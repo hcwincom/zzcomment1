@@ -1,0 +1,76 @@
+<tc_include file="Public:head" />
+ 
+</head>
+<body>
+	<tc_include file="Public:header" />
+	<!-- top end -->
+
+	<!-- main -->
+		<div class="shop-wrapper">
+			
+			<tc_include file="Public:seller_home" />
+				<div class="shop-head head1">
+					<span class="">{$seller_info.goods_top}</span>
+				</div>
+				<div class="column-product-wrapper">
+					<ul class="column-product-container">
+						
+						<foreach name="list_goods" item="vo">
+							<li>
+								<a href="{:U('Portal/Seller/goods_detail',array('id'=>$vo['id'],'sid'=>$vo['sid']))}" class="product-content">
+									<img src="__UPLOAD__/{$vo['pic']}" alt="商品图片" title="{$vo.name}"><br>
+									<p>
+										<span class="lf">{$vo.name}</span>
+										<span class="rt">￥{$vo.price}</span>
+									</p>
+								</a>
+							</li>
+						</foreach>
+						
+					</ul>
+				</div>
+ 				<tc_include file="Public:tocomment" />
+				 
+				<div class="shop-head head5">
+					<span class="">{$seller_info.comment_top}（{$count_comment}）</span>
+				</div>
+				<div class="shop-colcontainer">
+				 <tc_include file="Public:comment" />
+					 
+					<div class="showmore">
+						<a href="{:U('Portal/Seller/comment',array('sid'=>$sid))}">查看更多>></a>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	<!-- main end -->
+
+	<!-- bottom -->
+	 <tc_include file="Public:footer" />
+	<!-- bottom end -->
+
+	<!-- js -->	
+<script>
+$('#zzcommment-form').submit(function(){
+	 
+	var uid="{$Think.session.user.id|default=0}"; 
+	var userid="{$info.uid|default=0}"; 
+	uid=parseInt(uid); 
+	if(uid<=0){
+		$(".comment-infor").text("未登录不能评级！");
+		return false;
+	} 
+	userid=parseInt(userid); 
+	if(uid==userid){
+		$(".comment-infor").text('不能对自己的店铺评级！');
+		return false;
+	}
+	$(".comment-infor").text("正在上传评分材料，不要重复提交！");
+	 
+	return true; 
+});
+
+</script> 
+</body>
+</html>

@@ -1,0 +1,39 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			
+			<li class="active"><a>{$flag}修改</a></li>
+		</ul>
+		<form method="post" class="form-horizontal js-ajax-form" action="{:U('filter_char_do')}">
+			<fieldset>
+				 
+				
+				<div class="control-group">
+					<label class="control-label">内容</label>
+					<div class="controls">
+						<textarea  style="width:80%" name="content"  >{$content}</textarea>
+					</div>
+				</div>
+				 
+			</fieldset>
+			<div class="form-actions">
+				 
+				<button type="submit" class="btn btn-primary js-ajax-submit">{:L('SAVE')}</button>
+				<a class="btn" href="javascript:history.back(-1);">{:L('BACK')}</a>
+			</div>
+			<div class="control-group">
+				<span class="control-label" style="color:red">*</span>
+				<div class="controls">  
+					<span>文字用-分割,如词1-词2-词3。敏感词会被过滤成**</span>
+				</div>
+				
+			</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	
+	 
+</body>
+</html>

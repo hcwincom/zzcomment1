@@ -1,0 +1,68 @@
+<tc_include file="Public/user_head" />
+	<div class="per_right">
+            <form action="" method="" id="zzform">
+            <div class="table-container">
+                <table class="webmsg">
+                    <thead> 
+                        <tr>
+                            <th class="webmsg_t1"><input type="checkbox" id="all">全选</th>
+                            <th class="webmsg_t2">时间</th>
+                            <th class="webmsg_t3">内容</th>
+                            <th class="webmsg_t4">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody id="lk">
+                    <foreach name="list" item="vo">
+                        <tr>
+                            <td><input type="checkbox" value="{$vo.id}" name="ids[]" ></td>
+                            <td>{$vo.time|date='Y-m-d H:i:s',###}</td>
+                            <td>{$vo.content}</td>
+                            <td><a href="javascript:void(0);" class="zzdel"><img src="__TMPL__Public/img/delete.png"></a></td>
+                        </tr>
+                    </foreach>   
+                      </tbody>
+                </table>
+                <div class="form1" style="margin-top:10px;"><input type="submit" value="删除"></div>
+            </div>
+            </form>
+            <div class="page">{$page}</div>
+            </div>
+        </div>
+	<tc_include file="Public/user_footer" />
+	<script>
+	$('.zzdel').click(function(){
+		var $tr=$(this).parents('tr');
+		var id=$tr.find('input').val();
+		$.post("{:U('User/Msg/del')}",{'id':id},function(data){
+			if(data.errno==1){
+				location.reload(true);
+			}else{
+				alert(data.error);
+			}
+		});
+	});
+	$('#zzform').submit(function(){
+		var ids=new Array();
+		$('#lk tr input').each(function(){
+			if(this.checked){
+				ids[ids.length]=this.value;
+			}
+			
+		});
+		 
+		if(ids.length==0){
+			return false;
+		}
+		$.post("{:U('User/Msg/dels')}",{'ids':ids},function(data){
+			if(data.errno==1){
+				location.reload(true);
+			}else{
+				alert(data.error);
+			}
+		});
+		
+		return false;
+	});
+	</script>
+</body>
+</html>

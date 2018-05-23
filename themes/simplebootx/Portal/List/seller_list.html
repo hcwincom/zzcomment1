@@ -1,0 +1,113 @@
+<tc_include file="Public:head" />
+ 
+</head>
+<body>
+	<tc_include file="Public:header" />
+	<tc_include file="Public:banner" />
+	<div class="hmain-wrapper">	
+		<div class="wide-container">
+			<tc_include file="Public:addshop" />	 
+				<div class="shoplist-wrapper">
+					<div class="shop-type2" id="shop_type2">
+					<foreach name="add_cate1" item="vo">
+						<a href="{:U('Portal/List/seller_list',array('cid0'=>$vo['id'],'keyword'=>$keyword))}" class='<if condition="$vo['id'] eq $cid0">select</if>'>{$vo.name}</a>
+					</foreach>
+					</div>
+					<div class="clear"></div>
+				 
+					<div class="clear"></div>
+					<div class="shop-character" id="shop_character">
+						<span>按行业首字母检索：</span>
+					<foreach name="chars" item="vo">
+						<a href="{:U('Portal/List/seller_list',array('cid0'=>$cid0,'char'=>$vo,'keyword'=>$keyword))}" class='<if condition="$vo eq $char">select</if>'>{$vo}</a>
+					</foreach>
+						
+					</div>
+					<div class="column-head">
+						<h2>
+							<a href="{:U('Portal/List/seller_list')}" class="lf">
+								<em>商家列表</em><br>
+								<span>Merchant list</span>							
+							</a>
+						</h2>
+					</div>
+					<div class="clear"></div>
+					<notempty name="cid0">
+					<div class="shop-type-subcontain">
+						<div class="shop-type-sub">
+							<a href="javascript:void(0);" class="select">行业分类</a>
+						<empty name="cate1">
+							<a href="javascript:void(0);">没有符合条件的分类</a>
+						</empty>
+						<volist name="cate1" id="vo" > 
+					  		<a href="{:U('Portal/List/seller_list',array('cid1'=>$vo['id'],'char'=>$char,'keyword'=>$keyword,'cid0'=>$cid0))}" class='<if condition="$vo['id'] eq $cid1">select</if>'>{$vo.name}</a>
+						</volist> 
+						</div>
+						<div class="more-less">
+							<a href="javascript:void(0);" id="more_less">展开</a>
+						</div>
+					</div>
+					</notempty>
+					<div class="clear"></div>
+					<div class="column2-wrapper list-ad">
+						<ul class="column-shop-container">
+						<foreach name="list_top_seller" item="vo">
+							<li>
+								<a href="{:U('Portal/Seller/home',array('sid'=>$vo['id']))}" class="shop-content">
+									<div>
+										<img src="__UPLOAD__/{$vo.pic|default=$company['seller_empty']['content']}" alt="商家图片" title="{$vo.name}">
+									</div>
+									<br>
+									<em>{$vo.name}</em>
+									<p>
+										<span class="lf shop-level level-color">等级：<i>{$vo.grade}</i></span>
+										<span class="rt shop-clicknumber">浏览量：{$vo.browse}</span>
+									</p>
+								</a>
+							</li>
+						</foreach>
+						<foreach name="list_top_seller_empty" item="vo">
+							<li>
+								<a href="{:U('Portal/Index/index')}" class="shop-content">
+									<div>
+										<img src="__UPLOAD__/{$vo.pic}" alt="推荐图片" title="{$vo.name}">
+									</div>
+									<br>
+									<em>{$vo.name} </em>
+									<p>
+										 <span class="lf">价格：￥{$vo.price}</span> 
+									</p>
+								</a>
+							</li>
+						</foreach>
+							 
+						</ul>
+					</div>
+					<div class="listcont-wrapper">
+						<ul class="column-shop-container">
+						<foreach name="list_score_seller" item="vo">
+							<li>
+								<a href="{:U('Portal/Seller/home',array('sid'=>$vo['id']))}" class="shop-content">
+									<div>
+										<img src="__UPLOAD__/{$vo.pic|default=$company['seller_empty']['content']}" alt="商家图片" title="{$vo.name}">
+									</div>
+									<br>
+									<em>{$vo.name} </em>
+									<p>
+										<span class="lf shop-level level-color">等级：<i>{$vo.grade}</i></span>
+										<span class="rt shop-clicknumber">浏览量：{$vo.browse}</span>
+									</p>
+								</a>
+							</li>
+						</foreach>
+						</ul>						
+						<div class="page">{$page}</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	<!-- main end -->
+<tc_include file="Public:banner_footer" />
+	
+</body>
+</html>

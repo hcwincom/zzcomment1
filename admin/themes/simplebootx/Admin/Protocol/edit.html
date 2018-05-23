@@ -1,0 +1,42 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			
+			<li class="active"><a>{$info.title}修改</a></li>
+		</ul>
+		<form method="post" class="form-horizontal js-ajax-form" action="{:U('doEdit')}">
+			<fieldset>
+				<div class="control-group">
+					<label class="control-label">标题</label>
+					<div class="controls">
+						<input  style="width:80%" type="text" name="title" value="{$info.title}" required>
+					</div>
+				</div>
+				 <div class="control-group">
+					<label class="control-label">内容</label>
+					<div class="controls">
+						<textarea  style="width:80%" name="content" id="content1" required>{$info.content}</textarea>
+					</div>
+				</div>
+			</fieldset>
+			<div class="form-actions">
+				<input type="hidden" name="id" value="{$info.id}" />
+				<button type="submit" class="btn btn-primary js-ajax-submit">{:L('SAVE')}</button>
+				<a class="btn" href="javascript:history.back(-1);">{:L('BACK')}</a>
+			</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.all.min.js"></script>
+<script type="text/javascript">
+	
+	  //初始化百度编辑器
+       var ue = UE.getEditor('content1');
+        
+</script>
+	 
+</body>
+</html>

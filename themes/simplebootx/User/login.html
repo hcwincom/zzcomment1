@@ -1,0 +1,79 @@
+<tc_include file="Public:head" />
+</head>
+<body>
+  <!-- lgtop -->
+		<tc_include file="Public:login_head" />
+	<!-- lgtop end -->
+   <!-- main -->
+		<div class="lgmain-wrapper">
+			<div class="lgwide-container">
+				<div class="login-lf">
+					<img src="__TMPL__Public/img/loginbg.jpg">
+				</div>
+				<div class="login-rt">
+					<form id="login_form" action="" method="post" class="login-form rt">
+						<p>登录</p>
+						<div class="row-box">
+							<i class="user-ico"></i>
+							<input type="text" name="user" placeholder="手机号/用户名" class="username">
+						</div>
+						<p class="lg-infor"></p>
+						<div class="row-box">
+							<i class="passw-ico"></i>
+							<input type="password" name="password" placeholder="密码" class="password">
+						</div>
+						<p class="lg-infor"></p>						
+						<div class="row-box captcha-c">
+							<input type="text" name="verify" placeholder="验证码" class="captcha" >
+							<a href="javascript:void(0);" class="rt">{:sp_verifycode_img('length=4&font_size=14&width=100&height=34&charset=1234567890&use_noise=0&use_curve=0')}
+	                         </a>
+						</div>
+						<p class="lg-infor"></p>
+						<div class="clear remember-pw">
+							<label class="lf"><input type="checkbox" name="remember" value="1">下次自动登录</label>
+							
+							 <a href="{:U('User/Login/forgot_password')}" class="rt">忘记密码？</a> 
+						</div> 
+						<div class="clear">
+							<input type="submit" value="登录" class="lg-signup1" onclick="return loginCheck();">
+						</div>
+						<p class="lg-infor"></p>
+					</form>
+				</div>
+			</div>
+		</div>
+	<!-- main end -->
+     
+      
+	<tc_include file="Public:footer" />
+ <script>
+ $('#login_form').submit(function(){
+	 var remember=0;
+	 if($('.remember-pw input').prop('checked')==true){
+		 remember=1;
+	 } 
+	 
+	 var username=$.trim($('.username').val());
+     var password=$.trim($('.password').val());
+     var verify=$.trim($('.captcha').val());
+     if(verify.length!=4){
+       	 
+	   	$('.captcha').focus();
+	   	$('.captcha').parent("div").next(".lg-infor").text('请输入4位验证码');
+	   return false; 
+    }
+	 $.post("{:U('User/Login/ajaxlogin')}",{'username':username,'password':password,'verify':verify,'remember':remember},function(data){
+			if(data.errno==1){
+				location.href=data.error;
+			}else{
+				 
+				//location.reload(false);
+				$('.lg-signup1').parent("div").next(".lg-infor").text(data.error);
+				$('.verify_img').attr('src',$('.verify_img').attr('src')+'&time=1');
+			}
+		});
+	 return false;
+ });
+ </script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<tc_include file="Public/user_head" />
+	 <div class="per_right rt">
+                <div class="adddynamic">
+                    <form action="" method="post" id="recommend" name="playlist">
+                        <div class="form3"><span class="">{$type}：</span><i>{$info.name}</i></div>
+                        
+                        <div class="form3"><span class="lf">置顶时间：</span>
+				<ul class="form3_list1 lf">
+					<foreach name="top" item="vo">
+					<li>
+						<div class="">
+							<input type="checkbox" name="week" value="{$vo.day}"
+								onClick="anycheck(this.form)"> <span>{$vo.day}</span>
+						</div>
+						<div>
+							剩余：<span>{$vo.count}</span>位
+						</div>
+					</li>
+					</foreach>
+				</ul>
+				<div class="clear"></div>
+                        </div>
+                        <div class="form3"><span>单价：</span><i id="price1">{$company.top_goods_fee.content}</i>元</div>
+                        <div class="form3"><span>总价：</span><i id="price2">0</i>元</div>
+                        <div class="form3"><input type="submit" value="购买"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+	<tc_include file="Public/user_footer" />
+<script>
+$('#recommend').submit(function(){
+	var id='{$info.id}';
+	var days=new Array();
+	$('.form3_list1 input').each(function(){
+		if(this.checked==true){
+			days[days.length]=this.value;
+		}
+	});
+	if(days.length==0){
+		return false;
+	}
+	$.post("{:U('User/Goods/add_top_ajax')}",{'id':id,'days':days},function(data){
+		 
+		if(data.errno==1){
+			alert('购买成功,等待审核');
+			history.go(-1);
+		}else{
+			alert(data.error);
+		}	
+	});
+	return false;
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+ <tc_include file="Public:head" />
+ 
+</head>
+<body>
+	<tc_include file="Public:header" />
+	<!-- top end -->
+
+	<!-- main -->
+		<div class="shop-wrapper">
+			
+			<tc_include file="Public:seller_home" />
+				 <div class="shop-detailcontainer">
+					<h4 class="cont-head">{$detail.name}</h4>
+					<p class="cont-date"><span>{$detail.start_time|date='Y-m-d',###}</span></p>
+					<div class="cont" id="edit_cont">{$detail.content}</div>
+				</div>
+					
+			</div>
+		</div>
+	<!-- main end -->
+
+	<tc_include file="Public:footer" />
+</body>
+</html>
+<script>
+$('#edit_cont img').each(function(){
+	$(this).css('width','100%');
+});
+</script>

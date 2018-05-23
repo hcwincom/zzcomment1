@@ -1,0 +1,54 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+	        <li ><a href="{:U('index')}">分类管理</a></li>
+			<li ><a href="{:U('add')}">添加分类</a></li>
+			<li class="active"><a href="#">编辑分类</a></li>
+	    </ul>
+		<form class="form-horizontal js-ajax-form" action="{:U('edit_do')}" method="post">
+			<div class="tabbable">
+		        <div class="tab-content">
+		          <div class="tab-pane active" id="A">
+						<fieldset>
+							<input type="hidden" name="id" value="{$info.id}" >
+							<div class="control-group">
+								<label class="control-label">上级父类</label>
+								<div class="controls">
+									
+									 <select name="parent">
+										<option value="0">一级分类</option>
+									<foreach name="list" item="vo">
+										<option value="{$vo.id}" <if condition="$vo['id'] eq $info['fid']">selected</if>>{$vo.name}</option>
+									</foreach>
+									</select>
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label">类名</label>
+								<div class="controls">
+									<input type="text" name="name" value="{$info.name}" required><span class="form-required">*</span>
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label">排序</label>
+								<div class="controls">
+									<input type="text" name="sort" value="{$info.sort}">
+								</div>
+							</div>
+						</fieldset>
+		          </div>
+		         
+		         
+		        </div>
+		    </div>
+		    <div class="form-actions">
+		     	<button class="btn btn-primary js-ajax-submit"type="submit">保存</button>
+		      	<a class="btn" href="javascript:history.back(-1);">返回</a>
+		    </div>
+		</form>
+	</div>
+	<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

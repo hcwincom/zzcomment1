@@ -1,0 +1,37 @@
+<!-- top -->
+		<div class="top-wrapper">
+			<div class="lf logo">
+				<h1>
+					<a href="{:U('Portal/Index/index')}" title="{$company['title']['content']}">
+						<img src="__UPLOAD__/{$company['logo']['content']}" alt="网站LOGO">
+					</a>
+					  
+				</h1>
+			</div>
+			 
+			<div class="lf research">
+				<form action="{:U('Portal/List/seller_list',array('cid0'=>$vo['id'],'char'=>$char))}" method="post" class="lf">
+					<input type="text" placeholder="请输入感兴趣的商家名称" value="{$keyword}" name="keyword" class="lf">
+					<input type="submit" value="立即搜索" class="lf">
+				</form>
+				<div class="lf shop-type" id="shop-type">
+				<foreach name="add_cate1" item="vo">
+					<a href="{:U('Portal/List/seller_list',array('cid0'=>$vo['id'],'char'=>$char,'keyword'=>$keyword))}" class='<if condition="$vo['id'] eq $cid0">select</if>'>{$vo.name}</a>
+				</foreach>
+					 
+				</div>
+			</div>
+			<div class="login-link rt">
+			<empty name="Think.session.user">
+				<a href="{:U('User/Login/index')}">登录</a>
+				<a href="{:U('User/Register/index')}">注册</a>
+			<else/> 
+				<a href="{:U('User/Info/index')}" class="login-status"><img src="__UPLOAD__/{$Think.session.user.avatar|default=$company['avatar']['content']}" title="个人头像"></a>
+				<a href="{:U('User/Index/logout')}" class="login-status ">退出登录</a>
+				 
+			</empty>	
+			</div>
+		</div>
+		<div class="clear"></div>
+	<!-- top end -->
+ 

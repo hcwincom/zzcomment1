@@ -1,0 +1,81 @@
+<tc_include file="Public:head" />
+</head>
+<body>
+  <!-- lgtop -->
+		<tc_include file="Public:login_head" />
+	<!-- lgtop end -->
+	<!-- main -->
+		<div class="lgmain-wrapper">
+			<div class="set-title">
+				<div class="lgwide-container">修改密码</div>
+			</div>
+			<div class="lgwide-container">
+				<div>
+					<form action="" method="" class="reset-form3">
+						<p>请按照提示信息修改密码</p>
+						<div>
+							<label>旧密码</label>
+							<input type="password" name="password" placeholder="请您填写密码6-15个字符" class="oldpsw">
+						</div>
+						<p class="lg-infor"></p>
+						<div>
+							<label>新密码</label>
+							<input type="password" name="password" placeholder="请您填写密码6-15个字符" class="newpassword">
+						</div>
+						<p class="lg-infor"></p>
+						<div>
+							<label>确认新密码</label>
+							<input type="password" name="repassword" placeholder="请您再次确认密码" class="newrepassword">
+						</div>
+						<p class="lg-infor"></p>
+						<div>
+							<label></label>
+							<input type="submit" value="确定" class="lg-signup4" onclick="return modifyPwCheck();">
+						</div>
+						<p class="lg-infor"></p>
+					</form>
+				</div>
+			</div>
+		</div>
+	<!-- main end -->
+
+	<tc_include file="Public:footer" />
+	<script type="text/javascript">
+		function newRePwCheck(){
+			var newpw=$("input[class='newpassword'").val();
+			var newrepw=$("input[class='newrepassword']").val();
+			if(pwR.test(newpw)==false){
+				$("input[class='newpassword'").parent("div").next(".lg-infor").text("请输入正确密码！");
+				totalstatus=false;
+			}
+			if(newrepw!=newpw){
+				$("input[class='newrepassword'").parent("div").next(".lg-infor").text("密码不一致！");
+				totalstatus=false;
+			}
+		}
+		function modifyPwCheck(){
+			totalstatus=true;
+			nullCheck();
+			newRePwCheck();
+			if(totalstatus==false){ 
+				return false;
+			}
+			var oldpw=$.trim($(".oldpsw").val());
+			var newpw=$.trim($(".newpassword").val());
+			if(oldpw==newpw){
+				$("input[class='newpassword'").parent("div").next(".lg-infor").text("新旧密码不能相同！");
+				return false;
+			}
+			$.post("{:U('User/Info/psw_ajax')}",{'newpw':newpw,'oldpw':oldpw},function(data){
+				$(".lg-signup4").parent("div").next(".lg-infor").text(data.error);
+				if(data.errno==1){ 
+					$(".lg-signup4").parent("div").next(".lg-infor").text("密码修改成功");	
+					self.location=document.referrer;
+				}
+			});
+			return false;
+		}
+	</script>
+	<!-- js end -->
+</body>
+</html>

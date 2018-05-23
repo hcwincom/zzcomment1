@@ -1,0 +1,45 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li><a href="{:U('Indexadmin/index')}">{:L('USER_INDEXADMIN_INDEX')}</a></li>
+			<li class="active"><a href="{:U('Indexadmin/account',array('id'=>$info['id']))}">充值</a></li>
+		</ul>
+		<form method="post" class="form-horizontal js-ajax-form" action="{:U('Indexadmin/account_do')}">
+			<fieldset>
+			<input type="hidden" name="id" value="{$info.id}" />
+				<div class="control-group">
+					<label class="control-label">用户名</label>
+					<div class="controls">
+						<input type="text"   value="{$info.user_login}">
+					</div>
+				</div>
+				 <div class="control-group">
+					<label class="control-label">账户余额￥</label>
+					<div class="controls">
+						<input type="text" value="{$info.account}">
+					</div>
+				</div>
+				 <div class="control-group">
+					<label class="control-label">充值金额￥</label>
+					<div class="controls">
+						<input type="number" name="account" required>*只接受整数
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">说明</label>
+					<div class="controls">
+						<input type="text" name="content">
+					</div>
+				</div>
+			</fieldset>
+			<div class="form-actions">
+				<button type="submit" class="btn btn-primary js-ajax-submit">充值</button>
+				<a class="btn" href="javascript:history.back(-1);">{:L('BACK')}</a>
+			</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

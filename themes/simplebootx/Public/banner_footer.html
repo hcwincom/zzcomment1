@@ -1,0 +1,19 @@
+<tc_include file="Public:footer" />
+ 
+	<script type="text/javascript">
+		$(function() {
+		    $(".flexslider").flexslider({
+				slideshowSpeed: 4000, //展示时间间隔ms
+				animationSpeed: 400, //滚动时间ms
+				touch: true, //是否支持触屏滑动
+				pauseOnHover:true//鼠标悬停上去是否暂停
+			});
+			$(".flexslider").hover(function(){
+				$(".flex-direction-nav li a.flex-prev").css("left","20px");
+				$(".flex-direction-nav li a.flex-next").css("right","20px");
+			},function(){
+				$(".flex-direction-nav li a.flex-prev").css("left","-46px");
+				$(".flex-direction-nav li a.flex-next").css("right","-46px");
+			})
+		});	
+	</script>

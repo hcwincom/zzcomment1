@@ -1,0 +1,25 @@
+<!-- bottom -->
+<div class="foot-wrapper">
+	<div class="foot-container">
+		<div class="lf foot-cont1">
+			<p class="p1">{$company.company.content}</p>
+			<div>{$company.icp.content}<br>
+			技术支持：{$company.suport.content}</div>
+		</div>
+		<div class="lf foot-cont3">
+			<div class="foot-link">
+				<a href="{:U('Portal/index/index')}">网站首页</a>
+				<a href="{:U('Portal/List/seller_list')}">查找店铺</a>
+				<a href="{:U('Portal/index/protocol',array('name'=>'user'))}">用户协议</a>
+				<a href="{:U('Portal/index/protocol',array('name'=>'seller'))}">商家协议</a>
+				<span>客服电话：{$company.tel.content}</span>
+				<span>邮箱：{$company.email.content}</span>
+			</div>
+		</div>
+		<div class="rt foot-cont2">
+			<img src="__UPLOAD__/{$company.winxin.content}" alt="微信二维码" title="微信二维码">
+			<p>扫一扫,关注我们</p>
+		</div>
+	</div>
+</div>
+<!-- bottom end -->

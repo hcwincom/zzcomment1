@@ -1,0 +1,32 @@
+<tc_include file="Public/user_head" />
+	<div class="per_right">
+	    <div class="per_rnav">
+	    	<a class="" href="{:U('User/Info/pay')}">充值</a>
+	       <a class="rb" href="{:U('User/Info/paylist')}">消费/充值记录</a>
+	    </div>
+       <div class="table-container">
+           <table class="webmsg">
+               <thead> 
+                   <tr>
+                       <th class="webmsg_t2">时间</th>
+                       <th class="webmsg_t5">金额</th>
+                       <th class="webmsg_t3">说明</th>
+                   </tr>
+               </thead>
+               <tbody id="lk">
+               <foreach name="list" item="vo">
+                   <tr>
+                       <td>{$vo.time|date='Y-m-d H:i:s',###}</td>
+                       <td>￥{$vo.money}</td>
+                       <td>{$vo.content}</td>
+                   </tr>
+               </foreach>   
+                 </tbody>
+           </table>           
+       </div>
+       <div class="page">{$page}</div>
+       </div>
+   </div>
+	<tc_include file="Public/user_footer" />
+</body>
+</html>

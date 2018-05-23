@@ -1,0 +1,34 @@
+<tc_include file="Public/user_head" />
+	   <div class="per_right rt">
+            <div class="per_rnav">
+         		<a  href="{:U('User/Goods/index',array('sid'=>$sid))}">商品管理</a>
+         		<a class="rb" href="{:U('User/Goods/add',array('sid'=>$sid))}">上传商品</a>
+         	 </div>
+         <div class="addshop">
+               <form action="{:U('User/Goods/add_do')}" method="post" onsubmit="return send2()" enctype="multipart/form-data">
+                   <input type="hidden" name="sid" value="{$sid}"/>
+                   <div class="form1"><span>商品名称:</span><input type="text" name="shopname" placeholder="" onblur="shopname1()"></div>
+                   <p class="ml msg1"></p> 
+                   <div class="form1"><span>价格:</span><input type="text" name="shopprice" placeholder="" onblur="shopprice1()"></div>  
+                   <p class="ml msg2"></p> 
+                   <div class="form1"><span class="lf">上传图片：</span>
+                       <div class="lf ib imgbox6">
+                       <div id="preview6" class="preview"></div>
+                       <label class="btn btn6" for="p6" title="选择图片"><span>选择图片</span></label>
+                       <input type="file" class="upload_pic" onchange="preview(this,6)" name="IDpic6" value="" id="p6">
+                      <p class="pms">*上传尺寸为980*590的jpg、png图,大小在4M以内</p>
+                       </div>
+                       <div class="clear"></div>
+
+                   </div>
+                   <p class="ml msg3"></p> 
+                   <div class="form1"><input type="submit" value="上传"></div>
+
+               </form>
+           </div>
+        </div>
+       </div>
+	<tc_include file="Public/user_footer" />
+  
+</body>
+</html>

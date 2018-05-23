@@ -1,0 +1,236 @@
+<tc_include file="Public:head" />
+</head>
+<body>
+  <!-- lgtop -->
+		<tc_include file="Public:login_head" />
+	<!-- lgtop end -->
+   
+    <!-- main -->
+		<div class="lgmain-wrapper">
+			<div class="lgwide-container">
+				<div>
+					<form action="{:U('User/Register/doregister')}" method="post" class="register-form">
+						<p class="lg-infor2">中英文和数字均可，最长14个字符<br>可加._，不可为手机号码</p>
+						<div>
+							<label class="must">用户名</label>
+							<input type="text" name="username" placeholder="请设置用户名" class="username" id="username">
+						</div>
+						<p class="lg-infor"></p>
+						<div>
+							<label class="must">手机号</label>
+							<input type="text" name="mobile" placeholder="可用于登录和找回密码" id="mobile">
+						</div>
+						<p class="lg-infor"></p>
+						
+						<div>
+							<label class="must">密码</label>
+							<input type="password" name="password" placeholder="请设置6-15位字符作为登录密码" id="password">
+						</div>
+						<p class="lg-infor"></p>
+						<div>
+							<label class="must">确认密码</label>
+							<input type="password" name="repassword" placeholder="请再次确认登录密码">
+						</div>
+						<p class="lg-infor"></p>
+						 <div class="captcha-c1">
+							<label class="must">图形码</label>
+							<input type="text" name="verify" placeholder="请输入验证码" class="captcha" id="verify">
+							  <a href="javascript:void(0);" class="rt">{:sp_verifycode_img('length=4&font_size=14&width=100&height=34&charset=1234567890&use_noise=0&use_curve=0')}
+	                         </a>
+						</div>
+						<p class="verify-infor lg-infor"></p>
+						<div class="telecheck1">
+							<label class="must">短信码</label>
+							<input type="text" name="telecaptcha" placeholder="手机验证码" id="zzcode">
+							<a href="javascript:void(0);" class="btncheck1" id="m_check">发送验证码</a>
+						</div>
+						<p class="lg-infor"></p>
+						<div class="rowcheck">
+							<label></label>
+							<input type="checkbox" class="must">
+							<span>
+								阅读并接受
+								<a href="{:U('Portal/index/protocol',array('name'=>'user'))}">《用户注册协议》</a>
+								<a href="{:U('Portal/index/protocol',array('name'=>'seller'))}">《商户服务协议》</a>
+							</span>
+						</div>
+						<p class="lg-infor"></p>
+						<div class="rg-s">
+							<label></label>
+							<input type="submit" value="注册" class="lg-signup2" onclick="return registerCheck();">
+						</div>
+						<p class="lg-infor"></p>
+					</form>
+				</div>
+			</div>
+		</div>
+	<!-- main end -->
+      
+	<tc_include file="Public:footer" />
+ 
+<script>
+var send=0;
+$("#m_check").click(function(){
+	if($("#rm_check").hasClass("disabled")==true){
+		return false;
+	}
+	var status=true;
+ 
+	var mR0=/^(13[0-9]|15[012356789]|17[013678]|18[0-9]|14[57])[0-9]{8}$/;
+	var mobile=$("input[name='mobile']").val();
+	 var username=$.trim($('#username').val());
+	
+	  
+	if(mR0.test(mobile)){
+		status=true;
+	}else{
+		$("input[name='mobile']").parent("div").next(".lg-infor").text("请填写正确的手机号码！");
+		status=false;
+		return false;
+	}
+	if(mR0.test(username)){
+		status=false;
+		 $(".username").parent("div").next(".lg-infor").text("用户名不能为手机号");
+		return false;
+	}
+	var verify=$.trim($('#verify').val());
+	if(verify.length!=4){
+	   	$('.captcha').focus();
+	   	$(".captcha").parent("div").next(".lg-infor").text("请填写正确的验证码！");
+	   	 return false; 
+    }
+	$.ajax({
+		url: "{:U('User/Public/ajaxUsername')}",
+		type:'post',
+		cacash:false,
+		async:false,	//不设置则默认true代表异步,false同步
+		data:{'username':username},
+		dataType:'json',
+		error:function(data){
+			alert('错误，刷新页面');
+			location.reload(true);
+		},
+		success:function(data){
+			if(data.errno!=2){
+			  status=false;
+			  $(".username").parent("div").next(".lg-infor").text("该用户名已存在");
+			   
+			}
+		}
+	});
+	 if( status==false){
+		 return false;
+	 }
+	 $.ajax({
+			url: "{:U('User/Public/ajaxMobile')}",
+			type:'post',
+			cacash:false,
+			async:false,	//不设置则默认true代表异步,false同步
+			data:{'mobile':mobile},
+			dataType:'json',
+			error:function(data){
+				alert('错误，刷新页面');
+				location.reload(true);
+			},
+			success:function(data){
+				if(data.errno!=2){
+				  status=false;
+				  $("#mobile").parent("div").next(".lg-infor").text("该手机号已存在");
+				  
+				}
+			}
+		});
+	 if( status==false){
+		 return false;
+	 }
+	 $.ajax({
+		url: "{:U('User/Public/ajaxVerify')}",
+		type:'post',
+		cacash:false,
+		async:false,	//不设置则默认true代表异步,false同步
+		data:{'verify':verify},
+		dataType:'json',
+		error:function(data){
+			alert('错误，刷新页面');
+			location.reload(true);
+		},
+		success:function(data){
+			if(data.errno!=1){
+			  status=false;
+			  $(".captcha").parent("div").next(".lg-infor").text("请填写正确的验证码或点击刷新验证码！");
+			  $('.verify_img').attr('src',$('.verify_img').attr('src')+'&time=1');
+			}
+		}
+	});
+	 if( status==false){
+		 return false;
+	 }
+	 
+	 $.ajax({
+			url: "{:U('User/Public/ajaxSend')}",
+			type:'post',
+			cacash:false,
+			async:false,	//不设置则默认true代表异步,false同步
+			data:{"mobile":mobile,'type':'regCode'},
+			dataType:'json',
+			error:function(data){
+				status=false;
+			},
+			success:function(data){
+				if(data.errno!=1){
+					status=false;
+					send=0;
+					$('#zzcode').parent("div").next(".lg-infor").text(data.error);
+					 
+				}else{
+					send=1;
+				}
+			}
+		});
+	 if( status==false){
+		 return false;
+	 }
+	var time=60;
+	if($("#m_check").hasClass("disabled")==false&&status==true){
+		$("#m_check").addClass("disabled");
+		var t=setInterval(function(){
+			time--;
+			$("#m_check").html(time+"秒后可重新获取");
+			if(time==0){
+				clearInterval(t);					
+				$("#m_check").html("重新获取");
+				$("#m_check").removeClass("disabled");
+			}
+		},1000);
+	}
+});
+$('.register-form').submit(function(){
+	if(send==0){
+		$('.lg-signup2').parent("div").next(".lg-infor").text('请点击发送短信验证码');
+		return false;
+	}
+   var username=$.trim($('#username').val());
+   var password1=$.trim($('#password').val());
+   var mobile=$.trim($('#mobile').val());
+  
+   var verify=$.trim($('#verify').val());
+   var code=$.trim($('#zzcode').val());
+   
+ $.post("{:U('User/Register/ajaxreg')}",{'user_login':username,'mobile':mobile,'password':password1,'verify':verify,'code':code},function(data){
+	
+	  if(data.errno==1){
+			//返回上一页并刷新
+			self.location=document.referrer;
+		}else{
+			 
+			$('.lg-signup2').parent("div").next(".lg-infor").text(data.error);
+			$('.verify_img').attr('src',$('.verify_img').attr('src')+'&time=1');
+			 
+		}
+	});
+ return false;
+ 
+});
+</script>
+</body>
+</html>

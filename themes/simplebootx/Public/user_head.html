@@ -1,0 +1,38 @@
+ <tc_include file="Public:head" />
+ <link rel="stylesheet" href="__TMPL__Public/css/personal.css" type="text/css">
+ <link rel="stylesheet" type="text/css" href="__TMPL__Public/css/lightcase.css" media="screen">
+</head>
+<body>
+	<tc_include file="Public:header" />
+	<div id="per_line"></div>
+		<div class="crumbs w1200">
+			<span>首页</span>&gt;<a href="{:U('User/Info/index')}">个人中心</a>&gt;<span>{$user_flag}</span>
+			<div class="mobile rt">
+				<div class="mobilemenu"></div>
+			</div>
+			
+		</div>
+		<div class="per_main w1200">
+			<div class="per_left">
+				<a class="plt <eq name='user_flag' value='会员资料'>red</eq>" href="{:U('User/Info/index')}">会员资料</a>
+				<div class="per_lf">
+					<a class="plt <eq name='user_flag' value='我的账户'>red</eq>" href="javascript:void(0)">我的账户</a>
+					<ul class="per_lf_list">
+						<li><a href="{:U('User/Info/info')}">资料设置</a></li>
+						<li><a href="{:U('User/Info/pay')}">会员充值</a></li>
+						<li><a href="{:U('User/Comment/index')}">评级管理</a></li>
+						 <li><a href="{:U('User/Msg/index')}">消息记录</a></li>
+					</ul>
+				</div>
+				<div class="per_lf">
+				<foreach name="seller_list" item="vo" key="k">
+					<a class="plt <if condition="$sid eq $vo['id']" >red</if>" href="javascript:void(0)">店铺{$k+1}</a>
+					<ul class="per_lf_list">
+						<li><a href="{:U('User/Seller/index',array('sid'=>$vo['id']))}">店铺管理</a></li>
+						<li><a href="{:U('User/Goods/index',array('sid'=>$vo['id']))}">商品列表</a></li>
+						<li><a href="{:U('User/News/index',array('sid'=>$vo['id']))}">动态列表</a></li>
+						<li><a href="{:U('User/Seller/add_top',array('sid'=>$vo['id']))}">推荐位购买</a></li>
+					</ul>
+				</foreach>
+				</div>
+			</div>

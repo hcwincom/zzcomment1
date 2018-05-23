@@ -1,0 +1,41 @@
+<tc_include file="Public/user_head" /> 
+	<div class="per_right rt">
+                <div class="per_rnav">
+                 
+                	<a class="" href="{:U('User/Info/pay')}">充值</a>
+                	<a class="" href="{:U('User/Info/paylist')}">消费/充值记录</a>
+                	 <a class="rb" href="javascript:void(0);">微信支付</a>
+                </div>
+                <div class="pay_main">
+                   <div style="margin-left: 10px;color:#556B2F;font-size:30px;font-weight: bolder;">微信扫码支付</div>
+                   	<p>充值订单号:{$info['oid']}</p>
+                    <p>充值金额:￥{$info['money']}</p>
+                    
+					<img alt="微信扫码支付" src="{:U('Portal/Pay/wx_qr',['data'=>$info['weixinUrl']])}" style="width:150px;height:150px;"/>
+					<p id="wxid"> </p>
+					<p id="wxmsg"></p>
+                </div>
+            </div>
+        </div>
+
+	<tc_include file="Public/user_footer" />
+<script>
+ 
+var query_url="{$info['query_url']}";
+var oid="{$info['oid']}";
+var inter=setInterval(weixin,2000);
+function weixin(){
+	 
+	$.post(query_url,{'oid':oid},function(data){
+		console.log(data);
+		if(data.code>0){
+			clearInterval(inter); 
+			$('#wxid').html('微信交易号:'+data.trade_no);
+			$('#wxmsg').html('支付结果:'+data.msg);
+		}
+	},'json');
+	 
+}
+</script>
+</body>
+</html>

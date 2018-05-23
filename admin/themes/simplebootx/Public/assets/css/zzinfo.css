@@ -1,0 +1,22 @@
+.controls input{
+	color:black;
+	width:225px;
+}
+.controls select{
+	color:black;
+	width:240px;
+}
+.fleft{
+float:left;
+
+} 
+.fleft .controls{
+ width:350px;
+	
+}
+.control-group .red{
+	color:red;
+}
+ .control-group textarea{
+	width:80%;
+}

@@ -1,0 +1,79 @@
+<div class="shop-nav-wrapper" id="shop_nav">
+	<div class="wide-container">
+		<a href="{:U('Portal/Seller/home',array('sid'=>$sid))}" class="<eq name='seller_flag' value='home'>current</eq>">{$seller_info.home}</a>
+		<a href="{:U('Portal/Seller/news',array('sid'=>$sid))}" class="<eq name='seller_flag' value='news'>current</eq>">{$seller_info.news}</a>
+		<a href="{:U('Portal/Seller/goods',array('sid'=>$sid))}" class="<eq name='seller_flag' value='goods'>current</eq>">{$seller_info.goods}</a>
+		<a href="{:U('Portal/Seller/comment',array('sid'=>$sid))}" class="<eq name='seller_flag' value='comment'>current</eq>">{$seller_info.comment}</a>
+	</div>
+</div>
+<div class="wide-container">
+<!-- shop erwei -->
+<notempty name='info.qrcode'>
+	<div class="shop-erwei" id="shop_erwei">
+		
+		<img src="__UPLOAD__/{$info.qrcode}" alt="二维码">
+		
+		<div class="close2"><a href="javascript:void(0);">关闭</a></div>
+	</div>
+</notempty>
+<!-- shop erwei end -->
+ <!-- add shop -->
+	<tc_include file="Public:addshop" />
+<!-- add shop end -->
+
+	<div class="shop-infor-wrapper">
+		<div class="shop-infor-container">
+			<div class="infor-top">
+				<div class="infor-lf">
+					<em class="shopname">{$info.name}</em>
+					 
+					<span class="level level-color">等级<i>{$info.grade}</i></span>
+				</div>
+				<div class="infor-rt">
+				<neq name="info.status" value="1">
+					<span class="shop-mark">已认领</span> 
+				<else/>
+					<a href="{:U('User/Seller/apply',array('sid'=>$sid))}" class="shop-mark">去认领>></a>
+				</neq>
+					<div class="rt share">
+						<!-- share -->
+						<span class="lf">分享到：</span>
+						<div class="bdsharebuttonbox rt"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a></div>
+						<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"1","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{},"image":{"viewList":["tsina","weixin","qzone"],"viewText":"分享到：","viewSize":"24"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["tsina","weixin","qzone"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+						<!-- share end -->
+					</div>
+				</div>
+			</div>
+			<div class="infor-detail">
+				<div class="infor-rt">
+					<p class="infor-d3">
+						<img src="__UPLOAD__/{$info['pic']|default=$company['seller_empty']['content']}" alt="商家名称">
+					 
+					</p>
+				</div>
+				<div class="infor-lf">
+					<p class="infor-d1">
+						<span>类别： {$info.cname}</span><br>
+						<span>{$seller_info.corporation}： {$info.corporation}</span><br>
+						<span>{$seller_info.scope}：{$info.scope}</span><br>
+					<eq name='info.author_status' value='1'>
+						<span class="adduser">创评人：{$info.author_name}</span><br>
+					</eq>
+						<span>网址：<a href="{$info.link}" target="_blank" class="zzlink">{$info.link}</a></span><br>
+					</p>
+				</div>
+				<div class="infor-lf">
+					<p class="infor-d2">
+						<span class="time">{$info.bussiness_time|default='店主没有留下信息'}</span><br>
+						<span class="tele">
+						{$info.tel}  {$info.mobile}
+						<empty name="info.tel">
+							<empty name="info.mobile">店主没有留下信息</empty>
+						</empty>
+						</span><br>
+						<span class="addr">{$info.citys} {$info.address}</span><br>
+					</p>
+				</div>								
+			</div>
+		</div>
+	</div>

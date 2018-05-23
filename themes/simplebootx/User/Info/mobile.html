@@ -1,0 +1,199 @@
+<tc_include file="Public:head" />
+</head>
+<body>
+  <!-- lgtop -->
+		<tc_include file="Public:login_head" />
+	<!-- lgtop end -->
+	 <!-- main -->
+		<div class="lgmain-wrapper">
+			<div class="set-title">
+				<div class="lgwide-container">修改手机号</div>
+			</div>
+			<div class="lgwide-container">
+				<div>
+					<form action="#" method="" class="reset-form2">
+						<p>为了您的账号安全，请完成密码验证</p>
+						<div>
+							<label>输入密码：</label>
+							<input type="password" name="password" placeholder="请输入密码">
+						</div>
+						<p class="lg-infor"></p>
+						<div>
+							<label>新手机号：</label>
+							<input type="text" name="mobile" placeholder="请输入手机号">
+						</div>
+						<p class="lg-infor"></p>
+						<div class="telecheck">
+							<span>短信码：</span><br>
+							<input type="text" name="telecaptcha" placeholder="手机验证码">
+							<a href="javascript:void(0);" class="btncheck" id="m_check">发送验证码</a>
+						</div>
+						<p class="lg-infor"></p>
+						<div>
+							<input type="submit" value="确定" class="lg-signup3" onclick="return resetMobile();">
+						</div>
+						<p class="lg-infor"></p>
+					</form>
+				</div>
+			</div>
+		</div>
+	<!-- main end -->
+	 
+
+	<tc_include file="Public:footer" />
+	<script type="text/javascript">
+	var send=0;
+		$(function(){
+			$("#m_check").click(function(){
+				if($("#m_check").hasClass("disabled")==true){
+					return false;
+				}
+				var status=true;
+				var mobile=$.trim($("input[name='mobile']").val());
+				if(mR.test(mobile)){
+					status=true;
+				}
+				else{
+					$("input[name='mobile']").parent("div").next(".lg-infor").text("请填写正确的手机号码！");
+					 return false;
+				}
+				 
+				var psw=$.trim($("input[name='password']").val());
+				if(pwR.test(psw)){
+					status=true;
+				}
+				else{
+					$("input[name='password']").parent("div").next(".lg-infor").text("请填写正确的密码！");
+					return false;
+				}
+				$.ajax({
+					url: "{:U('User/Public/ajaxPsw')}",
+					type:'post',
+					cacash:false,
+					async:false,	//不设置则默认true代表异步,false同步
+					data:{'psw':psw},
+					dataType:'json',
+					error:function(data){
+						alert('错误，刷新页面');
+						location.reload(true);
+					},
+					success:function(data){
+						switch(data.errno){
+						case 1:break;
+						case 2: 
+							status=false;
+						  	$("input[name='telecaptcha']").parent("div").next(".lg-infor").text("请填写正确的密码！");
+						  	break;
+						defult:
+							status=false;
+						  	location.reload(true);
+						  	break;
+						}
+					}
+						 
+					 
+				});
+				 if( status==false){
+					 return false;
+				 }
+				 $.ajax({
+						url: "{:U('User/Public/ajaxMobile')}",
+						type:'post',
+						cacash:false,
+						async:false,	//不设置则默认true代表异步,false同步
+						data:{'mobile':mobile},
+						dataType:'json',
+						error:function(data){
+							alert('错误，刷新页面');
+							location.reload(true);
+						},
+						success:function(data){
+							switch(data.errno){
+							case 2:status=true;break;
+							case 1: 
+								status=false;
+							  	$("input[name='telecaptcha']").parent("div").next(".lg-infor").text(data.error);
+							  	break;
+							defult:
+								status=false;
+							  	location.reload(true);
+							  	break;
+							}
+						}
+							 
+						 
+					});
+					 if( status==false){
+						 return false;
+					 }
+				 $.ajax({
+						url: "{:U('User/Public/ajaxSend')}",
+						type:'post',
+						cacash:false,
+						async:false,	//不设置则默认true代表异步,false同步
+						data:{"mobile":mobile,'type':'mobileCode'},
+						dataType:'json',
+						error:function(data){
+							status=false;
+						},
+						success:function(data){
+							if(data.errno!=1){
+								send=0;
+								status=false;
+								$("input[name='telecaptcha']").parent("div").next(".lg-infor").text(data.error);
+							  	 
+							}else{
+								send=1;
+								status=true;
+							}
+						}
+					});
+				 if( status==false){
+					 return false;
+				 }
+				var time=60;
+				if($("#m_check").hasClass("disabled")==false&&status==true){
+					$("#m_check").addClass("disabled");
+					var t=setInterval(function(){
+						time--;
+						$("#m_check").html(time+"秒后可重新获取");
+						if(time==0){
+							clearInterval(t);					
+							$("#m_check").html("重新获取");
+							$("#m_check").removeClass("disabled");
+						}
+					},1000)
+				}
+			})			
+		})
+		function resetMobile(){
+			var mobile=$.trim($("input[name='mobile']").val());
+			var psw=$.trim($("input[name='password']").val());
+			var code=$.trim($("input[name='telecaptcha']").val());
+			if(code.length!=4){
+				$(":submit").parent("div").next(".lg-infor").text("短信验证码错误");	
+				return false;
+			}
+			if(send==0){
+				$(":submit").parent("div").next(".lg-infor").text("请点击发送手机验证码");
+				return false;
+			} 
+			$(":submit").parent("div").next(".lg-infor").text("手机号验证中...");	
+			$.post("{:U('User/Info/mobile_ajax')}",{'mobile':mobile,'psw':psw,'code':code},function(data){
+				
+				  if(data.errno==1){
+						//返回上一页并刷新
+						$(":submit").parent("div").next(".lg-infor").text("手机号验证成功");	
+						self.location=document.referrer;
+					}else{
+						$(":submit").parent("div").next(".lg-infor").text(data.error);	
+						
+					}
+				});
+			return false;
+		}
+	</script>
+	
+	<!-- js end -->
+</body>
+</html>

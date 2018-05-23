@@ -1,0 +1,38 @@
+<div class="shop-head head2">
+	<span class="">评级区</span>
+</div>
+<div class="shop-message-wrapper">
+	<div class="shop-message-container">
+		<p>留下您的足迹</p>
+		<form id="zzcommment-form" class="sm-form" action="{:U('User/Comment/add')}" method="post" enctype="multipart/form-data">
+			 <input type="hidden" name="sid" value="{$sid}" />
+			<div class="sm-row">
+				<div class="sm-c1 lf">
+					<label for="user_message" class="must">内容</label>
+				</div>
+				<div class="sm-c2 lf">
+					<textarea name="usermessage" id="user_message" placeholder="请输入您的留言信息，字数在2-150字！" class="user-message"></textarea>
+				</div>
+			</div>
+			<div class="sm-row">
+				<div class="sm-c1 lf">
+					<label class="must">评级</label>
+				</div>
+				<div class="sm-c2 lf">
+					<label for="add_core" class="core add-core lf checked"><span>升级：&nbsp;</span><input type="radio" name="core" value="1" id="add_core" checked></label>
+					<label for="sub_core" class="core sub-core lf"><span>降级：&nbsp;</span><input type="radio" name="core" value="-1" id="sub_core"></label>
+					
+					<label for="provedata" class="upload lf">
+						<span class="lf">上传文件：</span>
+						<span class="lf btn-style">点击上传</span>
+						<input type="file" name="provedata" id="provedata">
+					</label>
+					<p class="sm-infor">1登录后才能评级，必须上传评级证明材料--支持图片、录音、视频,最大4M！</p>
+					<input type="submit" value="提交留言" class="lg-signup" id="lgsignup" onclick="return userComment();">
+				</div>
+			</div>
+			<div>
+			</div>
+		</form>
+	</div>
+</div>

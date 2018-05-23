@@ -1,0 +1,63 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+	        <li ><a href="{:U('index')}">banner管理</a></li>
+			<li class="active"><a href="{:U('add')}">添加banner</a></li>
+	    </ul>
+	    <!--  -->
+		<form class="form-horizontal js-ajax-form" action="{:U('add_do')}" method="post">
+			 
+			<fieldset>
+				 
+				<div class="control-group">
+					<label class="control-label">标题</label>
+					<div class="controls">
+						<input type="text" name="title" value="" required><span class="form-required">*不能为空</span>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">链接</label>
+					<div class="controls">
+						<input  style="width:80%" type="text" name="link" value="http://"  >
+					</div>
+				</div>
+				
+				<div class="control-group">
+					<label class="control-label">图片</label>
+					<div class="controls">
+						<img id="old-pic" src="__ROOT__/data/upload/{$info.pic}" alt="暂无图片" style="width:390px;height:270px"/>
+						<a href="javascript:upload_one_image('图片上传','#js-link-image');newPic();">上传新图片</a>
+						<input type="hidden" name="pic" value="" id="js-link-image" required/> 
+						
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">排序</label>
+					<div class="controls">
+						<input type="text" name="sort" value="0">
+					</div>
+				</div>
+			</fieldset>
+		          
+		    <div class="form-actions">
+		     	<button class="btn btn-primary js-ajax-submit"type="submit">添加</button>
+		      	<a class="btn" href="javascript:history.back(-1);">返回</a>
+		    </div>
+		</form>
+	</div>
+	<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+	<script>
+	
+	function newPic(){
+		var oldPic=$.trim($('#old-pic').attr('src'));
+		var newPic=$.trim('__ROOT__/data/upload/'+$('#js-link-image').val());
+		if(newPic!=''&&newPic!=oldPic){
+			$('#old-pic').attr('src',newPic);
+		}
+		setTimeout("newPic()",500);
+	}
+	</script>
+</body>
+</html>

@@ -1,0 +1,126 @@
+
+ 
+<tc_include file="Public:bottom" />
+	<!-- js -->	
+	<!-- js end -->	
+
+	<script type="text/javascript" src="__TMPL__Public/js/jquery.flexslider-min.js"></script>
+	
+	<script type="text/javascript" src="__TMPL__Public/js/load.js"></script>
+	
+	<!-- js end -->
+<script>
+if(navigator.appName == "Microsoft Internet Explorer"&&parseInt(navigator.appVersion.split(";")[1].replace(/[ ]/g, "").replace("MSIE",""))<9){
+	alert("当前浏览器版本过低，为不影响网站体验效果，请下载最新版本的浏览器！");
+}
+$('#add-cate2 option').hide();
+$('#add-cate2 .cate20').show();
+$('#add-cate1').change(function(){
+	var fid=this.value;
+	$('#add-cate2 option').hide();
+	$('#add-cate2 .cate20').show();
+	$('#add-cate2 .cate20').prop('selected',true);
+	$('#add-cate2 .cate2'+fid).show();
+	
+});
+
+$('#add-city2 option').hide();
+$('#add-city2 .city20').show();
+$('#add-city1').change(function(){
+	var fid=this.value;
+	$('#add-city2 option').hide();
+	$('#add-city2 .city20').show();
+	$('#add-city2 .city20').prop('selected',true);
+	$('#add-city2 .city2'+fid).show();
+	$('#add-city3 option').hide();
+	$('#add-city3 .city30').show(); 
+	$('#add-city3 .city30').prop('selected',true);
+	 
+});
+
+$('#add-city3 option').hide();
+$('#add-city3 .city30').show();
+$('#add-city2').change(function(){
+	var fid=this.value;
+	$('#add-city3 option').hide();
+	
+	$('#add-city3 .city30').show(); 
+	$('#add-city3 .city30').prop('selected',true);
+	
+	$('#add-city3 .city3'+fid).show(); 
+});
+
+$('.reply-form').submit(function(){
+	 var cid=$(this).find('.zzcid').val();
+	 var content=$(this).find('#user_reply').val();
+	 $.post("{:U('Portal/Index/reply')}",{'cid':cid,'content':content},function(data){
+		 alert(data.error);
+		 if(data.errno==1){
+			 
+			 $('#user_reply').val('');
+			 $("#reply_layer").fadeOut();
+			//还要在网页添加回复
+			 
+			var span='<span class="comment-title">'+data['uname']+'&nbsp;&nbsp;回复</span>';
+			var p='<p class="comment-about">'+data['content']+'<span class="comment-date">&nbsp;&nbsp;【发表于'+data['time']+'】</span></p>';
+			var cid=data['cid'];
+			$('.zzreply'+cid).prepend(span+p);
+			$('.zzreply0'+cid).find('.comment-rbtn2').html('展开回复');
+		 }
+	 });
+	 
+	 return false;
+});
+$('.shop-add-form').submit(function(){
+	var id=parseInt("{$Think.session.user.id}");
+	if(!(id>0)){
+		$('#message').show();
+		$('#message').text('未登录不能创建');
+		
+		return false;
+	} 
+	 
+	var verify=$('#captcha').val();
+	if(verify.length!=4){
+		$('#message').show();
+		$('#message').text('验证码不正确');
+		
+		return false;
+	}
+	var status=true;
+	$.ajax({
+		url: "{:U('User/Public/ajaxVerify')}",
+		type:'post',
+		cacash:false,
+		async:false,	//不设置则默认true代表异步,false同步
+		data:{'verify':verify},
+		dataType:'json',
+		error:function(data){
+			alert('错误，刷新页面');
+			location.reload(true);
+		},
+		success:function(data){
+			if(data.errno!=1){
+			  status=false;
+			  $('#message').show();
+			$('#message').text('验证码不正确');
+			  $('.verify_img').attr('src',$('.verify_img').attr('src')+'&time=1');
+			}
+		}
+	});
+	 if( status==false){
+		 return false;
+	 }else{
+		 return true;
+	 }
+	return false;
+});
+$('.zzlink').click(function(){
+	var link=$(this).attr('href');
+	var exp=/^(http|ftp|https):\/\/([\w.]+\/?)\S*/;
+	if(!exp.test(link)){
+		$(this).attr('href','http://'+link);
+	}  
+	return true;
+});
+</script>

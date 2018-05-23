@@ -1,0 +1,80 @@
+<tc_include file="Public/user_head" />
+	   <div class="per_right rt">
+                 <div class="per_rnav">
+	                    <a class="<eq name='status' value='-1'>rb</eq>" href="{:U('User/News/index',array('sid'=>$sid,'status'=>-1))}">全部</a>
+	                    <a class="<eq name='status' value='0'>rb</eq>" href="{:U('User/News/index',array('sid'=>$sid,'status'=>0))}">审核中</a>
+	                    <a class="<eq name='status' value='1'>rb</eq>" href="{:U('User/News/index',array('sid'=>$sid,'status'=>1))}">审核失败</a>
+	                    <a class="<eq name='status' value='2'>rb</eq>" href="{:U('User/News/index',array('sid'=>$sid,'status'=>2))}">审核完成</a>
+	                    <a class="<eq name='status' value='3'>rb</eq>" href="{:U('User/News/index',array('sid'=>$sid,'status'=>3))}">已过期</a>
+	                    <a class="<eq name='status' value='4'>rb</eq>" href="{:U('User/News/add',array('sid'=>$sid,'status'=>4))}">发布新动态</a>
+                    	
+                    </div>
+                 <div class="adddynamic">
+                    <form action="{:U('User/News/add_do')}" method="post" onsubmit="return send1()" enctype="multipart/form-data">
+                        <input type="hidden" name="sid" value="{$sid}"/>
+                        <div class="form2"><span>标题：</span><input type="text" name="title" placeholder="" onblur="tit1()"></div>
+                        <p class="ml msg1"></p>
+                        <div class="form2"><span class="lf">缩略图：</span>
+                            <div class="lf ib imgbox7">
+                            <div id="preview7" class="preview"></div>
+                            <label class="btn btn7" for="p7" title="选择图片"><span>选择图片</span></label>
+                            <input type="file" class="upload_pic" onchange="preview(this,7)" name="IDpic7" value="" id="p7" >
+                           <p class="pms">*上传尺寸为176*104的jpg、png图,大小在4M以内</p>
+                            </div>
+                         
+                            <div class="clear"></div>
+                        </div>
+                        <p class="ml msg4"></p> 
+                        <div class="form2"><span>内容：</span><textarea name="content2" id="content2" ></textarea></div>
+                        <p class="ml msg2"></p>
+                        <div class="form2"><span>时限：</span><input name="start" class="inline laydate-icon" id="start"  ></div>
+                        <p class="ml msg3"></p>
+                        <div class="form2 mtc"><input type="submit" value="发布动态"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+	<tc_include file="Public/user_footer" />
+	 <script type="text/javascript" src="__TMPL__Public/js/laydate.js"></script>      
+ <script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.all.min.js"></script>
+<script type="text/javascript">
+	
+	  //初始化百度编辑器
+     //  var ue = UE.getEditor('content2');
+       var ue = UE.getEditor('content2', {
+           wordCount: true, //开启字数统计
+           elementPathEnabled: false,//是否启用元素路径，默认是显示
+           maximumWords: 10000,       //允许的最大字符数
+           initialContent: '',    //初始化编辑器的内容,也可以通过textarea/script给值，看官网例子
+           autoClearinitialContent: true, //是否自动清除编辑器初始内容，注意：如果focus属性设置为true,这个也为真，那么编辑器一上来就会触发导致初始化的内容看不到了
+           pasteplain: true,  //是否默认为纯文本粘贴。false为不使用纯文本粘贴，true为使用纯文本粘贴  
+           initialFrameWidth: 860, //初始化宽度
+           initialFrameHeight: 420, //初始化高度
+           autoHeightEnabled: false //关闭高度自适应
+   		});
+       
+      
+       !function(){
+           laydate.skin('molv');//切换皮肤，请查看skins下面皮肤库
+           laydate({elem: '#demo'});//绑定元素
+       }();
+
+       //日期范围限制
+       var start = {
+           elem: '#start',
+           format: 'YYYY-MM-DD',
+           min: laydate.now(), //设定最小日期为当前日期
+           max:'', //最大日期
+           istime: false,
+           istoday: false,
+           choose: function(datas){
+                end.min = datas; //开始日选好后，重置结束日的最小日期
+                end.start = datas //将结束日的初始值设定为开始日
+           }
+       };
+
+       laydate(start);  
+</script>
+</body>
+</html>

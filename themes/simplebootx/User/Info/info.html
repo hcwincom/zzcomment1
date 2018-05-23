@@ -1,0 +1,92 @@
+<tc_include file="Public/user_head" />
+	<div class="per_right">
+				<form action="{:U('User/Info/edit')}" method="post" onsubmit="return send()" enctype="multipart/form-data">
+					<div class="per_r1" >
+						<div class="ib imgbox">
+							<div id="preview1" class="preview imgbox1" ><img class="imgbox1" src="__UPLOAD__/{$user.avatar}"></div>
+							<label class="btn btn1" for="p1" title="选择图片"><span>选择图片</span></label>
+							<input type="file" class="upload_pic" onchange="preview(this,1)" id="p1" name="IDpic1" value="" >
+						</div>
+						<p class="pms">*上传格式为jpg、png图,大小在4M以内</p>
+					</div>
+					<div class="per_r1">
+						<div class="form1"><span>用户名:</span><input type="text" name="user_login" value="{$user.user_login}" onblur="name1()"></div>
+						<p class="ml msg1"></p>	
+						<div class="form1"><span>QQ:</span><input type="text" name="qq" value="{$user.qq}" onblur="qq1()"></div>
+						<p class="ml msg2"></p>	
+						<div class="form1">
+							<span>性别:</span>
+							<label class="sex"><input name="sex" <eq name='user.sex' value='0'>checked</eq> type="radio" value="0">&nbsp;保密</label>
+							<label class="sex"><input name="sex" <eq name='user.sex' value='1'>checked</eq> type="radio" value="1">&nbsp;男</label>
+							<label class="sex"><input name="sex" <eq name='user.sex' value='2'>checked</eq> type="radio" value="2">&nbsp;女</label>
+						</div>
+						<div class="form1">
+							<span>手机号：</span><i>{$user.mobile}</i>
+					 		<a class="red" href="{:U('User/Info/mobile')}">(点击修改)</a> 
+						</div>
+						<div class="form1"><span>密码：</span><a class="red" href="{:U('User/Info/psw')}">更改</a></div> 
+						<p class="ml"></p>	
+						<div class="form1">
+						<eq name="user.name_status" value="1">
+							<span class="lf rz">已实名验证</span>
+						<else/>
+							<span class="lf">实名认证：</span>
+						
+							<div class="lf">
+								<div class="lf ib imgbox2">身份证正面：
+								<div id="preview2" class="preview">
+							 
+								<img class="imgbox2" src="__UPLOAD__/{$user.name_pic1}">
+							 
+								</div>
+								<label class="btn btn2" for="p2" title="选择图片"><span>选择图片</span></label>
+								<input type="file" class="upload_pic" onchange="preview(this,2)" id="p2" name="IDpic2" value="" >
+								</div>
+								<div class="lf ib imgbox3">身份证反面：
+								<div id="preview3" class="preview">
+							 
+								<img class="imgbox3" src="__UPLOAD__/{$user.name_pic2}">
+								 
+								</div>
+								<label class="btn btn3" for="p3" title="选择图片"><span>选择图片</span></label>
+									<input type="file" class="upload_pic" onchange="preview(this,3)" id="p3" name="IDpic3" value="" >
+								<p class="ml msg4"></p>
+								</div>
+								<div class="clear"></div>
+								<p class="pms">*上传格式为jpg、png图,大小在4M以内</p>
+							</div>
+							
+						</eq>
+						<div class="clear"></div>
+						</div>
+						<p class="ml msg3"></p>
+					<neq name="user.name_status" value="1">
+						<div class="form1">
+							<span class="lf">手持身份证照：</span>
+                            <div class="lf ib imgbox8">
+                                <div id="preview8" class="preview">
+                             
+                                <img class="imgbox8" src="__UPLOAD__/{$user.name_pic3}">
+                               
+                                </div>
+                            <label class="btn btn8" for="p8" title="选择图片"><span>选择图片</span></label>
+                            <input type="file" class="upload_pic" id="p8" onchange="preview(this,8)" name="IDpic8" value="" > 
+                            </div>
+                            <div class="clear"></div>
+							<p class="pms">*上传格式为jpg、png图,大小在4M以内</p>
+							 
+						</div>
+						<p class="ml"></p>
+					</neq>
+						<div class="form1"><input type="submit" value="保存"><input type="reset" value="取消"></div>
+					</div>
+					<div class="clear"></div>
+
+				</form>
+				
+			</div>
+		</div>		 
+
+	<tc_include file="Public/user_footer" />
+</body>
+</html>

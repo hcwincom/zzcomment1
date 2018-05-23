@@ -1,0 +1,118 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="{:U('index')}">店铺管理</a></li>
+			 
+		</ul>
+		 <form class="well form-search" role="form" method="post" action="{:U('index')}">
+		 	<label for="fid1">行业分类:</label>
+				 <select name="fid1" id="fid1">
+					<option value="0">所有</option>
+				<foreach name="cates1" item="vo"> 
+					<option value="{$vo.id}" <if condition="$vo['id'] eq $fid1">selected</if>>{$vo.name}</option>
+				</foreach>
+				</select>
+				
+				<select name="fid2" id="fid2">
+					<option class="fid20" value="0">所有</option>
+				<foreach name="cates2" item="vo"> 
+					<option class="fid2{$vo.fid}" value="{$vo.id}" <if condition="$vo['id'] eq $fid2">selected</if>>{$vo.name}</option>
+				</foreach>
+				</select>
+			
+				<label for="status">店铺状态:</label>
+				<select name="status" id="status">
+					<option value="-1" <if condition="$status eq -1">selected</if>>所有</option>
+					<option value="1" <if condition="$status eq 1">selected</if>>未领用</option>
+					<option value="2" <if condition="$status eq 2">selected</if>>已认领</option>
+					<option value="3" <if condition="$status eq 3">selected</if>>已冻结</option>
+				 
+				</select>
+			
+			<label for="sort">排序:</label> 
+				<select name="sort" id="sort">
+					<option value="1" <if condition="$sort eq 1">selected</if>>店铺创建时间</option>
+					<option value="2" <if condition="$sort eq 2">selected</if>>店铺等级</option>
+					<option value="3" <if condition="$sort eq 3">selected</if>>店铺浏览量</option>
+				 
+				</select>
+				
+				<label for="name">店铺名称:</label> <input type="text" id="name" name="name" value="{$name}" />
+				
+				<label for="id">店铺ID:</label> <input type="text" name="id" value="{$id}" />
+				<input type="submit" id="fsearch" class="btn btn-primary" value="搜索" />
+            <a class="btn btn-danger" href="{:U('index')}">清空</a>
+			
+		</form>
+			<table class="table table-hover table-bordered table-list">
+				<thead>
+					<tr>
+						 
+						<th width="50">ID</th>
+						<th>店铺名称</th>
+						
+						<th>店铺所在地区</th>
+						<th>店铺详细地址</th>
+						<th>店铺经营范围</th>
+						<th>店铺等级</th>
+						<th>店铺分数</th>
+						<th>浏览量</th>
+						<th>创建时间</th>
+						<th>状态</th>
+						<th>操作</th>
+					</tr>
+				</thead>
+				<tbody>
+				<foreach name="list" item="vo">
+					<tr> 
+	                    <td>{$vo.id}</td>      
+	                    <td> {$vo.name}</td>
+	                    <td> {$vo.name1}-{$vo.name2}-{$vo.name3}</td>
+	                    <td> {$vo.address}</td>
+	                    <td> {$vo.scope}</td>
+	                    <td> {$vo.grade}</td>
+	                    <td> {$vo.score}</td>
+	                    <td> {$vo.browse}</td>
+	                   <td> {$vo.create_time|date="Y-m-d H:i:s",###}</td>
+	                   <td>
+	                   <switch name="vo.status">
+	                   		<case value="0">未审核</case>
+	                   		<case value="1">未领用</case>
+	                   		<case value="2">已领用</case>
+	                   		<case value="3">已冻结</case>
+	                   		<default />异常状态
+	                   </switch>
+	                   </td>
+	                    <td> 
+	                    	<a href="{:U('info',array('id'=>$vo['id']))}">详情</a>  
+	                    </td>
+						
+					</tr>
+				</foreach>
+				</tbody>
+				 
+			</table>
+			<div class="table-actions">
+				 
+			</div>
+			<div class="pagination">{$page}</div>
+		
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script>
+		$('#fid1').change(function(){
+			var fid1=$(this).val();
+			if(fid1=='0'){
+				$('#fid2 option').show();
+				return true;
+			}
+			$('#fid2 option').hide();
+			$('.fid20').show();
+			$('.fid20').prop('selected',true);
+			$('.fid2'+fid1).show();
+		});
+	</script>
+</body>
+</html>
