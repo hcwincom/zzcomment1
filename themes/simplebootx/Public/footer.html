@@ -48,12 +48,22 @@ $('#add-cate1').change(function(){
 	
 });
 
-$('.ciyt_addshop .city2 option').hide();
-$('.ciyt_addshop .city2 .city20').show();
-$('.ciyt_addshop .city3 option').hide();
-$('.ciyt_addshop .city3 .city20').show();
+
+var province=parseInt("{$city1|default=0}");
+var city=parseInt("{$city2|default=0}");
+var town=parseInt("{$city3|default=0}");
+var city_url="{:U('portal/public/city')}";
+$('.city1'+province).prop('selected',true);
+city2(province,$('body'));
+$('.city3'+town).prop('selected',true);
+
+
 $('.city1').change(function(){ 
 	city2(this.value,$(this).parent()); 
+});
+$('.city2').change(function(){
+	city3(this.value,$(this).parent()); 
+	
 });
 function city2(fid,$div){
 	$div.find('.city2 option').hide();
@@ -64,22 +74,21 @@ function city2(fid,$div){
 	$div.find('.city3 .city30').show(); 
 	$div.find('.city3 .city30').prop('selected',true);
 }
-
-$('.city2').change(function(){
-	city3(this.value,$(this).parent()); 
-	var fid=this.value;
-	$('#add-city3 option').hide();
-	
-	$('#add-city3 .city30').show(); 
-	$('#add-city3 .city30').prop('selected',true);
-	
-	$('#add-city3 .city3'+fid).show(); 
-});
 function city3(fid,$div){
-	 
-	$div.find('.city3 .city31').remove(); 
-	$div.find('.city3 .city30').prop('selected',true);
+	var $select3=$div.find('.city3');
+	$select3.find('.city31').remove();
+	$select3.find('.city30').prop('selected',true);
+	if(fid!=0){ 
+		$.post(city_url,{'fid':fid},function(data){
+			var list=data.list;
+			for(var i in list){ 
+				$select3.append('<option class="city31" value="'+i+'">'+list[i]+'</option>');
+			}
+		},'json');
+	}
 }
+
+ 
 $('.reply-form').submit(function(){
 	 var cid=$(this).find('.zzcid').val();
 	 var content=$(this).find('#user_reply').val();

@@ -3,7 +3,7 @@
 	<select name="province" class="city1">
 		<option class="city10" value="0">省份</option>
 	<foreach name="add_city1" item="vo">
-		<option value="{$vo.id}">{$vo.name}</option>
+		<option class="city1{$vo.id}" value="{$vo.id}" <if condition="$city1 eq $vo['id']">select</if>>{$vo.name}</option>
 	</foreach>
 	</select>
 	<select name="city" class="city2">
@@ -14,7 +14,9 @@
 	</select>
 	<select name="town" class="city3">
 		<option class="city30" value="0">县/区</option>
-	 	<option class="city311111111" value="11111111">1111111</option>
+	<foreach name="add_city3" item="vo">
+		<option class="city31 city3{$vo.id}" value="{$vo.id}">{$vo.name}</option>
+	</foreach>
 	</select>
  
  
