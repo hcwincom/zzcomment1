@@ -1,0 +1,24 @@
+<ul class="column-product-container">
+<foreach name="list_top_goods" item="vo">
+	<li>
+		<a href="{:U('Portal/Seller/goods_detail',array('id'=>$vo['id'],'sid'=>$vo['sid']))}" class="product-content">
+			<img src="__UPLOAD__/{$vo.pic}" alt="{$vo.name}" title="{$vo.name}"><br>
+			<p>
+				<span class="lf">{$vo.name}</span>
+				<span class="rt">￥{$vo.price}</span>
+			</p>
+		</a>
+	</li>
+</foreach>
+ <foreach name="list_goods" item="vo">
+	<li>
+		<a href="{:U('Portal/Seller/goods_detail',array('id'=>$vo['id'],'sid'=>$vo['sid']))}" class="product-content">
+			<img src="__UPLOAD__/{$vo.pic}" alt="{$vo.name}" title="{$vo.name}"><br>
+			<p>
+				<span class="lf">{$vo.name}</span>
+				<span class="rt">￥{$vo.price}</span>
+			</p>
+		</a>
+	</li>
+</foreach>	
+</ul>

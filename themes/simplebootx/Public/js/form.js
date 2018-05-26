@@ -174,8 +174,8 @@ if(cval!=""){ //如果非空 显示正确
 }
 else{
     $(".msg7").text("请正确手机号码");
-return false;
-}
+	return false;
+	}
 };
 function tell1(){
 var cval = $("input[name='tell']").val();       

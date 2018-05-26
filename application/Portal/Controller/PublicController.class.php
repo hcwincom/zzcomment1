@@ -62,6 +62,13 @@ class PublicController extends HomebaseController {
          return 0;
            
      }
+     /* 地区选择 */
+     public function city($fid=0){
+         
+         $m_city=M('city');
+         $list=$m_city->where('fid='.$fid)->getField('id,name');
+         $this->success('地区列表','',$list);
+     }
 }
 
 

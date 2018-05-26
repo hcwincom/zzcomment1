@@ -7,7 +7,15 @@
 			<li><a href="{:U('add')}">添加分类</a></li>
 		</ul>
 		 <form class="well form-search" method="post" action="{:U('index')}">
+		 	 
 			<div class="table-actions">
+			 	类型<select name="type" id="">
+				 
+				<foreach name="types" item="vo" k="key">
+					<option value="{$key}" <if condition="$key eq $type">selected</if>>{$vo}</option>
+				</foreach>
+				</select>
+				&nbsp;&nbsp;&nbsp;
 				 一级分类<select name="parent" id="fid">
 					<option value="0">所有一级分类</option>
 				<foreach name="list0" item="vo">

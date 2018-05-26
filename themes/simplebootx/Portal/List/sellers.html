@@ -1,0 +1,69 @@
+ <tc_include file="Public:head" />
+  <link rel="stylesheet" href="__TMPL__Public/css/seller_list.css" type="text/css">
+</head>
+<body>
+	<tc_include file="Public:header" />  
+	<tc_include file="Public:list_head" />
+	 	<div class="list-detail">
+				
+				<div class="shop-search">
+					<div class="shop-form">
+						<div class="sear-info">
+							<tc_include file="Public:city" />
+						</div>	
+
+						<div class="catecory">
+							<label>店铺分类</label>
+							<select name="catecory" id="add-cate1">
+								<option value="0">分类</option>
+							<foreach name="add_cate1" item="vo">
+								<option value="{$vo.id}">{$vo.name}</option>
+							</foreach>	 
+							</select>
+							<select name="letter" id="add-cate2">
+								<option class="cate20" value="0">行业</option>
+							<foreach name="add_cate2" item="vo">
+								<option class="cate2{$vo.fid}" value="{$vo.id}">{$vo.first_char}{$vo.name}</option>
+							</foreach>
+							</select>
+						</div>				
+					</div>	
+					
+				</div>
+				
+				<div class="shop-colcontainer">
+					
+					<div class="group-cont" id="group-cont">
+						<ul class="shop-newadd">
+						<foreach name="sellers" item="vo">
+					 
+							<li>
+								<a href="{:U('Portal/Seller/home',array('sid'=>$vo['id']))}" class="shop-content">
+									<div>
+										<img src="__UPLOAD__/{$vo.pic|default=$company['seller_empty']['content']}" alt="商家图片" title="{$vo.name}">
+									</div>
+									<br>
+									<em>{$vo.name}</em>
+									<p>
+										<span class="lf shop-level level-color">等级：<i>{$vo.grade}</i></span>
+										<span class="rt shop-clicknumber">浏览量：{$vo.browse}</span>
+									</p>
+								</a>
+							</li>
+						</foreach>
+							 
+						</ul>
+					</div>				
+					<div class="page">{$page}</div>
+					
+				</div>		
+			</div>
+		 
+				 
+			
+	<!-- main end -->
+
+	<tc_include file="Public:list_footer" />
+   
+</body>
+</html>

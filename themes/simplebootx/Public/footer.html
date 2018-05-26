@@ -1,6 +1,30 @@
 
  
-<tc_include file="Public:bottom" />
+<!-- bottom -->
+<div class="foot-wrapper">
+	<div class="foot-container">
+		<div class="lf foot-cont1">
+			<p class="p1">{$company.company.content}</p>
+			<div>{$company.icp.content}<br>
+			技术支持：{$company.suport.content}</div>
+		</div>
+		<div class="lf foot-cont3">
+			<div class="foot-link">
+				<a href="{:U('/')}">网站首页</a>
+				<a href="{:U('/')}">查找店铺</a>
+				<a href="{:U('Portal/index/protocol',array('name'=>'user'))}">用户协议</a>
+				<a href="{:U('Portal/index/protocol',array('name'=>'seller'))}">商家协议</a>
+				<span>客服电话：{$company.tel.content}</span>
+				<span>邮箱：{$company.email.content}</span>
+			</div>
+		</div>
+		<div class="rt foot-cont2">
+			<img src="__UPLOAD__/{$company.winxin.content}" alt="微信二维码" title="微信二维码">
+			<p>扫一扫,关注我们</p>
+		</div>
+	</div>
+</div>
+<!-- bottom end -->
 	<!-- js -->	
 	<!-- js end -->	
 
@@ -24,23 +48,25 @@ $('#add-cate1').change(function(){
 	
 });
 
-$('#add-city2 option').hide();
-$('#add-city2 .city20').show();
-$('#add-city1').change(function(){
-	var fid=this.value;
-	$('#add-city2 option').hide();
-	$('#add-city2 .city20').show();
-	$('#add-city2 .city20').prop('selected',true);
-	$('#add-city2 .city2'+fid).show();
-	$('#add-city3 option').hide();
-	$('#add-city3 .city30').show(); 
-	$('#add-city3 .city30').prop('selected',true);
-	 
+$('.ciyt_addshop .city2 option').hide();
+$('.ciyt_addshop .city2 .city20').show();
+$('.ciyt_addshop .city3 option').hide();
+$('.ciyt_addshop .city3 .city20').show();
+$('.city1').change(function(){ 
+	city2(this.value,$(this).parent()); 
 });
+function city2(fid,$div){
+	$div.find('.city2 option').hide();
+	$div.find('.city2 .city20').show();
+	$div.find('.city2 .city20').prop('selected',true);
+	$div.find('.city2 .city2'+fid).show();
+	$div.find('.city3 option').hide();
+	$div.find('.city3 .city30').show(); 
+	$div.find('.city3 .city30').prop('selected',true);
+}
 
-$('#add-city3 option').hide();
-$('#add-city3 .city30').show();
-$('#add-city2').change(function(){
+$('.city2').change(function(){
+	city3(this.value,$(this).parent()); 
 	var fid=this.value;
 	$('#add-city3 option').hide();
 	
@@ -49,7 +75,11 @@ $('#add-city2').change(function(){
 	
 	$('#add-city3 .city3'+fid).show(); 
 });
-
+function city3(fid,$div){
+	 
+	$div.find('.city3 .city31').remove(); 
+	$div.find('.city3 .city30').prop('selected',true);
+}
 $('.reply-form').submit(function(){
 	 var cid=$(this).find('.zzcid').val();
 	 var content=$(this).find('#user_reply').val();

@@ -1,5 +1,5 @@
- 
-<tc_include file="Public:bottom" />
+   </div> 
+<tc_include file="Public:footer" />
 <!-- js -->	
  
 	<script type="text/javascript" src="__TMPL__Public/js/personal.js"></script>
@@ -8,17 +8,7 @@
 	<script>
 		$(".plt").click(function(){
 			$(this).next(".per_lf_list").toggle(1500);
-		})
-		if(navigator.appName == "Microsoft Internet Explorer"&&parseInt(navigator.appVersion.split(";")[1].replace(/[ ]/g, "").replace("MSIE",""))<9){
-			alert("当前浏览器版本过低，为不影响网站体验效果，请下载最新版本的浏览器！");
-		}
-		$('.zzlink').click(function(){
-			var link=$(this).attr('href');
-			var exp=/^(http|ftp|https):\/\/([\w.]+\/?)\S*/;
-			if(!exp.test(link)){
-				$(this).attr('href','http://'+link);
-			}  
-			return true;
 		});
+		 
 
 	</script>

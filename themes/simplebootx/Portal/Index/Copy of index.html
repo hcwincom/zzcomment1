@@ -1,0 +1,200 @@
+ <tc_include file="Public:head" />
+ 
+</head>
+<body>
+	<tc_include file="Public:header" />
+	 <tc_include file="Public:banner" />
+	 
+
+	<!-- main -->
+		<div class="hmain-wrapper">
+			<div class="wide-container">
+				<!-- add shop -->
+					<tc_include file="Public:addshop" />
+				<!-- add shop end -->
+				
+				<div class="column2-wrapper">
+					<div class="column-head">
+						<h2>
+							<a href="{:U('Portal/List/seller_list')}" class="lf">
+								<em>商家推荐</em><br>
+								<span>Recommend the merchant</span>							
+							</a>
+							<a href="{:U('Portal/List/seller_list')}" class="rt more">更多>></a>
+						</h2>
+					</div>
+					<div class="column-shop-wrapper">
+						<ul class="column-shop-container">
+						<foreach name="list_top_seller" item="vo">
+							<li>
+								<a href="{:U('Portal/Seller/home',array('sid'=>$vo['id']))}" class="shop-content">
+									<div>
+										<img src="__UPLOAD__/{$vo.pic|default=$company['seller_empty']['content']}" alt="商家图片" title="{$vo.name}">
+									</div>
+									<br>
+									<em>{$vo.name}</em>
+									<p>
+										<span class="lf shop-level level-color">等级：<i>{$vo.grade}</i></span>
+										 <span class="rt shop-clicknumber">浏览量：{$vo.browse}</span>
+									</p>
+								</a>
+							</li>
+						</foreach>
+						<foreach name="list_top_seller_empty" item="vo">
+							<li>
+								<a href="{:U('index')}" class="shop-content">
+									<div>
+										<img src="__UPLOAD__/{$vo.pic}" alt="推荐图片" title="{$vo.name}">
+									</div>
+									<br>
+									<em>{$vo.name} </em>
+									<p>
+										 <span class="lf">价格：￥{$vo.price}</span>
+									</p>
+								</a>
+							</li>
+						</foreach>
+							 
+						</ul>
+					</div>
+				</div>
+				<div class="clear"></div>
+				<div class="column-group">
+					<ul class="group-head" id="group-head">
+						<li class="current">商家排名</li>
+						<li>商家上新</li>
+						<li>最新动态</li>
+						<li>最新招聘</li>
+						<li>最新评级</li>
+						<li>新增店铺</li>
+						<li>便民信息</li>
+					</ul>
+					<ul class="group-cont" id="group-cont">
+						<li>
+							<ul  class="shop-newadd">
+							<foreach name="list_new_seller" item="vo">
+								<li>
+									<a href="{:U('Portal/Index/seller_list_home')}" class="shop-content">
+										<div>
+											<img src="__UPLOAD__/images/shang1.png" alt="商家图片" title="{$vo.name}">
+										</div>
+										<br>
+										<em>东来顺</em>
+										<p>
+											<span class="lf shop-clicknumber">个人写真</span>
+											<span class="rt shop-level level-color">¥<i>999</i></span>
+										</p>
+									</a>
+								</li>
+								<li>
+									<div class="shop-r1">
+										<a href="{:U('Portal/Seller/home',array('sid'=>$vo['id']))}" class="lf" title="商家名称">{$vo.name}</a>
+										<span class="rt">注册时间：{$vo.create_time|date="Y.m.d",###}</span>
+									</div>
+									<div class="shop-r2">
+										<span class="lf">创评人:{$vo.author_name}</span>
+										<i class="rt">{$vo.citys}</i>
+									</div>
+								</li>
+							</foreach>	 
+							</ul>
+							<div class="showmore">
+								<a href="{:U('Portal/List/seller_list')}">查看更多>></a>
+							</div>
+						</li>
+						<li>
+							 <tc_include file="Public:comment" />
+							<div class="showmore">
+								<a href="{:U('Portal/List/comment_list')}">查看更多>></a>
+							</div>
+						</li>
+						<li>
+							<tc_include file="Public:news" />
+							<div class="showmore">
+								<a href="{:U('Portal/List/news_list')}">查看更多>></a>
+							</div>
+						</li>
+					</ul>
+				</div>
+			
+				<div class="clear"></div>
+				<div class="column1-wrapper">
+					<div class="column-head">
+						<h2>
+							<a href="{:U('Portal/List/seller_list')}" class="lf">
+								<em>商家排名</em><br>
+								<span>Ranking of merchants</span>							
+							</a>
+							<a href="{:U('Portal/List/seller_list')}" class="rt more">更多>></a>
+						</h2>
+					</div>
+					<div class="column-shop-wrapper">
+						<ul class="column-shop-container">
+						<foreach name="list_score_seller" item="vo">
+							<li>
+								<a href="{:U('Portal/Seller/home',array('sid'=>$vo['id']))}" class="shop-content">
+									<div>
+										<img src="__UPLOAD__/{$vo.pic|default=$company['seller_empty']['content']}" alt="商家图片" title="{$vo.name}">
+									</div>
+									<br>
+									<em>{$vo.name}</em>
+									<p>
+										<span class="lf shop-level level-color">等级：<i>{$vo.grade}</i></span>
+										<span class="rt shop-clicknumber">浏览量：{$vo.browse}</span>
+									</p>
+								</a>
+							</li>
+						</foreach>
+							 
+						</ul>
+					</div>
+				</div>
+				<div class="clear"></div>
+				<div class="column3-wrapper">
+					<div class="column-head">
+						<h2>
+							<a href="{:U('Portal/List/goods_list')}" class="lf">
+								<em>商品上新</em><br>
+								<span>New commodity</span>							
+							</a>
+							<a href="{:U('Portal/List/goods_list')}" class="rt more">更多>></a>
+						</h2>
+					</div>
+					<div class="column-product-wrapper">
+						<ul class="column-product-container">
+						<foreach name="list_top_goods" item="vo">
+							<li>
+								<a href="{:U('Portal/Seller/goods_detail',array('id'=>$vo['id'],'sid'=>$vo['sid']))}" class="product-content">
+									<img src="__UPLOAD__/{$vo.pic|default=$company['goods_empty']['content']}" alt="商品图片" title="{$vo.name}"><br>
+									<p>
+										<span class="lf">{$vo.name}</span>
+										<span class="rt">￥{$vo.price}</span>
+									</p>
+								</a>
+							</li>
+						</foreach>
+						<foreach name="list_goods" item="vo">
+							<li>
+								<a href="{:U('Portal/Seller/goods_detail',array('id'=>$vo['id'],'sid'=>$vo['sid']))}" class="product-content">
+									<img src="__UPLOAD__/{$vo.pic|default=$company['goods_empty']['content']}" alt="商品图片" title="{$vo.name}"><br>
+									<p>
+										<span class="lf">{$vo.name}</span>
+										<span class="rt">￥{$vo.price}</span>
+									</p>
+								</a>
+							</li>
+						</foreach>
+							 
+						</ul>
+					</div>
+				</div>
+				<div class="clear"></div>
+				 
+			</div>
+		</div>
+	<!-- main end -->
+
+	<tc_include file="Public:banner_footer" />
+  
+</body>
+</html>

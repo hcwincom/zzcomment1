@@ -2,7 +2,7 @@
 		<div class="top-wrapper">
 			<div class="lf logo">
 				<h1>
-					<a href="{:U('Portal/Index/index')}" title="{$company['title']['content']}">
+					<a href="{:U('/')}" title="{$company['title']['content']}">
 						<img src="__UPLOAD__/{$company['logo']['content']}" alt="网站LOGO">
 					</a>
 					  
@@ -10,18 +10,21 @@
 			</div>
 			 
 			<div class="lf research">
-				<form action="{:U('Portal/List/seller_list',array('cid0'=>$vo['id'],'char'=>$char))}" method="post" class="lf">
+				<form action="{:U('/',array('cid0'=>$vo['id'],'char'=>$char))}" method="post" class="lf">
 					<input type="text" placeholder="请输入感兴趣的商家名称" value="{$keyword}" name="keyword" class="lf">
 					<input type="submit" value="立即搜索" class="lf">
 				</form>
 				<div class="lf shop-type" id="shop-type">
 				<foreach name="add_cate1" item="vo">
-					<a href="{:U('Portal/List/seller_list',array('cid0'=>$vo['id'],'char'=>$char,'keyword'=>$keyword))}" class='<if condition="$vo['id'] eq $cid0">select</if>'>{$vo.name}</a>
+					<a href="{:U('/',array('cid0'=>$vo['id'],'char'=>$char,'keyword'=>$keyword))}" class='<if condition="$vo['id'] eq $cid0">select</if>'>{$vo.name}</a>
 				</foreach>
 					 
 				</div>
 			</div>
 			<div class="login-link rt">
+				<div class="lf publish" id="publish">
+					<a href="{:U('User/Infos/add')}">发布信息</a>
+				</div>
 			<empty name="Think.session.user">
 				<a href="{:U('User/Login/index')}">登录</a>
 				<a href="{:U('User/Register/index')}">注册</a>
@@ -34,4 +37,86 @@
 		</div>
 		<div class="clear"></div>
 	<!-- top end -->
- 
+ <!-- add shop -->
+	
+	<div class="shop-add" id="shopadd_btn">
+		<a href="javascript:void(0);" title="创建店铺">创建店铺 >></a>
+		
+		<a href="javascript:void(0);" title="发布信息">发布信息 >></a>
+	</div>
+	<div class="pop-layer" id="pop_layer">
+		<div class="pop-container">
+			<a href="javascript:void(0);" class="close" id="close"><img src="__TMPL__Public/img/close.png" alt="关闭" title="关闭"></a>
+			<form action="{:U('User/Seller/create')}" method="post" class="shop-add-form" enctype="multipart/form-data">
+				<p class="message" id="message">请输入店铺信息！(登录后才能创建店铺)</p>
+				<div class="ciyt_addshop"><tc_include file="Public:city" /></div>
+				
+				<div class="catecory">
+					<label>店铺分类</label>
+					<select name="catecory" id="add-cate1">
+						<option value="0">分类</option>
+					<foreach name="add_cate1" item="vo">
+						<option value="{$vo.id}">{$vo.name}</option>
+					</foreach>	 
+					</select>
+					<select name="letter" id="add-cate2">
+						<option class="cate20" value="0">行业</option>
+					<foreach name="add_cate2" item="vo">
+						<option class="cate2{$vo.fid}" value="{$vo.id}">{$vo.first_char}{$vo.name}</option>
+					</foreach>
+					</select>
+				</div>
+				<div>
+					<label for="shop_name">店铺名称</label>
+					<input type="text" placeholder="请输入店铺名称" name="shop_name" class="shopname" id="shop_name">
+				</div>
+				<div>
+					<label for="shop_net">网址</label>
+					<input type="text" placeholder="请输入网址" name="shop_net" class="shopnet" id="shop_net">
+				</div>
+				
+				<div>
+					<span for="shop_pic">店铺图片</span>
+					<input type="file" name="shop_pic" class="shopname" id="shop_pic" accept="image/jpeg,image/jpg,image/png">
+				</div>
+				 
+				<div>
+					<span for="shop_phone">店铺电话</span>
+					<input type="text" placeholder="请输入经营范围" name="shop_phone" class="shopphone" id="shop_phone">
+				</div>
+				
+				<div>
+					<label for="shop_address">详细地址</label>
+					<input type="text" placeholder="请输入详细地址，精确到门牌号" name="shop_address" class="shopaddress" id="shop_address">
+				</div>
+				 
+				<div>
+					<label for="captcha">验证码</label>
+					<input type="text" name="verify" placeholder="请输入验证码" class="captcha" id="captcha" required/>
+					<a href="javascript:void(0);" class="captcha rt">{:sp_verifycode_img('length=4&font_size=14&width=100&height=34&charset=1234567890&use_noise=0&use_curve=0')}</a>
+				</div>
+				<div>
+					<input type="submit" value="立即创建" class="signup" id="signup">
+				</div>
+			</form>
+		</div>
+	</div>
+<!-- add shop end -->
+<!-- comment reply -->
+	<div class="pop-layer" id="reply_layer">
+		<div class="pop-container">
+			<a href="javascript:void(0);" class="close" id="rclose"><img src="__TMPL__Public/img/close.png" alt="关闭" title="关闭"></a>
+			<form class="reply-form">
+				<input type="hidden" name="zzcid" class="zzcid" value="0"/>
+				<p class="message" id="rmessage">请输入回复信息！</p>
+				<div>
+					<label for="user_reply" class="must">留言内容</label>
+					<textarea placeholder="请输入您的回复信息，字数在2-150字！" name="userreply" id="user_reply"></textarea>
+				</div>
+				<div>
+					<input type="submit" value="立即回复" class="signup" id="rsignup">
+				</div>
+			</form>
+		</div>
+	</div>
+<!-- comment reply end -->

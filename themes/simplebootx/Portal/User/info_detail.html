@@ -1,0 +1,47 @@
+<tc_include file="Public:head" />
+</head>
+
+<body>
+	<tc_include file="Public:header" />
+	
+	<div class="hmain-wrapper">
+		<div class="wide-container">
+			 
+			<div class="shop-infor-detail" id="shop_infor_detail">
+				<div class="alignment">
+					<a href="{:U('/')}">首页 >></a>
+					<a href="{:U('portal/list/infos')}">便民信息>></a>
+					<a href="{:U('portal/list/infos',['cid'=>$detail['cid']])}">{$detail['cname']}</a>
+				</div>
+				<div class="alignment-infor">
+					<div class="person-infor">
+						<div class="person-infor-img">
+							<span>
+								<img src="__UPLOAD__/{$detail.upic|default=$company['avatar']['content']}" alt="" title="个人头像">
+							</span>
+												
+							<p class="person-name">{$detail.uname}</p>
+						</div>
+					</div>
+					<div class="person-content">
+						<p class="mess">{$detail.name}<span></span></p>
+						<p class="tell">电话：{$detail.tel}</p>
+						<p class="address">地址：{$detail.city_name} {$detail.address}</p>
+					</div>
+				</div>
+				<div class="shop-infor-article">
+					<p>{$detail.dsc}</p>
+				</div>
+				<div>{$detail.content}</div>
+			</div>
+			
+			
+		</div>
+	</div>
+	
+	
+	
+	
+	<tc_include file="Public:footer" />
+</body>
+</html>

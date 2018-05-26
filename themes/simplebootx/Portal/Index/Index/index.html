@@ -1,0 +1,483 @@
+ <tc_include file="Public:head" />
+ 
+</head>
+<body>
+	<tc_include file="Public:header" />
+	 <tc_include file="Public:banner" />
+	 
+
+	<!-- main -->
+		<div class="hmain-wrapper">
+			<div class="wide-container">
+				<!-- add shop -->
+				<tc_include file="Public:addshop" />
+				<!-- add shop end -->
+				
+				<div class="column2-wrapper">
+					<div class="column-head">
+						<h2>
+							<em>商家推荐</em><br>
+							<span>Recommend the merchant</span>	
+						</h2>
+					</div>
+					<div class="column-shop-wrapper">
+						<ul class="column-shop-container">
+							<li>
+								<a href="{:U('Portal/Index/seller_list_home')}" class="shop-content">
+									<div>
+										<img src="__UPLOAD__/images/busi.png" alt="商家图片" title="{$vo.name}">
+									</div>
+									<br>
+									<em>东来顺（银泰百货店）</em>
+									<p>
+										<span class="lf shop-level level-color">评分：<i>4.5</i></span>
+										 <span class="rt shop-clicknumber">等级：4</span>
+									</p>
+								</a>
+							</li>
+							<li>
+								<a href="{:U('Portal/Index/business_home')}" class="shop-content">
+									<div>
+										<img src="__UPLOAD__/images/busi2.png" alt="商家图片" title="{$vo.name}">
+									</div>
+									<br>
+									<em>东来顺（银泰百货店）</em>
+									<p>
+										<span class="lf shop-level level-color">评分：<i>4.5</i></span>
+										 <span class="rt shop-clicknumber">等级：4</span>
+									</p>
+								</a>
+							</li>
+							<li>
+								<a href="{:U('Portal/Index/person_home')}" class="shop-content">
+									<div>
+										<img src="__UPLOAD__/images/busi3.png" alt="商家图片" title="{$vo.name}">
+									</div>
+									<br>
+									<em>东来顺（银泰百货店）</em>
+									<p>
+										<span class="lf shop-level level-color">评分：<i>4.5</i></span>
+										 <span class="rt shop-clicknumber">等级：4</span>
+									</p>
+								</a>
+							</li>
+							<li>
+								<a href="{:U('Portal/Index/business_home')}" class="shop-content">
+									<div>
+										<img src="__UPLOAD__/images/busi4.png" alt="商家图片" title="{$vo.name}">
+									</div>
+									<br>
+									<em>东来顺（银泰百货店）</em>
+									<p>
+										<span class="lf shop-level level-color">评分：<i>4.5</i></span>
+										 <span class="rt shop-clicknumber">等级：4</span>
+									</p>
+								</a>
+							</li>
+							<li>
+								<a href="{:U('Portal/Index/seller_list_home')}" class="shop-content">
+									<div>
+										<img src="__UPLOAD__/images/shang3.png" alt="商家图片" title="{$vo.name}">
+									</div>
+									<br>
+									<em>淘品小栈</em>
+									<p>
+										<span class="lf shop-level level-color">评分：<i>4.5</i></span>
+										 <span class="rt shop-clicknumber">等级：4</span>
+									</p>
+								</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="clear"></div>
+				
+<!--				商家排名  二级导航-->
+				<div class="column-group">
+					<ul class="group-head" id="group-head">
+						<li class="current">商家排名</li>
+						<li>商家上新</li>
+						<li>最新动态</li>
+						<li>最新招聘</li>
+						<li>最新评级</li>
+						<li>新增店铺</li>
+						<li>便民信息</li>
+					</ul>
+					<ul class="group-cont" id="group-cont">
+						<li>
+							<ul  class="shop-newadd">								
+								<foreach name="list_new_seller" item="vo">
+									<li>
+										<a href="{:U('Portal/Index/seller_list_home')}" class="shop-content">
+											<div>
+												<img src="__UPLOAD__/images/shang1.png" alt="商家图片" title="{$vo.name}">
+											</div>
+											<br>
+											<em>东来顺</em>
+											<p>
+												<span class="lf shop-clicknumber">个人写真</span>
+												<span class="rt shop-level level-color">¥<i>999</i></span>
+											</p>
+										</a>
+									</li>
+								</foreach>	
+							</ul>
+						</li>
+                 <!--	商家上新-->
+						<li>
+							<ul class="shop-newadd">
+								<li>
+									<a href="{:U('Portal/Index/seller_list_home')}" class="shop-content">
+										<div>
+											<img src="__UPLOAD__/images/shang1.png" alt="商家图片" title="{$vo.name}">
+										</div>
+										<br>
+										<em>东来顺</em>
+										<p>
+											<span class="lf shop-clicknumber">个人写真</span>
+											<span class="rt shop-level level-color">¥<i>999</i></span>
+										</p>
+									</a>
+								</li>
+								<li>
+									<a href="{:U('Portal/Index/seller_list_home')}" class="shop-content">
+										<div>
+											<img src="__UPLOAD__/images/shang1.png" alt="商家图片" title="{$vo.name}">
+										</div>
+										<br>
+										<em>东来顺</em>
+										<p>
+											<span class="lf shop-clicknumber">个人写真</span>
+											<span class="rt shop-level level-color">¥<i>999</i></span>
+										</p>
+									</a>
+								</li>
+								<li>
+									<a href="{:U('Portal/Index/seller_list_home')}" class="shop-content">
+										<div>
+											<img src="__UPLOAD__/images/shang1.png" alt="商家图片" title="{$vo.name}">
+										</div>
+										<br>
+										<em>东来顺</em>
+										<p>
+											<span class="lf shop-clicknumber">个人写真</span>
+											<span class="rt shop-level level-color">¥<i>999</i></span>
+										</p>
+									</a>
+								</li>
+								<li>
+									<a href="{:U('Portal/Index/seller_list_home')}" class="shop-content">
+										<div>
+											<img src="__UPLOAD__/images/shang1.png" alt="商家图片" title="{$vo.name}">
+										</div>
+										<br>
+										<em>东来顺</em>
+										<p>
+											<span class="lf shop-clicknumber">个人写真</span>
+											<span class="rt shop-level level-color">¥<i>999</i></span>
+										</p>
+									</a>
+								</li>
+							</ul>
+						</li>
+						
+						<!--最新动态-->
+						<li>
+							<ul class="shop-news">
+								<li>
+									<a href="{:U('Portal/Index/business_home')}" class="lf">
+										<div>
+											<img src="__UPLOAD__/images/touxiang2.png" alt="商家图片" title="{$vo.name}">
+										</div>
+									</a>
+									<div class="lf news-cont">
+										<a href="{:U('Portal/Index/business_home')}" class="lf news-title">祖运网会员福利来袭！注册会员送现金！</a>
+										<span class="rt news-date">2018-05-15</span>
+										<p class="clear news-about">祖运网会员福利来袭！注册会员送现金！  五月是一个幸福的月份，为什么说是幸福的呢？因为祖运网给广大的会员朋友们准备了一个无比惊喜的福利啊！不同于那些华而不实的会员惊喜，我们祖运网的会员福利就是这么简单</p>
+									</div>
+								</li>
+								<li>
+									<a href="{:U('Portal/Index/business_home')}" class="lf">
+										<div>
+											<img src="__UPLOAD__/images/touxiang2.png" alt="商家图片" title="{$vo.name}">
+										</div>
+									</a>
+									<div class="lf news-cont">
+										<a href="{:U('Portal/Index/business_home')}" class="lf news-title">祖运网会员福利来袭！注册会员送现金！</a>
+										<span class="rt news-date">2018-05-15</span>
+										<p class="clear news-about">祖运网会员福利来袭！注册会员送现金！  五月是一个幸福的月份，为什么说是幸福的呢？因为祖运网给广大的会员朋友们准备了一个无比惊喜的福利啊！不同于那些华而不实的会员惊喜，我们祖运网的会员福利就是这么简单</p>
+									</div>
+								</li>
+								
+							</ul>
+						</li>
+<!--						最新招聘-->
+						<li>
+							<ul class="shop-job">
+								<li>
+									<a href="{:U('Portal/Index/business_home')}" class="lf">
+										<div>
+											<img src="__UPLOAD__/images/touxiang2.png" alt="商家图片" title="{$vo.name}">
+										</div>
+									</a>
+									<div class="lf news-cont">
+										<a href="{:U('Portal/Index/business_home')}" class="lf news-title">招贤纳士</a>
+										<span class="rt news-date">2018-08-30</span>
+										<p class="clear news-about">活动运营专员  工作地点：合肥  所属部门：市场部  招聘人数：3人  学历：不限</p>
+									</div>
+								</li>
+								
+								<li>
+									<a href="{:U('Portal/Index/business_home')}" class="lf">
+										<div>
+											<img src="__UPLOAD__/images/touxiang3.png" alt="商家图片" title="{$vo.name}">
+										</div>
+									</a>
+									<div class="lf news-cont">
+										<a href="{:U('Portal/Index/business_home')}" class="lf news-title">发展历程</a>
+										<span class="rt news-date">2018-9-15</span>
+										<p class="clear news-about">东来顺集团立足清真餐饮主业，以传承坚守百年老字号品牌为发展核心，严格遵守清真政策，本着提供“天然、安全、健康、绿色”的产品理念，始终倡导“服务大众、品质至上、传承创新”的品牌文化。业务范围涵盖餐饮连锁发展、肉类产</p>
+									</div>
+								</li>
+								
+							</ul>
+						</li>
+          <!--			最新评级-->
+						<li>
+							<ul class="shop-comment">
+								<li>
+									<a href="{:U('Portal/Index/seller_list_home')}" class="lf">
+										<img src="__UPLOAD__/images/touxiang.png" alt="" title="">
+									</a>
+									<div class="lf comment-cont">
+										<input type="hidden" class="zzcid" name="zzcid" value="44">
+										<span class="comment-title">采朵花</span>
+										<span class="comment-type">加分</span>
+										<span class="rt news-date">2018-5-30</span>
+										<p class="comment-about">
+											经常吃，一直没有写过点评，从高中的时候就经常吃这一家的火锅。铜锅涮肉挺对我胃口的，本来是准备到楼上去吃海底捞的，可是楼上的人太多，我们排队要排一两个小时，所以想想还......
+										</p>
+										<div class="comment-replay">
+											<a href="javascript:void(0);" class="comment-rbtn1" title="回复">回复</a>
+											<a href="javascript:void(0);" class="comment-rbtn2" title="点赞">点赞（<em class="likes">11</em>条）</a>
+											<a href="javascript:void(0);" class="comment-rbtn3" title="点赞">顶（<em>11</em>条）</a>
+											<a href="javascript:void(0);" class="comment-rbtn4" title="附件下载">附件下载</a>
+										</div>
+										<div class="clear"></div>
+									</div>
+								</li>
+								<li>
+									<a href="{:U('Portal/Index/seller_list_home')}" class="lf">
+										<img src="__UPLOAD__/images/touxiang.png" alt="" title="">
+									</a>
+									<div class="lf comment-cont">
+										<input type="hidden" class="zzcid" name="zzcid" value="44">
+										<span class="comment-title">采朵花</span>
+										<span class="comment-type">加分</span>
+										<span class="rt news-date">2018-5-30</span>
+										<p class="comment-about">
+											经常吃，一直没有写过点评，从高中的时候就经常吃这一家的火锅。铜锅涮肉挺对我胃口的，本来是准备到楼上去吃海底捞的，可是楼上的人太多，我们排队要排一两个小时，所以想想还......
+										</p>
+										<div class="comment-replay">
+											<a href="javascript:void(0);" class="comment-rbtn1" title="回复">回复</a>
+											<a href="javascript:void(0);" class="comment-rbtn2" title="点赞">点赞（<em class="likes">11</em>条）</a>
+											<a href="javascript:void(0);" class="comment-rbtn3" title="点赞">顶（<em>11</em>条）</a>
+											<a href="javascript:void(0);" class="comment-rbtn4" title="附件下载">附件下载</a>
+										</div>
+										<div class="clear"></div>
+									</div>
+								</li>
+							</ul>
+						</li>
+          <!--				新增店铺-->
+						<li>
+							<ul class="shop-newly">
+								<li>
+									<a href="{:U('Portal/Index/seller_list_home')}" class="shop-content">
+										<div>
+											<img src="__UPLOAD__/images/shang1.png" alt="商家图片" title="{$vo.name}">
+										</div>
+										<br>
+										<em>东来顺</em>
+										<p>
+											<span class="lf shop-clicknumber">个人写真</span>
+											<span class="rt shop-level level-color">¥<i>999</i></span>
+										</p>
+									</a>
+								</li>
+								<li>
+									<a href="{:U('Portal/Index/seller_list_home')}" class="shop-content">
+										<div>
+											<img src="__UPLOAD__/images/shang1.png" alt="商家图片" title="{$vo.name}">
+										</div>
+										<br>
+										<em>东来顺</em>
+										<p>
+											<span class="lf shop-clicknumber">个人写真</span>
+											<span class="rt shop-level level-color">¥<i>999</i></span>
+										</p>
+									</a>
+								</li>
+								<li>
+									<a href="{:U('Portal/Index/seller_list_home')}" class="shop-content">
+										<div>
+											<img src="__UPLOAD__/images/shang1.png" alt="商家图片" title="{$vo.name}">
+										</div>
+										<br>
+										<em>东来顺</em>
+										<p>
+											<span class="lf shop-clicknumber">个人写真</span>
+											<span class="rt shop-level level-color">¥<i>999</i></span>
+										</p>
+									</a>
+								</li>
+								<li>
+									<a href="{:U('Portal/Index/seller_list_home')}" class="shop-content">
+										<div>
+											<img src="__UPLOAD__/images/shang1.png" alt="商家图片" title="{$vo.name}">
+										</div>
+										<br>
+										<em>东来顺</em>
+										<p>
+											<span class="lf shop-clicknumber">个人写真</span>
+											<span class="rt shop-level level-color">¥<i>999</i></span>
+										</p>
+									</a>
+								</li>
+							</ul>
+						</li>
+						
+						
+         <!--				便民信息-->
+						<li>
+							<ul class="shop-infor">
+								<li>
+									<a href="{:U('Portal/Index/shop_list_new')}" class="lf">
+										<div>
+											<img src="__UPLOAD__/images/touxiang2.png" alt="商家图片" title="{$vo.name}">
+										</div>
+									</a>
+									<div class="lf news-cont">
+										<a href="{:U('Portal/Index/shop_list_new')}" class="lf news-title">祖运网会员福利来袭！注册会员送现金！</a>
+										<span class="rt news-date">2018-05-15</span>
+										<p class="clear news-about">祖运网会员福利来袭！注册会员送现金！  五月是一个幸福的月份，为什么说是幸福的呢？因为祖运网给广大的会员朋友们准备了一个无比惊喜的福利啊！不同于那些华而不实的会员惊喜，我们祖运网的会员福利就是这么简单</p>
+									</div>
+								</li>
+								<li>
+									<a href="{:U('Portal/Index/shop_list_new')}" class="lf">
+										<div>
+											<img src="__UPLOAD__/images/touxiang2.png" alt="商家图片" title="{$vo.name}">
+										</div>
+									</a>
+									<div class="lf news-cont">
+										<a href="{:U('Portal/Index/shop_list_new')}" class="lf news-title">祖运网会员福利来袭！注册会员送现金！</a>
+										<span class="rt news-date">2018-05-15</span>
+										<p class="clear news-about">祖运网会员福利来袭！注册会员送现金！  五月是一个幸福的月份，为什么说是幸福的呢？因为祖运网给广大的会员朋友们准备了一个无比惊喜的福利啊！不同于那些华而不实的会员惊喜，我们祖运网的会员福利就是这么简单</p>
+									</div>
+								</li>
+							</ul>
+						</li>
+						
+
+						<div class="showmore">
+							<a href="{:U('Portal/Index/shop_list_new')}">查看更多>></a>
+						</div>
+					</ul>
+				</div>
+			
+				<div class="clear"></div>
+				
+<!--
+				<div class="column1-wrapper">
+					<div class="column-head">
+						<h2>
+							<a href="{:U('Portal/List/seller_list')}" class="lf">
+								<em>商家排名</em><br>
+								<span>Ranking of merchants</span>							
+							</a>
+							<a href="{:U('Portal/List/seller_list')}" class="rt more">更多>></a>
+						</h2>
+					</div>
+					<div class="column-shop-wrapper">
+						<ul class="column-shop-container">
+						<foreach name="list_score_seller" item="vo">
+							<li>
+								<a href="{:U('Portal/Seller/home',array('sid'=>$vo['id']))}" class="shop-content">
+									<div>
+										<img src="__UPLOAD__/{$vo.pic|default=$company['seller_empty']['content']}" alt="商家图片" title="{$vo.name}">
+									</div>
+									<br>
+									<em>{$vo.name}</em>
+									<p>
+										<span class="lf shop-level level-color">等级：<i>{$vo.grade}</i></span>
+										<span class="rt shop-clicknumber">浏览量：{$vo.browse}</span>
+									</p>
+								</a>
+							</li>
+						</foreach>
+							 
+						</ul>
+					</div>
+				</div>
+				<div class="clear"></div>
+				<div class="column3-wrapper">
+					<div class="column-head">
+						<h2>
+							<a href="{:U('Portal/List/goods_list')}" class="lf">
+								<em>商品上新</em><br>
+								<span>New commodity</span>							
+							</a>
+							<a href="{:U('Portal/List/goods_list')}" class="rt more">更多>></a>
+						</h2>
+					</div>
+					<div class="column-product-wrapper">
+						<ul class="column-product-container">
+						<foreach name="list_top_goods" item="vo">
+							<li>
+								<a href="{:U('Portal/Seller/goods_detail',array('id'=>$vo['id'],'sid'=>$vo['sid']))}" class="product-content">
+									<img src="__UPLOAD__/{$vo.pic|default=$company['goods_empty']['content']}" alt="商品图片" title="{$vo.name}"><br>
+									<p>
+										<span class="lf">{$vo.name}</span>
+										<span class="rt">￥{$vo.price}</span>
+									</p>
+								</a>
+							</li>
+						</foreach>
+						<foreach name="list_goods" item="vo">
+							<li>
+								<a href="{:U('Portal/Seller/goods_detail',array('id'=>$vo['id'],'sid'=>$vo['sid']))}" class="product-content">
+									<img src="__UPLOAD__/{$vo.pic|default=$company['goods_empty']['content']}" alt="商品图片" title="{$vo.name}"><br>
+									<p>
+										<span class="lf">{$vo.name}</span>
+										<span class="rt">￥{$vo.price}</span>
+									</p>
+								</a>
+							</li>
+						</foreach>
+							 
+						</ul>
+					</div>
+				</div>
+				<div class="clear"></div>
+-->
+				 
+			</div>
+		</div>
+	<!-- main end -->
+
+	<tc_include file="Public:banner_footer" />
+ 
+
+</body>
+</html>
+<script type="text/javascript">
+	$(function(){
+		
+		$("#group-head>li").click(function(){
+			var index = $(this).index();
+			$(this).addClass("current").siblings().removeClass("current");
+			$("#group-cont>li").eq(index).css("display","block").siblings("li").css("display","none");
+		})
+				
+	});
+</script>

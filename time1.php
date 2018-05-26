@@ -4,10 +4,10 @@ date_default_timezone_set('PRC');
 header("content-type:text/html;charset=utf-8");
 set_time_limit(600);
 // $url="http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
-$log='1.log';
-error_log(date('Y-m-d H:i:s')."\r\n",'3',$log);
+$log='data/log/time.log';
+error_log(date('Y-m-d H:i:s')."定时任务开始\r\n",'3',$log);
 
-$db = new mysqli( 'localhost', 'root', 'root','zzcomment','3306') or die();
+$db = new mysqli( 'localhost', 'root', 'root','zzcomment1','3306') or die();
 // 数据库编码方式
 mysqli_set_charset($db, 'utf8');
 $time=time();
@@ -39,5 +39,5 @@ error_log(date('Y-m-d H:i:s')."系统任务执行完成\r\n",'3',$log);
 // error_log(date('Y-m-d H:i:s')."\r\n",'3',$log);
 // file_get_contents($url);
 
-exit;
+exit('执行结束');
 ?>

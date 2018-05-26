@@ -1,0 +1,91 @@
+<tc_include file="Public/user_head" />
+	<div class="per_right rt">
+            <div class="dynamic_main">
+               <div class="per_rnav">
+                	 <a class="rb" href="{:U('User/infos/index')}">信息管理</a>
+                	<a class="" href="{:U('User/infos/add')}">发布新信息</a> 
+                </div>
+                <div class="per_list"> 
+                    <ul class="dynamic_list">
+                    <foreach name="list" item="vo">
+                        <li>
+                        	<input type="hidden" class="id" value="{$vo.id}"/>
+                            <div class="lf dynamic_li_lf1">
+                                <img class="dy_img" src="__UPLOAD__/{$vo.pic}">  
+                            </div>
+                             <div class="lf dynamic_li_lf2">
+                                <p class="per_d1">{$vo.name}</p>
+                                <p class="per_d2">{$vo.dsc}</p>
+                            </div>
+                            <div class="rt dynamic_li_rt">
+	                            <span class="per_d3 time">{$vo.start_time|date='Y-m-d',###}</span>
+	                            
+	                           <eq name="vo.status" value="2">
+	                            <a href="javascript:void(0);" class="per_d6 dyml"><img src="__TMPL__Public/img/groom.png"></a>
+	                           <a href="{:U('User/infos/add_top',array('id'=>$vo['id'],'sid'=>$vo['sid']))}" class="per_d6"><img src="__TMPL__Public/img/addtop.png"></a>
+	                           
+	                           <else/>
+	                            <a href="javascript:void(0);" class="per_d6 dyml2"><img src="__TMPL__Public/img/groom_1.png"></a>
+	                          <a href="javascript:void(0);" class="per_d6"><img src="__TMPL__Public/img/addtop_1.png"></a>
+	                           
+	                           </eq> 
+	                           <span class="per_d4 expire">{$statuss[$vo['status']]}</span>
+	                            
+                             <span class="per_d5 delete"><img src="__TMPL__Public/img/delete.png"></span>
+                            </div>
+                            <div class="clear"></div>
+                        </li>
+                        
+                     </foreach>
+                      
+                    </ul>
+                    
+                    <div class="dingo">
+                        <a href="javascript:void(0);" class="cl" >X</a>
+                        <div class="dingo_main">
+                             <form action="" method="" id="top-form0">
+                             <input type="hidden" vlaue="0" id="top-id"/>
+                            <div class="dingo_text"><span>推荐价格：</span><i class="red">{$company['top_active_fee0']['content']}</i>元</div>
+                            <div class="dingo_bt"><input type="submit" value="确认支付"></div>
+                            </form>
+                        </div>
+                    </div>
+                 	<div class="page">{$page}</div>
+                </div>
+            </div>
+        </div>
+
+     
+	<tc_include file="Public/user_footer" />
+<script>
+//推荐获取id值
+$(".dyml").click(function(){
+	$(".dingo").show();
+	var id=$(this).parents('li').find('.id').val();
+	$(".dingo #top-id").val(id);
+});
+$('.delete').click(function(){
+	var $li=$(this).parents('li');
+	var id=$li.find('.id').val();
+	$.post("{:U('User/infos/del')}",{'id':id},function(data){
+		if(data.errno!=1){ 
+			alert('删除失败'); 
+		}
+		location.reload(true);
+	});
+	
+});
+$('#top-form0').submit(function(){
+	var id=$('#top-id').val();
+	$('.dingo').hide();
+	$.post("{:U('User/infos/top0')}",{'id':id},function(data){ 
+		alert(data.error); 
+		if(data.errno==1){
+			location.reload(true);
+		}
+	});
+	return false;
+});
+</script>
+</body>
+</html>

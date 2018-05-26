@@ -1,0 +1,104 @@
+<tc_include file="Public:head" />
+
+</head>
+<body>
+	<tc_include file="Public:header" />
+	
+	<div class="hman-wrapper">
+		<div class="shop-nav-wrapper" id="shop_nav">
+			<ul class="wide-container">
+				<li><a href="{:U('Portal/Index/seller_list_home')}">店铺首页</a></li>
+				<li><a href="{:U('Portal/Index/store_news')}">店铺动态</a></li>
+				<li class="current"><a href="{:U('Portal/Index/store_goods')}">店铺商品</a></li>
+				<li><a href="{:U('Portal/Index/store_comment')}">最新评级</a></li>
+				<li><a href="{:U('Portal/Index/store_job')}">最新招聘</a></li>
+			</ul>
+		</div>
+		<div class="wide-container">
+			<tc_include file="Public:seller_home" />
+			<!--				店铺商品-->
+				<div class="list-detail detail-block">
+					<div class="shop-head head4">
+						<span class="">所有商品</span>
+					</div>
+					<div class="shop-colcontainer">
+						<ul class="shop-newadd">
+							<li>
+								<a href="{:U('Portal/Seller/goods_detail')}" class="shop-content">
+									<div>
+										<img src="__UPLOAD__/images/shang1.png" alt="商家图片" title="{$vo.name}">
+									</div>
+										
+									<p>
+										<span class="lf shop-clicknumber">个人写真</span>
+										<span class="rt shop-level level-color">¥<i>999</i></span>
+									</p>
+								</a>
+							</li>
+							<li>
+								<a href="{:U('Portal/Seller/goods_detail')}" class="shop-content">
+									<div>
+										<img src="__UPLOAD__/images/shang1.png" alt="商家图片" title="{$vo.name}">
+									</div>
+										
+									<p>
+										<span class="lf shop-clicknumber">个人写真</span>
+										<span class="rt shop-level level-color">¥<i>999</i></span>
+									</p>
+								</a>
+							</li>
+							<li>
+								<a href="{:U('Portal/Seller/goods_detail')}" class="shop-content">
+									<div>
+										<img src="__UPLOAD__/images/shang1.png" alt="商家图片" title="{$vo.name}">
+									</div>
+										
+									<p>
+										<span class="lf shop-clicknumber">个人写真</span>
+										<span class="rt shop-level level-color">¥<i>999</i></span>
+									</p>
+								</a>
+							</li>
+							<li>
+								<a href="{:U('Portal/Seller/goods_detail')}" class="shop-content">
+									<div>
+										<img src="__UPLOAD__/images/shang1.png" alt="商家图片" title="{$vo.name}">
+									</div>
+										
+									<p>
+										<span class="lf shop-clicknumber">个人写真</span>
+										<span class="rt shop-level level-color">¥<i>999</i></span>
+									</p>
+								</a>
+							</li>
+						</ul>
+					</div>
+					
+					
+					
+					<div class="page">
+						<ul>
+							<li class="active current">
+								<span class="cureent">1</span>
+							</li>
+							<li>
+								<a href="#">2</a>
+							</li>
+							<li>
+								<a href="#">尾页</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+		</div>
+		
+		
+		
+		
+		
+	</div>
+	
+<tc_include file="Public:banner_footer" />	
+	
+</body>
+</html>

@@ -15,26 +15,7 @@ class HomebaseController extends AppframeController {
 		defined('TMPL_PATH') or define("TMPL_PATH", C("SP_TMPL_PATH"));
 		$site_options=get_site_options();
 		$this->assign($site_options);
-		/* $ucenter_syn=C("UCENTER_ENABLED");
-		if($ucenter_syn){
-		    $session_user=session('user');
-			if(empty($session_user)){
-			    
-				if(!empty($_COOKIE['thinkcmf_auth'])  && $_COOKIE['thinkcmf_auth']!="logout"){
-					$thinkcmf_auth=sp_authcode($_COOKIE['thinkcmf_auth'],"DECODE");
-					$thinkcmf_auth=explode("\t", $thinkcmf_auth);
-					$auth_username=$thinkcmf_auth[1];
-					$users_model=M('Users');
-					$where['user_login']=$auth_username;
-					$user=$users_model->where($where)->find();
-					if(!empty($user)){
-						$is_login=true;
-						session('user',$user);
-					}
-				}
-			}else{
-			}
-		} */
+		 
 		//如果Session中没有登录信息，尝试从Cookie中加载用户信息
 		if (empty(session('user'))) {
 		    
@@ -84,9 +65,7 @@ class HomebaseController extends AppframeController {
 		            session('user',null);
 		            setcookie('zypjwLogin', null,time()-2,'/');
 		        }
-		    }
-		   
-		   
+		    } 
 		}
 		//给头文件读取数据保存到session 
 		if(empty(session('company'))){
@@ -101,21 +80,21 @@ class HomebaseController extends AppframeController {
 		    
 		    //读取网站头文件中一级分类
 		    $m_cate=M('Cate');
-		    $cate1=$m_cate->where('fid=0')->order('sort desc,name asc')->select();
-		    $cate2=$m_cate->where('fid>0')->order('sort desc,first_char asc')->select(); 
+		    $cate1=$m_cate->where('fid=0 and type=1')->order('sort desc,name asc')->select();
+		    $cate2=$m_cate->where('fid>0 and type=1')->order('sort desc,first_char asc')->select(); 
 		    session('add_cate1',$cate1);
 		    session('add_cate2',$cate2);
 		    $m_city=M('City');
-// 		    $city1=$m_city->where('type=1')->order($this->order)->select();
-// 		    $city2=$m_city->where('type=2')->order($this->order)->select();
-// 		    $city3=$m_city->where('type=3')->order($this->order)->select(); 
+		    $city1=$m_city->where('type=1')->order($this->order)->select();
+		    $city2=$m_city->where('type=2')->order($this->order)->select();
+		   
 		    
-		    $city1=$m_city->where("name='安徽省'")->order($this->order)->select();
-		    $city2=$m_city->where("name='安庆市'")->order($this->order)->select();
-		    $city3=$m_city->where("name='潜山县'")->order($this->order)->select();
+// 		    $city1=$m_city->where("name='安徽省'")->order($this->order)->select();
+// 		    $city2=$m_city->where("name='安庆市'")->order($this->order)->select();
+ 
 		    session('add_city1',$city1);
 		    session('add_city2',$city2);
-		    session('add_city3',$city3);
+		   
 		}
 		  
 		$this->assign("company",session('company'))

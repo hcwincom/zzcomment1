@@ -95,8 +95,42 @@ class SqlController extends AdminbaseController {
 	            $this->error('删除失败'); 
 	        } 
 	    }
-	    $this->success('备份已删除');
+	    $this->success('备份已删除'); 
+	}
+	 
+	//sql语句
+	public function query(){
+	    $data=I('post.');
+	    if(empty($data['type'])){
+	        $data['type']=0;
+	    }
+	     $this->assign('data',$data);
+	    if(empty($data['sql'])){
+	        $this->display();
+	        exit;
+	    } 
 	    
+	    
+	    $m=M();
+        try {
+            if($data['type']==0){
+                $list=$m->query($data['sql']);
+                $row=count($list);
+                $this->assign('list',$list);
+            }else{
+                $row=$m->execute($data['sql']);
+            }
+        } catch (\Exception $e) {
+            $msg=$e->getMessage();
+            $this->assign('msg',$msg);
+        }
+        if(empty($row)){
+            $row=0;
+        }
+        $this->assign('row',$row);
+        error_log('管理员'.session('ADMIN_ID').'使用了Sql语句'."\r\n".$data['sql']."\r\n",3,'data/log/sql.log');
+        $this->display();
+	   
 	    
 	}
 	

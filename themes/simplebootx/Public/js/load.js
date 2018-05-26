@@ -75,14 +75,17 @@ $(document).ready(function(){
 
 	// comment
 	$(".comment-rbtn2").click(function(){
-		if($(this).text()=="展开回复"){
-			$(this).parent(".comment-reply").next(".comment-cont2").fadeIn();
-			$(this).text("隐藏回复");
-		}
-		else{
-			$(this).parent(".comment-reply").next(".comment-cont2").fadeOut();
-			$(this).text("展开回复");
-		}
+		var num = $(this).children().text();
+		num++;
+		$(this).children().text(num);
+//		if($(this).text()=="展开回复"){
+//			$(this).parent(".comment-reply").next(".comment-cont2").fadeIn();
+//			$(this).text("隐藏回复");
+//		}
+//		else{
+//			$(this).parent(".comment-reply").next(".comment-cont2").fadeOut();
+//			$(this).text("展开回复");
+//		}
 	})
 
 	$(".comment-rbtn1").click(function(){
@@ -94,6 +97,12 @@ $(document).ready(function(){
 	$("#rclose").click(function(){
 		$("#reply_layer").fadeOut();
 	})
+	
+	$(".comment-rbtn3").click(function(){
+		var num = $(this).children().text();
+		num++;
+		$(this).children().text(num);
+	});
 
 	// addshop
 	$("#pop_layer input:text").each(function(){

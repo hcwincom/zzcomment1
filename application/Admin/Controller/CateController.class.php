@@ -13,6 +13,7 @@ class CateController extends AdminbaseController {
 	    parent::_initialize();
 	    $this->m = M('Cate');
 	    $this->order='sort desc,first_char asc,id asc';
+	    $this->assign('types',[1=>'店铺分类',2=>'招聘分类',3=>"便民信息"]);
 	}
     //分类管理首页
     public function index(){
@@ -20,7 +21,9 @@ class CateController extends AdminbaseController {
         //这是选择框的一级分类
         $list0=$m->where('fid=0')->order($this->order)->select();
     	$fid=I('parent',0,'intval');
-    	$where=array('fid'=>$fid);
+    	$type=I('type',1,'intval');
+    	$where=array('fid'=>$fid,'type'=>$type);
+    	 
     	$total=$m->where($where)->count();
     	$page = $this->page($total, 10);
     	$list=$m->where($where)->order($this->order)->limit($page->firstRow,$page->listRows)->select();
@@ -30,6 +33,7 @@ class CateController extends AdminbaseController {
         $this->assign('list',$list);
         $this->assign('list0',$list0);
         $this->assign('fid',$fid);
+        $this->assign('type',$type);
     	$this->display();
     }
     
@@ -53,6 +57,7 @@ class CateController extends AdminbaseController {
         $fid=I('parent',0);
         $name=I('name','');
         $sort=I('sort',0);
+        $type=I('type',1);
         if(empty($name)){
             $this->error('类名不能为空');
         }
@@ -66,6 +71,7 @@ class CateController extends AdminbaseController {
             'name'=>$name,
             'fid'=>$fid,
             'sort'=>$sort,
+            'type'=>$type,
             'create_time'=>time(),
             'first_char'=>$firstChar,
             
@@ -97,6 +103,7 @@ class CateController extends AdminbaseController {
         $fid=I('parent',0);
         $name=I('name','');
         $sort=I('sort',0);
+       
         if(empty($name)){
             $this->error('类名不能为空');
         }
@@ -110,10 +117,8 @@ class CateController extends AdminbaseController {
         $data=array(
             'name'=>$name,
             'fid'=>$fid,
-            'sort'=>$sort,
-           
-            'first_char'=>$firstChar,
-            
+            'sort'=>$sort, 
+            'first_char'=>$firstChar, 
         );
         
         $row=$m->where('id='.$id)->save($data);
@@ -141,9 +146,10 @@ class CateController extends AdminbaseController {
         
         //检查分类下是否有店铺，有就不能删除
         $map_product['cid']=array('in',$ids);
-        $temp=M('Seller')->where($map_product)->select();
+        $types=[1=>'seller',2=>'job',3=>'info'];
+        $temp=M($types[$info['type']])->where($map_product)->find();
         if(!empty($temp)){
-            $this->error('分类下还有店铺，不能删除');
+            $this->error('分类下还有信息，不能删除');
         }
         //删除分类
         $map['id']=array('in',$ids);

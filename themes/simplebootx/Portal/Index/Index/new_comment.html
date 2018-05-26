@@ -1,0 +1,212 @@
+<tc_include file="Public:head" />
+
+<link rel="stylesheet" href="__TMPL__Public/css/seller_list.css" type="text/css">
+</head>
+
+<body>
+	<tc_include file="Public:header" />
+	
+<!--	轮播banner-->
+	<tc_include file="Public:banner" />
+	<div class="hmain-wrapper">
+		<div class="wide-container">
+			<!-- add shop -->
+				<tc_include file="Public:addshop" />
+				<!-- add shop end -->				
+			<div class="column-group">
+				<ul class="group-head" id="group-head">
+					<li><a href="{:U('Portal/Index/shop_list_new')}">商家排名</a></li>
+					<li><a href="{:U('Portal/Index/new_goods')}">商家上新</a></li>
+					<li><a href="{:U('Portal/Index/recent_news')}">最新动态</a></li>
+					<li><a href="{:U('Portal/Index/new_jobs')}">最新招聘</a></li>
+					<li class="current"><a href="{:U('Portal/Index/new_comment')}">最新评级</a></li>
+					<li><a href="{:U('Portal/Index/new_store')}">新增店铺</a></li>
+					<li><a href="{:U('Portal/Index/new_information')}">便民信息</a></li>						
+				</ul>	
+			</div>	
+			<div class="list-detail">
+				<div class="shop-search">			
+					<div class="shop-form">
+						<div class="sear-info">
+							<label>城市分类</label>
+							<select name="province" id="add-city1">
+								<option class="city10" value="0">省份</option>
+							<foreach name="add_city1" item="vo">
+								<option value="{$vo.id}">{$vo.name}</option>
+							</foreach>
+							</select>
+							<select name="city" id="add-city2">
+								<option class="city20" value="0">地级市</option>
+							<foreach name="add_city2" item="vo">
+								<option class="city2{$vo.fid}" value="{$vo.id}">{$vo.name}</option>
+							</foreach>
+							</select>
+							<select name="town" id="add-city3">
+								<option class="city30" value="0">县/区</option>
+							<foreach name="add_city3" item="vo">
+								<option class="city3{$vo.fid}" value="{$vo.id}">{$vo.name}</option>
+							</foreach>
+							</select>
+						</div>	
+
+						<div class="catecory">
+							<label>店铺分类</label>
+							<select name="catecory" id="add-cate1">
+								<option value="0">分类</option>
+							<foreach name="add_cate1" item="vo">
+								<option value="{$vo.id}">{$vo.name}</option>
+							</foreach>	 
+							</select>
+							<select name="letter" id="add-cate2">
+								<option class="cate20" value="0">行业</option>
+							<foreach name="add_cate2" item="vo">
+								<option class="cate2{$vo.fid}" value="{$vo.id}">{$vo.first_char}{$vo.name}</option>
+							</foreach>
+							</select>
+						</div>				
+					</div>	
+				</div>
+				<div class="shop-colcontainer">
+					<div class="group-cont" id="group-cont">
+						<ul class="shop-comment">
+							<li>
+								<a href="javascript:void(0);" class="lf">
+									<img src="__UPLOAD__/images/touxiang.png" alt="" title="">
+								</a>
+								<div class="lf comment-cont">
+									<input type="hidden" class="zzcid" name="zzcid" value="44">
+									<span class="comment-title">采朵花</span>
+									<span class="comment-type">加分</span>
+									<span class="rt news-date">2018-5-30</span>
+									<p class="comment-about">
+									经常吃，一直没有写过点评，从高中的时候就经常吃这一家的火锅。铜锅涮肉挺对我胃口的，本来是准备到楼上去吃海底捞的，可是楼上的人太多，我们排队要排一两个小时，所以想想还......
+									</p>
+									<div class="comment-replay">
+										<a href="javascript:void(0);" class="comment-rbtn1" title="回复">回复</a>
+										<a href="javascript:void(0);" class="comment-rbtn2" title="点赞">点赞（<em class="likes">11</em>条）</a>
+										<a href="javascript:void(0);" class="comment-rbtn3" title="点赞">顶（<em>11</em>条）</a>
+										<a href="javascript:void(0);" class="comment-rbtn4" title="附件下载">附件下载</a>
+									</div>
+									<div class="clear"></div>
+								</div>
+							</li>
+							<li>
+								<a href="javascript:void(0);" class="lf">
+									<img src="__UPLOAD__/images/touxiang.png" alt="" title="">
+								</a>
+								<div class="lf comment-cont">
+									<input type="hidden" class="zzcid" name="zzcid" value="44">
+									<span class="comment-title">采朵花</span>
+									<span class="comment-type">加分</span>
+									<span class="rt news-date">2018-5-30</span>
+									<p class="comment-about">
+									经常吃，一直没有写过点评，从高中的时候就经常吃这一家的火锅。铜锅涮肉挺对我胃口的，本来是准备到楼上去吃海底捞的，可是楼上的人太多，我们排队要排一两个小时，所以想想还......
+									</p>
+									<div class="comment-replay">
+										<a href="javascript:void(0);" class="comment-rbtn1" title="回复">回复</a>
+										<a href="javascript:void(0);" class="comment-rbtn2" title="点赞">点赞（<em class="likes">11</em>条）</a>
+										<a href="javascript:void(0);" class="comment-rbtn3" title="点赞">顶（<em>11</em>条）</a>
+										<a href="javascript:void(0);" class="comment-rbtn4" title="附件下载">附件下载</a>
+									</div>
+									<div class="clear"></div>
+								</div>
+							</li>
+							<li>
+								<a href="javascript:void(0);" class="lf">
+									<img src="__UPLOAD__/images/touxiang.png" alt="" title="">
+								</a>
+								<div class="lf comment-cont">
+									<input type="hidden" class="zzcid" name="zzcid" value="44">
+									<span class="comment-title">采朵花</span>
+									<span class="comment-type">加分</span>
+									<span class="rt news-date">2018-5-30</span>
+									<p class="comment-about">
+									经常吃，一直没有写过点评，从高中的时候就经常吃这一家的火锅。铜锅涮肉挺对我胃口的，本来是准备到楼上去吃海底捞的，可是楼上的人太多，我们排队要排一两个小时，所以想想还......
+									</p>
+									<div class="comment-replay">
+										<a href="javascript:void(0);" class="comment-rbtn1" title="回复">回复</a>
+										<a href="javascript:void(0);" class="comment-rbtn2" title="点赞">点赞（<em class="likes">11</em>条）</a>
+										<a href="javascript:void(0);" class="comment-rbtn3" title="点赞">顶（<em>11</em>条）</a>
+										<a href="javascript:void(0);" class="comment-rbtn4" title="附件下载">附件下载</a>
+									</div>
+									<div class="clear"></div>
+								</div>
+							</li>
+							<li>
+								<a href="javascript:void(0);" class="lf">
+									<img src="__UPLOAD__/images/touxiang.png" alt="" title="">
+								</a>
+								<div class="lf comment-cont">
+									<input type="hidden" class="zzcid" name="zzcid" value="44">
+									<span class="comment-title">采朵花</span>
+									<span class="comment-type">加分</span>
+									<span class="rt news-date">2018-5-30</span>
+									<p class="comment-about">
+									经常吃，一直没有写过点评，从高中的时候就经常吃这一家的火锅。铜锅涮肉挺对我胃口的，本来是准备到楼上去吃海底捞的，可是楼上的人太多，我们排队要排一两个小时，所以想想还......
+									</p>
+									<div class="comment-replay">
+										<a href="javascript:void(0);" class="comment-rbtn1" title="回复">回复</a>
+										<a href="javascript:void(0);" class="comment-rbtn2" title="点赞">点赞（<em class="likes">11</em>条）</a>
+										<a href="javascript:void(0);" class="comment-rbtn3" title="点赞">顶（<em>11</em>条）</a>
+										<a href="javascript:void(0);" class="comment-rbtn4" title="附件下载">附件下载</a>
+									</div>
+									<div class="clear"></div>
+								</div>
+							</li>
+							<li>
+								<a href="javascript:void(0);" class="lf">
+									<img src="__UPLOAD__/images/touxiang.png" alt="" title="">
+								</a>
+								<div class="lf comment-cont">
+									<input type="hidden" class="zzcid" name="zzcid" value="44">
+									<span class="comment-title">采朵花</span>
+									<span class="comment-type">加分</span>
+									<span class="rt news-date">2018-5-30</span>
+									<p class="comment-about">
+									经常吃，一直没有写过点评，从高中的时候就经常吃这一家的火锅。铜锅涮肉挺对我胃口的，本来是准备到楼上去吃海底捞的，可是楼上的人太多，我们排队要排一两个小时，所以想想还......
+									</p>
+									<div class="comment-replay">
+										<a href="javascript:void(0);" class="comment-rbtn1" title="回复">回复</a>
+										<a href="javascript:void(0);" class="comment-rbtn2" title="点赞">点赞（<em class="likes">11</em>条）</a>
+										<a href="javascript:void(0);" class="comment-rbtn3" title="点赞">顶（<em>11</em>条）</a>
+										<a href="javascript:void(0);" class="comment-rbtn4" title="附件下载">附件下载</a>
+									</div>
+									<div class="clear"></div>
+								</div>
+							</li>
+						</ul>
+						
+						
+					</div>
+					
+					
+					<div class="page">
+						<ul>
+							<li class="active current">
+								<span class="cureent">1</span>
+							</li>
+							<li>
+								<a href="#">2</a>
+							</li>
+							<li>
+								<a href="#">尾页</a>
+							</li>
+						</ul>
+						
+					</div>
+				</div>
+				
+				
+				
+				
+			</div>
+			
+			
+		</div>
+	</div>
+	
+	
+	
+	
+</body>
+</html>

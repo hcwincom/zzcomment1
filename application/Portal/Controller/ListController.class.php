@@ -7,45 +7,17 @@ class ListController extends HomebaseController {
     function _initialize(){
         parent::_initialize();
         $banners=M('Banner')->order('sort desc')->select();
+        //推荐商家
+        $list_top_seller=[];
         $this->assign('banners',$banners);
+        $this->assign('list_top_seller',$list_top_seller);
     }
-	// 店铺列表
-	public function seller_list() {
+	// 新增店铺列表
+	public function sellers() {
+	   
 	    $chars=array('A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z');
-	    
-	    $time=time();
-	    $m_seller=M('Seller');
-	    
-	    //推荐商家
-	    $where_top=array();
-	    //0申请。，1不同意，2同意
-	    $where_top['status']=array('eq',2);
-	    
-	    //此处直接比较时间，没有服务器检查过期
-	    $where_top['start_time']=array('lt',$time);
-	    
-	    $tmp=M('TopSeller')->where($where_top)->limit('0,10')->select();
-	    $sids=array();
-	    foreach ($tmp as $v){
-	        $sids[]=$v['pid'];
-	    }
-	    $len=count($sids);
-	    if($len>0){
-	        $where=array('id'=>array('in',$sids));
-	        //推荐商家按等级高低排名
-	        $list_top_seller=$m_seller->order('score desc')->where($where)->select();
-	    }
-	    
-	    //少于10个要有默认图片
-	    $list_top_seller_empty=array();
 	     
-	    /* $empty=session('company.top_seller_empty');
-	    $price=session('company.top_seller_fee');
-	    for($i=$len;$i<10;$i++){
-	        $list_top_seller_empty[]=array('pic'=>$empty['content'],'name'=>$empty['title'],'price'=>$price['content']);
-	    } */
-	    
-	    
+	    $m_seller=M('Seller'); 
 	    //商家//商家排名10
 	    $where_seller=array();
 	    //0未审核，1未认领，2已认领,3已冻结
@@ -62,7 +34,7 @@ class ListController extends HomebaseController {
 	    $char=I('char','');
 	    //二级分类
 	    $cid1=I('cid1',0,'intval');
-	    $where_cate=array();
+	    $where_cate=array('type'=>1);
 	    if($cid0>0){
 	        $where_cate['fid']=$cid0; 
 	    }
@@ -86,11 +58,9 @@ class ListController extends HomebaseController {
 	    } 
 	    $total=$m_seller->where($where_seller)->count();
 	    $page = $this->page($total, 20);
-	    $list_score_seller=$m_seller->where($where_seller)->order('score desc')->limit($page->firstRow,$page->listRows)->select();
+	    $sellers=$m_seller->where($where_seller)->order('create_time desc')->limit($page->firstRow,$page->listRows)->select();
 	    
-	    $this->assign('list_score_seller',$list_score_seller)
-	    ->assign('list_top_seller',$list_top_seller)
-	    ->assign('list_top_seller_empty',$list_top_seller_empty)
+	    $this->assign('sellers',$sellers) 
 	    ->assign('page',$page->show('Admin'));
 	   $this->assign('chars',$chars)
 	   ->assign('char',$char)
@@ -98,11 +68,13 @@ class ListController extends HomebaseController {
 	   ->assign('keyword',$keyword)
 	   ->assign('cid1',$cid1)
 	   ->assign('cate1',$cate1);
+	   $this->assign('html_flag','sellers');
 	   $this->display();
 	    
 	}
-	
-	public function goods_list(){
+	/*商品列表页  */
+	public function goods(){
+	  
 	    $m=M('Goods');
 	    $time=time();
 	    //推荐商家
@@ -134,12 +106,13 @@ class ListController extends HomebaseController {
 	    
 	    $list=$m->where($where_top)->order('start_time desc')->limit($page->firstRow,$page->listRows)->select();
 	    
-	    $this->assign('list',$list)->assign('list_top',$list_top)
+	    $this->assign('list_goods',$list)->assign('list_top_goods',$list_top)
 	    ->assign('page',$page->show('Admin'));
+	    $this->assign('html_flag','goods');
 	    $this->display();
 	}
-	
-	public function news_list(){
+	/* 动态 */
+	public function news(){
 	    $time=time(); 
 	    $m=M('Active');
 	    $where_top=array(); 
@@ -189,11 +162,12 @@ class ListController extends HomebaseController {
 	    }
 	    $this->assign('list_active',$list)->assign('list_top_active',$list_top_active)
 	    ->assign('page',$page->show('Admin'));
+	    $this->assign('html_flag','news');
 	    $this->display();
 	}
 	
 	//店铺点评
-	public function comment_list(){
+	public function comments(){
 	    $time=time();
 	    //点评
 	    $where_comment=array('status'=>2);
@@ -212,6 +186,76 @@ class ListController extends HomebaseController {
 	     
 	    $this->assign('list_comment',$list)
 	    ->assign('page',$page->show('Admin'));
+	    $this->assign('html_flag','comments');
+	    $this->display();
+	}
+	/*最新招聘 */
+	public function jobs(){
+	    $time=time();
+	    $m=M('job');
+	    $where_top=array();
+	    //0申请。，1不同意，2同意
+	    $where_top['status']=array('eq',2);
+	    
+	    //此处直接比较时间，没有服务器检查过期
+	    $where_top['start_time']=array('lt',$time);
+	    
+	    //先找置顶动态
+	    $top_len=10;
+	    $tmp=M('TopActive')->where($where_top)->limit(0,10)->select();
+	    $sids=array();
+	    foreach ($tmp as $v){
+	        $sids[]=$v['pid'];
+	    }
+	    $len=0;
+	    if((count($sids))>0){
+	        $where=array('id'=>array('in',$sids));
+	        //推荐动态发布时间排名
+	        $list_top_active=$m->order('start_time desc')->where($where)->select();
+	        $len=count($list_top_active);
+	    }
+	    foreach($list_top_active as $k=>$v){
+	        
+	        $content_01 = $v["content"];//从数据库获取富文本content
+	        $content_02 = htmlspecialchars_decode($content_01); //把一些预定义的 HTML 实体转换为字符
+	        $content_03 = str_replace("&nbsp;","",$content_02);//将空格替换成空
+	        $contents = strip_tags($content_03);//函数剥去字符串中的 HTML、XML 以及 PHP 的标签,获取纯文本内容
+	        $con = mb_substr($contents, 0, 100,"utf-8");//返回字符串中的前100字符串长度的字符
+	        $list_top_active[$k]['content']=$con;
+	    }
+	    //少于$active_len个要有其他动态
+	    //置顶的动态不变
+	    $total=$m->where($where_top)->count();
+	    $page = $this->page($total, 10-$len);
+	    
+	    $list=$m->where($where_top)->order('start_time desc')->limit($page->firstRow,$page->listRows)->select();
+	    foreach($list as $k=>$v){
+	        
+	        $content_01 = $v["content"];//从数据库获取富文本content
+	        $content_02 = htmlspecialchars_decode($content_01); //把一些预定义的 HTML 实体转换为字符
+	        $content_03 = str_replace("&nbsp;","",$content_02);//将空格替换成空
+	        $contents = strip_tags($content_03);//函数剥去字符串中的 HTML、XML 以及 PHP 的标签,获取纯文本内容
+	        $con = mb_substr($contents, 0, 100,"utf-8");//返回字符串中的前100字符串长度的字符
+	        $list[$k]['content']=$con;
+	    }
+	    $this->assign('list_active',$list)->assign('list_top_active',$list_top_active)
+	    ->assign('page',$page->show('Admin'));
+	    $this->assign('html_flag','news');
+	    $this->display();
+	}
+	/*便民信息 */
+	public function infos(){
+	    $time=time();
+	    $m=M('info');
+	    $where=array();
+	    $total=$m->where($where)->count();
+	    $page = $this->page($total, 10);
+	    $list=$m->where($where)->order('start_time desc')->limit($page->firstRow,$page->listRows)->select();
+	    $cates=M('cate')->where('fid=0 and type=3')->select();
+	    $this->assign('info_cates',$cates);
+	    $this->assign('list_info',$list)
+	    ->assign('page',$page->show('Admin'));
+	    $this->assign('html_flag','news');
 	    $this->display();
 	}
 }

@@ -1,66 +1,65 @@
 <tc_include file="Public/user_head" />
 	<div class="per_right rt">
-                <div class="dynamic_main">
-                   <div class="per_rnav">
-	                    <a class="<eq name='status' value='-1'>rb</eq>" href="{:U('User/News/index',array('sid'=>$sid,'status'=>-1))}">全部</a>
-	                    <a class="<eq name='status' value='0'>rb</eq>" href="{:U('User/News/index',array('sid'=>$sid,'status'=>0))}">审核中</a>
-	                    <a class="<eq name='status' value='1'>rb</eq>" href="{:U('User/News/index',array('sid'=>$sid,'status'=>1))}">审核失败</a>
-	                    <a class="<eq name='status' value='2'>rb</eq>" href="{:U('User/News/index',array('sid'=>$sid,'status'=>2))}">审核完成</a>
-	                    <a class="<eq name='status' value='3'>rb</eq>" href="{:U('User/News/index',array('sid'=>$sid,'status'=>3))}">已过期</a>
-	                    <a class="<eq name='status' value='4'>rb</eq>" href="{:U('User/News/add',array('sid'=>$sid,'status'=>4))}">发布新动态</a>
-                    	
-                    </div>
-                    <ul class="dynamic_list">
-                    <foreach name="list" item="vo">
-                        <li>
-                        	<input type="hidden" class="id" value="{$vo.id}"/>
-                            <div class="lf dynamic_li_lf1">
-                                <img class="dy_img" src="__UPLOAD__/{$vo.pic}">  
-                            </div>
-                             <div class="lf dynamic_li_lf2">
-                                <p class="per_d1">{$vo.name}</p>
-                                <p class="per_d2">{$vo.content}</p>
-                            </div>
-                            <div class="rt dynamic_li_rt">
-	                            <span class="per_d3 time">{$vo.start_time|date='Y-m-d',###}</span>
-	                           <eq name="vo.status" value="2">
-	                            <a href="javascript:void(0);" class="per_d6 dyml"><img src="__TMPL__Public/img/groom.png"></a>
-	                           <a href="{:U('User/News/add_top',array('id'=>$vo['id'],'sid'=>$vo['sid']))}" class="per_d6"><img src="__TMPL__Public/img/addtop.png"></a>
-	                           
-	                           <else/>
-	                            <a href="javascript:void(0);" class="per_d6 dyml2"><img src="__TMPL__Public/img/groom_1.png"></a>
-	                          <a href="javascript:void(0);" class="per_d6"><img src="__TMPL__Public/img/addtop_1.png"></a>
-	                           
-	                           </eq> 
-	                            <switch name="vo.status">
-                            	<case value="0"> <span class="per_d4 expire">审核中</span></case>
-                            	<case value="1"><span class="per_d4 expire">审核失败</span></case>
-                            	<case value="3"><span class="per_d4 expire">已过期</span></case>
-                            	<case value="2"> <a href="{:U('Portal/Seller/news_detail',array('id'=>$vo['id'],'sid'=>$vo['sid']))}" class="per_d4 edit">查看详情</a> </case>
-                            </switch><span class="per_d5 delete"><img src="__TMPL__Public/img/delete.png"></span>
-                            </div>
-                            <div class="clear"></div>
-                        </li>
-                        
-                     </foreach>
-                      
-                    </ul>
-                    
-                    <div class="dingo">
-                        <a href="javascript:void(0);" class="cl" >X</a>
-                        <div class="dingo_main">
-                             <form action="" method="" id="top-form0">
-                             <input type="hidden" vlaue="0" id="top-id"/>
-                            <div class="dingo_text"><span>推荐价格：</span><i class="red">{$company['top_active_fee0']['content']}</i>元</div>
-                            <div class="dingo_bt"><input type="submit" value="确认支付"></div>
-                            </form>
-                        </div>
-                    </div>
-                 <div class="page">{$page}</div>
-                </div>
-            </div>
-        </div>
-
+         <div class="dynamic_main">
+            <div class="per_rnav">
+              <a class="<eq name='status' value='-1'>rb</eq>" href="{:U('User/News/index',array('sid'=>$sid,'status'=>-1))}">全部</a>
+              <a class="<eq name='status' value='0'>rb</eq>" href="{:U('User/News/index',array('sid'=>$sid,'status'=>0))}">审核中</a>
+              <a class="<eq name='status' value='1'>rb</eq>" href="{:U('User/News/index',array('sid'=>$sid,'status'=>1))}">审核失败</a>
+              <a class="<eq name='status' value='2'>rb</eq>" href="{:U('User/News/index',array('sid'=>$sid,'status'=>2))}">审核完成</a>
+              <a class="<eq name='status' value='3'>rb</eq>" href="{:U('User/News/index',array('sid'=>$sid,'status'=>3))}">已过期</a>
+              <a class="<eq name='status' value='4'>rb</eq>" href="{:U('User/News/add',array('sid'=>$sid,'status'=>4))}">发布新动态</a>
+             	
+             </div>
+             <ul class="dynamic_list">
+             <foreach name="list" item="vo">
+                 <li>
+                 	<input type="hidden" class="id" value="{$vo.id}"/>
+                     <div class="lf dynamic_li_lf1">
+                         <img class="dy_img" src="__UPLOAD__/{$vo.pic}">  
+                     </div>
+                      <div class="lf dynamic_li_lf2">
+                         <p class="per_d1">{$vo.name}</p>
+                         <p class="per_d2">{$vo.content}</p>
+                     </div>
+                     <div class="rt dynamic_li_rt">
+                      <span class="per_d3 time">{$vo.start_time|date='Y-m-d',###}</span>
+                     <eq name="vo.status" value="2">
+                      <a href="javascript:void(0);" class="per_d6 dyml"><img src="__TMPL__Public/img/groom.png"></a>
+                     <a href="{:U('User/News/add_top',array('id'=>$vo['id'],'sid'=>$vo['sid']))}" class="per_d6"><img src="__TMPL__Public/img/addtop.png"></a>
+                     
+                     <else/>
+                      <a href="javascript:void(0);" class="per_d6 dyml2"><img src="__TMPL__Public/img/groom_1.png"></a>
+                    <a href="javascript:void(0);" class="per_d6"><img src="__TMPL__Public/img/addtop_1.png"></a>
+                     
+                     </eq> 
+                      <switch name="vo.status">
+                     	<case value="0"> <span class="per_d4 expire">审核中</span></case>
+                     	<case value="1"><span class="per_d4 expire">审核失败</span></case>
+                     	<case value="3"><span class="per_d4 expire">已过期</span></case>
+                     	<case value="2"> <a href="{:U('Portal/Seller/news_detail',array('id'=>$vo['id'],'sid'=>$vo['sid']))}" class="per_d4 edit">查看详情</a> </case>
+                     </switch><span class="per_d5 delete"><img src="__TMPL__Public/img/delete.png"></span>
+                     </div>
+                     <div class="clear"></div>
+                 </li>
+                 
+              </foreach>
+               
+             </ul>
+             
+             <div class="dingo">
+                 <a href="javascript:void(0);" class="cl" >X</a>
+                 <div class="dingo_main">
+                      <form action="" method="" id="top-form0">
+                      <input type="hidden" vlaue="0" id="top-id"/>
+                     <div class="dingo_text"><span>推荐价格：</span><i class="red">{$company['top_active_fee0']['content']}</i>元</div>
+                     <div class="dingo_bt"><input type="submit" value="确认支付"></div>
+                     </form>
+                 </div>
+             </div>
+          	<div class="page">{$page}</div>
+         </div>
+     </div>
+    
      
 	<tc_include file="Public/user_footer" />
 <script>
