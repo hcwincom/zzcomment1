@@ -67,7 +67,8 @@ class PublicController extends HomebaseController {
          
          $m_city=M('city');
          $list=$m_city->where('fid='.$fid)->getField('id,name');
-         $this->success('地区列表','',$list);
+         $this->ajaxReturn(['list'=>$list]);
+         exit;
      }
 }
 
