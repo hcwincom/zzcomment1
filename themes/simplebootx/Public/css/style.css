@@ -65,7 +65,7 @@ textarea{resize: none;}
 .shop-type2>a{float:left;padding:0 42px;text-align:center;font-size:18px;line-height: 40px;background:#e5e5e5;position: relative;}
 .shop-type2>a.select{color:#fff;background:#d00000;}
 .shop-type2>a.select:after{content:"";display:block;position:absolute;left:43%;top:65px;width:14px;height:12px;background:url(../img/homeico.png) no-repeat -22px -218px;}
-.shop-type-subcontain{border:1px solid #dcdcdc;padding:10px 5px;margin:20px 0 0 0;background:#e5e5e5;}
+.shop-type-subcontain{border:1px solid #dcdcdc;padding:10px 5px;margin:20px 0 10px 0;;background:#e5e5e5;}
 .shop-type-sub{width:100%;min-height:36px;overflow: hidden;}
 .shop-type-sub a{float:left;padding:10px 10px;color:#333;font-size:16px;line-height: 1em;white-space: nowrap;}
 .shop-type-subcontain a.select{color: #d00000;text-decoration: underline;}
@@ -74,7 +74,8 @@ textarea{resize: none;}
 
 .shoplist-wrapper{position: relative;}
 .shoplist-wrapper .page{padding:80px 0 80px;}
-.shop-character{position:absolute;margin:50px 0 0;right:0;z-index: 4;line-height:32px;font-size:18px;color:#999;}
+.shop-character-list{margin-left:3%; margin-top:30px;}
+.shop-character{font-size:18px;}
 .shop-character>a{display:inline-block;font-size:18px;line-height:18px;margin:3px 0;padding:0 5px;color:#999;border-right: 1px solid #dcdcdc;}
 .shop-character>a:last-child{border: none;}
 .shop-character>a.select,.shop-character>a:hover{color:#d00000;}
@@ -151,9 +152,8 @@ textarea{resize: none;}
 .group-head>li{float:left;padding:0 25px;height:50px;font-size:18px;line-height: 50px;cursor:pointer;}
 .group-head>li.current{background:#d00000;color:#fff;}
 /*页面修改*/
-
 .group-cont>li{display:none;min-height: 100px;}
-.shop-newadd{margin:35px auto;overflow: hidden;margin-left: 3%;}
+.shop-newadd{margin:30px auto;overflow: hidden;margin-left: 3%;}
 .shop-newadd>li{
 	display: inline-block;
     width: 24%;
