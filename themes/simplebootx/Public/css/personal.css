@@ -63,6 +63,32 @@
 .form1 input[type="submit"],.form1 input[type="reset"]{width:105px;height:35px;line-height: 35px;background:#eb0000;color:#fff;text-align: center;margin-right:50px;cursor: pointer;font-size: 16px;}
 .form1{font-size: 16px;}
 .per_rnav{width:100%;background:#e5e5e5;}
+.rnav-two{margin-top:10px;}
+.rnav-two div{display:inline-block;height:40px;;line-height:40px;margin-left:30px;cursor: pointer;}
+.check-all{margin-left:10px!important;position:absolute}
+.all-reds{color: #d50000;}
+.checked-alls{width:20px;float:left;margin-left:10px;}
+.labei-all-check{
+    position:absolute;
+    top:0;
+    bottom:0;
+    margin:auto;
+    background:#fff;
+    display: inline-block;
+    width:10px;
+    height:10px;
+    border-radius: 50%;
+    border: .08rem solid #fff;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-box-shadow: 0 0 0 1px #c3c3c3;
+    box-shadow: 0 0 0 1px #c3c3c3;
+}
+.first-all{margin-left:50px!important;}
+.checked-on{
+    background:#db0000;
+}
+
 .per_rnav p{width:120px;line-height: 40px;background:#d00000;color:#fff;text-align:center;font-size: 16px;}
 .per_rnav a{display: inline-block; padding:0 25px;line-height: 40px;color:#333;text-align:center;font-size: 16px;}
 .per_rnav .rb{background:#d00000;color:#fff;}
@@ -133,10 +159,10 @@ background-color: rgba(0, 0, 0, .3);}
 .addshop{margin-left:25px;margin-top:30px;}
 .adddynamic{margin-top:30px;}
 .dynamic_list{width:100%;}
-.dynamic_list li{border-bottom: 1px solid #dcdcdc;margin-top:15px;padding-bottom:30px;}
+.dynamic_list li{border-bottom: 1px solid #dcdcdc;margin-top:15px;padding-bottom:30px;position:relative}
 .dy_img{width:144px;}
-.dynamic_li_lf1{width:170px;}
-.dynamic_li_lf2{width:450px;overflow: hidden;}
+.dynamic_li_lf1{width:170px;margin-left: 48px;}
+.dynamic_li_lf2{width:400px;overflow: hidden;}
 .dynamic_li_rt{width:340px;margin-top:10px;}
 .per_d1,.per_d2{font-size: 16px;color:#666;line-height: 35px;}
 .per_d2{width:450px;line-height: 20px;max-height:40px;text-overflow:ellipsis;overflow: hidden;}
@@ -320,7 +346,7 @@ td.msgmaner_td3 ul li{
  } 
 @media screen and (max-width:1000px) {
     .form1{margin-left:30px;}
-.dynamic_li_lf1{width:20%;min-width: 130px;margin-right:10px;}
+.dynamic_li_lf1{width:20%;min-width: 130px;margin-right:4px;}
 .dynamic_li_lf2{width:40%;overflow: hidden;}
 .dynamic_li_rt{width:35%;margin-top:10px;}
 .per_d2{width:100%;}
@@ -371,6 +397,7 @@ td.msgmaner_td3 ul li{
 	}
 }
 @media screen and (max-width:600px) {
+.dynamic_list .labei-all-check {top: -76px!important;}
  .dynamic_li_lf2{width:60%;}
  .dynamic_li_rt{width:70%;}
  .per_d3{display: inline-block;}
@@ -388,7 +415,7 @@ td.msgmaner_td3 ul li{
      .form1 input[type="text"]{width:200px;height:43px;border:1px solid #dcdcdc;padding-left:10px;}
     .form2 input[type="text"]{width:230px;height:43px;border:1px solid #dcdcdc;padding-left:10px;margin-left:15px;}
     .form2 input[type="submit"]{ width:260px;height:35px;line-height: 35px;background:#eb0000;color:#fff;text-align: center;cursor: pointer;font-size: 16px;margin:0 auto;}
-    .dynamic_li_rt{width:95%;}
+    .dynamic_li_rt{width:91%;}
     .form2 select{width:72px;padding-left: 5px;}
 #provinces,#citys,#countys{width:95px;margin:0 0 0 15px;padding-left:3px;}
 .imgbox2{margin-bottom: 10px;}
@@ -428,7 +455,9 @@ td.msgmaner_td3 ul li{
 		background-size: contain;
 	}
 	
-	
+	.dynamic_li_lf2 p{
+        font-size:14px!important;
+    }
 	
 }
 @media screen and (max-width:500px){
@@ -443,10 +472,15 @@ td.msgmaner_td3 ul li{
 	.rcont_main_list>.per_li5{display: none;}
 	.rcont_main_list>.per_li6{display: none;}
 	
-	
+	.dynamic_li_lf1 {
+    margin-left: 28px;
 }
-
-
+}
+@media screen and (max-width:465px){
+    .dynamic_li_lf2 {
+        width: 50%;
+    }
+}
 @media screen and (max-width:400px) {
     .form1 input[type="submit"],.form1 input[type="reset"]{padding:0 20px;height:35px;line-height: 35px;background:#eb0000;color:#fff;text-align: center;margin-right:30px;cursor: pointer;font-size: 16px;}
     .form3>span{width:90px;}
@@ -457,7 +491,7 @@ td.msgmaner_td3 ul li{
     #citys,#countys{margin:0 0 0 2px;}
     .btn6{width:174px;height:105px;line-height: 105px;}
     #preview6{width:174px;height:105px;}
-     .dynamic_li_lf2{width:50%;}
+     .dynamic_li_lf2{width:40%;}
      .dynamic_li_rt{width:100%;}
      .imgbox4,.imgbox5{width:270px;}
 	.per_li1{width: 15%;}
@@ -470,6 +504,7 @@ td.msgmaner_td3 ul li{
 	.rcont_main_list>.per_li4{display: none;}
 	.rcont_main_list>.per_li5{display: none;}
 	.rcont_main_list>.per_li6{display: none;}
+    
 	
  }
 

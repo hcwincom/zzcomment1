@@ -10,12 +10,27 @@
               <a class="<eq name='status' value='4'>rb</eq>" href="{:U('User/News/add',array('sid'=>$sid,'status'=>4))}">发布新动态</a>
              	
              </div>
+             <div class="per_rnav rnav-two">
+                 <div class="check-all">
+                     <label class="labei-all-check select-all"></label>
+                 </div>
+                 <div class="first-all">全选</div>
+                 <div class="all-reds putaway-up">上架</div>
+                 <div class="all-reds sold-out">下架</div>
+                 <div class="all-reds delete-down">删除</div>
+                 <div>推荐</div>
+                 <div>置顶</div>
+             </div>
              <ul class="dynamic_list">
              <foreach name="list" item="vo">
                  <li>
+                    <div class="checked-alls">
+                        <label class="labei-all-check" for="cheched-box{$vo.id}"></label>
+                        <input id="cheched-box{$vo.id}" style="display:none;" type="checkbox" value="{$vo.id}">
+                    </div>
                  	<input type="hidden" class="id" value="{$vo.id}"/>
                      <div class="lf dynamic_li_lf1">
-                         <img class="dy_img" src="__UPLOAD__/{$vo.pic}">  
+                        <a href="#"> <img class="dy_img" src="__UPLOAD__/{$vo.pic}"></a>  
                      </div>
                       <div class="lf dynamic_li_lf2">
                          <p class="per_d1">{$vo.name}</p>
@@ -62,6 +77,8 @@
     
      
 	<tc_include file="Public/user_footer" />
+</body>
+</html>
 <script>
 //推荐获取id值
 $(".dyml").click(function(){
@@ -91,6 +108,72 @@ $('#top-form0').submit(function(){
 	});
 	return false;
 });
+    //全选/取消全选
+    //记录个li；
+    var len_uli=$(".dynamic_list>li").length;
+    //判断全选
+    var isckecked=false;
+    //判断是否有class
+    var isclass;
+    $(".select-all").click(function(){
+        isckecked=!isckecked;
+        if(isckecked){
+            $(".labei-all-check").addClass("checked-on");
+            $(".labei-all-check").next().prop("checked","true");
+        }else{
+            $(".labei-all-check").removeClass("checked-on");
+            $(".labei-all-check").next().removeProp("checked","false");
+        } 
+    });
+    $(".dynamic_list .labei-all-check").click(function(){
+        isclass=$(this).hasClass("checked-on");
+        if(isclass){
+            $(this).removeClass("checked-on");
+        }else{
+            $(this).addClass("checked-on");
+        }
+        if(len_uli==$(".dynamic_list .checked-on").length){
+            $(".select-all").addClass("checked-on");
+            isckecked=true;
+        }else{
+            $(".select-all").removeClass("checked-on");
+            isckecked=false;
+        }
+    });
+    $(".first-all").click(function(){
+        $(".select-all").click();
+    });
+    //上架事件
+    $(".putaway-up").click(function(){
+        var arr_uid=get_value($(".dynamic_list .checked-on"));
+        if(!arr_uid==""){
+            console.log(arr_uid)
+        }
+    });
+    //下架事件
+    $(".sold-out").click(function(){
+        var arr_uid=get_value($(".dynamic_list .checked-on"));
+        if(!arr_uid==""){
+            console.log(arr_uid)
+        }
+    });
+    //删除事件
+    $(".delete-down").click(function(){
+        var arr_uid=get_value($(".dynamic_list .checked-on"));
+        if(!arr_uid==""){
+            console.log(arr_uid)
+        }
+    })
+    //全选获取选中的uil
+    function get_value(element){
+        //保存uid
+        var arry=[];
+        var ck_on_cl=element.length;
+        for(var i=0;i<ck_on_cl;i++){
+            arry.push($(element[i]).next().val())
+        }
+        return arry.join(",")
+    }
+    
+    
 </script>
-</body>
-</html>
