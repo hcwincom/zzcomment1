@@ -50,6 +50,14 @@
 
 
 /*商品详情页面*/
+.sear-info>input[type="submit"]{
+	width: 100px;
+	line-height: 42px;
+	font-size: 16px;
+	background: #d50000;
+	color: #fff;
+	cursor: pointer;
+}
 
 .shop-form{
 	width: 100%;
@@ -72,7 +80,7 @@
 	color:#000;
 }
 .shop-form select{
-	width:150px;
+	width:200px;
 	margin-right:10px;
 	float:left;
 	height:44px;
@@ -85,7 +93,8 @@
 	padding-left: 12px;
 }
 .shop-form .catecory{
-	margin-left: 15%;
+	margin-left: 13%;
+	vertical-align: bottom;
 }
 .catecory>select{
 	width: 155px;
@@ -131,6 +140,9 @@
 	.job_detail{
 		width: 80%;
 	}
+	.shop-form .catecory{
+		margin-left: 1%;
+	}
 	
 }
 
@@ -143,7 +155,7 @@
 		margin-left: 1%;
 	}
 	.catecory>select{
-		width: 100px;
+		width: 150px;
 	}
 
 	
@@ -178,7 +190,7 @@
 	}
 	.goods-infor{width: 90%;}
 	.shop-form select{
-		width: 100px;
+		width: 120px;
 	}
 	.catecory>select{
 		width: 150px;
