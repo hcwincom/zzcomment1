@@ -53,6 +53,8 @@ i,em{ font-style: normal; }
 .foot-cont2{width:96px;}
 .foot-cont2 p{line-height:24px;color:#fff;text-align: center;}
 .foot-cont2 img{width:96px;height: 96px;}
+.slides li{display:none;}
+.slides li:first-child{display:block}
 
 @media screen and (max-width: 1250px){
 	.top-wrapper{width:96%;margin:0 2%;}
