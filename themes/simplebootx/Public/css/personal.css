@@ -179,7 +179,8 @@ background-color: rgba(0, 0, 0, .3);}
 .form3>span{display: inline-block;line-height:45px;width:110px;font-size: 16px;text-align: right;}
 .form3 input[type="submit"]{padding:0 20px;height:35px;line-height: 35px;background:#eb0000;color:#fff;text-align: center;margin-left:110px;cursor: pointer;font-size: 16px;}
 .form3{margin:10px 0;}
-.form3_list1 li{width:300px;font-size:16px;color:#333;line-height: 35px;text-align: center;margin-bottom:10px;float: left;}
+.date-sjk{line-height: 45px;}
+.form3_list1 li{width:300px;font-size:16px;color:#333;line-height: 35px;margin-bottom:10px;float: left;}
 .form3_list1 li span{margin-left:10px;text-align: left;}
 .form3_t1{color:#000;font-size: 18px;line-height: 35px;}
 /*.form3_list2 li{margin-left:10px;font-size: 16px;color:#333;margin-bottom:10px;}

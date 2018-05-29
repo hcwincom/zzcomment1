@@ -1,22 +1,46 @@
 <tc_include file="Public/user_head" />
 	 <div class="per_right rt">
+         <div class="per_rnav">
+              <a class="<eq name='status' value='-1'>rb</eq>" href="{:U('User/News/index',array('sid'=>$sid,'status'=>-1))}">全部</a>
+              <a class="<eq name='status' value='0'>rb</eq>" href="{:U('User/News/index',array('sid'=>$sid,'status'=>0))}">审核中</a>
+              <a class="<eq name='status' value='1'>rb</eq>" href="{:U('User/News/index',array('sid'=>$sid,'status'=>1))}">审核失败</a>
+              <a class="<eq name='status' value='2'>rb</eq>" href="{:U('User/News/index',array('sid'=>$sid,'status'=>2))}">审核完成</a>
+              <a class="<eq name='status' value='3'>rb</eq>" href="{:U('User/News/index',array('sid'=>$sid,'status'=>3))}">已过期</a>
+              <a class="<eq name='status' value='4'>rb</eq>" href="{:U('User/News/add',array('sid'=>$sid,'status'=>4))}">发布新动态</a>
+              <a class="<eq name='status' value='4'>rb</eq>" href="{:U('User/News/add',array('sid'=>$sid,'status'=>4))}">动态置顶</a>
+             </div>
                 <div class="adddynamic">
                     <form action="" method="post" id="recommend" name="playlist">
                         <div class="form3"><span class="">{$type}：</span><i>{$info.name}</i></div>
                         
                         <div class="form3"><span class="lf">置顶时间：</span>
                             <ul class="form3_list1 lf">
-                            <foreach name="top" item="vo">
                                 <li>
-                                    <div class="">
+                                    <div class="date-sjk">
+<!--
                                         <input type="checkbox" name="week" value="{$vo.day}" onClick="anycheck(this.form)">
                                         <span>{$vo.day}</span>
+-->
+                                       起始时间： <input name="start" class="inline laydate-icon" id="start1"  >
                                     </div>
+                                    <div style="color:#f00;font-size:12px;">
+                                        起始时间最早为今天，起始到结束至少为一天
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="date-sjk">
+<!--
+                                        <input type="checkbox" name="week" value="{$vo.day}" onClick="anycheck(this.form)">
+                                        <span>{$vo.day}</span>
+-->
+                                       结束时间： <input name="start" class="inline laydate-icon" id="start2"  >
+                                    </div>
+<!--
                                     <div>
                                         剩余：<span>{$vo.count}</span>位 
                                     </div>
+-->
                                 </li>
-                             </foreach>
                             </ul>
                             <div class="clear"></div>
                         </div>
@@ -28,6 +52,7 @@
             </div>
         </div>
 	<tc_include file="Public/user_footer" />
+<script type="text/javascript" src="__TMPL__Public/js/laydate.js"></script>      
 <script>
 $('#recommend').submit(function(){
 	var id='{$info.id}';
@@ -51,6 +76,49 @@ $('#recommend').submit(function(){
 	});
 	return false;
 });
+    !function(){
+           laydate.skin('molv');//切换皮肤，请查看skins下面皮肤库
+           laydate({elem: '#demo'});//绑定元素
+       }();
+
+       //日期范围限制
+       var start = {
+           elem: '#start1',
+           format: 'YYYY-MM-DD',
+           min: laydate.now(), //设定最小日期为当前日期
+           max:'', //最大日期
+           istime: false,
+           istoday: false,
+           choose: function(datas){
+                end.min = datas; //开始日选好后，重置结束日的最小日期
+                end.start = datas //将结束日的初始值设定为开始日
+           }
+       };
+
+       laydate(start);  
+    var start2 = {
+           elem: '#start2',
+           format: 'YYYY-MM-DD',
+           min: laydate.now(), //设定最小日期为当前日期
+           max:'', //最大日期
+           istime: false,
+           istoday: false,
+           choose: function(datas){
+                end.min = datas; //开始日选好后，重置结束日的最小日期
+                end.start2 = datas //将结束日的初始值设定为开始日
+           }
+       };
+    laydate(start2); 
+    $("input[type=submit]").click(function(e){
+        e.stopPropagation();
+        var date_start=new Date($("#start1").val()).getTime()/1000/60/60/24;
+        var date_end=new Date($("#start2").val()).getTime()/1000/60/60/24;
+        if(!(date_end-date_start>=1)){
+            alert("置顶时间最少为1天");
+            return false;
+        }
+    })
+    
 </script>
 </body>
 </html>
