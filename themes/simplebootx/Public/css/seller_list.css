@@ -50,16 +50,14 @@
 
 
 /*商品详情页面*/
-.group-head{
-	padding-left: 40px;
-}
-.shop-search>.shop-form{
+
+.shop-form{
 	width: 100%;
 	margin: 0;
+	margin-top: 30px;
 }
-.shop-search>.shop-form>div{
+.shop-form>div{
 	display: inline-block;
-	margin-left: 3%;
 }
 
 .shop-form label{
@@ -74,7 +72,7 @@
 	color:#000;
 }
 .shop-form select{
-	width:100px;
+	width:150px;
 	margin-right:10px;
 	float:left;
 	height:44px;
@@ -84,6 +82,7 @@
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
+	padding-left: 12px;
 }
 .shop-form .catecory{
 	margin-left: 15%;
@@ -164,9 +163,6 @@
 		margin-left: 0;
 	}
 	
-	.shop-form select{
-		width: 70px;
-	}
 	
 	
 	
@@ -191,7 +187,7 @@
 
 @media screen and (max-width: 500px){
 	.shop-form select{
-		width: 80px;
+		width: 100px;
 	}
 	.catecory>select{
 		width: 100px;

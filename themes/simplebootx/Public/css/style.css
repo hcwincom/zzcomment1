@@ -74,7 +74,12 @@ textarea{resize: none;}
 
 .shoplist-wrapper{position: relative;}
 .shoplist-wrapper .page{padding:80px 0 80px;}
-.shop-character-list{margin-left:3%; margin-top:30px;}
+/* 城市搜索 */
+.shop-form{width: 100%;margin-top:30px;}
+
+
+
+.shop-character-list{margin-top:30px;}
 .shop-character{font-size:18px;}
 .shop-character>a{display:inline-block;font-size:18px;line-height:18px;margin:3px 0;padding:0 5px;color:#999;border-right: 1px solid #dcdcdc;}
 .shop-character>a:last-child{border: none;}
@@ -153,10 +158,10 @@ textarea{resize: none;}
 .group-head>li.current{background:#d00000;color:#fff;}
 /*页面修改*/
 .group-cont>li{display:none;min-height: 100px;}
-.shop-newadd{margin:30px auto;overflow: hidden;margin-left: 3%;}
+.shop-newadd{margin:30px auto;overflow: hidden;}
 .shop-newadd>li{
 	display: inline-block;
-    width: 24%;
+    width: 20%;
     overflow: hidden;
     border: 1px solid transparent;
     margin: 30px 0;
@@ -677,6 +682,9 @@ a.captcha img{width:100px;height:44px;}
 	.column-product-container>li>a>p>span:last-child{clear:both;float:left;}
 	.shop-comment>li{padding:10px 0;}
 	.shop-comment>li>a{width:10%;height:10%;}
+	/* 商家推荐 */
+	.column-shop-container>li>a{width:210px;}
+	.column-shop-container>li>a>div>img{width:210px;height:120px;overflow: hidden;}
 	.comment-cont{width:90%;}
 	.shop-comment>li{padding:10px 0;}
 	.shop-news>li>a{width:20%;}
@@ -702,7 +710,10 @@ a.captcha img{width:100px;height:44px;}
 	.news-cont{width:75%;}
 	.shop-job>li>a{width: 25%;}
 	.shop-infor>li>a{width: 25%;}
-	..shop-newadd>li>a>div{height: 140px;}
+	.shop-newadd>li>a>div{height: 140px;}
+	/* 商家推荐 */
+	.column-shop-container>li>a{width:160px;}
+	.column-shop-container>li>a>div>img{width:160px;height:110px;overflow: hidden;}
 	/*shop main*/
 	.infor-d3>img{width:300px;height:181px;}
 	.lgwide-container{width:96%;margin:0 2%;}
