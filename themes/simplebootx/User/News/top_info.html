@@ -1,17 +1,44 @@
 <tc_include file="Public/user_head" />
 <div class="per_right rt">
-    <div class="per_rnav">
-        <a class="" href="{:U('index',['sid'=>$sid])}">{$flag}管理</a>
-        <a class="" href="{:U('add',['sid'=>$sid])}">发布新{$flag}</a>
-        <a class="rb" href="{:U('top_info',['sid'=>$sid])}">置顶购买记录</a>
+    <div class="dynamic_main">
+        <div class="per_rnav">
+            <a class="" href="{:U('index',['sid'=>$sid])}">{$flag}管理</a>
+            <a class="" href="{:U('add',['sid'=>$sid])}">发布新{$flag}</a>
+            <a class="rb" href="{:U('top_info',['sid'=>$sid])}">置顶购买记录</a>
+        </div>
+        <div class="per_rnav rnav-two">
+            <div class="all_name">动态名称</div>
+            <div class="all_time">购买时间</div>
+            <div class="all_date">起始时间 </div>
+            <div class="all_date">结束时间</div>
+            <div class="all_state">状态</div>
+            <div class="all_price">总价格</div>
+        </div>
+        <ul class="dynamic_list">
+            <foreach name="list" item="vo">
+                <li>
+                    <div class="lf dynamic_li_lf1">
+                        <p class="per_d1">{$vo.name}</p>
+                    </div>
+                    <div class="lf dynamic_li_lf2">
+                        <p class="per_d1">2018-3-5</p>
+                    </div>
+                    <div class="rt dynamic_li_rt">
+                        <span class="per_d3 time">2018-3-9</span>
+                        <span class="per_d3 time">2018-5-9</span>
+                        <div class="per_d4">
+                            <span>审核通过</span>
+                            <span>审核中...</span>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                </li>
+        
+            </foreach>
+        
+        </ul>
+        <div class="page">{$page}</div>
     </div>
-
-
-
-
-
-
-
 </div>
 
 
