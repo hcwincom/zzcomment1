@@ -2,13 +2,9 @@
 	<div class="per_right rt">
          <div class="dynamic_main">
             <div class="per_rnav">
-              <a class="<eq name='status' value='-1'>rb</eq>" href="{:U('User/News/index',array('sid'=>$sid,'status'=>-1))}">全部</a>
-              <a class="<eq name='status' value='0'>rb</eq>" href="{:U('User/News/index',array('sid'=>$sid,'status'=>0))}">审核中</a>
-              <a class="<eq name='status' value='1'>rb</eq>" href="{:U('User/News/index',array('sid'=>$sid,'status'=>1))}">审核失败</a>
-              <a class="<eq name='status' value='2'>rb</eq>" href="{:U('User/News/index',array('sid'=>$sid,'status'=>2))}">审核完成</a>
-              <a class="<eq name='status' value='3'>rb</eq>" href="{:U('User/News/index',array('sid'=>$sid,'status'=>3))}">已过期</a>
-              <a class="<eq name='status' value='4'>rb</eq>" href="{:U('User/News/add',array('sid'=>$sid,'status'=>4))}">发布新动态</a>
-             	
+              	<a class="rb" href="{:U('index',['sid'=>$sid])}">{$flag}管理</a>
+                <a class="" href="{:U('add',['sid'=>$sid])}">发布新{$flag}</a> 
+               
              </div>
              <div class="per_rnav rnav-two">
                  <div class="check-all">
@@ -18,8 +14,7 @@
                  <div class="all-reds putaway-up">上架</div>
                  <div class="all-reds sold-out">下架</div>
                  <div class="all-reds delete-down">删除</div>
-                 <div>推荐</div>
-                 <div>置顶</div>
+                 
              </div>
              <ul class="dynamic_list">
              <foreach name="list" item="vo">
@@ -30,29 +25,24 @@
                     </div>
                  	<input type="hidden" class="id" value="{$vo.id}"/>
                      <div class="lf dynamic_li_lf1">
-                        <a href="#"> <img class="dy_img" src="__UPLOAD__/{$vo.pic}"></a>  
+                        <a href="{:U('Portal/Seller/news_detail',array('id'=>$vo['id'],'sid'=>$vo['sid']))}"> <img class="dy_img" src="__UPLOAD__/{$vo.pic}"></a>  
                      </div>
                       <div class="lf dynamic_li_lf2">
                          <p class="per_d1">{$vo.name}</p>
-                         <p class="per_d2">{$vo.content}</p>
+                         <p class="per_d2">{$vo.dsc}</p>
                      </div>
                      <div class="rt dynamic_li_rt">
-                      <span class="per_d3 time">{$vo.start_time|date='Y-m-d',###}</span>
-                     <eq name="vo.status" value="2">
-                      <a href="javascript:void(0);" class="per_d6 dyml"><img src="__TMPL__Public/img/groom.png"></a>
-                     <a href="{:U('User/News/add_top',array('id'=>$vo['id'],'sid'=>$vo['sid']))}" class="per_d6"><img src="__TMPL__Public/img/addtop.png"></a>
-                     
+                      	<span class="per_d3 time">{$vo.create_time|date='Y-m-d',###}</span>
+                     <eq name="vo.status" value="3">
+                      	<a href="javascript:void(0);" class="per_d6 dyml"><img src="__TMPL__Public/img/groom.png"></a>
+                      	<a href="{:U('add_top',array('id'=>$vo['id'],'sid'=>$vo['sid']))}" class="per_d6"><img src="__TMPL__Public/img/addtop.png"></a>
+                     	 
                      <else/>
-                      <a href="javascript:void(0);" class="per_d6 dyml2"><img src="__TMPL__Public/img/groom_1.png"></a>
-                    <a href="javascript:void(0);" class="per_d6"><img src="__TMPL__Public/img/addtop_1.png"></a>
-                     
+                      	<a href="javascript:void(0);" class="per_d6 dyml2"><img src="__TMPL__Public/img/groom_1.png"></a>
+                    	<a href="javascript:void(0);" class="per_d6"><img src="__TMPL__Public/img/addtop_1.png"></a> 
                      </eq> 
-                      <switch name="vo.status">
-                     	<case value="0"> <span class="per_d4 expire">审核中</span></case>
-                     	<case value="1"><span class="per_d4 expire">审核失败</span></case>
-                     	<case value="3"><span class="per_d4 expire">已过期</span></case>
-                     	<case value="2"> <a href="{:U('Portal/Seller/news_detail',array('id'=>$vo['id'],'sid'=>$vo['sid']))}" class="per_d4 edit">查看详情</a> </case>
-                     </switch><span class="per_d5 delete"><img src="__TMPL__Public/img/delete.png"></span>
+                      <a href="{:U('edit',['id'=>$vo['id'],'sid'=>$vo['sid']])}" class="per_d4 edit">{$statuss[$vo['status']]}编辑</a>  
+                      <span class="per_d5 delete"><img src="__TMPL__Public/img/delete.png"></span>
                      </div>
                      <div class="clear"></div>
                  </li>

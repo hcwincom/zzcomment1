@@ -17,10 +17,10 @@
 	<!-- main -->
 <div class="hmain-wrapper">
 	<div class="wide-container">
-		 <div class="column2-wrapper">
+		<div class="column2-wrapper">
 			<div class="column-head">
 				<h2>
-					<a href="#" class="lf">
+					<a href="javascript:void(0);" class="lf">
 						<em>商家推荐</em><br>
 						<span>Recommend the merchant</span>							
 					</a>
@@ -31,16 +31,23 @@
 				<ul class="column-shop-container">
 				<foreach name="top_seller" item="vo">
 					<li>
-						<a href="{:U('Portal/Seller/home',array('sid'=>$vo['id']))}" class="shop-content">
+						<a href="{$vo.url}" class="shop-content">
 							<div>
 								<img src="__UPLOAD__/{$vo.pic|default=$company['seller_empty']['content']}" alt="商家图片" title="{$vo.name}">
 							</div>
 							<br>
 							<em>{$vo.name}</em>
+							
 							<p>
+							<empty name="vo.id">
+								<span class="lf shop-level level-color">价格：<i>￥{$vo.price}</i></span>
+								 
+							<else/>
 								<span class="lf shop-level level-color">等级：<i>{$vo.grade}</i></span>
-								 <span class="rt shop-clicknumber">浏览量：{$vo.browse}</span>
+								<span class="rt shop-clicknumber">浏览量：{$vo.browse}</span>
+							</empty>
 							</p>
+							 
 						</a>
 					</li>
 				</foreach>
@@ -49,6 +56,7 @@
 				</ul>
 			</div>
 		</div>
+	 
 		<div class="clear"></div>
 			<div class="column-group">
 				<ul class="group-head" id="group-head">

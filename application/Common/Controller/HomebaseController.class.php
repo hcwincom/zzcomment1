@@ -5,6 +5,7 @@ use Common\Controller\AppframeController;
 
 class HomebaseController extends AppframeController {
 	
+   
 	public function __construct() {
 		$this->set_action_success_error_tpl();
 		parent::__construct();
@@ -67,6 +68,7 @@ class HomebaseController extends AppframeController {
 		        }
 		    } 
 		}
+		 
 		//给头文件读取数据保存到session 
 		if(empty(session('company'))){
 		  
@@ -87,22 +89,19 @@ class HomebaseController extends AppframeController {
 		    $m_city=M('City');
 		    $city1=$m_city->where('type=1')->order($this->order)->select();
 		    $city2=$m_city->where('type=2')->order($this->order)->select();
-		   
 		    
-// 		    $city1=$m_city->where("name='安徽省'")->order($this->order)->select();
-// 		    $city2=$m_city->where("name='安庆市'")->order($this->order)->select();
  
 		    session('add_city1',$city1);
 		    session('add_city2',$city2);
+		    
 		   
 		}
-		  
+		 
 		$this->assign("company",session('company'))
 		->assign("add_cate1",session('add_cate1'))
 		->assign('add_cate2',session('add_cate2'))
 		->assign('add_city1',session('add_city1'))
-		->assign('add_city2',session('add_city2'))
-		->assign('add_city3',session('add_city3'));
+		->assign('add_city2',session('add_city2'));
 		 
 		 
 	}

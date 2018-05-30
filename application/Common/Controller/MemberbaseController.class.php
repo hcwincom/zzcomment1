@@ -8,7 +8,7 @@ class MemberbaseController extends HomebaseController{
 	protected $user_model;
 	protected $user;
 	protected $userid;
-	
+	protected $sid;
 	function _initialize() {
 		parent::_initialize();
 		
@@ -33,7 +33,15 @@ class MemberbaseController extends HomebaseController{
 		    "uid"=>$this->userid,
 		    'status'=>2,
 		);
-		$seller_list=M('Seller')->field('id,name')->where($where)->select();
+		$seller_list=M('Seller')->where($where)->getField('id,name');
+		$sid=I('sid',0,'intval');
+		if($sid!=0){
+		    if(!isset($seller_list[$sid])){
+		        $this->error('店铺数据错误');
+		    }
+		}
+		$this->sid=$sid;
+		$this->assign('sid',$this->sid);
 		$this->assign('seller_list',$seller_list);
 	}
 	

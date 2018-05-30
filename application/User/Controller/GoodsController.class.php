@@ -6,12 +6,11 @@ use Common\Controller\MemberbaseController;
  * 商品管理  */
 class GoodsController extends MemberbaseController {
 	private $m;
-	private $sid;
+ 
 	function _initialize(){
 		parent::_initialize();
 		$this->m=M('Goods');
-		$this->sid=I('sid',0);
-		$this->assign('sid',$this->sid);
+		 
 	}
 	 
     //  

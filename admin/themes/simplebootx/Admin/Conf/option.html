@@ -5,21 +5,23 @@
 		<ul class="nav nav-tabs">
 			<li class=""><a href="{:U('top')}">推荐置顶设置</a></li>
 			<li class=""><a href="{:U('seller')}">店铺推荐位设置</a></li>
-			<li class=""><a href="{:U('option')}">会员操作赠币设置</a></li>
-			<li class="active"><a href="{:U('filter_char')}">网站过滤关键字配置</a></li>
-			 
+			<li class="active"><a href="{:U('option')}">会员操作赠币设置</a></li>
+			<li class=""><a href="{:U('filter_char')}">网站过滤关键字配置</a></li>
+			
 		</ul>
-		<form method="post" class="form-horizontal js-ajax-form" action="{:U('filter_char_do')}">
+		<form method="post" class="form-horizontal js-ajax-form" action="{:U('option_do')}">
 			<fieldset>
 				 
+				<foreach name="conf" item="vo" k="key">
 				
 				<div class="control-group">
-					<label class="control-label">内容</label>
+					<label class="control-label">{$types[$key]}</label>
 					<div class="controls">
-						<textarea  style="width:80%" name="content"  >{$content}</textarea>
+						  <input type="text" value="{$vo}" name="{$key}" required/> 
 					</div>
 				</div>
 				 
+				 </foreach>
 			</fieldset>
 			<div class="form-actions">
 				 
@@ -27,9 +29,10 @@
 				<a class="btn" href="javascript:history.back(-1);">{:L('BACK')}</a>
 			</div>
 			<div class="control-group">
-				<span class="control-label" style="color:red">*</span>
+				<label class="control-label" style="color:red">*</label>
 				<div class="controls">  
-					<span>文字用-分割,如词1-词2-词3。敏感词会被过滤成**</span>
+					<p>赠币在网站消费如商品置顶，推荐位购买中优先使用但不能体现</p>
+					<p> </p> 
 				</div>
 				
 			</div>
