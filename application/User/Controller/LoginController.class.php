@@ -301,7 +301,7 @@ hello;
 	        $data=array('errno'=>0,'error'=>'验证码错误');
 	        $this->ajaxReturn($data);
 	        exit;
-	    }
+	    } 
 	    
 	    $users_model=M("Users");
 	    $rules = array(

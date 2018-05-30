@@ -1823,6 +1823,8 @@ function sp_alpha_id($in, $to_num = false, $pad_up = 4, $passKey = null){
  * @return boolean <br>true：验证码正确，false：验证码错误
  */
 function sp_check_verify_code($verifycode=''){
+    //暂时取消验证
+    return true;
     $verifycode= empty($verifycode)?I('request.verify'):$verifycode;
 	$verify = new \Think\Verify();
 	return $verify->check($verifycode, "");
