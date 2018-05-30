@@ -6,7 +6,7 @@
 .per_main{margin-top:30px;margin-bottom: 100px;}
 .per_main:after{content: "";display: block;height: 0;clear: both;}
 .per_left{width: 200px;background:#f5f5f5;padding-bottom: 20px;float:left;}
-.plt{display: inline-block;font-size:18px;color:#333;line-height:45px;text-align: center;width:100%;}
+.plt{display: inline-block;font-size:18px;color:#333;line-height:45px;text-align: center;width:100%;word-wrap:break-word; word-break:normal;}
 .per_lf{width:100%;border-top:1px solid #dcdcdc;}
 .per_lf_list{}
 .per_lf_list li{font-size:16px;line-height: 35px;list-style: disc!important;text-align:left;width:100px;margin-left:85px;color:#666;}
@@ -167,7 +167,9 @@ background-color: rgba(0, 0, 0, .3);}
 .per_d1,.per_d2{font-size: 16px;color:#666;line-height: 35px;}
 .per_d2{width:450px;line-height: 20px;max-height:40px;text-overflow:ellipsis;overflow: hidden;}
 .per_d3{display: block;width:70px;color:#999;font-size:12px;text-align: center;}
-.per_d4{margin-left:10px;margin-right:10px;width:48px;}
+.per_d4{margin-left:10px;margin-right:10px;width:48px;padding:0 20px;line-height: 35px;text-align: center;display: inline-block;}
+.per_d4 span{display: block;color: #d50000;}
+.per_d4 a{display: block;color: #fff;background: #d50000}
 .per_d5{display: inline-block;width:25px;text-align: center;}
 .per_d6{display: inline-block;width:40px;text-align: center;}
 .dyml,.dyml2{margin-left:70px;}
@@ -177,6 +179,7 @@ background-color: rgba(0, 0, 0, .3);}
 .dingo_bt input{display: inline-block;width:200px;line-height: 35px;text-align: center;background:#f00;color:#fff;margin-top:30px;cursor: pointer;}
 .expire{display: inline-block;width:90px;text-align: center;line-height: 35px;font-size: 16px;color:#999;}
 .form3>span{display: inline-block;line-height:45px;width:110px;font-size: 16px;text-align: right;}
+.form3 i{font-size: 16px;color: #d00000;}
 .form3 input[type="submit"]{padding:0 20px;height:35px;line-height: 35px;background:#eb0000;color:#fff;text-align: center;margin-left:110px;cursor: pointer;font-size: 16px;}
 .form3{margin:10px 0;}
 .date-sjk{line-height: 45px;}

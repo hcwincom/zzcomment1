@@ -52,6 +52,7 @@ $('#recommend').submit(function(){
         alert("置顶时间最少为1天");
         return false;
     }
+    
     var zprice=parseFloat($('#price2').text());
 	$.post("{:U('User/News/add_top_ajax')}",{'id':id,'start':start,'end':end,'zprice':zprice},function(data){
 	 

@@ -17,7 +17,8 @@ class NewsController extends MemberbaseController {
 		$this->assign('size',$this->size);
 		$this->assign('flag','动态');
 		$this->assign('statuss',C('info_status'));
-	}
+    }
+    
 	 
     // 动态
     public function index() {

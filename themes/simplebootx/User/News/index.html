@@ -4,7 +4,7 @@
             <div class="per_rnav">
               	<a class="rb" href="{:U('index',['sid'=>$sid])}">{$flag}管理</a>
                 <a class="" href="{:U('add',['sid'=>$sid])}">发布新{$flag}</a> 
-               
+                <a class="" href="{:U('add',['sid'=>$sid])}">置顶购买记录</a>
              </div>
              <div class="per_rnav rnav-two">
                  <div class="check-all">
@@ -41,7 +41,10 @@
                       	<a href="javascript:void(0);" class="per_d6 dyml2"><img src="__TMPL__Public/img/groom_1.png"></a>
                     	<a href="javascript:void(0);" class="per_d6"><img src="__TMPL__Public/img/addtop_1.png"></a> 
                      </eq> 
-                      <a href="{:U('edit',['id'=>$vo['id'],'sid'=>$vo['sid']])}" class="per_d4 edit">{$statuss[$vo['status']]}编辑</a>  
+                    <div class="per_d4">
+                        <span>{$statuss[$vo['status']]}</span>
+                        <a href="{:U('edit',['id'=>$vo['id'],'sid'=>$vo['sid']])}" class="">编辑</a>
+                    </div>
                       <span class="per_d5 delete"><img src="__TMPL__Public/img/delete.png"></span>
                      </div>
                      <div class="clear"></div>
