@@ -1,23 +1,23 @@
 <ul class="shop-news">
-<foreach name="list_top_active" item="vo">
+<foreach name="list_top_info" item="vo">
 	<li>
-		<a href="{:U('Portal/Seller/news_detail',array('id'=>$vo['id'],'sid'=>$vo['sid']))}" class="lf">
+		<a href="{:U('Portal/Seller/info_detail',array('id'=>$vo['id'],'sid'=>$vo['sid']))}" class="lf">
 			<img src="__UPLOAD__/{$vo.pic}" alt="{$vo.name}" title="{$vo.name}">
 		</a>
 		<div class="lf news-cont">
-			<a href="{:U('Portal/Seller/news_detail',array('id'=>$vo['id'],'sid'=>$vo['sid']))}" class="lf news-title">{$vo.name}</a>
+			<a href="{:U('Portal/Seller/info_detail',array('id'=>$vo['id'],'sid'=>$vo['sid']))}" class="lf news-title">{$vo.name}</a>
 			<span class="rt news-date">{$vo.create_time|date="Y-m-d",###}</span>
 			<p class="clear news-about">{$vo.dsc}</p>
 		</div>
 	</li>
 </foreach>
-<foreach name="list_active" item="vo">
+<foreach name="list_info" item="vo">
 	<li>
-		<a href="{:U('Portal/Seller/news_detail',array('id'=>$vo['id'],'sid'=>$vo['sid']))}" class="lf">
+		<a href="{:U('Portal/Seller/info_detail',array('id'=>$vo['id'],'sid'=>$vo['sid']))}" class="lf">
 			<img src="__UPLOAD__/{$vo.pic}" alt="{$vo.name}" title="{$vo.name}">
 		</a>
 		<div class="lf news-cont">
-			<a href="{:U('Portal/Seller/news_detail',array('id'=>$vo['id'],'sid'=>$vo['sid']))}" class="lf news-title">{$vo.name}</a>
+			<a href="{:U('Portal/Seller/info_detail',array('id'=>$vo['id'],'sid'=>$vo['sid']))}" class="lf news-title">{$vo.name}</a>
 			<span class="rt news-date">{$vo.create_time|date="Y-m-d",###}</span>
 			<p class="clear news-about">{$vo.dsc}</p>
 		</div>

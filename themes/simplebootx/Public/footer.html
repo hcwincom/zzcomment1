@@ -53,12 +53,17 @@ var province=parseInt("{$city1|default=0}");
 var city=parseInt("{$city2|default=0}");
 var town=parseInt("{$city3|default=0}");
 var city_url="{:U('portal/public/city')}";
-$('.city1'+province).prop('selected',true);
-city2(province,$('body'));
-$('.city3'+town).prop('selected',true);
+$('.city1s'+province).prop('selected',true);
+$('.city2 option').hide();
+$('.city2 .city20').show();
+$('.city2 .city2'+province).show();
+$('.city2s'+city).prop('selected',true);
+$('.city31').show(); 
+$('.city3s'+town).prop('selected',true);
 
 
 $('.city1').change(function(){ 
+	 
 	city2(this.value,$(this).parent()); 
 });
 $('.city2').change(function(){
@@ -82,7 +87,7 @@ function city3(fid,$div){
 		$.post(city_url,{'fid':fid},function(data){
 			var list=data.list;
 			for(var i in list){ 
-				$select3.append('<option class="city31" value="'+i+'">'+list[i]+'</option>');
+				$select3.append('<option class="city31 city3s'+i+'" value="'+i+'">'+list[i]+'</option>');
 			}
 		},'json');
 	}

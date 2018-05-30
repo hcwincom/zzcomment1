@@ -2,7 +2,7 @@
 		<div class="top-wrapper">
 			<div class="lf logo">
 				<h1>
-					<a href="{:U('/')}" title="{$company['title']['content']}">
+					<a href="{:U('portal/index/index')}" title="{$company['title']['content']}">
 						<img src="__UPLOAD__/{$company['logo']['content']}" alt="网站LOGO">
 					</a>
 					  
@@ -10,13 +10,13 @@
 			</div>
 			 
 			<div class="lf research">
-				<form action="{:U('/',array('cid0'=>$vo['id'],'char'=>$char))}" method="post" class="lf">
+				<form action="{:U('portal/index/index',array('cid0'=>$vo['id'],'char'=>$char))}" method="post" class="lf">
 					<input type="text" placeholder="请输入感兴趣的商家名称" value="{$keyword}" name="keyword" class="lf">
 					<input type="submit" value="立即搜索" class="lf">
 				</form>
 				<div class="lf shop-type" id="shop-type">
 				<foreach name="add_cate1" item="vo">
-					<a href="{:U('/',array('cid0'=>$vo['id'],'char'=>$char,'keyword'=>$keyword))}" class='<if condition="$vo['id'] eq $cid0">select</if>'>{$vo.name}</a>
+					<a href="{:U('portal/index/index',array('cid0'=>$vo['id'],'char'=>$char,'keyword'=>$keyword))}" class='<if condition="$vo['id'] eq $cid0">select</if>'>{$vo.name}</a>
 				</foreach>
 					 
 				</div>

@@ -8,19 +8,43 @@ use Common\Controller\HomebaseController;
 class IndexController extends HomebaseController {
 	
     //首页
-	public function index() {
-	     
-	     $m=M();
+	public function index() { 
 	    $time=time();
-	    //banner图
-	   
+	    //banner图 
 	    $banners=M('Banner')->order('sort desc')->select();
 	    
 	    $chars=array('A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z');
 	    
 	    $m_seller=M('Seller');
+	    //推荐商家
+	    $top_sellers=[]; 
+	    $tops0=C('price_top_seller');
+	    $tops=C('count_top_seller');
+	    foreach($tops0 as $k=>$v){
+	        if(empty($tops[$k])){
+	            $top_sellers[$k]=$tops0[$k];
+	            $top_sellers[$k]['url']='javascript:void(0)';
+	         }else{
+	             $top_sellers[$k]=$m_seller->where('id='.$tops[$k])->find();
+	             $top_sellers[$k]['url']=U('Portal/Seller/home',array('sid'=>$tops[$k]));
+	         }
+	     }
+	   
 	    //商家//商家排名10
 	    $where_seller=array();
+	    $m_city=M('city');
+	    $citys=session('city');
+	    if($citys['city3']!=0){
+	        $where_seller['city']=['eq',$citys['city3']];
+	    }elseif($citys['city2']!=0){
+	        $tmp=$m_city->where('type=3 and fid='.$citys['city2'])->getField('id',true);
+	        $where_seller['city']=['in',$tmp];
+	    }elseif($citys['city1']!=0){
+	        $tmp1=$m_city->where('type=2 and fid='.$citys['city1'])->getField('id',true);
+	        $tmp2=$m_city->where(['type'=>['eq',3],'fid'=>['in',$tmp1]])->getField('id',true);
+	        $where_seller['city']=['in',$tmp2];
+	        
+	    }
 	    //0未审核，1未认领，2已认领,3已冻结
 	    $where_seller['status']=array('between','1,2');
 	    
@@ -36,7 +60,7 @@ class IndexController extends HomebaseController {
 	    //二级分类
 	    $cid1=I('cid1',0,'intval');
 	    $where_cate=array('type'=>1);
-	    if($cid0>0){
+	    if($cid0>0){ 
 	        $where_cate['fid']=$cid0;
 	    }
 	    if($char!=''){
@@ -57,9 +81,10 @@ class IndexController extends HomebaseController {
 	            $where_seller['cid']=array('eq',0);
 	        }
 	    }
+	    
 	    $total=$m_seller->where($where_seller)->count();
-	    $page = $this->page($total, 20);
-	    $sellers=$m_seller->where($where_seller)->order('create_time desc')->limit($page->firstRow,$page->listRows)->select();
+	    $page = $this->page($total, C('page_seller_list'));
+	    $sellers=$m_seller->where($where_seller)->order('score desc')->limit($page->firstRow,$page->listRows)->select();
 	    
 	    $this->assign('sellers',$sellers)
 	    ->assign('page',$page->show('Admin'));
@@ -69,8 +94,7 @@ class IndexController extends HomebaseController {
 	    ->assign('keyword',$keyword)
 	    ->assign('cid1',$cid1)
 	    ->assign('cate1',$cate1);
-	    //推荐商家
-	    $top_sellers=[]; 
+	    
 	    $this->assign('banners',$banners)
 	    ->assign('html_flag','index')
 	    ->assign('top_seller',$top_sellers);

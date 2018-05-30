@@ -4,11 +4,11 @@
 <body>
 	<tc_include file="Public:header" />  
 	<tc_include file="Public:list_head" />
-	 
+	 	 
 		<div class="shop-colcontainer shop-type2" id="shop_type2">
 			 
 			<foreach name="add_cate1" item="vo">
-				<a href="{:U('/',array('cid0'=>$vo['id'],'keyword'=>$keyword))}" class='<if condition="$vo['id'] eq $cid0">select</if>'>{$vo.name}</a>
+				<a href="{:U('portal/index/index',array('cid0'=>$vo['id'],'keyword'=>$keyword))}" class='<if condition="$vo['id'] eq $cid0">select</if>'>{$vo.name}</a>
 			</foreach>
 		</div>
 		<div class="clear"></div>
@@ -16,15 +16,17 @@
 		
 		<div class="shop-form">
 			<div class="sear-info">
+			<form action="" method="post">
 				<tc_include file="Public:city" />
 				<input type="submit" value="提交" class="subTop" name="subTop">
+			</form>
 			</div>
 			<div class="clear"></div>
 			<div class="shop-character-list">
 				<div class="shop-character" id="shop_character">
 					<span>按行业首字母检索：</span>
 					<foreach name="chars" item="vo">
-						<a href="{:U('/',array('cid0'=>$cid0,'char'=>$vo,'keyword'=>$keyword))}" class='<if condition="$vo eq $char">select</if>'>{$vo}</a>
+						<a href="{:U('portal/index/index',array('cid0'=>$cid0,'char'=>$vo,'keyword'=>$keyword))}" class='<if condition="$vo eq $char">select</if>'>{$vo}</a>
 					</foreach>
 				</div>
 				<div class="clear"></div>
@@ -36,7 +38,7 @@
 								<a href="javascript:void(0);">没有符合条件的分类</a>
 							</empty>
 							<volist name="cate1" id="vo" > 
-								<a href="{:U('/',array('cid1'=>$vo['id'],'char'=>$char,'keyword'=>$keyword,'cid0'=>$cid0))}" class='<if condition="$vo['id'] eq $cid1">select</if>'>{$vo.name}</a>
+								<a href="{:U('portal/index/index',array('cid1'=>$vo['id'],'char'=>$char,'keyword'=>$keyword,'cid0'=>$cid0))}" class='<if condition="$vo['id'] eq $cid1">select</if>'>{$vo.name}</a>
 							</volist> 
 						</div>
 						<div class="more-less">
@@ -68,11 +70,7 @@
 			</div>
 			<div class="page">{$page}</div>
 			 
-		</div>	  
-				 
-			
-	<!-- main end -->
-	</div>
+		 
 	<tc_include file="Public:list_footer" />
    
 </body>

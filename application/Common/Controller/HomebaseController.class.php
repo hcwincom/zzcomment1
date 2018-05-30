@@ -71,7 +71,9 @@ class HomebaseController extends AppframeController {
 		 
 		//给头文件读取数据保存到session 
 		if(empty(session('company'))){
-		  
+		    if(empty(session('city'))){
+		        session('city',['city1'=>0,'city2'=>0,'city3'=>0]);
+		    }
 		    //读取网站配置
 		    $tmp=M('Company')->select();
 		    $company=array();
@@ -96,6 +98,21 @@ class HomebaseController extends AppframeController {
 		    
 		   
 		}
+		 $city['city1']=I('city1',-1);
+		 $city['city2']=I('city2',0);
+		 $city['city3']=I('city3',0);
+		 $citys=session('city');
+		 //如果没提交城市，选择原session.如果有选择就更新
+		 if($city['city1']==-1){
+		     $city=$citys;
+		 }else{
+		     session('city',$city);
+		     if($city['city2']!=0){
+		         $city3=$m_city->where('type=3 and fid='.$city['city2'])->order($this->order)->select();
+		         $this->assign("add_city3",$city3);
+		     }
+		 }
+		 $this->assign("city1",$city['city1'])->assign("city2",$city['city2'])->assign("city3",$city['city3']);
 		 
 		$this->assign("company",session('company'))
 		->assign("add_cate1",session('add_cate1'))

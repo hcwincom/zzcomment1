@@ -70,6 +70,39 @@ class PublicController extends HomebaseController {
          $this->ajaxReturn(['list'=>$list]);
          exit;
      }
+      /* 更新原有数据 */
+     public function test(){
+         //更新所有商品和动态状态2为状态3
+         $m=M('goods');
+         $m->where(['status'=>2])->save(['status'=>3]);
+         //设置所有信息城市为安庆潜山
+         $m->where('1')->save(['city'=>340824]);
+         
+         $m=M('active');
+         $m->where(['status'=>2])->save(['status'=>3]);
+        //动态content内容文字提取到dsc中
+         $list=$m->getfield('id,dsc,content');
+         $tmp=[];
+         foreach($list as $k=>$v){
+             if(empty($v['dsc'])){
+                 $content_01 = $v['content'];//从数据库获取富文本content
+                 $content_02 = htmlspecialchars_decode($content_01); //把一些预定义的 HTML 实体转换为字符
+                 $content_03 = str_replace("&nbsp;","",$content_02);//将空格替换成空
+                 $tmp[$k]= strip_tags($content_03);//函数剥去字符串中的 HTML、XML 以及 PHP 的标签,获取纯文本内容
+                 $m->where('id='.$k)->save(['dsc'=>$tmp[$k]]);
+            }
+             
+         }  
+        //设置所有动态城市为安庆潜山
+         $m->where('1')->save(['city'=>340824]);
+         
+         //更新所有评论
+         $m=M('comment'); 
+         //设置所有信息城市为安庆潜山
+         $m->where('1')->save(['city'=>340824]);
+         
+         exit('结束');
+     }
 }
 
 

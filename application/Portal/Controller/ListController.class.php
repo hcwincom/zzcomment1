@@ -7,185 +7,210 @@ class ListController extends HomebaseController {
     function _initialize(){
         parent::_initialize();
         $banners=M('Banner')->order('sort desc')->select();
+         
         //推荐商家
-        $list_top_seller=[];
+        $m_seller=M('Seller');
+        $top_sellers=[];
+        $tops0=C('price_top_seller');
+        $tops=C('count_top_seller');
+        foreach($tops0 as $k=>$v){
+            if(empty($tops[$k])){
+                $top_sellers[$k]=$tops0[$k];
+                $top_sellers[$k]['url']='javascript:void(0)';
+            }else{
+                $top_sellers[$k]=$m_seller->where('id='.$tops[$k])->find();
+                $top_sellers[$k]['url']=U('Portal/Seller/home',array('sid'=>$tops[$k]));
+            }
+        }
         $this->assign('banners',$banners);
-        $this->assign('list_top_seller',$list_top_seller);
+        $this->assign('top_seller',$top_sellers);
     }
 	// 新增店铺列表
-	public function sellers() {
-	   
-	    $chars=array('A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z');
-	     
-	    $m_seller=M('Seller'); 
-	    //商家//商家排名10
-	    $where_seller=array();
-	    //0未审核，1未认领，2已认领,3已冻结
-	    $where_seller['status']=array('between','1,2');
-	    
-	    $keyword=trim(I('keyword',''));
-	    if($keyword!=''){
-	        $where_seller['name']=array('like','%'.$keyword.'%');
-	    }
-	    //大类
-	    $m_cate=M('Cate');
-	    $cid0=I('cid0',0,'intval');
-	    //小类首字母
-	    $char=I('char','');
-	    //二级分类
-	    $cid1=I('cid1',0,'intval');
-	    $where_cate=array('type'=>1);
-	    if($cid0>0){
-	        $where_cate['fid']=$cid0; 
-	    }
-	    if($char!=''){
-	        $where_cate['first_char']=$char;  
-	    }
-	    $cate1=$m_cate->where($where_cate)->order('sort desc,first_char asc')->select(); 
-	    
-	    //如果有点击分类
-	    if($cid1>0){
-	        $where_seller['cid']=array('eq',$cid1); 
-	    }else{
-	        if(!empty($cate1)){
-	            foreach($cate1 as $v){
-	                $cids[]=$v['id'];
-	            }
-	            $where_seller['cid']=array('in',$cids);
-	        }else{
-	            $where_seller['cid']=array('eq',0);
-	        }
-	    } 
-	    $total=$m_seller->where($where_seller)->count();
-	    $page = $this->page($total, 20);
-	    $sellers=$m_seller->where($where_seller)->order('create_time desc')->limit($page->firstRow,$page->listRows)->select();
-	    
-	    $this->assign('sellers',$sellers) 
-	    ->assign('page',$page->show('Admin'));
-	   $this->assign('chars',$chars)
-	   ->assign('char',$char)
-	   ->assign('cid0',$cid0)
-	   ->assign('keyword',$keyword)
-	   ->assign('cid1',$cid1)
-	   ->assign('cate1',$cate1);
-	   $this->assign('html_flag','sellers');
-	   $this->display();
-	    
-	}
-	/*商品列表页  */
-	public function goods(){
-	  
-	    $m=M('Goods');
-	    $time=time();
-	    //推荐商家
-	    $where_top=array();
-	    //0申请。，1不同意，2同意
-	    $where_top['status']=array('eq',2);
-	    
-	    //此处直接比较时间，没有服务器检查过期
-	    $where_top['start_time']=array('lt',$time);
-	    
-	    //先找置顶 
-// 	    $top_len=20;
-	    $tmp=M('TopGoods')->where($where_top)->select();
-	    $sids=array();
-	    foreach ($tmp as $v){
-	        $sids[]=$v['pid'];
-	    }
-	    $len=0;
-	    if((count($sids))>0){
-	        $where=array('id'=>array('in',$sids));
-	        //推荐动态发布时间排名
-	        $list_top=$m->order('start_time desc')->where($where)->select();
-// 	        $len=count($list_top);
-	    }
-	    //少于$active_len个要有其他动态
-	    //置顶的动态不变
-	    $total=$m->where($where_top)->count();
-	    $page = $this->page($total, 20-$len);
-	    
-	    $list=$m->where($where_top)->order('start_time desc')->limit($page->firstRow,$page->listRows)->select();
-	    
-	    $this->assign('list_goods',$list)->assign('list_top_goods',$list_top)
-	    ->assign('page',$page->show('Admin'));
-	    $this->assign('html_flag','goods');
-	    $this->display();
-	}
+    public function sellers() {
+        $time=time();
+        //banner图
+        $banners=M('Banner')->order('sort desc')->select();
+        
+        $chars=array('A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z');
+        
+        $m_seller=M('Seller');
+        //推荐商家
+        $top_sellers=[];
+        $tops0=C('price_top_seller');
+        $tops=C('count_top_seller');
+        foreach($tops0 as $k=>$v){
+            if(empty($tops[$k])){
+                $top_sellers[$k]=$tops0[$k];
+                $top_sellers[$k]['url']='javascript:void(0)';
+            }else{
+                $top_sellers[$k]=$m_seller->where('id='.$tops[$k])->find();
+                $top_sellers[$k]['url']=U('Portal/Seller/home',array('sid'=>$tops[$k]));
+            }
+        }
+        
+        //商家//商家排名10
+        $where_seller=array();
+        $tmp=$this->city();
+        if(!empty($tmp)){
+            $where_seller['city']=$tmp;
+        }
+        //0未审核，1未认领，2已认领,3已冻结
+        $where_seller['status']=array('between','1,2');
+        
+        $keyword=trim(I('keyword',''));
+        if($keyword!=''){
+            $where_seller['name']=array('like','%'.$keyword.'%');
+        }
+        //大类
+        $m_cate=M('Cate');
+        $cid0=I('cid0',0,'intval');
+        //小类首字母
+        $char=I('char','');
+        //二级分类
+        $cid1=I('cid1',0,'intval');
+        $where_cate=array('type'=>1);
+        if($cid0>0){
+            $where_cate['fid']=$cid0;
+        }
+        if($char!=''){
+            $where_cate['first_char']=$char;
+        }
+        $cate1=$m_cate->where($where_cate)->order('sort desc,first_char asc')->select();
+        
+        //如果有点击分类
+        if($cid1>0){
+            $where_seller['cid']=array('eq',$cid1);
+        }else{
+            if(!empty($cate1)){
+                foreach($cate1 as $v){
+                    $cids[]=$v['id'];
+                }
+                $where_seller['cid']=array('in',$cids);
+            }else{
+                $where_seller['cid']=array('eq',0);
+            }
+        }
+        
+        $total=$m_seller->where($where_seller)->count();
+        $page = $this->page($total, C('page_seller_list'));
+        $sellers=$m_seller->where($where_seller)->order('create_time desc')->limit($page->firstRow,$page->listRows)->select();
+        
+        $this->assign('sellers',$sellers)
+        ->assign('page',$page->show('Admin'));
+        $this->assign('chars',$chars)
+        ->assign('char',$char)
+        ->assign('cid0',$cid0)
+        ->assign('keyword',$keyword)
+        ->assign('cid1',$cid1)
+        ->assign('cate1',$cate1);
+        
+        $this->assign('banners',$banners)
+        ->assign('html_flag','sellers')
+        ->assign('top_seller',$top_sellers);
+        
+        $this->display();
+    }
+	 
 	/* 动态 */
 	public function news(){
 	    $time=time(); 
-	    $m=M('Active');
-	    $where_top=array(); 
-	    //0申请。，1不同意，2同意
-	    $where_top['status']=array('eq',2);
-	     
-	    //此处直接比较时间，没有服务器检查过期
-	    $where_top['start_time']=array('lt',$time);
-	   
+	    $m=M('Active'); 
+	    $order='start_time desc';
+	    $field='id,sid,pic,name,dsc,start_time';
 	    //先找置顶动态
-	    $top_len=10;
-	    $tmp=M('TopActive')->where($where_top)->limit(0,10)->select();
-	    $sids=array();
-	    foreach ($tmp as $v){
-	        $sids[]=$v['pid'];
-	    }
+	    //0申请，1不同意，2同意，3，生效中，4过期  
+	    $where_top=['status'=>['eq',3]];  
+	    $top_len=C('price_top_active.top_count');
+	    $sids=M('TopActive')->where($where_top)->limit(0,$top_len)->getField('pid',true);
+	    $list_top_active=[];
 	    $len=0;
-	    if((count($sids))>0){ 
+	    if(!empty($sids)){ 
 	        $where=array('id'=>array('in',$sids));
 	        //推荐动态发布时间排名
-	        $list_top_active=$m->order('start_time desc')->where($where)->select();
+	        $list_top_active=$m->field($field)->order($order)->where($where)->select();
 	        $len=count($list_top_active);
-	    }
-	    foreach($list_top_active as $k=>$v){
-	         
-	        $content_01 = $v["content"];//从数据库获取富文本content
-	        $content_02 = htmlspecialchars_decode($content_01); //把一些预定义的 HTML 实体转换为字符
-	        $content_03 = str_replace("&nbsp;","",$content_02);//将空格替换成空
-	        $contents = strip_tags($content_03);//函数剥去字符串中的 HTML、XML 以及 PHP 的标签,获取纯文本内容
-	        $con = mb_substr($contents, 0, 100,"utf-8");//返回字符串中的前100字符串长度的字符
-	        $list_top_active[$k]['content']=$con;
-	    }
-	    //少于$active_len个要有其他动态
-	    //置顶的动态不变
-	    $total=$m->where($where_top)->count();
-	    $page = $this->page($total, 10-$len);
+	    } 
 	    
-	    $list=$m->where($where_top)->order('start_time desc')->limit($page->firstRow,$page->listRows)->select();
-	    foreach($list as $k=>$v){
-	        
-	        $content_01 = $v["content"];//从数据库获取富文本content
-	        $content_02 = htmlspecialchars_decode($content_01); //把一些预定义的 HTML 实体转换为字符
-	        $content_03 = str_replace("&nbsp;","",$content_02);//将空格替换成空
-	        $contents = strip_tags($content_03);//函数剥去字符串中的 HTML、XML 以及 PHP 的标签,获取纯文本内容
-	        $con = mb_substr($contents, 0, 100,"utf-8");//返回字符串中的前100字符串长度的字符
-	        $list[$k]['content']=$con;
-	    }
+	   
+	    //0申请。，1不同意，2同意3=>'上架',4=>'下架' 
+	    $where=['status'=>['eq',3]]; 
+	    $tmp=$this->city();
+	    if(!empty($tmp)){
+	        $where['city']=$tmp;
+	    } 
+	    $total=$m->where($where)->count();
+	    $page = $this->page($total, C('page_news_list')-$len);
+	    
+	    $list=$m->field($field)->where($where)->order($order)->limit($page->firstRow,$page->listRows)->select();
+	    
 	    $this->assign('list_active',$list)->assign('list_top_active',$list_top_active)
 	    ->assign('page',$page->show('Admin'));
 	    $this->assign('html_flag','news');
 	    $this->display();
 	}
-	
+	/* 商品列表页 */
+	public function goods(){
+	    $time=time();
+	    $m=M('goods');
+	    $order='start_time desc';
+	    $field='id,sid,pic,name,start_time';
+	    //先找置顶动态
+	    //0申请，1不同意，2同意，3，生效中，4过期
+	    $where_top=['status'=>['eq',3]];
+	    $top_len=C('price_top_goods.top_count');
+	    $sids=M('TopGoods')->where($where_top)->limit(0,$top_len)->getField('pid',true);
+	    $list_top_active=[];
+	    $len=0;
+	    if(!empty($sids)){
+	        $where=array('id'=>array('in',$sids));
+	        //推荐动态发布时间排名
+	        $list_top_active=$m->field($field)->order($order)->where($where)->select();
+	        $len=count($list_top_active);
+	    }
+	    
+	    
+	    //0申请。，1不同意，2同意3=>'上架',4=>'下架'
+	    $where=['status'=>['eq',3]];
+	    $tmp=$this->city();
+	    if(!empty($tmp)){
+	        $where['city']=$tmp;
+	    }
+	    $total=$m->where($where)->count();
+	    $page = $this->page($total, C('page_goods_list')-$len);
+	    
+	    $list=$m->field($field)->where($where)->order($order)->limit($page->firstRow,$page->listRows)->select();
+	    
+	    $this->assign('list_goods',$list)->assign('list_top_goods',$list_top_active)
+	    ->assign('page',$page->show('Admin'));
+	    $this->assign('html_flag','goods');
+	    $this->display();
+	}
 	//店铺点评
 	public function comments(){
 	    $time=time();
 	    //点评
 	    $where_comment=array('status'=>2);
+	    $tmp=$this->city();
+	    if(!empty($tmp)){
+	        $where_comment['city']=$tmp;
+	    }
 	     $uid=I('uid',0);
 	     if($uid>0){
 	         $where_comment['uid']=$uid;
 	     }
 	   
 	    $total=M('Comment')->where($where_comment)->count();
-	    $page = $this->page($total, 10);
-	    $list=D('Comment0View')->where($where_comment)->order('id desc')->limit($page->firstRow,$page->listRows)->select();
-	    $m_reply=D('Reply0View');
-	    foreach ($list as $k=>$v){
-	        $list[$k]['reply']=$m_reply->where('cid='.$v['id'])->order('id desc')->select();
-	    }
-	     
-	    $this->assign('list_comment',$list)
-	    ->assign('page',$page->show('Admin'));
+	    if($total){ 
+    	    $page = $this->page($total, C('page_comment_list'));
+    	    $ids=M('Comment')->where($where_comment)->getField('id',true);
+    	    $list=D('Comment0View')->where(['id'=>['in',$ids]])->order('id desc')->limit($page->firstRow,$page->listRows)->select();
+    	    $m_reply=D('Reply0View');
+    	    foreach ($list as $k=>$v){
+    	        $list[$k]['reply']=$m_reply->where('cid='.$v['id'])->order('id desc')->select();
+    	    }
+    	    $this->assign('list_comment',$list)
+    	    ->assign('page',$page->show('Admin'));
+	    } 
 	    $this->assign('html_flag','comments');
 	    $this->display();
 	}
@@ -193,69 +218,91 @@ class ListController extends HomebaseController {
 	public function jobs(){
 	    $time=time();
 	    $m=M('job');
-	    $where_top=array();
-	    //0申请。，1不同意，2同意
-	    $where_top['status']=array('eq',2);
-	    
-	    //此处直接比较时间，没有服务器检查过期
-	    $where_top['start_time']=array('lt',$time);
-	    
+	    $order='start_time desc';
+	    $field='id,sid,pic,name,dsc,start_time';
 	    //先找置顶动态
-	    $top_len=10;
-	    $tmp=M('TopActive')->where($where_top)->limit(0,10)->select();
-	    $sids=array();
-	    foreach ($tmp as $v){
-	        $sids[]=$v['pid'];
-	    }
+	    //0申请，1不同意，2同意，3，生效中，4过期
+	    $where_top=['status'=>['eq',3]];
+	    $top_len=C('price_top_job.top_count');
+	    $sids=M('TopJob')->where($where_top)->limit(0,$top_len)->getField('pid',true);
+	    $list_top_job=[];
 	    $len=0;
-	    if((count($sids))>0){
+	    if(!empty($sids)){
 	        $where=array('id'=>array('in',$sids));
 	        //推荐动态发布时间排名
-	        $list_top_active=$m->order('start_time desc')->where($where)->select();
-	        $len=count($list_top_active);
+	        $list_top_job=$m->field($field)->order($order)->where($where)->select();
+	        $len=count($list_top_job);
 	    }
-	    foreach($list_top_active as $k=>$v){
-	        
-	        $content_01 = $v["content"];//从数据库获取富文本content
-	        $content_02 = htmlspecialchars_decode($content_01); //把一些预定义的 HTML 实体转换为字符
-	        $content_03 = str_replace("&nbsp;","",$content_02);//将空格替换成空
-	        $contents = strip_tags($content_03);//函数剥去字符串中的 HTML、XML 以及 PHP 的标签,获取纯文本内容
-	        $con = mb_substr($contents, 0, 100,"utf-8");//返回字符串中的前100字符串长度的字符
-	        $list_top_active[$k]['content']=$con;
-	    }
-	    //少于$active_len个要有其他动态
-	    //置顶的动态不变
-	    $total=$m->where($where_top)->count();
-	    $page = $this->page($total, 10-$len);
 	    
-	    $list=$m->where($where_top)->order('start_time desc')->limit($page->firstRow,$page->listRows)->select();
-	    foreach($list as $k=>$v){
-	        
-	        $content_01 = $v["content"];//从数据库获取富文本content
-	        $content_02 = htmlspecialchars_decode($content_01); //把一些预定义的 HTML 实体转换为字符
-	        $content_03 = str_replace("&nbsp;","",$content_02);//将空格替换成空
-	        $contents = strip_tags($content_03);//函数剥去字符串中的 HTML、XML 以及 PHP 的标签,获取纯文本内容
-	        $con = mb_substr($contents, 0, 100,"utf-8");//返回字符串中的前100字符串长度的字符
-	        $list[$k]['content']=$con;
+	    
+	    //0申请。，1不同意，2同意3=>'上架',4=>'下架'
+	    $where=['status'=>['eq',3]];
+	    $tmp=$this->city();
+	    if(!empty($tmp)){
+	        $where['city']=$tmp;
 	    }
-	    $this->assign('list_active',$list)->assign('list_top_active',$list_top_active)
+	    $total=$m->where($where)->count();
+	    $page = $this->page($total, C('page_job_list')-$len);
+	    
+	    $list=$m->field($field)->where($where)->order($order)->limit($page->firstRow,$page->listRows)->select();
+	    
+	    $this->assign('list_job',$list)->assign('list_top_job',$list_top_job)
 	    ->assign('page',$page->show('Admin'));
-	    $this->assign('html_flag','news');
+	    $this->assign('html_flag','jobs');
 	    $this->display();
 	}
 	/*便民信息 */
 	public function infos(){
 	    $time=time();
 	    $m=M('info');
-	    $where=array();
+	    $order='start_time desc';
+	    $field='id,sid,pic,name,dsc,start_time';
+	    //先找置顶动态
+	    //0申请，1不同意，2同意，3，生效中，4过期
+	    $where_top=['status'=>['eq',3]];
+	    $top_len=C('price_top_info.top_count');
+	    $sids=M('TopInfo')->where($where_top)->limit(0,$top_len)->getField('pid',true);
+	    $list_top_info=[];
+	    $len=0;
+	    if(!empty($sids)){
+	        $where=array('id'=>array('in',$sids));
+	        //推荐动态发布时间排名
+	        $list_top_info=$m->field($field)->order($order)->where($where)->select();
+	        $len=count($list_top_info);
+	    }
+	    
+	    
+	    //0申请。，1不同意，2同意3=>'上架',4=>'下架'
+	    $where=['status'=>['eq',3]];
+	    $tmp=$this->city();
+	    if(!empty($tmp)){
+	        $where['city']=$tmp;
+	    }
 	    $total=$m->where($where)->count();
-	    $page = $this->page($total, 10);
-	    $list=$m->where($where)->order('start_time desc')->limit($page->firstRow,$page->listRows)->select();
-	    $cates=M('cate')->where('fid=0 and type=3')->select();
-	    $this->assign('info_cates',$cates);
-	    $this->assign('list_info',$list)
+	    $page = $this->page($total, C('page_info_list')-$len);
+	    
+	    $list=$m->field($field)->where($where)->order($order)->limit($page->firstRow,$page->listRows)->select();
+	    
+	    $this->assign('list_info',$list)->assign('list_top_info',$list_top_info)
 	    ->assign('page',$page->show('Admin'));
-	    $this->assign('html_flag','news');
+	    $this->assign('html_flag','infos');
 	    $this->display();
+	}
+	/* 获取城市信息 */
+	public function city(){
+	    $m_city=M('city');
+	    $citys=session('city');
+	    if($citys['city3']!=0){
+	        return ['eq',$citys['city3']];
+	    }elseif($citys['city2']!=0){
+	        $tmp=$m_city->where('type=3 and fid='.$citys['city2'])->getField('id',true);
+	        return ['in',$tmp];
+	    }elseif($citys['city1']!=0){
+	        $tmp1=$m_city->where('type=2 and fid='.$citys['city1'])->getField('id',true);
+	        $tmp2=$m_city->where(['type'=>['eq',3],'fid'=>['in',$tmp1]])->getField('id',true);
+	        return ['in',$tmp2]; 
+	    }else{
+	        return 0;
+	    }
 	}
 }
