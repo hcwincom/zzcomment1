@@ -3,8 +3,9 @@
          <div class="dynamic_main">
             <div class="per_rnav">
               	<a class="rb" href="{:U('index',['sid'=>$sid])}">{$flag}管理</a>
+              	<a class="" href="{:U('top',['sid'=>$sid])}">{$flag}置顶记录</a>
                 <a class="" href="{:U('add',['sid'=>$sid])}">发布新{$flag}</a> 
-                <a class="" href="{:U('add',['sid'=>$sid])}">置顶购买记录</a>
+                
              </div>
              <div class="per_rnav rnav-two">
                  <div class="check-all">
@@ -59,7 +60,7 @@
                  <div class="dingo_main">
                       <form action="" method="" id="top-form0">
                       <input type="hidden" vlaue="0" id="top-id"/>
-                     <div class="dingo_text"><span>推荐价格：</span><i class="red">{$company['top_active_fee0']['content']}</i>元</div>
+                     <div class="dingo_text"><span>推荐价格：</span><i class="red">{$top0_price}</i>元</div>
                      <div class="dingo_bt"><input type="submit" value="确认支付"></div>
                      </form>
                  </div>
@@ -73,6 +74,7 @@
 </body>
 </html>
 <script>
+var sid="{$sid}";
 //推荐获取id值
 $(".dyml").click(function(){
 	$(".dingo").show();
@@ -80,9 +82,12 @@ $(".dyml").click(function(){
 	$(".dingo #top-id").val(id);
 });
 $('.delete').click(function(){
+	if(!confirm('是否确认删除')){
+		return false;
+	}
 	var $li=$(this).parents('li');
 	var id=$li.find('.id').val();
-	$.post("{:U('User/News/del')}",{'id':id},function(data){
+	$.post("{:U('User/News/del')}",{'id':id,'sid':sid},function(data){
 		if(data.errno!=1){ 
 			alert('删除失败'); 
 		}
@@ -93,11 +98,8 @@ $('.delete').click(function(){
 $('#top-form0').submit(function(){
 	var id=$('#top-id').val();
 	$('.dingo').hide();
-	$.post("{:U('User/News/top0')}",{'id':id},function(data){ 
-		alert(data.error); 
-		if(data.errno==1){
-			location.reload(true);
-		}
+	$.post("{:U('User/News/top0')}",{'id':id,'sid':sid},function(data){ 
+		alert(data.error);
 	});
 	return false;
 });
@@ -139,23 +141,50 @@ $('#top-form0').submit(function(){
     //上架事件
     $(".putaway-up").click(function(){
         var arr_uid=get_value($(".dynamic_list .checked-on"));
-        if(!arr_uid==""){
-            console.log(arr_uid)
+        if(arr_uid==""){
+           alert('未选中信息');
+           return false;
         }
+        $.post("{:U('User/News/status0')}",{'ids':arr_uid,'status':3,'sid':sid},function(data){ 
+        	if(data.errno==1){
+     			location.reload(true);
+     		}else{
+     			alert(data.error);
+     		}
+    	},'json');
     });
     //下架事件
     $(".sold-out").click(function(){
         var arr_uid=get_value($(".dynamic_list .checked-on"));
-        if(!arr_uid==""){
-            console.log(arr_uid)
-        }
+        if(arr_uid==""){
+            alert('未选中信息');
+            return false;
+         }
+         $.post("{:U('User/News/status0')}",{'ids':arr_uid,'status':4,'sid':sid},function(data){ 
+        	 if(data.errno==1){
+      			location.reload(true);
+      		}else{
+      			alert(data.error);
+      		}
+     	},'json');
     });
     //删除事件
-    $(".delete-down").click(function(){
+    $(".delete-down").click(function(){ 
         var arr_uid=get_value($(".dynamic_list .checked-on"));
-        if(!arr_uid==""){
-            console.log(arr_uid)
-        }
+        if(arr_uid==""){
+            alert('未选中信息');
+            return false;
+         }
+        if(!confirm('是否确认删除')){
+    		return false;
+    	}
+         $.post("{:U('User/News/dels')}",{'ids':arr_uid,'sid':sid},function(data){  
+     		if(data.errno==1){
+     			location.reload(true);
+     		}else{
+     			alert(data.error);
+     		}
+     	},'json');
     })
     //全选获取选中的uil
     function get_value(element){

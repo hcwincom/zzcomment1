@@ -5,8 +5,7 @@ use Common\Controller\MemberbaseController;
 /*
  * 点评管理  */
 class NewsController extends MemberbaseController {
-	private $m;
-	
+	private $m; 
 	private $size;
 	function _initialize(){
 		parent::_initialize();
@@ -17,8 +16,7 @@ class NewsController extends MemberbaseController {
 		$this->assign('size',$this->size);
 		$this->assign('flag','动态');
 		$this->assign('statuss',C('info_status'));
-    }
-    
+	}
 	 
     // 动态
     public function index() {
@@ -32,19 +30,40 @@ class NewsController extends MemberbaseController {
         $total=$m->where($where)->count();
         $page = $this->page($total, C('PAGE'));
         $list=$m->field('id,name,sid,pic,dsc,status,create_time')->where($where)->order('create_time desc')->limit($page->firstRow,$page->listRows)->select();
-       /*  foreach($list as $k=>$v){
-           
-            $content_01 = $v["content"];//从数据库获取富文本content
-            $content_02 = htmlspecialchars_decode($content_01); //把一些预定义的 HTML 实体转换为字符
-            $content_03 = str_replace("&nbsp;","",$content_02);//将空格替换成空
-            $contents = strip_tags($content_03);//函数剥去字符串中的 HTML、XML 以及 PHP 的标签,获取纯文本内容
-            $con = mb_substr($contents, 0, 100,"utf-8");//返回字符串中的前100字符串长度的字符
-            $list[$k]['content']=$con;
-       } */
+       
        $this->assign('page',$page->show('Admin'));
-       $this->assign('list',$list)->assign('status',$status);
+       $this->assign('list',$list)
+       ->assign('status',$status)
+       ->assign('top0_price', C('price_top_active.top0_price'));
        $this->display();
        
+    }
+    // 动态置顶
+    public function top() {
+        $m=$this->m;
+        $where=array('sid'=>$this->sid);
+        $pids=$m->where($where)->getField('id',true);
+        $m_top=M('TopActive');
+        if(!empty($pids)){
+            $where=[
+                'pid'=>['in',$pids]
+            ];
+            $total=$m_top->where($where)->count();
+            $page = $this->page($total, C('PAGE'));
+            $list=$m_top
+            ->alias('t')
+            ->join('cm_active as p on p.id=t.pid')
+            ->field('t.*,p.name')
+            ->where($where)->order('create_time desc')
+            ->limit($page->firstRow,$page->listRows)
+            ->select(); 
+            $this->assign('page',$page->show('Admin'));
+            $this->assign('list',$list);
+            $this->assign('top_status',C('top_status'));
+        }
+       
+        $this->display();
+        
     }
     /* 添加 */
     public function add(){
@@ -69,16 +88,60 @@ class NewsController extends MemberbaseController {
     public function del(){
         $m=$this->m;
         $id=I('id',0);
-        $where='id='.$id; 
+        $where=['id'=>$id,'sid'=>($this->sid)]; 
         $info=$m->where($where)->find();
+       
+        if(empty($info)){
+            $data=array('errno'=>2,'error'=>'数据错误，请刷新');
+            $this->ajaxReturn($data);
+            exit;
+        }
         $row=$m->where($where)->delete();
         if($row===1){
-            $data=array('errno'=>1,'error'=>'删除成功');
-             
-             active_del($info);
+            $data=array('errno'=>1,'error'=>'删除成功'); 
+             pro_del('Active',$info);
         }else{
             $data=array('errno'=>2,'error'=>'删除失败');
         }
+        $this->ajaxReturn($data);
+        exit;
+    }
+    //删除
+    public function dels(){
+        $m=$this->m;
+        $ids=I('ids',''); 
+        $where=['id'=>['in',$ids],'sid'=>($this->sid)];
+        $list=$m->where($where)->field('id,pic')->select();
+        $row=$m->where($where)->delete();
+        if($row>=1){
+            $data=array('errno'=>1,'error'=>'删除成功'); 
+            pro_dels('Active',$list);
+        }else{
+            $data=array('errno'=>2,'error'=>'删除失败');
+        }
+        $this->ajaxReturn($data);
+        exit;
+    }
+    //下架上架
+    public function status0(){
+        $m=$this->m;
+        $ids=I('ids','');
+        $status=I('status',0,'intval');
+        $data=array('errno'=>0,'error'=>'操作未执行');
+        if(empty($ids) || empty($status)){
+            $data['error']='数据错误';
+            $this->ajaxReturn($data);
+            exit;
+        }
+       //检查是否有未审核数据
+        $tmp=$m->where(['id'=>['in',$ids],'status'=>['lt',2]])->find();
+        if(!empty($tmp)){
+            $data['error']='不能修改未审核通过的信息';
+            $this->ajaxReturn($data);
+            exit;
+        }
+        $row=$m->where(['id'=>['in',$ids]])->save(['status'=>$status]);
+        $data=array('errno'=>1,'error'=>'更新成功');
         $this->ajaxReturn($data);
         exit;
     }
@@ -89,21 +152,13 @@ class NewsController extends MemberbaseController {
         $time=time();
         $data=array('errno'=>0,'error'=>'动态推荐还未执行');
         $info=$m->where('id='.$id)->find();
-        if($info['status']!=2){ 
+        if($info['status']!=3){ 
             $data['error']='该动态无法购买推荐';
             $this->ajaxReturn($data);
             exit;
         }
-        $price=session('company.top_active_fee0');
-        $price=$price['content'];
-        //检查价格是否更新
-        $tmp=M('Company')->where(array('name'=>'top_active_fee0'))->find();
-        if($tmp['content']!=$price){
-            $data['error']='推荐价格变化，请刷新页面';
-            session('company',null);
-            $this->ajaxReturn($data);
-            exit;
-        }
+        $price=C('price_top_active.top0_price');
+        
         //扣款
         if($price>0){
             $m_user=M('Users');
@@ -163,7 +218,7 @@ class NewsController extends MemberbaseController {
         $m=$this->m;
         $info=$m->where('id='.$id)->find();
         if($info['status']!=3){
-            $this->error('该动态无法购买置顶');
+            $this->error('未上架不能置顶');
         }
          
         $top=array();
@@ -180,9 +235,9 @@ class NewsController extends MemberbaseController {
         $this->display();
     }
     
-    //ajax
-    public function add_top_ajax(){
-        $id=I('id',0);
+    //ajax和do
+    public function add_top_do(){
+        $id=I('id',0); 
         $m=M('TopActive');
         $start=strtotime(I('start',''));
         $end=strtotime(I('end',''));
@@ -191,49 +246,60 @@ class NewsController extends MemberbaseController {
         $time0=strtotime(date('Y-m-d'));
         $days=bcdiv(($end-$start),86400,0);
         if($start<$time0 || $days<1){
-            $data['error']='日期选择错误';
-            $this->ajaxReturn($data);
+            
+            $this->error('日期选择错误');
             exit;
         }
-        
+        //未上架不能置顶
         $info=M('Active')->where(array('id'=>$id,'status'=>3))->find();
-        if(empty($info)){
-            $data['error']='不能置顶';
-            $this->ajaxReturn($data);
+        if(empty($info)){ 
+            $this->error('未上架不能置顶');
             exit;
         }
-        $uid=$this->userid;
         $conf=C('price_top_active');
+        $uid=$this->userid;
         $price0=$conf['top_price'];
         //暂时
         $price=bcmul($days,$price0,2);
         //检查价格是否更新 
-        if($price!=bcmul($days,$price0,2)){
-            $data['error']='置顶价格变化，请刷新页面'; 
-            $this->ajaxReturn($data);
+        if($price!=bcmul($days,$price0,2)){ 
+            $this->error('置顶价格变化，请刷新页面');
             exit;
         }
-        $m->startTrans();
-        //获取时间段内已置顶信息,开始时间《=别人的结束时间，
-        //先不做
+       
+        //获取时间段内已置顶信息,置顶位满不能置顶
+        $m->startTrans(); 
+        $num=$conf['top_count'];
+        $where=[
+            'status'=>['between','2,3'],
+            'start_time'=>['between',[$start+1,$end-1]],
+            'end_time'=>['between',[$start+1,$end-1]],
+        ];
+        
+        $count=$m->where($where)->count('pid');
+        if($count>=$num){
+            $m->rollback();
+            $this->error('置顶位已满,请重新选择时间'); 
+            exit;
+        }
         
         //扣款
         if($price>0){
             $m_user=M('Users');
             $user=$m_user->where('id='.$uid)->find();
             if(empty($user) || $user['account']<$price){
-                $data['error']='你的余额不足，请充值';
-                $this->ajaxReturn($data);
+                
+                $m->rollback();
+                $this->error('你的余额不足，请充值');
                 exit;
             }
             $account=bcsub($user['account'],$price);
            
             $row_user=$m_user->data(array('account'=>$account))->where('id='.$uid)->save();
-            if($row_user!==1){
+            if($row_user!==1){ 
                 $m->rollback();
-                $data['error']='扣款失败';
-                $this->ajaxReturn($data);
-                exit;
+                $this->error('扣款失败');
+                exit; 
             }
         }
         //推荐
@@ -250,7 +316,7 @@ class NewsController extends MemberbaseController {
         
         $row=$m->add($data_top);
         if($row>=1){
-            $data=array('errno'=>1,'error'=>'推荐成功');
+            $data=array('errno'=>1,'error'=>'置顶成功');
             if(!empty($row_user)){
                 $data_pay=array(
                     'uid'=>$uid,
@@ -258,18 +324,15 @@ class NewsController extends MemberbaseController {
                     'time'=>$time,
                     'content'=>'置顶动态'.$id.'-'.$info['name'],
                 );
-                M('Pay')->add($data_pay);
-                $m->commit();
+                M('Pay')->add($data_pay); 
             }
+            $m->commit();
+            $this->success('置顶成功',U('top',['sid'=>$info['sid']]));
         }else{
-            if(!empty($row_user)){
-                $m->rollback();
-            }
-            $data=array('errno'=>2,'error'=>'置顶失败');
+            $m->rollback();
+            $this->error('置顶失败'); 
         }
-        $this->ajaxReturn($data);
-        exit;
-        
+        exit; 
     }
     
     //add_do
@@ -312,9 +375,11 @@ class NewsController extends MemberbaseController {
         if($start<$time){
             $this->error('请选择有效时间');
         }
+        $city=M('seller')->where(['id'=>$this->sid])->getField('city');
         $data=array(
             'sid'=>$this->sid,
             'pic'=>$pic,
+            'city'=>$city,
             'create_time'=>$time,
             'start_time'=>$time,
             'end_time'=>$start,

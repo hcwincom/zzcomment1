@@ -9,6 +9,7 @@ class MemberbaseController extends HomebaseController{
 	protected $user;
 	protected $userid;
 	protected $sid;
+	 
 	function _initialize() {
 		parent::_initialize();
 		
@@ -41,6 +42,7 @@ class MemberbaseController extends HomebaseController{
 		    }
 		}
 		$this->sid=$sid;
+		 
 		$this->assign('sid',$this->sid);
 		$this->assign('seller_list',$seller_list);
 	}

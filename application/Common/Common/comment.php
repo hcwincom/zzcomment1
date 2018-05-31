@@ -163,16 +163,70 @@ function goods_del($info0){
     M('TopGoods0')->where('pid='.$info0['id'])->delete();
 }
 /*
- * 删除动态的图片和推荐置顶 */
+ * 删除动态的图片 */
 function active_del($info0){
-    //删除图片和推荐置顶
-    
+    //删除图片 
     $file=getcwd().'/'.C("UPLOADPATH").'/'.$info0['pic'];
     if(is_file($file)){
         unlink($file);
-    }
+    } 
     M('TopActive')->where('pid='.$info0['id'])->delete();
     M('TopActive0')->where('pid='.$info0['id'])->delete();
+}
+/*
+ * 删除动态的图片和推荐置顶 */
+function active_dels($list){
+    //删除图片和推荐置顶
+    $path=getcwd().'/'.C("UPLOADPATH").'/';
+    $ids=[];
+    foreach($list as $k=>$v){
+        $ids[]=$k;
+        if(is_file($path.$v)){
+            unlink($path.$v);
+        } 
+    } 
+    $where=['pid'=>['in',$ids]];
+    M('TopActive')->where($where)->delete();
+    M('TopActive0')->where($where)->delete();
+   
+}
+/*
+ * 删除店铺信息的图片和推荐置顶 */
+function pro_dels($type,$list){
+    //删除图片和推荐置顶
+    $path=getcwd().'/'.C("UPLOADPATH").'/';
+    $ids=[];
+    foreach($list as $k=>$v){
+        $ids[]=$v['id'];
+        if(is_file($path.$v['pic'])){
+            unlink($path.$v['pic']);
+        }
+        if(is_file($path.$v['pic0'])){
+            unlink($path.$v['pic0']);
+        }
+    }
+    $where=['pid'=>['in',$ids]];
+    M('Top'.$type)->where($where)->delete();
+    M('Top'.$type.'0')->where($where)->delete();
+    
+}
+/*
+ * 删除店铺信息的图片和推荐置顶 */
+function pro_del($type,$info){
+    //删除图片和推荐置顶
+    $path=getcwd().'/'.C("UPLOADPATH").'/';
+    
+    if(is_file($path.$info['pic'])){
+        unlink($path.$info['pic']);
+    }
+    if(is_file($path.$info['pic0'])){
+        unlink($path.$info['pic0']);
+    }
+    
+    $where=['pid'=>['eq',$info['id']]];
+    M('Top'.$type)->where($where)->delete();
+    M('Top'.$type.'0')->where($where)->delete();
+    
 }
 /*
  * 删除评级 */

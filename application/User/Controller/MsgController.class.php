@@ -6,7 +6,7 @@ use Common\Controller\MemberbaseController;
  * msg  */
 class MsgController extends MemberbaseController {
 	private $m;
-	private $sid;
+	 
 	function _initialize(){
 		parent::_initialize();
 		$this->m=M('Msg');

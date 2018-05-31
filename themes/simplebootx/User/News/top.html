@@ -7,7 +7,7 @@
             <a class="" href="{:U('add',['sid'=>$sid])}">发布新{$flag}</a> 
         </div>
         <div class="per_rnav rnav-two">
-            <div class="all_name">动态名称</div>
+            <div class="all_name">{$flag}名称</div>
             <div class="all_time">购买时间</div>
             <div class="all_date">起始时间 </div>
             <div class="all_date">结束时间</div>
@@ -21,21 +21,20 @@
                         <p class="per_d1">{$vo.name}</p>
                     </div>
                     <div class="lf dynamic_li_lf2">
-                        <p class="per_d2 timer">2018-3-5</p>
+                        <p class="per_d2 timer">{$vo.create_time|date='Y-m-d H:i',###}</p>
                     </div>
                     <div class="rt dynamic_li_rt">
                         <div class="per_d3">
-                            <span class="timer">2018-3-9</span>
+                            <span class="timer">{$vo.start_time|date='Y-m-d',###}</span>
                         </div>
                         <div class="per_d4">
-                            <span class="timer">2018-3-10</span>
+                            <span class="timer">{$vo.end_time|date='Y-m-d',###}</span>
                         </div>
                         <div class="per_d5">
-                            <span class="audit">审核通过</span>
-                            <span class="">审核中...</span>
+                            <span class="audit">{$top_status[$vo['status']]}</span> 
                         </div>
                         <div class="per_d6">
-                            <span class="price">1元</span>
+                            <span class="price">{$vo['price']}元(含赠币{$vo['price1']})元</span>
                         </div>
                     </div>
                     <div class="clear"></div>
