@@ -55,13 +55,22 @@ $(document).ready(function(){
 	})
 	
 	// home tab
-	$("#group-cont>li:first").fadeIn();
-	$("#group-head>li").click(function(){
-		$(this).addClass("current").siblings().removeClass("current");
-		var suoyin=$(this).index();
-		$("#group-cont>li").hide();
-		$("#group-cont>li").eq(suoyin).fadeIn();
+	$("#group-cont>li").click(function(){
+		$(this).children().addClass("current").parent().siblings().children().removeClass("current");
 	});
+
+
+
+	// $("#group-cont>li:first").fadeIn();
+	// $("#group-head>li").click(function(){
+	// 	$(this).addClass("current").siblings().removeClass("current");
+	// 	var suoyin=$(this).index();
+	// 	$("#group-cont>li").hide();
+	// 	$("#group-cont>li").eq(suoyin).fadeIn();
+	// });
+
+
+	
 
 	// shop nav
 	$("#shop_nav a").click(function(){
@@ -74,18 +83,21 @@ $(document).ready(function(){
 	})
 
 	// comment
+	// $(".comment-rbtn5").click(function() {
+	// 	var num = $(this).children().text();
+	// 	num++;
+	// 	$(this).children().text(num);
+	// });
+
 	$(".comment-rbtn2").click(function(){
-		var num = $(this).children().text();
-		num++;
-		$(this).children().text(num);
-//		if($(this).text()=="展开回复"){
-//			$(this).parent(".comment-reply").next(".comment-cont2").fadeIn();
-//			$(this).text("隐藏回复");
-//		}
-//		else{
-//			$(this).parent(".comment-reply").next(".comment-cont2").fadeOut();
-//			$(this).text("展开回复");
-//		}
+		if($(this).text()=="展开回复"){
+			$(this).parent(".comment-reply").next(".comment-cont2").fadeIn();
+			$(this).text("隐藏回复");
+		}
+		else{
+			$(this).parent(".comment-reply").next(".comment-cont2").fadeOut();
+			$(this).text("展开回复");
+		}
 	})
 
 	$(".comment-rbtn1").click(function(){
@@ -98,11 +110,11 @@ $(document).ready(function(){
 		$("#reply_layer").fadeOut();
 	})
 	
-	$(".comment-rbtn3").click(function(){
-		var num = $(this).children().text();
-		num++;
-		$(this).children().text(num);
-	});
+	// $(".comment-rbtn3").click(function(){
+	// 	var num = $(this).children().text();
+	// 	num++;
+	// 	$(this).children().text(num);
+	// });
 
 	// addshop
 	$("#pop_layer input:text").each(function(){
