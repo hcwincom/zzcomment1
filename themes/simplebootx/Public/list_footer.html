@@ -16,6 +16,13 @@
 			},function(){
 				$(".flex-direction-nav li a.flex-prev").css("left","-46px");
 				$(".flex-direction-nav li a.flex-next").css("right","-46px");
-			})
+			});
+			
+			$(".group-head>li>a").each(function () {
+
+				$(this).attr("href", $(this).attr("href") + "#group-head");
+			});
+
 		});	
 	</script>
+	

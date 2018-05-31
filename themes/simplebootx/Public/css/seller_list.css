@@ -50,7 +50,7 @@
 
 
 /*商品详情页面*/
-.sear-info>input[type="submit"]{
+.sear-info input[type="submit"]{
 	width: 100px;
 	line-height: 42px;
 	font-size: 16px;

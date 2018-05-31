@@ -14,29 +14,29 @@
             <div class="all_state">状态</div>
             <div class="all_price">总价格</div>
         </div>
-        <ul class="dynamic_list">
+        <ul class="dynamic_list rnav_list">
             <foreach name="list" item="vo">
                 <li>
-                    <div class="lf dynamic_li_lf1">
-                        <p class="per_d1">{$vo.name}</p>
+                    <div class="">
+                        <p class="per_all1">{$vo.name}</p>
                     </div>
-                    <div class="lf dynamic_li_lf2">
-                        <p class="per_d2 timer">{$vo.create_time|date='Y-m-d H:i',###}</p>
+                    <div class="">
+                        <p class="per_all2 timer">{$vo.create_time|date='Y-m-d H:i',###}</p>
                     </div>
-                    <div class="rt dynamic_li_rt">
-                        <div class="per_d3">
+                
+                        <div class="per_all3">
                             <span class="timer">{$vo.start_time|date='Y-m-d',###}</span>
                         </div>
-                        <div class="per_d4">
+                        <div class="per_all4">
                             <span class="timer">{$vo.end_time|date='Y-m-d',###}</span>
                         </div>
-                        <div class="per_d5">
+                        <div class="per_all5">
                             <span class="audit">{$top_status[$vo['status']]}</span> 
                         </div>
-                        <div class="per_d6">
+                        <div class="per_all6">
                             <span class="price">{$vo['price']}元(含赠币{$vo['price1']})元</span>
                         </div>
-                    </div>
+                  
                     <div class="clear"></div>
                 </li>
         

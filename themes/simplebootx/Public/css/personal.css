@@ -64,7 +64,7 @@
 .form1{font-size: 16px;}
 .per_rnav{width:100%;background:#e5e5e5;}
 .rnav-two{margin-top:10px;}
-.rnav-two div{display:inline-block;height:40px;;line-height:40px;margin-left:30px;cursor: pointer;}
+.rnav-two div{display:inline-block;height:40px;;line-height:40px;margin-left:20px;cursor: pointer;width: 13%;}
 .check-all{margin-left:10px!important;position:absolute}
 .all-reds{color: #d50000;}
 .checked-alls{width:20px;float:left;margin-left:10px;}
@@ -160,6 +160,8 @@ background-color: rgba(0, 0, 0, .3);}
 .adddynamic{margin-top:30px;}
 .dynamic_list{width:100%;}
 .dynamic_list li{border-bottom: 1px solid #dcdcdc;margin-top:15px;padding-bottom:30px;position:relative}
+.rnav_list li{padding-bottom: 15px;}
+.rnav_list li div{display: inline-block;margin-left: 20px;width: 13%;}
 .dy_img{width:144px;}
 .dynamic_li_lf1{width:170px;margin-left: 48px;}
 .dynamic_li_lf2{width:400px;overflow: hidden;}
@@ -461,7 +463,9 @@ td.msgmaner_td3 ul li{
 	
 	.dynamic_li_lf2 p{
         font-size:14px!important;
-    }
+	}
+	.rnav-two div{width: 16%;margin-left: 10px;}
+	.rnav_list li div{padding-bottom: 20px;}
 	
 }
 @media screen and (max-width:500px){
@@ -483,7 +487,9 @@ td.msgmaner_td3 ul li{
 @media screen and (max-width:465px){
     .dynamic_li_lf2 {
         width: 50%;
-    }
+	}
+	.rnav-two div{width: 16%;margin-left: 10px;}
+	.rnav_list li div{width: 16%;margin-left: 10px;padding-bottom: 20px;}
 }
 @media screen and (max-width:400px) {
     .form1 input[type="submit"],.form1 input[type="reset"]{padding:0 20px;height:35px;line-height: 35px;background:#eb0000;color:#fff;text-align: center;margin-right:30px;cursor: pointer;font-size: 16px;}
@@ -509,7 +515,8 @@ td.msgmaner_td3 ul li{
 	.rcont_main_list>.per_li5{display: none;}
 	.rcont_main_list>.per_li6{display: none;}
     
-	
+	.rnav-two div{width: 18%;margin-left: 10px;}
+	.rnav_list li div{width: 18%;margin-left: 10px;padding-bottom: 20px;}
  }
 
 

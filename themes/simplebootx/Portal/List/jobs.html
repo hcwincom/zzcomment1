@@ -13,7 +13,33 @@
 						<input type="submit" value="提交" class="subTop" name="subTop">
 					</form>
 				</div>	
- 		
+			</div>
+			<!-- 行业搜索 -->
+			<div class="shop-character-list">
+				<div class="shop-character" id="shop_character">
+					<span>按行业首字母检索：</span>
+					<foreach name="chars" item="vo">
+						<a href="{:U('portal/index/index',array('cid0'=>$cid0,'char'=>$vo,'keyword'=>$keyword))}" class='<if condition="$vo eq $char">select</if>'>{$vo}</a>
+					</foreach>
+				</div>
+				<div class="clear"></div>
+				<notempty name="cid0">
+					<div class="shop-type-subcontain">
+						<div class="shop-type-sub">
+							<a href="javascript:void(0);" class="select">行业分类</a>
+							<empty name="cate1">
+								<a href="javascript:void(0);">没有符合条件的分类</a>
+							</empty>
+							<volist name="cate1" id="vo">
+								<a href="{:U('portal/index/index',array('cid1'=>$vo['id'],'char'=>$char,'keyword'=>$keyword,'cid0'=>$cid0))}" class='<if condition="$vo['
+								 id '] eq $cid1">select</if>'>{$vo.name}</a>
+							</volist>
+						</div>
+						<div class="more-less">
+							<a href="javascript:void(0);" id="more_less">展开</a>
+						</div>
+					</div>
+				</notempty>
 			</div>
 			 
 			<div class="shop-colcontainer">
