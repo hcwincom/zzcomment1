@@ -92,15 +92,15 @@ function anycheck(form){
         var f = Math.round(money*100)/100;    
         var s = f.toString();    
         var rs = s.indexOf('.');    
-        console.log(f)
-        console.log(s)
-        console.log(rs)
+        // console.log(f)
+        // console.log(s)
+        // console.log(rs)
         if (rs < 0) {    
             rs = s.length;    
             s += '.';    
         }    
-        console.log(s)
-        console.log(rs)
+        // console.log(s)
+        // console.log(rs)
         while (s.length <= rs + 2) {    
             s += '0';    
         }    

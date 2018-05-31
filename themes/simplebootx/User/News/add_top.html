@@ -58,54 +58,128 @@ $('#recommend').submit(function(){
 });
     !function(){
            laydate.skin('molv');//切换皮肤，请查看skins下面皮肤库
-           laydate({elem: '#demo'});//绑定元素
+        //    laydate({elem: '#demo'});//绑定元素
        }();
-
        //日期范围限制
        var start = {
            elem: '#start1',
            format: 'YYYY-MM-DD',
            min: laydate.now(), //设定最小日期为当前日期
            max:'', //最大日期
-           istime: false,
-           istoday: true,
+           istime: true,
+           istoday: false,
            choose: function(datas){
                 end.min = datas; //开始日选好后，重置结束日的最小日期
                 end.start = datas //将结束日的初始值设定为开始日
            }
        };
 
-       laydate(start);  
-    var start2 = {
+    laydate(start);  
+    var end = {
            elem: '#start2',
            format: 'YYYY-MM-DD',
            min: laydate.now(), //设定最小日期为当前日期
            max:'', //最大日期
-           istime: false,
-           istoday: false,
+           istime: true,
+            istoday: false,
            choose: function(datas){
-                end.min = datas; //开始日选好后，重置结束日的最小日期
-                end.start2 = datas //将结束日的初始值设定为开始日
+                // start1.min = datas; //开始日选好后，重置结束日的最小日期
+                // start1.start2 = datas //将结束日的初始值设定为开始日
+                 start.max = datas; //结束日选好后，重置开始日的最大日期  
            }
        };
-    laydate(start2); 
-  $('#start1,#start2').change(function(){
-	  	var start0=$.trim($("#start1").val());
-		var end0=$.trim($("#start2").val());
-		if(start=='' || end==''){
-			 return false;
-		}
-	    var date_start=new Date(start0).getTime()/1000/60/60/24;
-	    var date_end=new Date(end0).getTime()/1000/60/60/24;
-	    var days=date_end-date_start;
-	    if(!(days>=1)){ 
-	        return false;
-	    }
-	    var price=parseFloat($('#price1').text());
-	    var zprice=price*days;
-	    $('#price2').text(zprice);
-	    $('#zprice').val(zprice);
-  });
+    laydate(end);  
+
+
+
+    laydate({
+        istime:true,
+        format: 'YYYY-MM-DD',
+        elem:"#start1",
+        event:"focus",
+        choose:function(){
+            editprice();
+        }
+    });
+     laydate({
+            istime: true,
+            format: 'YYYY-MM-DD',
+            elem: "#start2",
+            event: "focus",
+            choose: function () {
+                editprice();
+            }
+        });
+
+    function editprice() {
+           var start0 = $.trim($("#start1").val());
+        console.log(start0);
+        var end0 = $.trim($("#start2").val());
+        console.log(end0);
+        if (start == '' || end == '') {
+            return false;
+        }
+        var date_start = new Date(start0).getTime() / 1000 / 60 / 60 / 24;
+        console.log(date_start);
+        var date_end = new Date(end0).getTime() / 1000 / 60 / 60 / 24;
+        console.log(date_end);
+        var days = date_end - date_start;
+        console.log(days);
+        if (!(days >= 1)) {
+            return false;
+        }
+        var price = parseFloat($('#price1').text());
+        var zprice = price * days;
+        $('#price2').text(zprice);
+        console.log();
+        $('#zprice').val(zprice);
+        console.log();
+    }
+
+
+    //    $(document).on("click","#laydate_table",function(){
+           
+    //        var start0 = $.trim($("#start1").val());
+    //        console.log(start0);
+    //        var end0 = $.trim($("#start2").val());
+    //        console.log(end0);
+    //        if (start == '' || end == '') {
+    //            return false;
+    //        }
+    //        var date_start = new Date(start0).getTime() / 1000 / 60 / 60 / 24;
+    //        console.log(date_start);
+    //        var date_end = new Date(end0).getTime() / 1000 / 60 / 60 / 24;
+    //        console.log(date_end);
+    //        var days = date_end - date_start;
+    //        console.log(days);
+    //        if (!(days >= 1)) {
+    //            return false;
+    //        }
+    //        var price = parseFloat($('#price1').text());
+    //        var zprice = price * days;
+    //        $('#price2').text(zprice);
+    //        console.log();
+    //        $('#zprice').val(zprice);
+    //        console.log();
+    //    });
+
+         
+
+
+
+
+
+
+       
+
+     
+    
+
+
+
+
+
+
     
 </script>
 </body>
