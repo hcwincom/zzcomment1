@@ -84,8 +84,8 @@ class HomebaseController extends AppframeController {
 		    
 		    //读取网站头文件中一级分类
 		    $m_cate=M('Cate');
-		    $cate1=$m_cate->where('fid=0 and type=1')->order('sort desc,name asc')->select();
-		    $cate2=$m_cate->where('fid>0 and type=1')->order('sort desc,first_char asc')->select(); 
+		    $cate1=$m_cate->where('fid=0 and type=1')->order('sort desc,name asc')->getField('id,name');
+		    $cate2=$m_cate->where('fid>0 and type=1')->order('sort desc,first_char asc')->getField('id,fid,name'); 
 		    session('add_cate1',$cate1);
 		    session('add_cate2',$cate2);
 		    $m_city=M('City');

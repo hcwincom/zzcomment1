@@ -16,7 +16,7 @@
 				</form>
 				<div class="lf shop-type" id="shop-type">
 				<foreach name="add_cate1" item="vo">
-					<a href="{:U('portal/index/index',array('cid0'=>$vo['id'],'char'=>$char,'keyword'=>$keyword))}" class='<if condition="$vo['id'] eq $cid0">select</if>'>{$vo.name}</a>
+					<a href="{:U('portal/index/index',array('cid0'=>$key,'char'=>$char,'keyword'=>$keyword))}" class='<if condition="$key eq $cid0">select</if>'>{$vo}</a>
 				</foreach>
 					 
 				</div>
@@ -56,7 +56,7 @@
 					<select name="catecory" id="add-cate1">
 						<option value="0">分类</option>
 					<foreach name="add_cate1" item="vo">
-						<option value="{$vo.id}">{$vo.name}</option>
+						<option value="{$key}">{$vo}</option>
 					</foreach>	 
 					</select>
 					<select name="letter" id="add-cate2">

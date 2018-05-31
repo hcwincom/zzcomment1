@@ -13,8 +13,7 @@ class IndexController extends HomebaseController {
 	    //banner图 
 	    $banners=M('Banner')->order('sort desc')->select();
 	    
-	    $chars=array('A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z');
-	    
+	   
 	    $m_seller=M('Seller');
 	    //推荐商家
 	    $top_sellers=[]; 
@@ -32,68 +31,32 @@ class IndexController extends HomebaseController {
 	   
 	    //商家//商家排名10
 	    $where_seller=array();
-	    $m_city=M('city');
-	    $citys=session('city');
-	    if($citys['city3']!=0){
-	        $where_seller['city']=['eq',$citys['city3']];
-	    }elseif($citys['city2']!=0){
-	        $tmp=$m_city->where('type=3 and fid='.$citys['city2'])->getField('id',true);
-	        $where_seller['city']=['in',$tmp];
-	    }elseif($citys['city1']!=0){
-	        $tmp1=$m_city->where('type=2 and fid='.$citys['city1'])->getField('id',true);
-	        $tmp2=$m_city->where(['type'=>['eq',3],'fid'=>['in',$tmp1]])->getField('id',true);
-	        $where_seller['city']=['in',$tmp2];
-	        
-	    }
+	    
 	    //0未审核，1未认领，2已认领,3已冻结
 	    $where_seller['status']=array('between','1,2');
-	    
+	    //处理城市
+	    $tmp=$this->city();
+	    if(!empty($tmp)){
+	        $where_seller['city']=$tmp;
+	    }
+	    //处理分类
+	    $tmp=$this->cate(1);
+	    if(!empty($tmp)){
+	        $where_seller['cid']=$tmp;
+	    } 
 	    $keyword=trim(I('keyword',''));
 	    if($keyword!=''){
 	        $where_seller['name']=array('like','%'.$keyword.'%');
-	    }
-	    //大类
-	    $m_cate=M('Cate');
-	    $cid0=I('cid0',0,'intval');
-	    //小类首字母
-	    $char=I('char','');
-	    //二级分类
-	    $cid1=I('cid1',0,'intval');
-	    $where_cate=array('type'=>1);
-	    if($cid0>0){ 
-	        $where_cate['fid']=$cid0;
-	    }
-	    if($char!=''){
-	        $where_cate['first_char']=$char;
-	    }
-	    $cate1=$m_cate->where($where_cate)->order('sort desc,first_char asc')->select();
-	    
-	    //如果有点击分类
-	    if($cid1>0){
-	        $where_seller['cid']=array('eq',$cid1);
-	    }else{
-	        if(!empty($cate1)){
-	            foreach($cate1 as $v){
-	                $cids[]=$v['id'];
-	            }
-	            $where_seller['cid']=array('in',$cids);
-	        }else{
-	            $where_seller['cid']=array('eq',0);
-	        }
 	    }
 	    
 	    $total=$m_seller->where($where_seller)->count();
 	    $page = $this->page($total, C('page_seller_list'));
 	    $sellers=$m_seller->where($where_seller)->order('score desc')->limit($page->firstRow,$page->listRows)->select();
-	    
+	   
+	  
 	    $this->assign('sellers',$sellers)
 	    ->assign('page',$page->show('Admin'));
-	    $this->assign('chars',$chars)
-	    ->assign('char',$char)
-	    ->assign('cid0',$cid0)
-	    ->assign('keyword',$keyword)
-	    ->assign('cid1',$cid1)
-	    ->assign('cate1',$cate1);
+	    $this->assign('keyword',$keyword);
 	    
 	    $this->assign('banners',$banners)
 	    ->assign('html_flag','index')
@@ -101,7 +64,7 @@ class IndexController extends HomebaseController {
 	  
 	    $this->display();
     }
-   
+     
     //回复评级
     public function reply(){
         $cid=I('cid',0);
@@ -148,7 +111,57 @@ class IndexController extends HomebaseController {
         $this->assign('info',$info);
         $this->display();
     }
-    
+    /* 获取城市信息 */
+    public function city(){
+        $m_city=M('city');
+        $citys=session('city');
+        if($citys['city3']!=0){
+            return ['eq',$citys['city3']];
+        }elseif($citys['city2']!=0){
+            $tmp=$m_city->where('type=3 and fid='.$citys['city2'])->getField('id',true);
+            return ['in',$tmp];
+        }elseif($citys['city1']!=0){
+            $tmp1=$m_city->where('type=2 and fid='.$citys['city1'])->getField('id',true);
+            $tmp2=$m_city->where(['type'=>['eq',3],'fid'=>['in',$tmp1]])->getField('id',true);
+            return ['in',$tmp2];
+        }else{
+            return 0;
+        }
+    }
+    /* 分类处理 */
+    public function cate($type=1){
+        $chars=array('A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z');
+        
+        //大类
+        $m_cate=M('Cate');
+        $cid0=I('cid0',0,'intval');
+        //小类首字母
+        $char=I('char','');
+        //二级分类
+        $cid1=I('cid1',0,'intval');
+        $where_cate=array('type'=>$type);
+        if($char!=''){
+            $where_cate['first_char']=$char;
+        }
+        if($type==1 && $cid0>0){
+            $where_cate['fid']=$cid0;
+        }
+        $cate1=$m_cate->where($where_cate)->order('sort desc,first_char asc')->getField('id,name');
+        $where_tmp=0;
+        //如果有点击分类
+        if($cid1>0){
+            $where_tmp=array('eq',$cid1);
+        }else{
+            $where_tmp=array('in',array_keys($cate1));
+        }
+        $this->assign('cid0',$cid0)
+        ->assign('cid1',$cid1)
+        ->assign('chars',$chars)
+        ->assign('char',$char)
+        ->assign('cate1',$cate1);
+        
+        return $where_tmp;
+    }
 
 }
 
