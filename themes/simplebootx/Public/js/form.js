@@ -72,8 +72,17 @@ $(".msg3").text("请选择时限");//显示必填
 return false;
 }
     };
+// 验证文件的大小
+    function ssize() {
+        var size = $("input[type=file]").get(0).filles[0].size;
+        if(size > 4*1024*1024){
+            alert("上传的图片的大于4M,请重新选择")
+            return false;
+        }
+        
+    }
 function send1(){
-    return(tit1()&&time()&&asd())
+    return (tit1() && time() && asd() && ssize());
 }
 function shopname1(){
 var cval = $("input[name='shopname']").val();    
