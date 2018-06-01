@@ -67,12 +67,17 @@ $('#recommend').submit(function(){
            min: laydate.now(), //设定最小日期为当前日期
            max:'', //最大日期
            istime: false,
-           istoday: false,
-           choose: function(datas){
-                end.min = datas; //开始日选好后，重置结束日的最小日期
+           istoday: true,
+             choose: function(datas){       
+              
+              datas = new Date(new Date(datas).getTime() + (1000 * 60 * 60 * 24));
+                datas = datas.getFullYear() + "-" + (datas.getMonth() + 1) + "-" + datas.getDate(); //重新格式化
+
+                 end.min = datas; //开始日选好后，重置结束日的最小日期
                 end.start = datas; //将结束日的初始值设定为开始日
                 editprice();
-           }
+           } 
+             
        };
 
     laydate(start);  
@@ -83,24 +88,19 @@ $('#recommend').submit(function(){
            max:'', //最大日期
            istime: false,
             istoday: false,
-           choose: function(datas){
-                // start1.min = datas; //开始日选好后，重置结束日的最小日期
-                // start1.start2 = datas //将结束日的初始值设定为开始日
-                 start.max = datas; //结束日选好后，重置开始日的最大日期  
+           choose: function(datas){ 
                  editprice();
            }
        };
     laydate(end);  
     function editprice() {
-           var start0 = $.trim($("#start1").val());
-       
+        var start0 = $.trim($("#start1").val());
         var end0 = $.trim($("#start2").val());
 
         if (start == '' || end == '' || start0.length == 0 || end0.length == 0) {
             return false;
         }
         var date_start = new Date(start0).getTime() / 1000 / 60 / 60 / 24;
-      
         var date_end = new Date(end0).getTime() / 1000 / 60 / 60 / 24;
        
         var days = date_end - date_start;
@@ -115,52 +115,6 @@ $('#recommend').submit(function(){
        
         $('#zprice').val(zprice);    
     }
-
-   
-
-    //    $(document).on("click","#laydate_table",function(){
-           
-    //        var start0 = $.trim($("#start1").val());
-    //        console.log(start0);
-    //        var end0 = $.trim($("#start2").val());
-    //        console.log(end0);
-    //        if (start == '' || end == '') {
-    //            return false;
-    //        }
-    //        var date_start = new Date(start0).getTime() / 1000 / 60 / 60 / 24;
-    //        console.log(date_start);
-    //        var date_end = new Date(end0).getTime() / 1000 / 60 / 60 / 24;
-    //        console.log(date_end);
-    //        var days = date_end - date_start;
-    //        console.log(days);
-    //        if (!(days >= 1)) {
-    //            return false;
-    //        }
-    //        var price = parseFloat($('#price1').text());
-    //        var zprice = price * days;
-    //        $('#price2').text(zprice);
-    //        console.log();
-    //        $('#zprice').val(zprice);
-    //        console.log();
-    //    });
-
-         
-
-
-
-
-
-
-       
-
-     
-    
-
-
-
-
-
-
     
 </script>
 </body>
