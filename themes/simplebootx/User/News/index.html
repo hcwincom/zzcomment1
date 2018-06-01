@@ -139,14 +139,13 @@ $('#top-form0').submit(function(){
         $(".select-all").click();
     });
     //上架事件
-    $(".putaway-up").click(function(){
-    	 
-    	status0(3);
-    	return false;
+    $(".putaway-up").click(function(){ 
+        status0(3);
+        return false;
     });
   //下架事件
     $(".sold-out").click(function(){
-    	status0(4);
+        status0(4);
     	return false; 
     });
     function status0(status){

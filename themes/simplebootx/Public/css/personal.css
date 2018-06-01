@@ -63,9 +63,9 @@
 .form1 input[type="submit"],.form1 input[type="reset"]{width:105px;height:35px;line-height: 35px;background:#eb0000;color:#fff;text-align: center;margin-right:50px;cursor: pointer;font-size: 16px;}
 .form1{font-size: 16px;}
 .per_rnav{width:100%;background:#e5e5e5;}
-.rnav-two{margin-top:10px;}
+.rnav-two{margin-top:10px;position: relative;}
 .rnav-two div{display:inline-block;height:40px;;line-height:40px;margin-left:20px;cursor: pointer;width: 13%;}
-.check-all{margin-left:10px!important;position:absolute}
+.check-all{margin-left:10px!important;position:absolute;}
 .all-reds{color: #d50000;}
 .checked-alls{width:20px;float:left;margin-left:10px;}
 .labei-all-check{
