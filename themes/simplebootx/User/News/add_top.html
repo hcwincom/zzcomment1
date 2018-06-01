@@ -54,7 +54,15 @@ $('#recommend').submit(function(){
         alert("置顶时间最少为1天");
         return false;
     } 
-	return true;
+    var zprice=$('#zprice').val();
+    var id="{$info.id}";
+    $.post("{:U('add_top_do')}",{'id':id,'start':start0,'end':end0,'zprice':zprice},function(data){
+    	alert(data.info);
+		if(data.status==1){ 
+			location.href=data.url;
+		} 	
+	},'json');
+	return false;
 });
     !function(){
            laydate.skin('molv');//切换皮肤，请查看skins下面皮肤库
@@ -68,23 +76,22 @@ $('#recommend').submit(function(){
            max:'', //最大日期
            istime: false,
            istoday: true,
-             choose: function(datas){       
-              
-              datas = new Date(new Date(datas).getTime() + (1000 * 60 * 60 * 24));
+           choose: function(datas){
+                
+                datas = new Date(new Date(datas).getTime() + (1000 * 60 * 60 * 24));
                 datas = datas.getFullYear() + "-" + (datas.getMonth() + 1) + "-" + datas.getDate(); //重新格式化
 
-                 end.min = datas; //开始日选好后，重置结束日的最小日期
+                end.min = datas; //开始日选好后，重置结束日的最小日期
                 end.start = datas; //将结束日的初始值设定为开始日
                 editprice();
-           } 
-             
+           }
        };
 
     laydate(start);  
     var end = {
            elem: '#start2',
            format: 'YYYY-MM-DD',
-           min: laydate.now(), //设定最小日期为当前日期
+           min: laydate.now(+1), //设定最小日期为当前日期
            max:'', //最大日期
            istime: false,
             istoday: false,
@@ -94,15 +101,13 @@ $('#recommend').submit(function(){
        };
     laydate(end);  
     function editprice() {
-        var start0 = $.trim($("#start1").val());
-        var end0 = $.trim($("#start2").val());
-
+        var start0 = $.trim($("#start1").val()); 
+        var end0 = $.trim($("#start2").val()); 
         if (start == '' || end == '' || start0.length == 0 || end0.length == 0) {
             return false;
         }
-        var date_start = new Date(start0).getTime() / 1000 / 60 / 60 / 24;
-        var date_end = new Date(end0).getTime() / 1000 / 60 / 60 / 24;
-       
+        var date_start = (new Date(start0).getTime()) / 1000 / 60 / 60 / 24; 
+        var date_end = (new Date(end0).getTime()) / 1000 / 60 / 60 / 24; 
         var days = date_end - date_start;
      
         if (!(days >= 1)) {
@@ -115,6 +120,7 @@ $('#recommend').submit(function(){
        
         $('#zprice').val(zprice);    
     }
+
     
 </script>
 </body>

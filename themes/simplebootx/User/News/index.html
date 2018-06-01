@@ -87,7 +87,7 @@ $('.delete').click(function(){
 	}
 	var $li=$(this).parents('li');
 	var id=$li.find('.id').val();
-	$.post("{:U('User/News/del')}",{'id':id,'sid':sid},function(data){
+	$.post("{:U('del')}",{'id':id,'sid':sid},function(data){
 		if(data.errno!=1){ 
 			alert('删除失败'); 
 		}
@@ -97,10 +97,10 @@ $('.delete').click(function(){
 });
 $('#top-form0').submit(function(){
 	var id=$('#top-id').val();
-	$('.dingo').hide();
-	$.post("{:U('User/News/top0')}",{'id':id,'sid':sid},function(data){ 
+	$('.dingo').hide(); 
+	$.post("{:U('top0')}",{'id':id},function(data){ 
 		alert(data.error);
-	});
+	},'json');
 	return false;
 });
     //全选/取消全选

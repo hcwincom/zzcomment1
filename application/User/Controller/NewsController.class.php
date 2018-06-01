@@ -149,62 +149,66 @@ class NewsController extends MemberbaseController {
     public function top0(){
         $m=$this->m;
         $id=I('id',0);
+        $uid=$this->userid;
         $time=time();
-        $data=array('errno'=>0,'error'=>'动态推荐还未执行');
+        $data=array('errno'=>0,'error'=>'操作未执行');
+       
         $info=$m->where('id='.$id)->find();
         if($info['status']!=3){ 
             $data['error']='该动态无法购买推荐';
             $this->ajaxReturn($data);
             exit;
         }
-        $price=C('price_top_active.top0_price');
-        
+        $price=C('option_active.top0_price');
+      
+        $m->startTrans();
         //扣款
         if($price>0){
             $m_user=M('Users');
-            $user=$m_user->where('id='.($this->userid))->find();
+            $user=$m_user->where('id='.$uid)->find();
             if(empty($user) || $user['account']<$price){
                 $data['error']='你的余额不足，请充值';
                 $this->ajaxReturn($data);
                 exit;
             }
             $account=bcsub($user['account'],$price);
-            $m_user->startTrans();
-            $row_user=$m_user->data(array('account'=>$account))->where('id='.($this->uid))->save();
+            
+            $row_user=$m_user->data(array('account'=>$account))->where('id='.$uid)->save();
             if($row_user!==1){
-                $m_user->rollback();
+                $m->rollback();
                 $data['error']='扣款失败';
                 $this->ajaxReturn($data);
                 exit;
             }
+           
         }
+       
        //推荐
         $where='id='.$id;
         $row=$m->data(array('start_time'=>$time))->where($where)->save();
         if($row===1){
-            $data=array('errno'=>1,'error'=>'推荐成功');
+           
             if(!empty($row_user)){
                 $data_pay=array(
-                    'uid'=>$this->uid,
+                    'uid'=>$uid,
                     'money'=>'-'.$price,
                     'time'=>$time,
                     'content'=>'推荐动态'.$id.'-'.$info['name'], 
                 );
                 M('Pay')->add($data_pay);
-                $m_user->commit();
+               
             }
-                $data_top0=array(
-                    'pid'=>$id,
-                    'status'=>2,
-                    'create_time'=>$time,
-                    'price'=>$price,
-                );
-                M('TopActive0')->add($data_top0);
-                
+            $data_top0=array(
+                'pid'=>$id,
+                'status'=>2,
+                'create_time'=>$time,
+                'price'=>$price,
+            );
+            M('TopActive0')->add($data_top0);
+            $m->commit();
+            $data=array('errno'=>1,'error'=>'推荐成功');
         }else{
-            if(!empty($row_user)){
-                $m_user->rollback();
-            }
+           $m->rollback(); 
             $data=array('errno'=>2,'error'=>'推荐失败');
         }
         $this->ajaxReturn($data);
@@ -215,6 +219,7 @@ class NewsController extends MemberbaseController {
     public function add_top(){
         $time=time();
         $id=I('id',0);
+       
         $m=$this->m;
         $info=$m->where('id='.$id)->find();
         if($info['status']!=3){
@@ -224,7 +229,7 @@ class NewsController extends MemberbaseController {
         $top=array();
         $m_top=M('TopActive');
         //得到价格
-        $price=C('price_top_active.top_price');
+        $price=C('option_active.top_price');
          
         $where_tops=array(
             'pid'=>array('eq',$id),
@@ -256,11 +261,10 @@ class NewsController extends MemberbaseController {
             $this->error('未上架不能置顶');
             exit;
         }
-        $conf=C('price_top_active');
+        $conf=C('option_active');
         $uid=$this->userid;
         $price0=$conf['top_price'];
-        //暂时
-        $price=bcmul($days,$price0,2);
+        
         //检查价格是否更新 
         if($price!=bcmul($days,$price0,2)){ 
             $this->error('置顶价格变化，请刷新页面');
