@@ -140,34 +140,30 @@ $('#top-form0').submit(function(){
     });
     //上架事件
     $(".putaway-up").click(function(){
-        var arr_uid=get_value($(".dynamic_list .checked-on"));
-        if(arr_uid==""){
-           alert('未选中信息');
-           return false;
-        }
-        $.post("{:U('User/News/status0')}",{'ids':arr_uid,'status':3,'sid':sid},function(data){ 
-        	if(data.errno==1){
-     			location.reload(true);
-     		}else{
-     			alert(data.error);
-     		}
-    	},'json');
+    	 
+    	status0(3);
+    	return false;
     });
-    //下架事件
+  //下架事件
     $(".sold-out").click(function(){
-        var arr_uid=get_value($(".dynamic_list .checked-on"));
-        if(arr_uid==""){
+    	status0(4);
+    	return false; 
+    });
+    function status0(status){
+    	 var arr_uid=get_value($(".dynamic_list .checked-on"));
+         if(arr_uid==""){
             alert('未选中信息');
             return false;
          }
-         $.post("{:U('User/News/status0')}",{'ids':arr_uid,'status':4,'sid':sid},function(data){ 
-        	 if(data.errno==1){
+         $.post("{:U('status0')}",{'ids':arr_uid,'status':status,'sid':sid},function(data){ 
+         	if(data.errno==1){
       			location.reload(true);
       		}else{
       			alert(data.error);
       		}
      	},'json');
-    });
+    }
+    
     //删除事件
     $(".delete-down").click(function(){ 
         var arr_uid=get_value($(".dynamic_list .checked-on"));
@@ -178,7 +174,7 @@ $('#top-form0').submit(function(){
         if(!confirm('是否确认删除')){
     		return false;
     	}
-         $.post("{:U('User/News/dels')}",{'ids':arr_uid,'sid':sid},function(data){  
+         $.post("{:U('dels')}",{'ids':arr_uid,'sid':sid},function(data){  
      		if(data.errno==1){
      			location.reload(true);
      		}else{
