@@ -15,7 +15,7 @@
                                 <li>
                                     <div class="date-sjk">
  
-                                       起始时间： <input name="start" class="inline laydate-icon" id="start1"  >
+                                       起始时间： <input name="start" class="inline laydate-icon" id="start1" readonly >
                                     </div>
                                     <div style="color:#f00;font-size:12px;">
 						                                        起始时间最早为今天，起始和结束时间都为当日0点。<br/>
@@ -26,7 +26,7 @@
                                 <li>
                                     <div class="date-sjk">
  
-                                       结束时间： <input name="end" class="inline laydate-icon" id="start2"  >
+                                       结束时间： <input name="end" class="inline laydate-icon" id="start2" readonly >
                                     </div>
  
                                 </li>
@@ -66,11 +66,12 @@ $('#recommend').submit(function(){
            format: 'YYYY-MM-DD',
            min: laydate.now(), //设定最小日期为当前日期
            max:'', //最大日期
-           istime: true,
+           istime: false,
            istoday: false,
            choose: function(datas){
                 end.min = datas; //开始日选好后，重置结束日的最小日期
-                end.start = datas //将结束日的初始值设定为开始日
+                end.start = datas; //将结束日的初始值设定为开始日
+                editprice();
            }
        };
 
@@ -80,60 +81,39 @@ $('#recommend').submit(function(){
            format: 'YYYY-MM-DD',
            min: laydate.now(), //设定最小日期为当前日期
            max:'', //最大日期
-           istime: true,
+           istime: false,
             istoday: false,
            choose: function(datas){
                 // start1.min = datas; //开始日选好后，重置结束日的最小日期
                 // start1.start2 = datas //将结束日的初始值设定为开始日
                  start.max = datas; //结束日选好后，重置开始日的最大日期  
+                 editprice();
            }
        };
     laydate(end);  
-
-
-
-    laydate({
-        istime:true,
-        format: 'YYYY-MM-DD',
-        elem:"#start1",
-        event:"focus",
-        choose:function(){
-            editprice();
-        }
-    });
-     laydate({
-            istime: true,
-            format: 'YYYY-MM-DD',
-            elem: "#start2",
-            event: "focus",
-            choose: function () {
-                editprice();
-            }
-        });
-
     function editprice() {
            var start0 = $.trim($("#start1").val());
-        console.log(start0);
+       
         var end0 = $.trim($("#start2").val());
-        console.log(end0);
-        if (start == '' || end == '') {
+
+        if (start == '' || end == '' || start0.length == 0 || end0.length == 0) {
             return false;
         }
         var date_start = new Date(start0).getTime() / 1000 / 60 / 60 / 24;
-        console.log(date_start);
+      
         var date_end = new Date(end0).getTime() / 1000 / 60 / 60 / 24;
-        console.log(date_end);
+       
         var days = date_end - date_start;
-        console.log(days);
+     
         if (!(days >= 1)) {
+            alert("置顶时间最少为1天");
             return false;
         }
         var price = parseFloat($('#price1').text());
-        var zprice = price * days;
+        var zprice = (price * days).toFixed(2);
         $('#price2').text(zprice);
-        console.log();
-        $('#zprice').val(zprice);
-        console.log();
+       
+        $('#zprice').val(zprice);    
     }
 
 
