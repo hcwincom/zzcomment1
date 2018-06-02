@@ -10,13 +10,13 @@
 			</div>
 			 
 			<div class="lf research">
-				<form action="{:U('portal/index/index')}" method="post" class="lf">
+				<form action="{:U('portal/list/index')}" method="post" class="lf">
 					<input type="text" placeholder="请输入感兴趣的商家名称" value="{$keyword}" name="keyword" class="lf">
 					<input type="submit" value="立即搜索" class="lf">
 				</form>
 				<div class="lf shop-type" id="shop-type">
 				<foreach name="add_cate1" item="vo">
-					<a href="{:U('portal/index/index',array('cid0'=>$key,'char'=>$char,'keyword'=>$keyword))}" class='<if condition="$key eq $cid0">select</if>'>{$vo}</a>
+					<a href="{:U('portal/list/index',array('cid0'=>$key,'char'=>$char,'keyword'=>$keyword))}" class='<if condition="$key eq $cid0">select</if>'>{$vo}</a>
 				</foreach>
 					 
 				</div>

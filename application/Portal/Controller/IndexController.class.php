@@ -39,15 +39,6 @@ class IndexController extends HomebaseController {
 	    if(!empty($tmp)){
 	        $where_seller['city']=$tmp;
 	    }
-	    //处理分类
-	    $tmp=$this->cate(1);
-	    if(!empty($tmp)){
-	        $where_seller['cid']=$tmp;
-	    } 
-	    $keyword=trim(I('keyword',''));
-	    if($keyword!=''){
-	        $where_seller['name']=array('like','%'.$keyword.'%');
-	    }
 	    
 	    $total=$m_seller->where($where_seller)->count();
 	    $page = $this->page($total, C('page_seller_list'));
@@ -56,7 +47,7 @@ class IndexController extends HomebaseController {
 	  
 	    $this->assign('sellers',$sellers)
 	    ->assign('page',$page->show('Admin'));
-	    $this->assign('keyword',$keyword);
+	    
 	    
 	    $this->assign('banners',$banners)
 	    ->assign('html_flag','index')

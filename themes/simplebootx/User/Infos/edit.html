@@ -1,59 +1,48 @@
 <tc_include file="Public/user_head" />
 	   <div class="per_right rt">
-                 <div class="per_rnav">
-	                <a class="" href="{:U('index')}">信息管理</a>
-                	<a class="" href="{:U('add')}">发布新信息</a>
-                	<a class="rb" href="{:U('edit',['id'=>$info['id']])}">编辑信息</a> 
-                  </div>
+                 <div class="per_rnav"> 
+	                <a class="" href="{:U('index')}">{$flag}管理</a>
+	                <a class="" href="{:U('top')}">{$flag}置顶记录</a>
+	                <a class="" href="{:U('add')}">发布新{$flag}</a> 
+                    <a class="rb" href="{:U('edit',['id'=>$info['id']])}">编辑{$flag}</a> 
+                 </div>
                  <div class="adddynamic">
-                    <form action="{:U('add_do')}" method="post" onsubmit="return send1()" enctype="multipart/form-data">
-                        <div class="form2">
-                        <span>地区选择：</span>
-                        <tc_include file="Public/city" />
-                        </div>
-                        <p class="ml msg1"></p>
-                        <div class="form2">
-	                        <span>分类选择：</span>
-	                        <select name="cate" id="add_info">
-	                        <foreach name="cates" item="vo" k="key">
-								<option value="{$key}">{$vo}</option> 
-							</foreach>
-							</select>
-                        </div>
-                        <p class="ml msg1"></p>
-                        <div class="form2"><span>标题：</span><input type="text" name="title" placeholder="" onblur="tit1()"></div>
-                        <p class="ml msg1"></p>
+                    <form action="{:U('edit_do')}" method="post" onsubmit="return send1()" enctype="multipart/form-data">
                        
-				 		<div class="form2"><span>联系电话：</span><input type="text" name="tel" placeholder=""  ></div>
+                        <input type="hidden" name="id" value="{$info.id}"/>
+                        <div class="form2"><span>标题：</span><input type="text" name="title" value="{$info.name}" onblur="tit1()" ></div>
                         <p class="ml msg1"></p>
-                       
-                        <div class="form2"><span>联系地址：</span><input type="text" name="address" placeholder=""  ></div>
+                         <div class="form2"><span>地区：</span><tc_include file="Public/city" /></div>
                         <p class="ml msg1"></p>
-                       
-                        <div class="form2"><span class="lf">上传图片：</span>
+                         <div class="form2"><span>分类：</span><tc_include file="Public/cate" /> </div>
+                        <p class="ml msg1"></p>
+                         <div class="form2"><span>联系方式：</span><input type="text" name="tel" value="{$info.tel}"></div>
+                        <p class="ml msg1"></p>
+                         <div class="form2"><span>联系地址：</span><input type="text" name="address" value="{$info.address}"></div>
+                        <p class="ml msg1"></p>
+                        <div class="form2"><span class="lf">缩略图：</span>
                             <div class="lf ib imgbox7">
-                            <div id="preview7" class="preview"></div>
+                            <div id="preview7" class="preview"><img class="imgbox3" src="__UPLOAD__/{$info['pic']}"></div>
                             <label class="btn btn7" for="p7" title="选择图片"><span>选择图片</span></label>
                             <input type="file" class="upload_pic" onchange="preview(this,7)" name="IDpic7" value="" id="p7" >
-                           <p class="pms">*上传尺寸为176*104的jpg、png图,大小在4M以内</p>
+                           <p class="pms">*上传尺寸为{$size['w']}*{$size['h']}的jpg、png图,大小在4M以内</p>
                             </div>
                          
                             <div class="clear"></div>
                         </div>
                         <p class="ml msg4"></p> 
-                        <div class="form2"><span class="lf">简介（纯文字）：</span><textarea name="dsc" id="" cols="30" rows="10" >dd</textarea></div>
+                        <div class="form2"><span class="lf">简介（纯文字）：</span><textarea name="dsc" id="" cols="30" rows="10" >{$info.dsc}</textarea></div>
                         <p class="ml msg2"></p>
-                        <div class="form2"><span>详情（可编辑样式，上传图片）：</span>
-						
-						<textarea name="content2" id="content2" cols="30"></textarea></div>
+                          
+                        <div class="form2"><span style="vertical-align: top;">详情（可编辑样式，上传图片）：</span><textarea style="display: inline-block" name="content2" id="content2" >{$info.content}</textarea></div>
                         <p class="ml msg2"></p>
-                        <div class="form2"><span>时限：</span><input name="start" class="inline laydate-icon" id="start"  ></div>
+                        <div class="form2"><span>时限：</span><input name="start" class="inline laydate-icon" id="start" value="{$info.end_time|date='Y-m-d',###}" ></div>
                         <p class="ml msg3"></p>
-                        <div class="form2 mtc"><input type="submit" value="发布"></div>
+                        <div class="form2 mtc"><input type="submit" value="保存更新"></div>
                     </form>
                 </div>
             </div>
-        </div>
+      
 	<tc_include file="Public/user_footer" />
 	 <script type="text/javascript" src="__TMPL__Public/js/laydate.js"></script>      
  <script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.config.js"></script>
@@ -63,21 +52,20 @@
 	  //初始化百度编辑器
      //  var ue = UE.getEditor('content2');
        var ue = UE.getEditor('content2', {
-           wordCount: true, //开启字数统计
-           elementPathEnabled: false,//是否启用元素路径，默认是显示
-           maximumWords: 10000,       //允许的最大字符数
-           initialContent: '',    //初始化编辑器的内容,也可以通过textarea/script给值，看官网例子
-           autoClearinitialContent: true, //是否自动清除编辑器初始内容，注意：如果focus属性设置为true,这个也为真，那么编辑器一上来就会触发导致初始化的内容看不到了
-           pasteplain: true,  //是否默认为纯文本粘贴。false为不使用纯文本粘贴，true为使用纯文本粘贴  
-           initialFrameWidth: 800, //初始化宽度
-           initialFrameHeight: 420, //初始化高度
-           autoHeightEnabled: false //关闭高度自适应
+           wordCount: true,  
+           elementPathEnabled: false, 
+           maximumWords: 10000,       
+           initialContent: '',     
+           autoClearinitialContent: true,  
+           pasteplain: true,   
+           initialFrameWidth: 860,  
+           initialFrameHeight: 420,  
+           autoHeightEnabled: false  
    		});
        
       
        !function(){
-           laydate.skin('molv');//切换皮肤，请查看skins下面皮肤库
-           laydate({elem: '#demo'});//绑定元素
+           laydate.skin('molv');//切换皮肤，请查看skins下面皮肤库 
        }();
 
        //日期范围限制
@@ -96,5 +84,4 @@
 
        laydate(start);  
 </script>
-</body>
-</html>
+ 

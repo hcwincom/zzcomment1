@@ -1,20 +1,4 @@
-<!-- slider -->
-<div class="flexslider">
-	<ul class="slides">
-	 <foreach name="banners" item="vo">
-		<li>
-			<a href="{$vo.link}" target="_blank" class="zzlink">
-				<img src="__UPLOAD__/{$vo.pic}" alt="{$vo.title}">
-			</a>
-		</li> 
-	</foreach> 
-	</ul>
-</div>
- 
-<!-- slider end -->
-	 
-
-	<!-- main -->
+ <!-- main -->
 <div class="hmain-wrapper">
 	<div class="wide-container">
 		<div class="column2-wrapper">
@@ -60,7 +44,7 @@
 		<div class="clear"></div>
 			<div class="column-group">
 				<ul class="group-head" id="group-head">
-					<li class="<eq name='html_flag' value='index'>current</eq>"><a href="{:U('portal/index/index')}">商家排名</a></li>
+					<li class="<eq name='html_flag' value='index'>current</eq>"><a href="{:U('portal/list/index')}">商家排名</a></li>
 					<li class="<eq name='html_flag' value='goods'>current</eq>"><a href="{:U('portal/list/goods')}">商家上新</a></li>
 					<li class="<eq name='html_flag' value='news'>current</eq>"><a href="{:U('portal/list/news')}">最新动态</a></li>
 					<li class="<eq name='html_flag' value='jobs'>current</eq>"><a href="{:U('portal/list/jobs')}">最新招聘</a></li>

@@ -488,8 +488,7 @@ class NewsController extends MemberbaseController {
             $this->error('请选择有效时间');
         }
         
-        $data=array( 
-            'create_time'=>$time,
+        $data=array(  
             'end_time'=>$start,
             'name'=>I('title',''),
             'dsc'=>I('dsc',''),

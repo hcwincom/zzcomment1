@@ -1,63 +1,81 @@
 <tc_include file="Public/user_head" />
 	<div class="per_right rt">
-            <div class="dynamic_main">
-               <div class="per_rnav">
-                	 <a class="rb" href="{:U('User/infos/index')}">信息管理</a>
-                	<a class="" href="{:U('User/infos/add')}">发布新信息</a> 
-                </div>
-                <div class="per_list"> 
-                    <ul class="dynamic_list">
-                    <foreach name="list" item="vo">
-                        <li>
-                        	<input type="hidden" class="id" value="{$vo.id}"/>
-                            <div class="lf dynamic_li_lf1">
-                                <img class="dy_img" src="__UPLOAD__/{$vo.pic}">  
-                            </div>
-                             <div class="lf dynamic_li_lf2">
-                                <p class="per_d1">{$vo.name}</p>
-                                <p class="per_d2">{$vo.dsc}</p>
-                            </div>
-                            <div class="rt dynamic_li_rt">
-	                            <span class="per_d3 time">{$vo.start_time|date='Y-m-d',###}</span>
-	                            
-	                           <eq name="vo.status" value="2">
-	                            <a href="javascript:void(0);" class="per_d6 dyml"><img src="__TMPL__Public/img/groom.png"></a>
-	                           <a href="{:U('User/infos/add_top',array('id'=>$vo['id'],'sid'=>$vo['sid']))}" class="per_d6"><img src="__TMPL__Public/img/addtop.png"></a>
-	                           
-	                           <else/>
-	                            <a href="javascript:void(0);" class="per_d6 dyml2"><img src="__TMPL__Public/img/groom_1.png"></a>
-	                          <a href="javascript:void(0);" class="per_d6"><img src="__TMPL__Public/img/addtop_1.png"></a>
-	                           
-	                           </eq> 
-	                           <span class="per_d4 expire">{$statuss[$vo['status']]}</span>
-	                            
-                             <span class="per_d5 delete"><img src="__TMPL__Public/img/delete.png"></span>
-                            </div>
-                            <div class="clear"></div>
-                        </li>
-                        
-                     </foreach>
-                      
-                    </ul>
-                    
-                    <div class="dingo">
-                        <a href="javascript:void(0);" class="cl" >X</a>
-                        <div class="dingo_main">
-                             <form action="" method="" id="top-form0">
-                             <input type="hidden" vlaue="0" id="top-id"/>
-                            <div class="dingo_text"><span>推荐价格：</span><i class="red">{$company['top_active_fee0']['content']}</i>元</div>
-                            <div class="dingo_bt"><input type="submit" value="确认支付"></div>
-                            </form>
-                        </div>
+         <div class="dynamic_main">
+            <div class="per_rnav">
+              	<a class="rb" href="{:U('index')}">{$flag}管理</a>
+              	<a class="" href="{:U('top')}">{$flag}置顶记录</a>
+                <a class="" href="{:U('add')}">发布新{$flag}</a> 
+                
+             </div>
+             <div class="per_rnav rnav-two">
+                 <div class="check-all">
+                     <label class="labei-all-check select-all"></label>
+                 </div>
+                 <div class="first-all">全选</div>
+                 <div class="all-reds putaway-up">上架</div>
+                 <div class="all-reds sold-out">下架</div>
+                 <div class="all-reds delete-down">删除</div>
+                 
+             </div>
+             <ul class="dynamic_list">
+             <foreach name="list" item="vo">
+                 <li>
+                    <div class="checked-alls">
+                        <label class="labei-all-check" for="cheched-box{$vo.id}"></label>
+                        <input id="cheched-box{$vo.id}" style="display:none;" type="checkbox" value="{$vo.id}">
                     </div>
-                 	<div class="page">{$page}</div>
-                </div>
-            </div>
-        </div>
-
+                 	<input type="hidden" class="id" value="{$vo.id}"/>
+                     <div class="lf dynamic_li_lf1">
+                        <a href="{:U('Portal/Seller/info_detail',array('id'=>$vo['id']))}"> 
+                        	<img class="dy_img" src="__UPLOAD__/{$vo['pic']|default=$company['info_empty']['content']}">
+                        </a>  
+                     </div>
+                      <div class="lf dynamic_li_lf2">
+                         <p class="per_d1">{$vo.name}</p>
+                         <p class="per_d2">{$vo.dsc}</p>
+                     </div>
+                     <div class="rt dynamic_li_rt">
+                      	<span class="per_d3 time">{$vo.create_time|date='Y-m-d',###}</span>
+                     <eq name="vo.status" value="3">
+                      	<a href="javascript:void(0);" class="per_d6 dyml"><img src="__TMPL__Public/img/groom.png"></a>
+                      	<a href="{:U('add_top',array('id'=>$vo['id']))}" class="per_d6"><img src="__TMPL__Public/img/addtop.png"></a>
+                     	 
+                     <else/>
+                      	<a href="javascript:void(0);" class="per_d6 dyml2"><img src="__TMPL__Public/img/groom_1.png"></a>
+                    	<a href="javascript:void(0);" class="per_d6"><img src="__TMPL__Public/img/addtop_1.png"></a> 
+                     </eq> 
+                    <div class="per_d4">
+                        <span>{$statuss[$vo['status']]}</span>
+                        <a href="{:U('edit',['id'=>$vo['id']])}" class="">编辑</a>
+                    </div>
+                      <span class="per_d5 delete"><img src="__TMPL__Public/img/delete.png"></span>
+                     </div>
+                     <div class="clear"></div>
+                 </li>
+                 
+              </foreach>
+               
+             </ul>
+             
+             <div class="dingo">
+                 <a href="javascript:void(0);" class="cl" >X</a>
+                 <div class="dingo_main">
+                      <form action="" method="" id="top-form0">
+                      <input type="hidden" vlaue="0" id="top-id"/>
+                     <div class="dingo_text"><span>推荐价格：</span><i class="red">{$top0_price}</i>元</div>
+                     <div class="dingo_bt"><input type="submit" value="确认支付"></div>
+                     </form>
+                 </div>
+             </div>
+          	<div class="page">{$page}</div>
+         </div>
+     </div>
+    
      
 	<tc_include file="Public/user_footer" />
+
 <script>
+ 
 //推荐获取id值
 $(".dyml").click(function(){
 	$(".dingo").show();
@@ -65,9 +83,12 @@ $(".dyml").click(function(){
 	$(".dingo #top-id").val(id);
 });
 $('.delete').click(function(){
+	if(!confirm('是否确认删除')){
+		return false;
+	}
 	var $li=$(this).parents('li');
 	var id=$li.find('.id').val();
-	$.post("{:U('User/infos/del')}",{'id':id},function(data){
+	$.post("{:U('del')}",{'id':id},function(data){
 		if(data.errno!=1){ 
 			alert('删除失败'); 
 		}
@@ -77,15 +98,101 @@ $('.delete').click(function(){
 });
 $('#top-form0').submit(function(){
 	var id=$('#top-id').val();
-	$('.dingo').hide();
-	$.post("{:U('User/infos/top0')}",{'id':id},function(data){ 
-		alert(data.error); 
-		if(data.errno==1){
-			location.reload(true);
-		}
-	});
+	$('.dingo').hide(); 
+	$.post("{:U('top0')}",{'id':id},function(data){ 
+		alert(data.error);
+	},'json');
 	return false;
 });
+    //全选/取消全选
+    //记录个li；
+    var len_uli=$(".dynamic_list>li").length;
+    //判断全选
+    var isckecked=false;
+    //判断是否有class
+    var isclass;
+    $(".select-all").click(function(){
+        isckecked=!isckecked;
+        if(isckecked){
+            $(".labei-all-check").addClass("checked-on");
+            $(".labei-all-check").next().prop("checked","true");
+        }else{
+            $(".labei-all-check").removeClass("checked-on");
+            $(".labei-all-check").next().removeProp("checked","false");
+        } 
+    });
+    $(".dynamic_list .labei-all-check").click(function(){
+        isclass=$(this).hasClass("checked-on");
+        if(isclass){
+            $(this).removeClass("checked-on");
+        }else{
+            $(this).addClass("checked-on");
+        }
+        if(len_uli==$(".dynamic_list .checked-on").length){
+            $(".select-all").addClass("checked-on");
+            isckecked=true;
+        }else{
+            $(".select-all").removeClass("checked-on");
+            isckecked=false;
+        }
+    });
+    $(".first-all").click(function(){
+        $(".select-all").click();
+    });
+    //上架事件
+    $(".putaway-up").click(function(){
+    	 
+    	status0(3);
+    	return false;
+    });
+  //下架事件
+    $(".sold-out").click(function(){
+    	status0(4);
+    	return false; 
+    });
+    function status0(status){
+    	 var arr_uid=get_value($(".dynamic_list .checked-on"));
+         if(arr_uid==""){
+            alert('未选中信息');
+            return false;
+         }
+         $.post("{:U('status0')}",{'ids':arr_uid,'status':status},function(data){ 
+         	if(data.errno==1){
+      			location.reload(true);
+      		}else{
+      			alert(data.error);
+      		}
+     	},'json');
+    }
+    
+    //删除事件
+    $(".delete-down").click(function(){ 
+        var arr_uid=get_value($(".dynamic_list .checked-on"));
+        if(arr_uid==""){
+            alert('未选中信息');
+            return false;
+         }
+        if(!confirm('是否确认删除')){
+    		return false;
+    	}
+         $.post("{:U('dels')}",{'ids':arr_uid},function(data){  
+     		if(data.errno==1){
+     			location.reload(true);
+     		}else{
+     			alert(data.error);
+     		}
+     	},'json');
+    })
+    //全选获取选中的uil
+    function get_value(element){
+        //保存uid
+        var arry=[];
+        var ck_on_cl=element.length;
+        for(var i=0;i<ck_on_cl;i++){
+            arry.push($(element[i]).next().val())
+        }
+        return arry.join(",")
+    }
+    
+    
 </script>
-</body>
-</html>

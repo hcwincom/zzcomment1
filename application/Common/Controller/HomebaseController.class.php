@@ -106,11 +106,11 @@ class HomebaseController extends AppframeController {
 		 if($city['city1']==-1){
 		     $city=$citys;
 		 }else{
-		     session('city',$city);
-		     if($city['city2']!=0){
-		         $city3=$m_city->where('type=3 and fid='.$city['city2'])->getField('id,name');
-		         $this->assign("add_city3",$city3);
-		     }
+		     session('city',$city); 
+		 }
+		 if($city['city2']!=0){
+		     $city3=$m_city->where('type=3 and fid='.$city['city2'])->getField('id,name');
+		     $this->assign("add_city3",$city3);
 		 }
 		 $this->assign("city1",$city['city1'])->assign("city2",$city['city2'])->assign("city3",$city['city3']);
 		 

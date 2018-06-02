@@ -498,13 +498,20 @@ class JobController extends MemberbaseController {
             $this->error('请选择有效时间');
         }
         
-        $data=array( 
-            'create_time'=>$time,
-            'end_time'=>$start,
+        $data=array(
+            'sid'=>$this->sid, 
+            'city'=>I('city3',0),  
+            'end_time'=>$start, 
             'name'=>I('title',''),
             'dsc'=>I('dsc',''),
+            'tel'=>I('tel',''),
+            'cid'=>I('cid',0),
+            'address'=>I('address',''),
             'content'=>$_POST['content2']
         );
+        if(empty($data['city']) || empty($data['cid'])){
+            $this->error('请选择城市和分类');
+        }
         //是否审核 
         $check=C('option_job.edit_check');
         $user=$this->user;

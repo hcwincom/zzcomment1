@@ -1,0 +1,51 @@
+<tc_include file="Public/user_head" />
+<div class="per_right rt">
+    <div class="dynamic_main">
+        <div class="per_rnav">
+            <a class="" href="{:U('index')}">{$flag}管理</a>
+            <a class="rb" href="{:U('top')}">{$flag}置顶记录</a>
+            <a class="" href="{:U('add')}">发布新{$flag}</a> 
+        </div>
+        <div class="per_rnav rnav-two">
+            <div class="all_name">{$flag}名称</div>
+            <div class="all_time">购买时间</div>
+            <div class="all_date">起始时间 </div>
+            <div class="all_date">结束时间</div>
+            <div class="all_state">状态</div>
+            <div class="all_price">总价格</div>
+        </div>
+        <ul class="dynamic_list rnav_list">
+            <foreach name="list" item="vo">
+                <li>
+                    <div class="">
+                        <p class="per_all1">{$vo.name}</p>
+                    </div>
+                    <div class="">
+                        <p class="per_all2 timer">{$vo.create_time|date='Y-m-d H:i',###}</p>
+                    </div>
+                
+                        <div class="per_all3">
+                            <span class="timer">{$vo.start_time|date='Y-m-d',###}</span>
+                        </div>
+                        <div class="per_all4">
+                            <span class="timer">{$vo.end_time|date='Y-m-d',###}</span>
+                        </div>
+                        <div class="per_all5">
+                            <span class="audit">{$top_status[$vo['status']]}</span> 
+                        </div>
+                        <div class="per_all6">
+                            <span class="price">{$vo['price']}元(含赠币{$vo['coin']})元</span>
+                        </div>
+                  
+                    <div class="clear"></div>
+                </li>
+        
+            </foreach>
+        
+        </ul>
+        <div class="page">{$page}</div>
+    </div>
+</div>
+ 
+<tc_include file="Public/user_footer" />
+ 

@@ -19,7 +19,7 @@
 				<!-- 导航 -->
 				<div class="shop-colcontainer shop-type2" id="shop_type2">
 					<foreach name="add_cate1" item="vo">
-						<a href="{:U('portal/list/sellers',array('cid0'=>$key,'keyword'=>$keyword))}" class='<if condition="$key eq $cid0">select</if>'>{$vo}</a>
+						<a href="{:U('portal/list/index',array('cid0'=>$key,'keyword'=>$keyword))}" class='<if condition="$key eq $cid0">select</if>'>{$vo}</a>
 					</foreach>
 				</div>
 
@@ -29,7 +29,7 @@
 					<div class="shop-character" id="shop_character">
 						<span>按行业首字母检索：</span>
 						<foreach name="chars" item="vo">
-							<a href="{:U('portal/list/sellers',array('cid0'=>$cid0,'char'=>$vo,'keyword'=>$keyword))}" class='<if condition="$vo eq $char">select</if>'>{$vo}</a>
+							<a href="{:U('portal/list/index',array('cid0'=>$cid0,'char'=>$vo,'keyword'=>$keyword))}" class='<if condition="$vo eq $char">select</if>'>{$vo}</a>
 						</foreach>
 					</div>
 					<div class="clear"></div>
@@ -41,7 +41,7 @@
 									<a href="javascript:void(0);">没有符合条件的分类</a>
 								</empty>
 								<foreach name="cate1" item="vo">
-									<a href="{:U('portal/list/sellers',array('cid1'=>$key,'char'=>$char,'keyword'=>$keyword,'cid0'=>$cid0))}" class='<if condition="$key eq $cid1">select</if>'>{$vo}</a>
+									<a href="{:U('portal/list/index',array('cid1'=>$key,'char'=>$char,'keyword'=>$keyword,'cid0'=>$cid0))}" class='<if condition="$key eq $cid1">select</if>'>{$vo}</a>
 								</foreach>
 							</div>
 							<div class="more-less">

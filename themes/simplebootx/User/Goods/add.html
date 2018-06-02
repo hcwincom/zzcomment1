@@ -7,6 +7,8 @@
          <div class="addshop">
                <form action="{:U('User/Goods/add_do')}" method="post" onsubmit="return send2()" enctype="multipart/form-data">
                    <input type="hidden" name="sid" value="{$sid}"/>
+                   
+                    <input type="hidden" name="picpath" value="{$picpath}" />
                    <div class="form1"><span>商品名称:</span><input type="text" name="shopname" placeholder="" onblur="shopname1()"></div>
                    <p class="ml msg1"></p> 
                    <div class="form1"><span>价格:</span><input type="text" name="shopprice" placeholder="" onblur="shopprice1()"></div>  
@@ -27,4 +29,8 @@
                </form>
            </div>
         </div>
+       </div>
 	<tc_include file="Public/user_footer" />
+  
+</body>
+</html>

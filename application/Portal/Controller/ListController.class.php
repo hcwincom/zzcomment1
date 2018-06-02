@@ -6,8 +6,8 @@ use Common\Controller\HomebaseController;
 class ListController extends HomebaseController {
     function _initialize(){
         parent::_initialize();
-        $banners=M('Banner')->order('sort desc')->select();
-         
+//         $banners=M('Banner')->order('sort desc')->select();
+//         $this->assign('banners',$banners);
         //推荐商家
         $m_seller=M('Seller');
         $top_sellers=[];
@@ -23,8 +23,61 @@ class ListController extends HomebaseController {
             }
         }
         
-        $this->assign('banners',$banners);
+       
         $this->assign('top_seller',$top_sellers);
+    }
+    // 店铺列表
+    public function index() {
+        $time=time();
+        //banner图
+        $banners=M('Banner')->order('sort desc')->select();
+        
+        $m_seller=M('Seller');
+        //推荐商家
+        $top_sellers=[];
+        $tops0=C('price_top_seller');
+        $tops=C('count_top_seller');
+        foreach($tops0 as $k=>$v){
+            if(empty($tops[$k])){
+                $top_sellers[$k]=$tops0[$k];
+                $top_sellers[$k]['url']='javascript:void(0)';
+            }else{
+                $top_sellers[$k]=$m_seller->where('id='.$tops[$k])->find();
+                $top_sellers[$k]['url']=U('Portal/Seller/home',array('sid'=>$tops[$k]));
+            }
+        }
+        
+        //商家//商家排名10
+        $where_seller=array();
+        //0未审核，1未认领，2已认领,3已冻结
+        $where_seller['status']=array('between','1,2');
+        
+        //处理城市
+        $tmp=$this->city();
+        if(!empty($tmp)){
+            $where_seller['city']=$tmp;
+        }
+        //处理分类
+        $tmp=$this->cate(1);
+        if(!empty($tmp)){
+            $where_seller['cid']=$tmp;
+        }
+        $keyword=trim(I('keyword',''));
+        if($keyword!=''){
+            $where_seller['name']=array('like','%'.$keyword.'%');
+        }
+        $total=$m_seller->where($where_seller)->count();
+        $page = $this->page($total, C('page_seller_list'));
+        $sellers=$m_seller->where($where_seller)->order('score desc')->limit($page->firstRow,$page->listRows)->select();
+        
+        $this->assign('sellers',$sellers)
+        ->assign('page',$page->show('Admin'));
+        $this->assign('keyword',$keyword);
+        
+        $this->assign('html_flag','index')
+        ->assign('top_seller',$top_sellers);
+        
+        $this->display();
     }
 	// 新增店铺列表
     public function sellers() {
@@ -74,8 +127,7 @@ class ListController extends HomebaseController {
         ->assign('page',$page->show('Admin'));
         $this->assign('keyword',$keyword);
         
-        $this->assign('banners',$banners)
-        ->assign('html_flag','sellers')
+        $this->assign('html_flag','sellers')
         ->assign('top_seller',$top_sellers);
         
         $this->display();
