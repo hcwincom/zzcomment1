@@ -21,7 +21,6 @@ function preview(file,o)
         prevDiv.innerHTML = '<div class="img" style="filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src=\'' + file.value + '\'"></div>';  
     }  
     
-   
 }
 $(function () {
     $("#price").val(toDecimal2(100));
