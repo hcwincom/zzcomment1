@@ -9,6 +9,7 @@
                  <div class="adddynamic">
                     <form action="{:U('add_do')}" method="post" onsubmit="return send1()" enctype="multipart/form-data">
                         <input type="hidden" name="sid" value="{$sid}"/>
+                        <input type="hidden" name="picpath" value="{$picpath}"/>
                         <div class="form2"><span>标题：</span><input type="text" name="title" placeholder="" onblur="tit1()"></div>
                         <p class="ml msg1"></p>
                         <div class="form2"><span class="lf">缩略图：</span>

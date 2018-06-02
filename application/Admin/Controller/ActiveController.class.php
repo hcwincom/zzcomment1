@@ -10,13 +10,35 @@ class ActiveController extends AdminbaseController {
 
     private $m;
     private $order;
+    private $info_status;
+    private $top_status;
     public function _initialize() {
         parent::_initialize();
         $this->m = M('Active');
-        $this->order='id desc';
+        $this->order='create_time desc';
+        $this->info_status=C('info_status');
+        $this->top_status=C('top_status');
         $this->assign('flag','店铺动态'); 
+        $this->assign('info_status',($this->info_status)); 
+        $this->assign('top_status',($this->top_status)); 
+       
     }
-    
+    /* 获取城市信息 */
+    public function city(){
+        $city1=I('city1',0);
+        $city2=I('city2',0);
+        $city3=I('city3',0);
+        $m_city=M('City');
+        $city1s=$m_city->where('type=1')->getField('id,name');
+        $city2s=$m_city->where('type=2')->getField('id,fid,name');
+        $citys3=[];
+        if($city2!=0){
+            $city3s=$m_city->where('type=3 and fid='.$city2)->getField('id,name'); 
+        }
+        $this->assign("add_city3",$city3s)->assign("add_city1",$city1s)->assign("add_city2",$city2s);
+        $this->assign("city1",$city1)->assign("city2",$city2)->assign("city3",$city3);
+        
+    }
     //编辑
     function index(){
         $m=D('Active0View');
@@ -41,6 +63,7 @@ class ActiveController extends AdminbaseController {
         if($status!=-1){
             $where['status']=array('eq',$status);
         }
+        $this->city();
         $total=$m->where($where)->count();
         $page = $this->page($total, 10);
         $list=$m->where($where)->order($this->order)->limit($page->firstRow,$page->listRows)->select();

@@ -15,6 +15,7 @@ class Active0ViewModel extends ViewModel {
             'sid', 
             'pic', 
             'name',
+            'dsc',
             'content',
             'create_time',
             'start_time',

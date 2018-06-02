@@ -3,22 +3,22 @@ namespace User\Controller;
 
 use Common\Controller\MemberbaseController;
 /*
- * 信息管理  */
-class InfosController extends MemberbaseController {
+ * 招聘管理  */
+class JobController extends MemberbaseController {
 	private $m; 
 	private $size;
 	function _initialize(){
 		parent::_initialize();
-		$this->m=M('Active');
+		$this->m=M('Job');
 		 
 		$this->size=['w'=>290,'h'=>175];
 		
 		$this->assign('size',$this->size);
-		$this->assign('flag','动态');
+		$this->assign('flag','招聘');
 		$this->assign('statuss',C('info_status'));
 	}
 	 
-    // 动态
+    // 招聘
     public function index() {
         $m=$this->m;
         $where=array('sid'=>$this->sid);
@@ -34,16 +34,16 @@ class InfosController extends MemberbaseController {
        $this->assign('page',$page->show('Admin'));
        $this->assign('list',$list)
        ->assign('status',$status)
-       ->assign('top0_price', C('price_top_active.top0_price'));
+       ->assign('top0_price', C('option_job.top0_price'));
        $this->display();
        exit;
     }
-    // 动态置顶
+    // 招聘置顶
     public function top() {
         $m=$this->m;
         $where=array('sid'=>$this->sid);
         $pids=$m->where($where)->getField('id',true);
-        $m_top=M('TopActive');
+        $m_top=M('TopJob');
         if(!empty($pids)){
             $where=[
                 'pid'=>['in',$pids]
@@ -52,7 +52,7 @@ class InfosController extends MemberbaseController {
             $page = $this->page($total, C('PAGE'));
             $list=$m_top
             ->alias('t')
-            ->join('cm_active as p on p.id=t.pid')
+            ->join('cm_job as p on p.id=t.pid')
             ->field('t.*,p.name')
             ->where($where)->order('create_time desc')
             ->limit($page->firstRow,$page->listRows)
@@ -67,7 +67,11 @@ class InfosController extends MemberbaseController {
     }
     /* 添加 */
     public function add(){
-        
+        $cate=M('cate')->where('type=2')->getField('id,name');
+        $this->assign('cate',$cate);
+        $picpath='/job/'.($this->sid).'/'.time().'/';
+        session('picpath',$picpath);
+        $this->assign('picpath',$picpath);
         $this->display();
        exit;
     }
@@ -78,9 +82,14 @@ class InfosController extends MemberbaseController {
         $where='id='.$id;
         $info=$m->where($where)->find();
         if(empty($info)){
-            $this->error('此动态不存在');
+            $this->error('此招聘不存在');
         }
+        $cate=M('cate')->where('type=2')->getField('id,name');
+        $this->assign('cate',$cate);
         $this->assign('info',$info); 
+        $this->assign('cateid',$info); 
+        session('picpath',$info['picpath']);
+       
         $this->display();
         exit;
     }
@@ -99,7 +108,7 @@ class InfosController extends MemberbaseController {
         $row=$m->where($where)->delete();
         if($row===1){
             $data=array('errno'=>1,'error'=>'删除成功'); 
-             pro_del('Active',$info);
+             pro_del('Job',$info);
         }else{
             $data=array('errno'=>2,'error'=>'删除失败');
         }
@@ -111,11 +120,11 @@ class InfosController extends MemberbaseController {
         $m=$this->m;
         $ids=I('ids',''); 
         $where=['id'=>['in',$ids],'sid'=>($this->sid)];
-        $list=$m->where($where)->field('id,pic')->select();
+        $list=$m->where($where)->field('id,pic,picpath')->select();
         $row=$m->where($where)->delete();
         if($row>=1){
             $data=array('errno'=>1,'error'=>'删除成功'); 
-            pro_dels('Active',$list);
+            pro_dels('Job',$list);
         }else{
             $data=array('errno'=>2,'error'=>'删除失败');
         }
@@ -155,13 +164,13 @@ class InfosController extends MemberbaseController {
        
         $info=$m->where('id='.$id)->find();
         if($info['status']!=3){ 
-            $data['error']='该动态无法购买推荐';
+            $data['error']='该招聘无法购买推荐';
             $this->ajaxReturn($data);
             exit;
         }
         
         
-        $conf=C('option_active');
+        $conf=C('option_job');
         $price=$conf['top0_price'];
         $m->startTrans();
         //扣款
@@ -206,7 +215,7 @@ class InfosController extends MemberbaseController {
                     'uid'=>$uid,
                     'money'=>'-'.$price,
                     'time'=>$time,
-                    'content'=>'推荐动态'.$id.'-'.$info['name'], 
+                    'content'=>'推荐招聘'.$id.'-'.$info['name'], 
                 );
                 M('Pay')->add($data_pay); 
             }
@@ -220,10 +229,10 @@ class InfosController extends MemberbaseController {
                 'money'=>$price_money,
             );
             
-            M('TopActive0')->add($data_top0);
+            M('TopJob0')->add($data_top0);
             $m->commit();
             
-            coin($conf['top0_coin'],$uid,'推荐动态'.$info['name']);
+            coin($conf['top0_coin'],$uid,'推荐招聘'.$info['name']);
             $data=array('errno'=>1,'error'=>'推荐成功');
         }else{
            $m->rollback(); 
@@ -245,23 +254,23 @@ class InfosController extends MemberbaseController {
         }
          
         $top=array();
-        $m_top=M('TopActive');
+        $m_top=M('TopJob');
         //得到价格
-        $price=C('option_active.top_price');
+        $price=C('option_job.top_price');
          
         $where_tops=array(
             'pid'=>array('eq',$id),
             'status'=>array('in','0,2'),
         );
          
-        $this->assign('type','动态标题')->assign('info',$info)->assign('price',$price);
+        $this->assign('type','招聘名称')->assign('info',$info)->assign('price',$price);
         $this->display();
     }
     
     //ajax和do
     public function add_top_do(){
         $id=I('id',0); 
-        $m=M('TopActive');
+        $m=M('TopJob');
         $start=strtotime(I('start',''));
         $end=strtotime(I('end',''));
         $price=round(I('zprice',0),2);
@@ -274,12 +283,12 @@ class InfosController extends MemberbaseController {
             exit;
         }
         //未上架不能置顶
-        $info=M('Active')->where(array('id'=>$id,'status'=>3))->find();
+        $info=M('Job')->where(array('id'=>$id,'status'=>3))->find();
         if(empty($info)){ 
             $this->error('未上架不能置顶');
             exit;
         }
-        $conf=C('option_active');
+        $conf=C('option_job');
         $uid=$this->userid;
         $price0=$conf['top_price'];
         
@@ -365,13 +374,13 @@ class InfosController extends MemberbaseController {
                     'uid'=>$uid,
                     'money'=>'-'.$price,
                     'time'=>$time,
-                    'content'=>'置顶动态'.$id.'-'.$info['name'],
+                    'content'=>'置顶招聘'.$id.'-'.$info['name'],
                 );
                 M('Pay')->add($data_pay); 
             }
             $m->commit();
             $coin=bcmul($days,$conf['top_coin']);
-            coin($coin,$uid,'置顶动态'.$info['name']);
+            coin($coin,$uid,'置顶招聘'.$info['name']);
             $this->success('置顶成功',U('top',['sid'=>$info['sid']]));
         }else{
             $m->rollback();
@@ -387,24 +396,29 @@ class InfosController extends MemberbaseController {
         $pic='';
         $time=time();
         $subname=date('Y-m-d',$time);
-        if(empty($_FILES['IDpic7']['name'])){
-            $this->error('没有上传有效图片');
+        $picpath=I('picpath','');
+        if($picpath!=session('picpath')){
+            $this->error('请刷新页面重新添加');
         }
+        if(empty($_FILES['IDpic7']['name'])){
+            $pic='';
+//             $this->error('没有上传有效图片');
+        }else{
             $path=C("UPLOADPATH");
             $size=$this->size;
             $upload = new \Think\Upload();// 实例化上传类
             //20M
             $upload->maxSize   =  C('SIZE') ;// 设置附件上传大小
             $upload->rootPath=getcwd().'/';
-            $upload->subName = $subname;
-            $upload->savePath  =$path.'/news/';
-            $info   =   $upload->upload();
-            if(!$info) {// 上传错误提示错误信息
+            $upload->subName = '';
+            $upload->savePath  =$path.$picpath;
+            $fileinfo=   $upload->upload();
+            if(!$fileinfo) {// 上传错误提示错误信息
                 $this->error($upload->getError());
             }
             
-            foreach ($info as $v){
-                $pic0='news/'.$subname.'/'.$v['savename'];
+            foreach ($fileinfo as $v){
+                $pic0=$picpath.$v['savename'];
                 $pic=$pic0.'.jpg';
             }
             $image = new \Think\Image();
@@ -413,33 +427,34 @@ class InfosController extends MemberbaseController {
             $image->thumb($size['w'], $size['h'],\Think\Image::IMAGE_THUMB_FIXED)->save($path.$pic);
            
             unlink($path.$pic0);
-           
+        } 
        
         
         $start=strtotime(I('start',$subname));
         if($start<$time){
             $this->error('请选择有效时间');
         }
-        $city=M('seller')->where(['id'=>$this->sid])->getField('city');
+        
         $data=array(
             'sid'=>$this->sid,
             'pic'=>$pic,
-            'city'=>$city,
+            'city'=>I('city3',0),
             'create_time'=>$time,
             'start_time'=>$time,
             'end_time'=>$start,
+            'picpath'=>$picpath,
             'name'=>I('title',''),
             'dsc'=>I('dsc',''),
+            'tel'=>I('tel',''),
+            'cid'=>I('cid',0),
+            'address'=>I('address',''),
             'content'=>$_POST['content2']
         );
-       
-        //实名认证无需审核
-        if(session('user.name_status')==1){
-            $data['status']=3;
-        }else{
-            $msg="，等待审核";
-        }
-        $check=C('option_active.add_check');
+        if(empty($data['city']) || empty($data['cid'])){
+            $this->error('请选择城市和分类');
+       }
+        //是否审核 
+        $check=C('option_job.add_check');
         $user=$this->user;
         switch($check){
             case 1:
@@ -456,7 +471,7 @@ class InfosController extends MemberbaseController {
         $m=$this->m;
         $insert=$m->add($data);
         if($insert>=1){
-            $this->success('发布动态成功'.$msg, U('index',['sid'=>$this->sid]));
+            $this->success('发布招聘成功'.$msg, U('index',['sid'=>$this->sid]));
         }else{
             $this->error('发布失败');
         }
@@ -471,7 +486,10 @@ class InfosController extends MemberbaseController {
         $where='id='.$id;
         $info=$m->where($where)->find();
         if(empty($info)){
-            $this->error('此动态不存在');
+            $this->error('此招聘不存在');
+        }
+        if($info['picpath']!=session('picpath')){
+            $this->error('请刷新页面重新编辑');
         }
         $time=time();
         $subname=date('Y-m-d',$time);
@@ -488,7 +506,7 @@ class InfosController extends MemberbaseController {
             'content'=>$_POST['content2']
         );
         //是否审核 
-        $check=C('option_active.edit_check');
+        $check=C('option_job.edit_check');
         $user=$this->user;
         switch($check){
             case 1:
@@ -503,21 +521,21 @@ class InfosController extends MemberbaseController {
                 break;
         }
         if(!empty($_FILES['IDpic7']['name'])){
-            $size=$this->size;
             $path=C("UPLOADPATH");
+            $size=$this->size;
             $upload = new \Think\Upload();// 实例化上传类
             //20M
             $upload->maxSize   =  C('SIZE') ;// 设置附件上传大小
             $upload->rootPath=getcwd().'/';
-            $upload->subName = $subname;
-            $upload->savePath  =$path.'/news/';
-            $info   =   $upload->upload();
-            if(!$info) {// 上传错误提示错误信息
+            $upload->subName = '';
+            $upload->savePath  =$path.$info['picpath'];
+            $fileinfo   =   $upload->upload();
+            if(!$fileinfo) {// 上传错误提示错误信息
                 $this->error($upload->getError());
             }
             
-            foreach ($info as $v){
-                $pic0='news/'.$subname.'/'.$v['savename'];
+            foreach ($fileinfo as $v){
+                $pic0=$info['picpath'].$v['savename'];
                 $pic=$pic0.'.jpg';
             }
             $image = new \Think\Image();
@@ -536,7 +554,7 @@ class InfosController extends MemberbaseController {
         
         $row=$m->where($where)->save($data);
         if($row===1){
-            $this->success('更新动态成功'.$msg, U('index',['sid'=>($this->sid)]));
+            $this->success('更新招聘成功'.$msg, U('index',['sid'=>($this->sid)]));
         }else{
             $this->error('更新失败');
         }

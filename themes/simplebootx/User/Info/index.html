@@ -4,6 +4,7 @@
 				<div class="per_t1"><span>{$user.user_login}</span>，欢迎您！</div>
   				<div class="per_t2">
 	  				我的余额：<span>{$user.account}</span>
+	  				我的赠币：<span>{$user.coin}</span>
 	  				<a href="{:U('User/Info/pay')}">充值</a>
 	  				<span class="line">丨</span>
   				<eq name="user.name_status" value="1">
@@ -17,7 +18,7 @@
   				<div class="per_t3">--欢迎进入祖运评级网--</div>
   				<div><a class="per_t4" href="{:U('Portal/Index/index')}">点击浏览</a></div>
 			</div>
-		</div>
+		
 
 	<tc_include file="Public/user_footer" />
 </body>

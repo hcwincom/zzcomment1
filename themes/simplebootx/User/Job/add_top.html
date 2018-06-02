@@ -1,0 +1,123 @@
+<tc_include file="Public/user_head" />
+	 <div class="per_right rt">
+         <div class="per_rnav">
+             	<a class="" href="{:U('index',['sid'=>$sid])}">{$flag}管理</a>
+             	<a class="" href="{:U('top',['sid'=>$sid])}">{$flag}置顶记录</a>
+                <a class="" href="{:U('add',['sid'=>$sid])}">发布新{$flag}</a> 
+                <a class="rb" href="{:U('add_top',['sid'=>$sid,'id'=>$info['id']])}">{$flag}置顶</a> 
+             </div>
+                <div class="adddynamic">
+                    <form action="{:U('add_top_do')}" method="post" id="recommend" name="playlist">
+                        <div class="form3"><span class="">{$type}：</span><i>{$info.name}</i></div>
+                        <input name="id" type="hidden" value="{$info.id}" > 
+                        <div class="form3"><span class="lf">置顶时间：</span>
+                            <ul class="form3_list1 lf">
+                                <li>
+                                    <div class="date-sjk">
+ 
+                                       起始时间： <input name="start" class="inline laydate-icon" id="start1" readonly >
+                                    </div>
+                                    <div style="color:#f00;font-size:12px;">
+						                                        起始时间最早为今天，起始和结束时间都为当日0点。<br/>
+						                                        置顶优先级最高，即使过期也会显示，除非手动下架，手动下架置顶费用不退。<br/>
+              					       	 同一时间置顶{$flag}不会重复显示,重复购买费用不退。<br/>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="date-sjk">
+ 
+                                       结束时间： <input name="end" class="inline laydate-icon" id="start2" readonly >
+                                    </div>
+ 
+                                </li>
+                            </ul>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="form3"><span>单价：</span><i id="price1">{$price}</i>元/天</div>
+                        <div class="form3"><span>总价：</span><i id="price2">0</i>元</div>
+                         <input id="zprice" name="zprice" type="hidden" value="0" >
+                        <div class="form3"><input type="submit" value="购买"></div>
+                    </form>
+                </div>
+            </div>
+        
+	<tc_include file="Public/user_footer" />
+<script type="text/javascript" src="__TMPL__Public/js/laydate.js"></script>      
+<script>
+$('#recommend').submit(function(){
+	 
+	var start0=$.trim($("#start1").val());
+	var end0=$.trim($("#start2").val());
+    var date_start=new Date(start0).getTime()/1000/60/60/24;
+    var date_end=new Date(end0).getTime()/1000/60/60/24;
+    if(!(date_end-date_start>=1)){
+        alert("置顶时间最少为1天");
+        return false;
+    } 
+    var zprice=$('#zprice').val();
+    var id="{$info.id}";
+    $.post("{:U('add_top_do')}",{'id':id,'start':start0,'end':end0,'zprice':zprice},function(data){
+    	alert(data.info);
+		if(data.status==1){ 
+			location.href=data.url;
+		} 	
+	},'json');
+	return false;
+});
+    !function(){
+           laydate.skin('molv');//切换皮肤，请查看skins下面皮肤库
+        //    laydate({elem: '#demo'});//绑定元素
+       }();
+       //日期范围限制
+       var start = {
+           elem: '#start1',
+           format: 'YYYY-MM-DD',
+           min: laydate.now(), //设定最小日期为当前日期
+           max:'', //最大日期
+           istime: false,
+           istoday: true,
+           choose: function(datas){
+                
+                datas = new Date(new Date(datas).getTime() + (1000 * 60 * 60 * 24));
+                datas = datas.getFullYear() + "-" + (datas.getMonth() + 1) + "-" + datas.getDate(); //重新格式化
+
+                end.min = datas; //开始日选好后，重置结束日的最小日期
+                end.start = datas; //将结束日的初始值设定为开始日
+                editprice();
+           }
+       };
+
+    laydate(start);  
+    var end = {
+           elem: '#start2',
+           format: 'YYYY-MM-DD',
+           min: laydate.now(+1), //设定最小日期为当前日期
+           max:'', //最大日期
+           istime: false,
+            istoday: false,
+           choose: function(datas){ 
+                 editprice();
+           }
+       };
+    laydate(end);  
+    function editprice() {
+        var start0 = $.trim($("#start1").val()); 
+        var end0 = $.trim($("#start2").val()); 
+        if (start == '' || end == '' || start0.length == 0 || end0.length == 0) {
+            return false;
+        }
+        var date_start = (new Date(start0).getTime()) / 1000 / 60 / 60 / 24; 
+        var date_end = (new Date(end0).getTime()) / 1000 / 60 / 60 / 24; 
+        var days = date_end - date_start;
+        var zprice = 0;
+        if (days >= 1) { 
+            var price = parseFloat($('#price1').text());
+           zprice = (price * days).toFixed(2); 
+        }  
+        $('#price2').text(zprice); 
+        $('#zprice').val(zprice);    
+    }
+
+    
+</script>
+ 

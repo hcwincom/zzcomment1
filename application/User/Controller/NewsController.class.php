@@ -3,7 +3,7 @@ namespace User\Controller;
 
 use Common\Controller\MemberbaseController;
 /*
- * 点评管理  */
+ * 动态管理  */
 class NewsController extends MemberbaseController {
 	private $m; 
 	private $size;
@@ -34,7 +34,7 @@ class NewsController extends MemberbaseController {
        $this->assign('page',$page->show('Admin'));
        $this->assign('list',$list)
        ->assign('status',$status)
-       ->assign('top0_price', C('price_top_active.top0_price'));
+       ->assign('top0_price', C('option_active.top0_price'));
        $this->display();
        exit;
     }
@@ -67,7 +67,9 @@ class NewsController extends MemberbaseController {
     }
     /* 添加 */
     public function add(){
-        
+        $picpath='/news/'.($this->sid).'/'.time().'/';
+        session('picpath',$picpath);
+        $this->assign('picpath',$picpath);
         $this->display();
        exit;
     }
@@ -80,6 +82,7 @@ class NewsController extends MemberbaseController {
         if(empty($info)){
             $this->error('此动态不存在');
         }
+        session('picpath',$info['picpath']);
         $this->assign('info',$info); 
         $this->display();
         exit;
@@ -111,7 +114,7 @@ class NewsController extends MemberbaseController {
         $m=$this->m;
         $ids=I('ids',''); 
         $where=['id'=>['in',$ids],'sid'=>($this->sid)];
-        $list=$m->where($where)->field('id,pic')->select();
+        $list=$m->where($where)->field('id,pic,picpath')->select();
         $row=$m->where($where)->delete();
         if($row>=1){
             $data=array('errno'=>1,'error'=>'删除成功'); 
@@ -254,7 +257,7 @@ class NewsController extends MemberbaseController {
             'status'=>array('in','0,2'),
         );
          
-        $this->assign('type','动态标题')->assign('info',$info)->assign('price',$price);
+        $this->assign('type','动态名称')->assign('info',$info)->assign('price',$price);
         $this->display();
     }
     
@@ -387,37 +390,42 @@ class NewsController extends MemberbaseController {
         $pic='';
         $time=time();
         $subname=date('Y-m-d',$time);
-        if(empty($_FILES['IDpic7']['name'])){
-            $this->error('没有上传有效图片');
+        $picpath=I('picpath','');
+        if($picpath!=session('picpath')){
+            $this->error('请刷新页面重新添加');
         }
+        if(empty($_FILES['IDpic7']['name'])){
+            $pic='';
+//             $this->error('没有上传有效图片');
+        }else{
             $path=C("UPLOADPATH");
             $size=$this->size;
             $upload = new \Think\Upload();// 实例化上传类
             //20M
             $upload->maxSize   =  C('SIZE') ;// 设置附件上传大小
             $upload->rootPath=getcwd().'/';
-            $upload->subName = $subname;
-            $upload->savePath  =$path.'/news/';
-            $info   =   $upload->upload();
-            if(!$info) {// 上传错误提示错误信息
+            $upload->subName = '';
+            $upload->savePath  =$path.$picpath;
+            $fileinfo=   $upload->upload();
+            if(!$fileinfo) {// 上传错误提示错误信息
                 $this->error($upload->getError());
             }
             
-            foreach ($info as $v){
-                $pic0='news/'.$subname.'/'.$v['savename'];
+            foreach ($fileinfo as $v){
+                $pic0=$picpath.$v['savename'];
                 $pic=$pic0.'.jpg';
             }
+          
             $image = new \Think\Image();
             $image->open($path.$pic0);
             // 生成一个固定大小为150*150的缩略图并保存为thumb.jpg
-            $image->thumb($size['w'], $size['h'],\Think\Image::IMAGE_THUMB_FIXED)->save($path.$pic);
-           
+            $image->thumb($size['w'], $size['h'],\Think\Image::IMAGE_THUMB_FIXED)->save($path.$pic); 
             unlink($path.$pic0);
-           
+        }  
        
         
         $start=strtotime(I('start',$subname));
-        if($start<$time){
+        if($start<=$time){
             $this->error('请选择有效时间');
         }
         $city=M('seller')->where(['id'=>$this->sid])->getField('city');
@@ -430,15 +438,11 @@ class NewsController extends MemberbaseController {
             'end_time'=>$start,
             'name'=>I('title',''),
             'dsc'=>I('dsc',''),
+            'picpath'=>$picpath,
             'content'=>$_POST['content2']
         );
        
-        //实名认证无需审核
-        if(session('user.name_status')==1){
-            $data['status']=3;
-        }else{
-            $msg="，等待审核";
-        }
+        // 审核 
         $check=C('option_active.add_check');
         $user=$this->user;
         switch($check){
@@ -473,6 +477,10 @@ class NewsController extends MemberbaseController {
         if(empty($info)){
             $this->error('此动态不存在');
         }
+        
+        if($info['picpath']!=session('picpath')){
+            $this->error('请刷新页面重新编辑');
+        }
         $time=time();
         $subname=date('Y-m-d',$time);
         $start=strtotime(I('start',$subname));
@@ -503,23 +511,24 @@ class NewsController extends MemberbaseController {
                 break;
         }
         if(!empty($_FILES['IDpic7']['name'])){
-            $size=$this->size;
             $path=C("UPLOADPATH");
+            $size=$this->size;
             $upload = new \Think\Upload();// 实例化上传类
             //20M
             $upload->maxSize   =  C('SIZE') ;// 设置附件上传大小
             $upload->rootPath=getcwd().'/';
-            $upload->subName = $subname;
-            $upload->savePath  =$path.'/news/';
-            $info   =   $upload->upload();
-            if(!$info) {// 上传错误提示错误信息
+            $upload->subName = '';
+            $upload->savePath  =$path.$info['picpath'];
+            $fileinfo   =   $upload->upload();
+            if(!$fileinfo) {// 上传错误提示错误信息
                 $this->error($upload->getError());
             }
             
-            foreach ($info as $v){
-                $pic0='news/'.$subname.'/'.$v['savename'];
+            foreach ($fileinfo as $v){
+                $pic0=$info['picpath'].$v['savename'];
                 $pic=$pic0.'.jpg';
             }
+             
             $image = new \Think\Image();
             $image->open($path.$pic0);
             // 生成一个固定大小为150*150的缩略图并保存为thumb.jpg

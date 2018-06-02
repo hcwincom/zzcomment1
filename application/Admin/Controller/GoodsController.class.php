@@ -15,8 +15,13 @@ class GoodsController extends AdminbaseController {
         parent::_initialize();
         $this->m = M('Goods');
         $this->d=D('Goods0View');
-        $this->order='id desc';
+        $this->order='create_time desc';
+        
+        $this->info_status=C('info_status');
+        $this->top_status=C('top_status');
         $this->assign('flag','店铺商品');
+        $this->assign('info_status',($this->info_status));
+        $this->assign('top_status',($this->top_status)); 
         
     }
     
