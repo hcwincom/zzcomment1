@@ -36,7 +36,7 @@ class NewsController extends MemberbaseController {
        ->assign('status',$status)
        ->assign('top0_price', C('price_top_active.top0_price'));
        $this->display();
-       
+       exit;
     }
     // 动态置顶
     public function top() {
@@ -159,21 +159,34 @@ class NewsController extends MemberbaseController {
             $this->ajaxReturn($data);
             exit;
         }
-        $price=C('option_active.top0_price');
-      
+        
+        
+        $conf=C('option_active');
+        $price=$conf['top0_price'];
         $m->startTrans();
         //扣款
         if($price>0){
             $m_user=M('Users');
             $user=$m_user->where('id='.$uid)->find();
-            if(empty($user) || $user['account']<$price){
-                $data['error']='你的余额不足，请充值';
-                $this->ajaxReturn($data);
-                exit;
-            }
-            $account=bcsub($user['account'],$price);
             
-            $row_user=$m_user->data(array('account'=>$account))->where('id='.$uid)->save();
+            /* 处理赠币,优先扣除赠币，不足扣除余额，再不足则扣款失败 */
+            $tmp=[];
+            $tmp['coin']=bcsub($user['coin'],$price);
+            if($tmp['coin']<0){
+                $tmp['account']=bcadd($tmp['coin'],$user['account']);
+                if($tmp['account']<0){
+                    $m->rollback();
+                    $this->error('你的余额不足，请充值');
+                    exit;
+                }
+                $tmp['coin']=0;
+                $price_coin=$user['coin'];
+                $price_money=abs($tmp['coin']);
+            }else{
+                $price_coin=$price;
+                $price_money=0;
+            }
+            $row_user=$m_user->data($tmp)->where('id='.$uid)->save();
             if($row_user!==1){
                 $m->rollback();
                 $data['error']='扣款失败';
@@ -195,17 +208,22 @@ class NewsController extends MemberbaseController {
                     'time'=>$time,
                     'content'=>'推荐动态'.$id.'-'.$info['name'], 
                 );
-                M('Pay')->add($data_pay);
-               
+                M('Pay')->add($data_pay); 
             }
+             
             $data_top0=array(
                 'pid'=>$id,
                 'status'=>2,
                 'create_time'=>$time,
                 'price'=>$price,
+                'coin'=>$price_coin,
+                'money'=>$price_money,
             );
+            
             M('TopActive0')->add($data_top0);
             $m->commit();
+            
+            coin($conf['top0_coin'],$uid,'推荐动态'.$info['name']);
             $data=array('errno'=>1,'error'=>'推荐成功');
         }else{
            $m->rollback(); 
@@ -291,15 +309,26 @@ class NewsController extends MemberbaseController {
         if($price>0){
             $m_user=M('Users');
             $user=$m_user->where('id='.$uid)->find();
-            if(empty($user) || $user['account']<$price){
-                
-                $m->rollback();
-                $this->error('你的余额不足，请充值');
-                exit;
+            /* 处理赠币,优先扣除赠币，不足扣除余额，再不足则扣款失败 */
+           $tmp=[]; 
+           $tmp['coin']=bcsub($user['coin'],$price);
+           if($tmp['coin']<0){
+               $tmp['account']=bcadd($tmp['coin'],$user['account']);
+               if($tmp['account']<0){
+                   $m->rollback();
+                   $this->error('你的余额不足，请充值');
+                   exit;
+               } 
+               $tmp['coin']=0; 
+               $price_coin=$user['coin'];
+               $price_money=abs($tmp['coin']);
+            }else{ 
+                $price_coin=$price;
+                $price_money=0;
             }
-            $account=bcsub($user['account'],$price);
-           
-            $row_user=$m_user->data(array('account'=>$account))->where('id='.$uid)->save();
+            
+          
+            $row_user=$m_user->data($tmp)->where('id='.$uid)->save();
             if($row_user!==1){ 
                 $m->rollback();
                 $this->error('扣款失败');
@@ -315,9 +344,19 @@ class NewsController extends MemberbaseController {
             'start_time'=>$start,
             'end_time'=>$end,
             'price'=>$price,
+            'coin'=>$price_coin,
+            'money'=>$price_money,
             'status'=>($time>=$start)?3:2,
         );
-        
+        switch($conf['top_check']){
+            case 3:
+                $data_top['status']=0;
+                break;
+            case 2:
+                $data_top['status']=($user['name_status']==1)?$data_top['status']:0; 
+            default:
+                break;
+        }
         $row=$m->add($data_top);
         if($row>=1){
             $data=array('errno'=>1,'error'=>'置顶成功');
@@ -331,6 +370,8 @@ class NewsController extends MemberbaseController {
                 M('Pay')->add($data_pay); 
             }
             $m->commit();
+            $coin=bcmul($days,$conf['top_coin']);
+            coin($coin,$uid,'置顶动态'.$info['name']);
             $this->success('置顶成功',U('top',['sid'=>$info['sid']]));
         }else{
             $m->rollback();
@@ -398,6 +439,20 @@ class NewsController extends MemberbaseController {
         }else{
             $msg="，等待审核";
         }
+        $check=C('option_active.add_check');
+        $user=$this->user;
+        switch($check){
+            case 1:
+                $data['status']=3;
+            case 3:
+                $data_top['status']=0;
+                $msg="，等待审核";
+                break;
+            case 2:
+                $data_top['status']=($user['name_status']==1)?3:0;
+            default:
+                break;
+        }
         $m=$this->m;
         $insert=$m->add($data);
         if($insert>=1){
@@ -432,12 +487,20 @@ class NewsController extends MemberbaseController {
             'dsc'=>I('dsc',''),
             'content'=>$_POST['content2']
         );
-        //实名认证无需审核
-        if(session('user.name_status')==1){
-            $data['status']=3;
-        }else{
-            $data['status']=0;
-            $msg="，等待审核";
+        //是否审核 
+        $check=C('option_active.edit_check');
+        $user=$this->user;
+        switch($check){
+            case 1:
+                $data['status']=3;
+            case 3:
+                $data_top['status']=0;
+                $msg="，等待审核";
+                break;
+            case 2:
+                $data_top['status']=($user['name_status']==1)?3:0;
+            default:
+                break;
         }
         if(!empty($_FILES['IDpic7']['name'])){
             $size=$this->size;
