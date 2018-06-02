@@ -27,7 +27,7 @@
                           
                         <div class="form2"><span style="vertical-align: top;">详情（可编辑样式，上传图片）：</span><textarea style="display: inline-block" name="content2" id="content2" ></textarea></div>
                         <p class="ml msg2"></p>
-                        <div class="form2"><span>时限：</span><input name="start" class="inline laydate-icon" id="start"  ></div>
+                        <div class="form2"><span>时限：</span><input name="start" class="inline laydate-icon" id="start" readonly  ></div>
                         <p class="ml msg3"></p>
                         <div class="form2 mtc"><input type="submit" value="发布动态"></div>
                     </form>
@@ -49,9 +49,7 @@
            initialContent: '',    //初始化编辑器的内容,也可以通过textarea/script给值，看官网例子
            autoClearinitialContent: true, //是否自动清除编辑器初始内容，注意：如果focus属性设置为true,这个也为真，那么编辑器一上来就会触发导致初始化的内容看不到了
            pasteplain: true,  //是否默认为纯文本粘贴。false为不使用纯文本粘贴，true为使用纯文本粘贴  
-           initialFrameWidth: 840, //初始化宽度
-           initialFrameHeight: 420, //初始化高度
-           autoHeightEnabled: true//关闭高度自适应
+           autoHeightEnabled: true//高度自适应
    		});
        
       
@@ -68,12 +66,7 @@
            max:'', //最大日期
            istime: false,
            istoday: false,
-           choose: function(datas){
-                end.min = datas; //开始日选好后，重置结束日的最小日期
-                end.start = datas //将结束日的初始值设定为开始日
-           }
        };
-
        laydate(start);  
 </script>
 </body>

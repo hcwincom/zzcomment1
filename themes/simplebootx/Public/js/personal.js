@@ -1,6 +1,15 @@
 function preview(file,o)  
-{  console.log(this.files)
+{  
+    
+    console.log(this.files)
     var prevDiv = document.getElementById('preview'+o);  
+     // 验证文件大小
+    var fileSize = file.files[0].size / 1024;
+    if (fileSize > 4 * 1024) {
+        alert("图片大小不能超过4MB");
+        return false;
+    } 
+
     if (file.files && file.files[0]) { 
         var reader = new FileReader();  
         reader.onload = function(evt) {  
@@ -11,6 +20,8 @@ function preview(file,o)
         console.log("ie")
         prevDiv.innerHTML = '<div class="img" style="filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src=\'' + file.value + '\'"></div>';  
     }  
+    
+   
 }
 $(function () {
     $("#price").val(toDecimal2(100));
