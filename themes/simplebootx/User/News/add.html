@@ -42,14 +42,13 @@
 <script type="text/javascript">
 	
 	  //初始化百度编辑器
-     //  var ue = UE.getEditor('content2');
+    //   var ue = UE.getEditor('content2');
        var ue = UE.getEditor('content2', {
            wordCount: true, //开启字数统计
            elementPathEnabled: false,//是否启用元素路径，默认是显示
            maximumWords: 10000,       //允许的最大字符数
            initialContent: '',    //初始化编辑器的内容,也可以通过textarea/script给值，看官网例子
-           autoClearinitialContent: true, //是否自动清除编辑器初始内容，
-           //注意：如果focus属性设置为true,这个也为真，那么编辑器一上来就会触发导致初始化的内容看不到了
+           autoClearinitialContent: true, //是否自动清除编辑器初始内容，注意：如果focus属性设置为true,这个也为真，那么编辑器一上来就会触发导致初始化的内容看不到了
            pasteplain: true,  //是否默认为纯文本粘贴。false为不使用纯文本粘贴，true为使用纯文本粘贴  
            autoHeightEnabled: true//高度自适应
    		});
