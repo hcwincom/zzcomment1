@@ -72,12 +72,16 @@ function time(){
         return false;
     }
 }
-
+function city() {
+    var cval = $("select option:selected").val();
+    if(cval != ""){
+        $()
+    }
+}
 
 
 // 验证文件的大小
-    function ssize(file) {
-      
+    function ssize(file) { 
         var fileSize = file.files[0].size / 1024;
              if (fileSize > 4 * 1024) {
                  alert("您选择的图片太大，请选择小于4M的图片");

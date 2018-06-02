@@ -1,41 +1,60 @@
 <tc_include file="Public/user_head" />
 	   <div class="per_right rt">
-                 <div class="per_rnav">
-                 
-		                <a class="" href="{:U('index',['sid'=>$sid])}">{$flag}管理</a>
-		                 <a class="" href="{:U('top',['sid'=>$sid])}">{$flag}置顶记录</a>
-		                <a class="" href="{:U('add',['sid'=>$sid])}">发布新{$flag}</a> 
-	                     <a class="rb" href="{:U('edit',['id'=>$info['id'],'sid'=>$sid])}">编辑{$flag}</a> 
-                    </div>
-                 <div class="adddynamic">
-                    <form action="{:U('edit_do')}" method="post" onsubmit="return send1()" enctype="multipart/form-data">
-                        <input type="hidden" name="sid" value="{$sid}"/>
-                        <input type="hidden" name="id" value="{$info.id}"/>
-                       
-                        <div class="form2"><span>标题：</span><input type="text" name="title" value="{$info.name}" onblur="tit1()" ></div>
-                        <p class="ml msg1"></p>
-                        <div class="form2"><span class="lf">缩略图：</span>
-                            <div class="lf ib imgbox7">
-                            <div id="preview7" class="preview"><img class="imgbox3" src="__UPLOAD__/{$info['pic']}"></div>
-                            <label class="btn btn7" for="p7" title="选择图片"><span>选择图片</span></label>
-                            <input type="file" class="upload_pic" onchange="preview(this,7)" name="IDpic7" value="" id="p7" >
-                           <p class="pms">*上传尺寸为{$size['w']}*{$size['h']}的jpg、png图,大小在4M以内</p>
-                            </div>
-                         
-                            <div class="clear"></div>
-                        </div>
-                        <p class="ml msg4"></p> 
-                        <div class="form2"><span class="lf">简介（纯文字）：</span><textarea name="dsc" id="" cols="30" rows="10" >{$info.dsc}</textarea></div>
-                        <p class="ml msg2"></p>
-                          
-                        <div class="form2"><span style="vertical-align: top;">详情（可编辑样式，上传图片）：</span><textarea style="display: inline-block" name="content2" id="content2" >{$info.content}</textarea></div>
-                        <p class="ml msg2"></p>
-                        <div class="form2"><span>时限：</span><input name="start" class="inline laydate-icon" id="start" value="{$info.end_time|date='Y-m-d',###}" ></div>
-                        <p class="ml msg3"></p>
-                        <div class="form2 mtc"><input type="submit" value="保存更新"></div>
-                    </form>
-                </div>
+            <div class="per_rnav">
+            
+                <a class="" href="{:U('index',['sid'=>$sid])}">{$flag}管理</a>
+                <a class="" href="{:U('top',['sid'=>$sid])}">{$flag}置顶记录</a>
+                <a class="" href="{:U('add',['sid'=>$sid])}">发布新{$flag}</a>
+                <a class="rb" href="{:U('edit',['id'=>$info['id'],'sid'=>$sid])}">编辑{$flag}</a>
             </div>
+            <div class="adddynamic">
+                <form action="{:U('edit_do')}" method="post" onsubmit="return send1()" enctype="multipart/form-data">
+                    <input type="hidden" name="sid" value="{$sid}" />
+                    <input type="hidden" name="id" value="{$info.id}" />
+            
+                    <div class="form2">
+                        <span>标题：</span>
+                        <input type="text" name="title" value="{$info.name}" onblur="tit1()">
+                    </div>
+                    <p class="ml msg1"></p>
+                    <div class="form2">
+                        <span class="lf">缩略图：</span>
+                        <div class="lf ib imgbox7">
+                            <div id="preview7" class="preview">
+                                <img class="imgbox3" src="__UPLOAD__/{$info['pic']}">
+                            </div>
+                            <label class="btn btn7" for="p7" title="选择图片">
+                                <span>选择图片</span>
+                            </label>
+                            <input type="file" class="upload_pic" onchange="preview(this,7)" name="IDpic7" value="" id="p7">
+                            <p class="pms">*上传尺寸为{$size['w']}*{$size['h']}的jpg、png图,大小在4M以内</p>
+                        </div>
+            
+                        <div class="clear"></div>
+                    </div>
+                    <p class="ml msg4"></p>
+                    <div class="form2">
+                        <span class="lf">简介（纯文字）：</span>
+                        <textarea name="dsc" id="" cols="30" rows="10">{$info.dsc}</textarea>
+                    </div>
+                    <p class="ml msg2"></p>
+            
+                    <div class="form2">
+                        <span style="vertical-align: top;">详情（可编辑样式，上传图片）：</span>
+                        <textarea style="display: inline-block" name="content2" id="content2">{$info.content}</textarea>
+                    </div>
+                    <p class="ml msg2"></p>
+                    <div class="form2">
+                        <span>时限：</span>
+                        <input name="start" class="inline laydate-icon" id="start" value="{$info.end_time|date='Y-m-d',###}">
+                    </div>
+                    <p class="ml msg3"></p>
+                    <div class="form2 mtc">
+                        <input type="submit" value="保存更新">
+                    </div>
+                </form>
+            </div>
+         </div>
       
 	<tc_include file="Public/user_footer" />
 	 <script type="text/javascript" src="__TMPL__Public/js/laydate.js"></script>      
