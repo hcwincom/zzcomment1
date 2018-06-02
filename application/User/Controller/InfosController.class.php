@@ -456,17 +456,21 @@ class InfosController extends MemberbaseController {
         //是否审核 
         $check=C('option_info.add_check');
         $user=$this->user;
+        
         switch($check){
             case 1:
                 $data['status']=3;
             case 3:
-                $data_top['status']=0;
-                $msg="，等待审核";
+                $data['status']=0;
                 break;
             case 2:
-                $data_top['status']=($user['name_status']==1)?3:0;
+                $data['status']=($user['name_status']==1)?3:0;
             default:
+                $data['status']=0;
                 break;
+        }
+        if($data['status']==0){
+            $msg="，等待审核";
         }
         $m=$this->m;
         $insert=$m->add($data);
@@ -515,17 +519,21 @@ class InfosController extends MemberbaseController {
         //是否审核 
         $check=C('option_info.edit_check');
         $user=$this->user;
+        
         switch($check){
             case 1:
                 $data['status']=3;
             case 3:
-                $data_top['status']=0;
-                $msg="，等待审核";
+                $data['status']=0;
                 break;
             case 2:
-                $data_top['status']=($user['name_status']==1)?3:0;
+                $data['status']=($user['name_status']==1)?3:0;
             default:
+                $data['status']=0;
                 break;
+        }
+        if($data['status']==0){
+            $msg="，等待审核";
         }
         if(!empty($_FILES['IDpic7']['name'])){
             $path=C("UPLOADPATH");
