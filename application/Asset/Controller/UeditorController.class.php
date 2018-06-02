@@ -66,7 +66,7 @@ class UeditorController extends Controller {
 				/* 上传涂鸦 */
 			case 'uploadscrawl':
 			    //session保存
-			    $pic_path=session('pic_path');
+			    $pic_path=session('picpath');
 			   
 			    if(empty($pic_path)){
 			        $result=json_encode(array('state'=> '操作已过期，请刷新网页')); 

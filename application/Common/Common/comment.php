@@ -187,8 +187,7 @@ function active_dels($list){
     } 
     $where=['pid'=>['in',$ids]];
     M('TopActive')->where($where)->delete();
-    M('TopActive0')->where($where)->delete();
-   
+    M('TopActive0')->where($where)->delete(); 
 }
 /*
  * 删除店铺信息的图片和推荐置顶 */
@@ -203,6 +202,18 @@ function pro_dels($type,$list){
         }
         if(is_file($path.$v['pic0'])){
             unlink($path.$v['pic0']);
+        }
+        $dir=$path.$v['picpath'];
+        if(is_dir($dir)){
+            $files=scandir($dir,1);
+            foreach($files as $v){
+                if($v=='.' || $v=='..'){
+                    break;
+                }else{
+                    unlink($dir.$v);
+                }
+            }
+            rmdir($dir);
         }
     }
     $where=['pid'=>['in',$ids]];
@@ -222,7 +233,18 @@ function pro_del($type,$info){
     if(is_file($path.$info['pic0'])){
         unlink($path.$info['pic0']);
     }
-    
+    $dir=$path.$info['picpath'];
+    if(is_dir($dir)){
+        $files=scandir($dir,1);
+        foreach($files as $v){
+            if($v=='.' || $v=='..'){
+                break;
+            }else{
+                unlink($dir.$v);
+            }
+        }
+        rmdir($dir); 
+    }
     $where=['pid'=>['eq',$info['id']]];
     M('Top'.$type)->where($where)->delete();
     M('Top'.$type.'0')->where($where)->delete();
@@ -289,4 +311,23 @@ function seller_del($info0){
         unlink($path.$info0['cards']);
     }
      
+}
+
+/* 赠币处理 */
+function coin($money,$uid,$dsc=''){
+   if($money==0){
+       return 2;
+   }
+    $m_user=M('users');
+    $where=['id'=>$uid];
+    $tmp=$m_user->where($where)->setInc('coin',$money);
+    $data_pay=array(
+        'uid'=>$uid,
+        'money'=>$money,
+        'time'=>time(),
+        'content'=>$dsc.'赠币'.$money,
+    );
+    M('Pay')->add($data_pay); 
+    return 1;
+    
 }

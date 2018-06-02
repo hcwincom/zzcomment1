@@ -25,6 +25,7 @@ class TopActive0ViewModel extends ViewModel {
             'sid', 
             'pic', 
             'name'=>'aname',
+            'dsc',
             'content',
             'create_time'=>'acreate_time',
             'start_time'=>'astart_time',

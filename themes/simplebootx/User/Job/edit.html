@@ -1,18 +1,24 @@
 <tc_include file="Public/user_head" />
 	   <div class="per_right rt">
-                 <div class="per_rnav">
-                 
-		                <a class="" href="{:U('index',['sid'=>$sid])}">{$flag}管理</a>
-		                 <a class="" href="{:U('top',['sid'=>$sid])}">{$flag}置顶记录</a>
-		                <a class="" href="{:U('add',['sid'=>$sid])}">发布新{$flag}</a> 
-	                     <a class="rb" href="{:U('edit',['id'=>$info['id'],'sid'=>$sid])}">编辑{$flag}</a> 
-                    </div>
+                 <div class="per_rnav"> 
+	                <a class="" href="{:U('index',['sid'=>$sid])}">{$flag}管理</a>
+	                <a class="" href="{:U('top',['sid'=>$sid])}">{$flag}置顶记录</a>
+	                <a class="" href="{:U('add',['sid'=>$sid])}">发布新{$flag}</a> 
+                    <a class="rb" href="{:U('edit',['id'=>$info['id'],'sid'=>$sid])}">编辑{$flag}</a> 
+                 </div>
                  <div class="adddynamic">
                     <form action="{:U('edit_do')}" method="post" onsubmit="return send1()" enctype="multipart/form-data">
                         <input type="hidden" name="sid" value="{$sid}"/>
                         <input type="hidden" name="id" value="{$info.id}"/>
-                       
                         <div class="form2"><span>标题：</span><input type="text" name="title" value="{$info.name}" onblur="tit1()" ></div>
+                        <p class="ml msg1"></p>
+                         <div class="form2"><span>地区：</span><tc_include file="Public/city" /></div>
+                        <p class="ml msg1"></p>
+                         <div class="form2"><span>分类：</span><tc_include file="Public/cate" /> </div>
+                        <p class="ml msg1"></p>
+                         <div class="form2"><span>联系方式：</span><input type="text" name="tel" value="{$info.tel}"></div>
+                        <p class="ml msg1"></p>
+                         <div class="form2"><span>联系地址：</span><input type="text" name="address" value="{$info.address}"></div>
                         <p class="ml msg1"></p>
                         <div class="form2"><span class="lf">缩略图：</span>
                             <div class="lf ib imgbox7">

@@ -1,0 +1,9 @@
+ 
+ <select name="cid" >
+	<option value="0">选择分类</option>
+<foreach name="cate" item="vo">
+	<option  value="{$key}" <if condition="$cateid eq $key">select</if>>{$vo}</option>
+</foreach>
+</select>
+	 
+	 

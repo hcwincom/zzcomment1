@@ -27,6 +27,8 @@ class MemberbaseController extends HomebaseController{
 			    session('user',null);
 			    setcookie('zypjwLogin', null,time()-2,'/');
 			    $this->error('密码已修改，你需要重新登录');
+			}else{
+			    session('user',$user1);
 			}
 		}
 		//查询店铺数

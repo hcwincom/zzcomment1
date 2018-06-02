@@ -89,8 +89,8 @@ class HomebaseController extends AppframeController {
 		    session('add_cate1',$cate1);
 		    session('add_cate2',$cate2);
 		    $m_city=M('City');
-		    $city1=$m_city->where('type=1')->order($this->order)->select();
-		    $city2=$m_city->where('type=2')->order($this->order)->select();
+		    $city1=$m_city->where('type=1')->getField('id,name');
+		    $city2=$m_city->where('type=2')->getField('id,fid,name');
 		    
  
 		    session('add_city1',$city1);
@@ -108,7 +108,7 @@ class HomebaseController extends AppframeController {
 		 }else{
 		     session('city',$city);
 		     if($city['city2']!=0){
-		         $city3=$m_city->where('type=3 and fid='.$city['city2'])->order($this->order)->select();
+		         $city3=$m_city->where('type=3 and fid='.$city['city2'])->getField('id,name');
 		         $this->assign("add_city3",$city3);
 		     }
 		 }

@@ -26,7 +26,9 @@
                     </div>
                  	<input type="hidden" class="id" value="{$vo.id}"/>
                      <div class="lf dynamic_li_lf1">
-                        <a href="{:U('Portal/Seller/news_detail',array('id'=>$vo['id'],'sid'=>$vo['sid']))}"> <img class="dy_img" src="__UPLOAD__/{$vo['pic']|default=$company['active_empty']['content']}"></a>  
+                        <a href="{:U('Portal/Seller/job_detail',array('id'=>$vo['id'],'sid'=>$vo['sid']))}"> 
+                        	<img class="dy_img" src="__UPLOAD__/{$vo['pic']|default=$company['job_empty']['content']}">
+                        </a>  
                      </div>
                       <div class="lf dynamic_li_lf2">
                          <p class="per_d1">{$vo.name}</p>

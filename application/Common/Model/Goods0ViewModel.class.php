@@ -20,8 +20,7 @@ class Goods0ViewModel extends ViewModel {
             'link',
             'create_time',
             'start_time', 
-             'status',
-            'content',
+             'status', 
             '_type'=>'LEFT' 
         ), 
       
