@@ -169,6 +169,7 @@ class ListController extends HomebaseController {
 	//店铺点评
 	public function comments(){
 	    $time=time();
+	    $m=M('Comment');
 	    //点评
 	    $where_comment=array('status'=>2);
 	    $tmp=$this->city();
@@ -183,8 +184,15 @@ class ListController extends HomebaseController {
 	    $total=M('Comment')->where($where_comment)->count();
 	    if($total){ 
     	    $page = $this->page($total, C('page_comment_list'));
-    	    $ids=M('Comment')->where($where_comment)->getField('id',true);
-    	    $list=D('Comment0View')->where(['id'=>['in',$ids]])->order('id desc')->limit($page->firstRow,$page->listRows)->select();
+    	    $ids=$m->where($where_comment)->getField('id',true);
+    	    $list=$m->alias('p')
+    	    ->field('p.*,u.avatar,u.user_login as uname,s.name as sname')
+    	    ->join('cm_users as u on u.id=p.uid')
+    	    ->join('cm_seller as s on s.id=p.sid')
+    	    ->where(['p.id'=>['in',$ids]])
+    	    ->order('id desc')
+    	    ->limit($page->firstRow,$page->listRows)
+    	    ->select();
     	    $m_reply=D('Reply0View');
     	    foreach ($list as $k=>$v){
     	        $list[$k]['reply']=$m_reply->where('cid='.$v['id'])->order('id desc')->select();

@@ -32,7 +32,7 @@ class CommentController extends MemberbaseController {
         set_time_limit(C('TIMEOUT'));
         $uid=session('user.id');
         $m=$this->m;
-        $sid=I('sid',0,'intval');
+        $sid=I('ssid',0,'intval');
         $seller=M('Seller')->where('id='.$sid)->find();
         if(empty($seller)|| $seller['uid']==$uid){
             $this->error('错误，用户不能为自己的店铺上传评级');
@@ -66,6 +66,7 @@ class CommentController extends MemberbaseController {
             'uid'=>$uid,
             'sid'=>$sid, 
             'score'=>$score,
+            'city'=>$seller['city'],
             'content'=>$content0,
             'create_time'=>time(),
             'ip'=>get_client_ip(0,true),
@@ -103,5 +104,27 @@ class CommentController extends MemberbaseController {
        }
        exit;
     }
-   
+   /* 会员顶 */
+    public function push(){
+        
+        $id=I('id',0,'intval');
+        
+        $uid=$this->userid;
+        $m=$this->m;
+        $info=$m->where('id='.$id)->find();
+        if(empty($info['status'])){
+            $this->error('数据错误','',['code'=>3]);
+        }
+        $m_push=M('push');
+        $data=['uid'=>$uid,'pid'=>$id];
+        $tmp=$m_push->where($data)->find();
+        if(!empty($tmp)){
+            $this->error('只能顶一次','',['code'=>2]);
+        } 
+        $data['time']=time();
+        $m_push->add($data);
+       
+        $m->where('id='.$id)->setInc('push');
+        $this->success('操作成功',['code'=>$info['push']+1]);
+    }
 }

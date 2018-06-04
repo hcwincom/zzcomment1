@@ -266,139 +266,149 @@ class SellerController extends MemberbaseController {
         if($info['status']!=2){
             $this->error('该店铺无法购买置顶');
         }
-        //计算得到可置顶周期，最多5个周期
-        //设置周期为1周
-        $date_len=1;
-        $i=5;
-        $top=array();
-        $m_top=M('TopSeller');
-        //得到总置顶位，再计算剩余
-        $num=10;
-        $where_tops=array(
-            'pid'=>array('eq',$id),
-            'status'=>array('in','0,2'),
-        );
-        $tops=$m_top->where($where_tops)->select();
-        $dates=getdate($time);
-        
-        //得到下周一
-        if($dates['wday']==0){
-            $time0=$time+3600*24;
-         }else{
-             $time0=$time+3600*24*(8-$dates['wday']);
-         }
-        
-        $flag=0;
-        
-        for($j=0;$j<$i;$j++){
-            $day1=date('Y-m-d',$time0+3600*24*7*$date_len*$j);
-            $time1=strtotime($day1);
-            foreach ($tops as $v){
-                if($time1==$v['start_time']){
-                    $flag=1;
-                    continue;
-                }
-            }
-            if($flag==1){
-                $flag=0;
-                continue;
-            }
-            $where=array('status'=>2,'start_time'=>$time1);
-            $count=$m_top->where($where)->count();
-            if($count<$num){
-                $top[]=array('day1'=>$day1,'day2'=>date('Y-m-d',$time1+3600*24*7*$date_len-1),'count'=>($num-$count));
-            }
+        //计算得到可置顶周期  
+        $top_sellers=[];
+        $tops0=C('price_top_seller');
+        $m_top=M('top_seller');
+        foreach($tops0 as $k=>$v){
+            $top_sellers[$k]=['price'=>$v['price']];
+            $where=['status'=>['eq',3],'site'=>['eq',$k]];
+            $top_sellers[$k]['start']=$m_top->where($where)->order('end_time desc')->find();
+            $where['status']=['eq',2];
+            $top_sellers[$k]['end']=$m_top->where($where)->order('start_time asc')->find();
             
         }
         
-        $this->assign('type','店铺名')->assign('info',$info)->assign('top',$top);
+        $this->assign('type','店铺名')->assign('info',$info)->assign('top_sellers',$top_sellers);
         $this->display();
     }
     
     //ajax
-    public function add_top_ajax(){
-        $id=I('id',0);
+    public function add_top_do(){
+        $id=I('sid',0);
         $m=M('TopSeller');
-        $days=I('days',array());
+        $start=strtotime(I('start',''));
+        $end=strtotime(I('end',''));
+        $price=round(I('zprice',0),2);
+        $site=round(I('site',0),2);
         $data=array('errno'=>0,'error'=>'未执行操作');
-        if(empty($days)){
-            $data['error']='未选中日期';
-            $this->ajaxReturn($data);
+        $time0=strtotime(date('Y-m-d'));
+        $days=bcdiv(($end-$start),86400,0);
+        if($start<$time0 || $days<1){
+            
+            $this->error('日期选择错误');
             exit;
         }
-        $uid=$this->userid;
+        //未上架不能置顶
         $info=M('Seller')->where(array('id'=>$id,'status'=>2))->find();
-        if(empty($info) || $info['uid']!=$uid){
-            $data['error']='不能购买推荐位';
-            $this->ajaxReturn($data);
+        if(empty($info)){
+            $this->error('该店铺不能购买推荐');
             exit;
         }
-        $price0=session('company.top_seller_fee');
+        $conf=C('option_seller');
+        $prices=C('price_top_seller');
+        $uid=$this->userid;
+        $price0=$prices[$site]['price'];
+        
         //检查价格是否更新
-        $tmp=M('Company')->where(array('name'=>'top_seller_fee'))->find();
-        if($tmp['content']!=$price0['content']){
-            $data['error']='价格变化，请刷新页面';
-            session('company',null);
-            $this->ajaxReturn($data);
+        if($price!=bcmul($days,$price0,2)){
+            $this->error($price.'推荐价格变化，请刷新页面'.bcmul($days,$price0,2));
             exit;
         }
-        $price=bcmul($price0['content'],count($days));
+        
+        //获取时间段内已置顶信息,置顶位满不能置顶
+        $m->startTrans();
+        
+        $where=[
+            'site'=>$site,
+            'status'=>['between','2,3'],
+            'start_time'=>['between',[$start+1,$end-1]],
+            'end_time'=>['between',[$start+1,$end-1]],
+        ];
+        
+        $tmp_seller=$m->where($where)->find();
+        if(!empty($tmp_seller)){
+            $m->rollback();
+            $this->error(date('Y-m-d',$tmp_seller['start_time']).'至'.date('Y-m-d',$tmp_seller['end_time']).'的推荐位已被购买');
+            exit;
+        }
+        
         //扣款
         if($price>0){
             $m_user=M('Users');
             $user=$m_user->where('id='.$uid)->find();
-            if(empty($user) || $user['account']<$price){
-                $data['error']='你的余额不足，请充值';
-                $this->ajaxReturn($data);
-                exit;
+            /* 处理赠币,优先扣除赠币，不足扣除余额，再不足则扣款失败 */
+            $tmp=[];
+            $tmp['coin']=bcsub($user['coin'],$price);
+            if($tmp['coin']<0){
+                $tmp['account']=bcadd($tmp['coin'],$user['account']);
+                if($tmp['account']<0){
+                    $m->rollback();
+                    $this->error('你的余额不足，请充值');
+                    exit;
+                }
+                $tmp['coin']=0;
+                $price_coin=$user['coin'];
+                $price_money=abs($tmp['coin']);
+            }else{
+                $price_coin=$price;
+                $price_money=0;
             }
-            $account=bcsub($user['account'],$price);
-            $m_user->startTrans();
-            $row_user=$m_user->data(array('account'=>$account))->where('id='.$uid)->save();
+            
+            
+            $row_user=$m_user->data($tmp)->where('id='.$uid)->save();
             if($row_user!==1){
-                $m_user->rollback();
-                $data['error']='扣款失败';
-                $this->ajaxReturn($data);
+                $m->rollback();
+                $this->error('扣款失败');
                 exit;
             }
         }
         //推荐
-        
+        //0申请，1不同意，2同意，3，生效中，4过期
         $time=time();
-        $data_top=array();
-        //设置周期为1周
-        $date_len=1;
-        foreach ($days as $v){
-            $time1=strtotime($v);
-            $data_top[]=array(
-                'pid'=>$id,
-                'create_time'=>$time,
-                'start_time'=>$time1,
-                'end_time'=>$time1+3600*24*7*$date_len-1,
-                'price'=>$price0['content'],
-            );
+        $data_top=array(
+            'pid'=>$id,
+            'create_time'=>$time,
+            'start_time'=>$start,
+            'end_time'=>$end,
+            'price'=>$price,
+            'site'=>$site,
+            'coin'=>$price_coin,
+            'money'=>$price_money,
+            'status'=>($time>=$start)?3:2,
+        );
+        switch($conf['top_check']){
+            case 1:
+                break;
+            case 2:
+                $data_top['status']=($user['name_status']==1)?$data_top['status']:0;
+                break;
+            default:
+                $data_top['status']=0;
+                break;
         }
-        $row=$m->addAll($data_top);
+        $msg=($data_top['status']==0)?'，等待审核'.$conf['top_check']:'';
+        $row=$m->add($data_top);
         if($row>=1){
-            $data=array('errno'=>1,'error'=>'推荐成功');
+            $data=array('errno'=>1,'error'=>'置顶成功');
             if(!empty($row_user)){
                 $data_pay=array(
                     'uid'=>$uid,
                     'money'=>'-'.$price,
                     'time'=>$time,
-                    'content'=>'推荐店铺'.$id.'-'.$info['name'],
+                    'content'=>'店铺推荐位购买'.$id.'-'.$info['name'],
                 );
                 M('Pay')->add($data_pay);
-                $m_user->commit();
             }
+            $m->commit();
+            $coin=bcmul($days,$conf['top_coin']);
+            coin($coin,$uid,'店铺推荐位购买'.$info['name']);
+            $this->success('店铺推荐位购买成功'.$msg,U('top',['sid'=>$info['id']]));
         }else{
-            if(!empty($row_user)){
-                $m_user->rollback();
-            }
-            $data=array('errno'=>2,'error'=>'置顶失败');
+            $m->rollback();
+            $this->error('店铺推荐位购买失败');
         }
-        $this->ajaxReturn($data);
-        exit;
+        exit; 
         
     }
     

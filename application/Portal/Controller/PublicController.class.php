@@ -70,6 +70,24 @@ class PublicController extends HomebaseController {
          $this->ajaxReturn(['list'=>$list]);
          exit;
      }
+     /*赞  */
+     public function praise(){
+         $ids=session('praise');
+         $id=I('id',0,'intval');
+         if(!empty($ids)){
+             if(in_array($id, $ids)){
+                 $this->error('已赞过','',['code'=>2]);
+            }
+         }
+         $m=M('comment');
+         $info=$m->where('id='.$id)->find();
+         if(empty($info['status'])){
+             $this->error('数据错误','',['code'=>3]);
+         }
+         $m->where('id='.$id)->setInc('praise');
+         $this->success('操作成功',['code'=>$info['praise']+1]);
+         exit;
+     }
       /* 更新原有数据 */
      public function test(){
          //更新所有商品和动态状态2为状态3

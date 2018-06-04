@@ -365,7 +365,7 @@ class GoodsController extends MemberbaseController {
                 $data_top['status']=0;
                 break;
         }
-        $msg=($data['status']==0)?'，等待审核':'';
+        $msg=($data_top['status']==0)?'，等待审核':'';
          
         $row=$m->add($data_top);
         if($row>=1){

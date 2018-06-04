@@ -58,6 +58,7 @@ class HomebaseController extends AppframeController {
 		    session('online_time',$time);
 		    session('company',null);
 		    session('browse',null);
+		    session('praise',null);
 		    $tmp=session('user');
 		    if(!empty($tmp)){
 		        $where=array('id'=>$tmp['id'],'user_status'=>1,'user_type'=>2,'user_pass'=>$tmp['user_pass']);
