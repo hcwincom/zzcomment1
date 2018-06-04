@@ -151,9 +151,7 @@ class ListController extends HomebaseController {
 	        //推荐动态发布时间排名
 	        $list_top_active=$m->field($field)->order($order)->where($where)->select();
 	        $len=count($list_top_active);
-	    } 
-	    
-	   
+	    }  
 	    //0申请。，1不同意，2同意3=>'上架',4=>'下架' 
 	    $where=['status'=>['eq',3]]; 
 	    $tmp=$this->city();

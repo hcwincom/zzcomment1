@@ -84,6 +84,39 @@ class SellerController extends HomebaseController {
     //店铺动态
     public function news() {
         $time=time();
+        $m=M('Active');
+        $order='start_time desc';
+        $field='id,sid,pic,name,dsc,start_time';
+        //先找置顶动态
+        //0申请，1不同意，2同意，3，生效中，4过期
+        $where_top=['status'=>['eq',3]];
+        $top_len=C('price_top_active.top_count');
+        $sids=M('TopActive')->where($where_top)->limit(0,$top_len)->getField('pid',true);
+        $list_top_active=[];
+        $len=0;
+        if(!empty($sids)){
+            $where=array('id'=>array('in',$sids));
+            //推荐动态发布时间排名
+            $list_top_active=$m->field($field)->order($order)->where($where)->select();
+            $len=count($list_top_active);
+        }
+        //0申请。，1不同意，2同意3=>'上架',4=>'下架'
+        $where=['status'=>['eq',3]];
+        
+        $total=$m->where($where)->count();
+        $page = $this->page($total, C('page_news_list')-$len);
+        
+        $list=$m->field($field)->where($where)->order($order)->limit($page->firstRow,$page->listRows)->select();
+        
+        $this->assign('list_active',$list)->assign('list_top_active',$list_top_active)
+        ->assign('page',$page->show('Admin')); 
+        $this->assign('seller_flag','news');
+        
+        $this->display();
+    }
+    //店铺动态
+    public function job() {
+        $time=time();
         $sid=$this->sid;
         $m=M('Active');
         $where_top=array();
@@ -94,7 +127,7 @@ class SellerController extends HomebaseController {
         
         $total=$m->where($where_top)->count();
         $page = $this->page($total, 5);
-       
+        
         $list=$m->where($where_top)->order('id desc')->limit($page->firstRow,$page->listRows)->select();
         foreach($list as $k=>$v){
             

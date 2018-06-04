@@ -356,14 +356,17 @@ class GoodsController extends MemberbaseController {
             'status'=>($time>=$start)?3:2,
         );
         switch($conf['top_check']){
-            case 3:
-                $data_top['status']=0;
+            case 1:
                 break;
             case 2:
-                $data_top['status']=($user['name_status']==1)?$data_top['status']:0; 
+                $data_top['status']=($user['name_status']==1)?$data_top['status']:0;
+                break;
             default:
+                $data_top['status']=0;
                 break;
         }
+        $msg=($data['status']==0)?'，等待审核':'';
+         
         $row=$m->add($data_top);
         if($row>=1){
             $data=array('errno'=>1,'error'=>'置顶成功');
@@ -379,7 +382,7 @@ class GoodsController extends MemberbaseController {
             $m->commit();
             $coin=bcmul($days,$conf['top_coin']);
             coin($coin,$uid,'置顶商品'.$info['name']);
-            $this->success('置顶成功',U('top',['sid'=>$info['sid']]));
+            $this->success('置顶成功'.$msg,U('top',['sid'=>$info['sid']]));
         }else{
             $m->rollback();
             $this->error('置顶失败'); 
@@ -443,21 +446,19 @@ class GoodsController extends MemberbaseController {
         //是否审核 
         $check=C('option_goods.add_check');
         $user=$this->user;
+        
         switch($check){
             case 1:
                 $data['status']=3;
-            case 3:
-                $data['status']=0;
                 break;
             case 2:
                 $data['status']=($user['name_status']==1)?3:0;
+                break;
             default:
                 $data['status']=0;
                 break;
         }
-        if($data['status']==0){
-            $msg="，等待审核";
-        }
+        $msg=($data['status']==0)?'，等待审核':'';
         $m=$this->m;
         $insert=$m->add($data);
         if($insert>=1){
@@ -495,19 +496,20 @@ class GoodsController extends MemberbaseController {
         //是否审核 
         $check=C('option_goods.edit_check');
         $user=$this->user;
-        switch($check){
+        switch($check){ 
             case 1:
-                $data['status']=3;
-            case 3:
-                $data['status']=0;
                 break;
             case 2:
-                $data['status']=($user['name_status']==1)?3:0;
+                if($user['name_status']==0){
+                    $data['status']=0;
+                }
+                break; 
             default:
                 $data['status']=0;
                 break;
         }
-        if($data['status']==0){
+        
+        if(isset($data['status']) && $data['status']==0){
             $msg="，等待审核";
         }
         if(!empty($_FILES['IDpic6']['name'])){
