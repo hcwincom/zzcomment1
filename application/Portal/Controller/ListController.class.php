@@ -228,7 +228,7 @@ class ListController extends HomebaseController {
 	    
 	    $this->assign('list_job',$list)->assign('list_top_job',$list_top_job)
 	    ->assign('page',$page->show('Admin'));
-	    $this->assign('html_flag','job');
+	    $this->assign('html_flag','jobs');
 	    $this->display();
 	}
 	/*便民信息 */
@@ -264,7 +264,7 @@ class ListController extends HomebaseController {
 	    
 	    $this->assign('list_info',$list)->assign('list_top_info',$list_top_info)
 	    ->assign('page',$page->show('Admin'));
-	    $this->assign('html_flag','info');
+	    $this->assign('html_flag','infos');
 	    $this->display();
 	}
 	/* 获取城市信息 */
