@@ -72,12 +72,6 @@ function time(){
         return false;
     }
 }
-function city() {
-    var cval = $("select option:selected").val();
-    if(cval != ""){
-        $()
-    }
-}
 
 
 // 验证文件的大小
@@ -89,8 +83,83 @@ function city() {
                  return false;
              }      
     }
+
+function cityf() {
+
+    // var cavl = $("#citysel option:selected").val();
+    //     console.log(cavl);
+    // if (cval != "") { //如果非空 显示正确
+    //     $(".msg6").text("");
+    //     return true;
+    // }
+    // else {
+    //     $(".msg6").text("请选择");//显示必填
+    //     return false;
+    // }
+
+    $(".city1").change(function () {
+        var city1 = $(".city1").val();
+        console.log(city1);
+        if (city1 == "" || city1 == null || city1 == undefined) {
+            $(".msg6").text("必填");
+            return false;
+        }
+    });
+    $(".city2").change(function () {
+        var city2 = $(".city2").val();
+        if (city2 == "" || city2 == null || city2 == undefined) {
+            $(".msg6").text("必填");
+            return false;
+        }
+    });
+
+    $(".city3").change(function () {
+        var city3 = $(".city3").val();
+        if (city3 == "" || city3 == null || city3 == undefined) {
+            $(".msg6").text("必填");
+            return false;
+        }
+    });
+
+}
+
+
+function telnum() {
+    var cval = $("input[name='tel']").val();
+    if(cval != ""){
+        $(".msg7").text("");
+        return true;
+    }else{
+        $(".msg7").text("请填写电话号码");
+        return false;
+    }
+    
+}
+function address() {
+    var cval = $("input[name='address']").val();
+    if (cval != "") {
+        $(".msg5").text("");
+        return true;
+    } else {
+        $(".msg5").text("请填写联系地址");
+        return false;
+    }
+
+}
+function shoppict() {
+    var cval1 = $("#p7").val();
+    if (cval1 != "") { //如果非空 显示正确
+        $(".msg4").text("");
+        return true;
+    }
+    else {
+        $(".msg4").text("请上传商品图片");//显示必填
+        return false;
+    }
+};
+
 function send1(){
-    return (tit1() && time() && asd() && ssize());
+    return (tit1()&&telnum()&&address()&&shoppict()&&time()&&asd());
 }
 function shopname1(){
 var cval = $("input[name='shopname']").val();    
@@ -103,6 +172,17 @@ $(".msg1").text("请填写商品名称");//显示必填
 return false;
 }
     };
+function shopprice1() {
+    var cval1 = $("input[name='shopprice']").val();
+    if (cval1 != "") { //如果非空 显示正确
+        $(".msg2").text("");
+        return true;
+    }
+    else {
+        $(".msg2").text("请填写商品价格");//显示必填
+        return false;
+    }
+    }
 
 function shoppic(){
 var cval1= $("#p6").val(); 
@@ -116,7 +196,7 @@ return false;
 }
     };
 function send2(){
-    return(shopname1()&&shoppic()&&asd());
+    return (shopname1()&&shopprice1()&&shoppic()&&asd());
 }
     
 function sname1(){
