@@ -29,23 +29,8 @@ class ListController extends HomebaseController {
     // 店铺列表
     public function index() {
         $time=time();
-        //banner图
-        $banners=M('Banner')->order('sort desc')->select();
-        
+         
         $m_seller=M('Seller');
-        //推荐商家
-        $top_sellers=[];
-        $tops0=C('price_top_seller');
-        $tops=C('count_top_seller');
-        foreach($tops0 as $k=>$v){
-            if(empty($tops[$k])){
-                $top_sellers[$k]=$tops0[$k];
-                $top_sellers[$k]['url']='javascript:void(0)';
-            }else{
-                $top_sellers[$k]=$m_seller->where('id='.$tops[$k])->find();
-                $top_sellers[$k]['url']=U('Portal/Seller/home',array('sid'=>$tops[$k]));
-            }
-        }
         
         //商家//商家排名10
         $where_seller=array();
@@ -74,32 +59,16 @@ class ListController extends HomebaseController {
         ->assign('page',$page->show('Admin'));
         $this->assign('keyword',$keyword);
         
-        $this->assign('html_flag','index')
-        ->assign('top_seller',$top_sellers);
+        $this->assign('html_flag','index');
         
         $this->display();
     }
 	// 新增店铺列表
-    public function sellers() {
+    public function sellers(){
         $time=time();
-        //banner图
-        $banners=M('Banner')->order('sort desc')->select();
          
         $m_seller=M('Seller');
-        //推荐商家
-        $top_sellers=[];
-        $tops0=C('price_top_seller');
-        $tops=C('count_top_seller');
-        foreach($tops0 as $k=>$v){
-            if(empty($tops[$k])){
-                $top_sellers[$k]=$tops0[$k];
-                $top_sellers[$k]['url']='javascript:void(0)';
-            }else{
-                $top_sellers[$k]=$m_seller->where('id='.$tops[$k])->find();
-                $top_sellers[$k]['url']=U('Portal/Seller/home',array('sid'=>$tops[$k]));
-            }
-        }
-        
+         
         //商家//商家排名10
         $where_seller=array();
         //0未审核，1未认领，2已认领,3已冻结
@@ -127,8 +96,7 @@ class ListController extends HomebaseController {
         ->assign('page',$page->show('Admin'));
         $this->assign('keyword',$keyword);
         
-        $this->assign('html_flag','sellers')
-        ->assign('top_seller',$top_sellers);
+        $this->assign('html_flag','sellers');
         
         $this->display();
     }
@@ -139,15 +107,12 @@ class ListController extends HomebaseController {
 	    $m=M('Active'); 
 	    $order='start_time desc';
 	    $field='id,sid,pic,name,dsc,start_time';
-	    //先找置顶动态
-	    //0申请，1不同意，2同意，3，生效中，4过期  
-	    $where_top=['status'=>['eq',3]];  
-	    $top_len=C('price_top_active.top_count');
-	    $sids=M('TopActive')->where($where_top)->limit(0,$top_len)->getField('pid',true);
+	    //先找置顶动态 
 	    $list_top_active=[];
+	    $ids=C('count_top_active');
 	    $len=0;
-	    if(!empty($sids)){ 
-	        $where=array('id'=>array('in',$sids));
+	    if(!empty($ids)){ 
+	        $where=array('id'=>array('in',$ids));
 	        //推荐动态发布时间排名
 	        $list_top_active=$m->field($field)->order($order)->where($where)->select();
 	        $len=count($list_top_active);
@@ -168,27 +133,22 @@ class ListController extends HomebaseController {
 	    $this->assign('html_flag','news');
 	    $this->display();
 	}
-	/* 商品列表页 */
+	/* 商品 */
 	public function goods(){
 	    $time=time();
-	    $m=M('goods');
+	    $m=M('Goods');
 	    $order='start_time desc';
 	    $field='id,sid,pic,name,start_time';
-	    //先找置顶动态
-	    //0申请，1不同意，2同意，3，生效中，4过期
-	    $where_top=['status'=>['eq',3]];
-	    $top_len=C('price_top_goods.top_count');
-	    $sids=M('TopGoods')->where($where_top)->limit(0,$top_len)->getField('pid',true);
-	    $list_top_active=[];
+	    //先找置顶商品
+	    $list_top_goods=[];
+	    $ids=C('count_top_goods');
 	    $len=0;
-	    if(!empty($sids)){
-	        $where=array('id'=>array('in',$sids));
-	        //推荐动态发布时间排名
-	        $list_top_active=$m->field($field)->order($order)->where($where)->select();
-	        $len=count($list_top_active);
+	    if(!empty($ids)){
+	        $where=array('id'=>array('in',$ids));
+	        //推荐商品发布时间排名
+	        $list_top_goods=$m->field($field)->order($order)->where($where)->select();
+	        $len=count($list_top_goods);
 	    }
-	    
-	    
 	    //0申请。，1不同意，2同意3=>'上架',4=>'下架'
 	    $where=['status'=>['eq',3]];
 	    $tmp=$this->city();
@@ -200,11 +160,12 @@ class ListController extends HomebaseController {
 	    
 	    $list=$m->field($field)->where($where)->order($order)->limit($page->firstRow,$page->listRows)->select();
 	    
-	    $this->assign('list_goods',$list)->assign('list_top_goods',$list_top_active)
+	    $this->assign('list_goods',$list)->assign('list_top_goods',$list_top_goods)
 	    ->assign('page',$page->show('Admin'));
 	    $this->assign('html_flag','goods');
 	    $this->display();
 	}
+	 
 	//店铺点评
 	public function comments(){
 	    $time=time();
@@ -237,24 +198,19 @@ class ListController extends HomebaseController {
 	/*最新招聘 */
 	public function jobs(){
 	    $time=time();
-	    $m=M('job');
+	    $m=M('Job');
 	    $order='start_time desc';
-	    $field='id,sid,pic,name,dsc,start_time';
-	    //先找置顶动态
-	    //0申请，1不同意，2同意，3，生效中，4过期
-	    $where_top=['status'=>['eq',3]];
-	    $top_len=C('price_top_job.top_count');
-	    $sids=M('TopJob')->where($where_top)->limit(0,$top_len)->getField('pid',true);
+	    $field='id,sid,pic,dsc,name,start_time';
+	    //先找置顶商品
 	    $list_top_job=[];
+	    $ids=C('count_top_job');
 	    $len=0;
-	    if(!empty($sids)){
-	        $where=array('id'=>array('in',$sids));
-	        //推荐动态发布时间排名
+	    if(!empty($ids)){
+	        $where=array('id'=>array('in',$ids));
+	        //推荐商品发布时间排名
 	        $list_top_job=$m->field($field)->order($order)->where($where)->select();
 	        $len=count($list_top_job);
 	    }
-	    
-	    
 	    //0申请。，1不同意，2同意3=>'上架',4=>'下架'
 	    $where=['status'=>['eq',3]];
 	    $tmp=$this->city();
@@ -272,30 +228,25 @@ class ListController extends HomebaseController {
 	    
 	    $this->assign('list_job',$list)->assign('list_top_job',$list_top_job)
 	    ->assign('page',$page->show('Admin'));
-	    $this->assign('html_flag','jobs');
+	    $this->assign('html_flag','job');
 	    $this->display();
 	}
 	/*便民信息 */
 	public function infos(){
 	    $time=time();
-	    $m=M('info');
+	    $m=M('Info');
 	    $order='start_time desc';
-	    $field='id,sid,pic,name,dsc,start_time';
-	    //先找置顶动态
-	    //0申请，1不同意，2同意，3，生效中，4过期
-	    $where_top=['status'=>['eq',3]];
-	    $top_len=C('price_top_info.top_count');
-	    $sids=M('TopInfo')->where($where_top)->limit(0,$top_len)->getField('pid',true);
+	    $field='id,uid,pic,dsc,name,start_time';
+	    //先找置顶商品
 	    $list_top_info=[];
+	    $ids=C('count_top_info');
 	    $len=0;
-	    if(!empty($sids)){
-	        $where=array('id'=>array('in',$sids));
-	        //推荐动态发布时间排名
+	    if(!empty($ids)){
+	        $where=array('id'=>array('in',$ids));
+	        //推荐商品发布时间排名
 	        $list_top_info=$m->field($field)->order($order)->where($where)->select();
 	        $len=count($list_top_info);
 	    }
-	    
-	    
 	    //0申请。，1不同意，2同意3=>'上架',4=>'下架'
 	    $where=['status'=>['eq',3]];
 	    $tmp=$this->city();
@@ -313,7 +264,7 @@ class ListController extends HomebaseController {
 	    
 	    $this->assign('list_info',$list)->assign('list_top_info',$list_top_info)
 	    ->assign('page',$page->show('Admin'));
-	    $this->assign('html_flag','infos');
+	    $this->assign('html_flag','info');
 	    $this->display();
 	}
 	/* 获取城市信息 */

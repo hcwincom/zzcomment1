@@ -8,7 +8,7 @@
 	<meta name="keywords" content="{$company['keywords']['content']}">
     <meta name="description" content="{$company['description']['content']}">
     <meta name="baidu-site-verification" content="xNRtrmerYv" /> 
-	<title>{$company['title']['content']}</title>
+	<title>{$html_title|default=$company['title']['content']}</title>
 	<link rel="stylesheet" href="__TMPL__Public/css/common.css" type="text/css">
 	<link rel="stylesheet" href="__TMPL__Public/css/style.css" type="text/css">
 	<script type="text/javascript" src="__TMPL__Public/js/jquery-1.12.1.min.js"></script>

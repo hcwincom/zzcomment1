@@ -1,0 +1,45 @@
+ <tc_include file="Public:head" />
+ <link rel="stylesheet" href="__TMPL__Public/css/seller_list.css" type="text/css">
+</head>
+<body>
+	<tc_include file="Public:header" />
+	<!-- top end -->
+
+	<!-- main -->
+		<div class="shop-wrapper">
+			
+			<tc_include file="Public:seller_home" />
+			<div class="job_detail">
+				<div class="job-head">
+					<p>{$detail.name}</p>
+				</div>
+				<div class="job-infor">
+					<ul>
+						
+						<li>分类：<span>{$detail.cate_name}</span></li>
+						<li>城市：<span>{$detail.city_name}</span></li> 
+						<li>工作地点：<span>{$detail.address}</span></li>
+						<li>联系方式：<span>{$detail.tel}</span></li>
+						 <li>发布时间：<span>{$detail.start_time|date='Y-m-d',###}</span></li>
+					</ul>
+				</div>
+				<div class="clear"></div>
+				<div class="job-profile">
+					<p><span>工作简介：</span>{$detail.dsc}
+					</p>
+				</div>	
+				<div class="cont" id="edit_cont">{$detail.content}</div>
+			</div>
+			 
+			</div>
+		</div>
+	<!-- main end -->
+
+	<tc_include file="Public:footer" />
+</body>
+</html>
+<script>
+$('#edit_cont img').each(function(){
+	$(this).css('width','100%');
+});
+</script>

@@ -23,7 +23,7 @@ class SellerController extends AdminbaseController {
         
         
         //这是选择框的分类
-        $list0=M('Cate')->order('fid asc,sort desc,first_char asc,id asc')->select();
+        $list0=M('Cate')->where('type=1')->order('fid asc,sort desc,first_char asc,id asc')->select();
        //1一级分类，2二级分类
         $cates2=array();
         $cates1=array();

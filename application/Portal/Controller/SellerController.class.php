@@ -51,6 +51,7 @@ class SellerController extends HomebaseController {
             session('browse',$arr);
             $m_seller->where('id='.$sid)->save(array('browse'=>($info['browse']+1)));
         }
+        $this->assign('html_title',$info['name']);
     }
     //首页
 	public function home() {
@@ -87,81 +88,62 @@ class SellerController extends HomebaseController {
         $m=M('Active');
         $order='start_time desc';
         $field='id,sid,pic,name,dsc,start_time';
-        //先找置顶动态
-        //0申请，1不同意，2同意，3，生效中，4过期
-        $where_top=['status'=>['eq',3]];
-        $top_len=C('price_top_active.top_count');
-        $sids=M('TopActive')->where($where_top)->limit(0,$top_len)->getField('pid',true);
-        $list_top_active=[];
-        $len=0;
-        if(!empty($sids)){
-            $where=array('id'=>array('in',$sids));
-            //推荐动态发布时间排名
-            $list_top_active=$m->field($field)->order($order)->where($where)->select();
-            $len=count($list_top_active);
-        }
+        $sid=$this->sid;
+        
         //0申请。，1不同意，2同意3=>'上架',4=>'下架'
-        $where=['status'=>['eq',3]];
+        $where=['status'=>['eq',3],'sid'=>$sid];
         
         $total=$m->where($where)->count();
-        $page = $this->page($total, C('page_news_list')-$len);
+        $page = $this->page($total, C('page_news_list'));
         
         $list=$m->field($field)->where($where)->order($order)->limit($page->firstRow,$page->listRows)->select();
         
-        $this->assign('list_active',$list)->assign('list_top_active',$list_top_active)
+        $this->assign('list_active',$list)
         ->assign('page',$page->show('Admin')); 
         $this->assign('seller_flag','news');
         
         $this->display();
     }
-    //店铺动态
+    //店铺招聘
     public function job() {
         $time=time();
-        $sid=$this->sid;
-        $m=M('Active');
-        $where_top=array();
-        $where_top['sid']=array('eq',$sid);
-        //0申请。，1不同意，2同意
-        $where_top['status']=array('eq',2);
+        $m=M('Job');
+        $order='start_time desc';
+        $field='id,sid,pic,name,dsc,start_time';
+        $sid=$this->sid; 
+        //0申请。，1不同意，2同意3=>'上架',4=>'下架'
+        $where=['status'=>['eq',3],'sid'=>$sid];
         
+        $total=$m->where($where)->count();
+        $page = $this->page($total, C('page_job_list'));
         
-        $total=$m->where($where_top)->count();
-        $page = $this->page($total, 5);
+        $list=$m->field($field)->where($where)->order($order)->limit($page->firstRow,$page->listRows)->select();
         
-        $list=$m->where($where_top)->order('id desc')->limit($page->firstRow,$page->listRows)->select();
-        foreach($list as $k=>$v){
-            
-            $content_01 = $v["content"];//从数据库获取富文本content
-            $content_02 = htmlspecialchars_decode($content_01); //把一些预定义的 HTML 实体转换为字符
-            $content_03 = str_replace("&nbsp;","",$content_02);//将空格替换成空
-            $contents = strip_tags($content_03);//函数剥去字符串中的 HTML、XML 以及 PHP 的标签,获取纯文本内容
-            $con = mb_substr($contents, 0, 100,"utf-8");//返回字符串中的前100字符串长度的字符
-            $list[$k]['content']=$con;
-        }
-        $this->assign('seller_flag','news')
-        ->assign('list_active',$list)
+        $this->assign('list_job',$list)
         ->assign('page',$page->show('Admin'));
+        $this->assign('seller_flag','job');
+        
         $this->display();
     }
     //店铺商品列表
     public function goods(){
         $time=time();
-        $sid=$this->sid;
         $m=M('Goods');
-        $where_top=array();
-        $where_top['sid']=array('eq',$sid);
-        //0申请。，1不同意，2同意
-        $where_top['status']=array('eq',2);
+        $order='start_time desc';
+        $field='id,sid,pic,name,start_time';
+        $sid=$this->sid;
+        //0申请。，1不同意，2同意3=>'上架',4=>'下架'
+        $where=['status'=>['eq',3],'sid'=>$sid];
         
-         
-        $total=$m->where($where_top)->count();
-        $page = $this->page($total, 8);
+        $total=$m->where($where)->count();
+        $page = $this->page($total, C('page_goods_list'));
         
-        $list=$m->where($where_top)->order('start_time desc')->limit($page->firstRow,$page->listRows)->select();
+        $list=$m->field($field)->where($where)->order($order)->limit($page->firstRow,$page->listRows)->select();
         
-        $this->assign('seller_flag','goods')
-        ->assign('list',$list)
+        $this->assign('list_goods',$list)
         ->assign('page',$page->show('Admin'));
+        $this->assign('seller_flag','goods');
+        
         $this->display();
     }
     
@@ -194,6 +176,7 @@ class SellerController extends HomebaseController {
             $this->error('该动态不存在');
         }
         $this->assign('detail',$detail);
+        $this->assign('html_title',$detail['name']);
         $this->display();
     }
     //详情
@@ -204,6 +187,26 @@ class SellerController extends HomebaseController {
             $this->error('该商品不存在');
         }
         $this->assign('detail',$detail);
+        $this->assign('html_title',$detail['name']);
+        $this->display();
+    }
+    //详情
+    public function job_detail(){
+        
+        $detail=M('Job')
+        ->field('job.*,cate.name as cate_name,concat(city1.name,city2.name,city3.name) as city_name') 
+        ->alias('job')
+        ->join('cm_cate as cate on cate.id=job.cid')
+        ->join('cm_city as city3 on city3.id=job.city')
+        ->join('cm_city as city2 on city2.id=city3.fid')
+        ->join('cm_city as city1 on city1.id=city2.fid')
+        ->where('job.id='.I('id',0,'intval'))->find();
+        if(empty($detail)){
+            $this->error('该信息不存在');
+        }
+        
+        $this->assign('detail',$detail);
+        $this->assign('html_title',$detail['name']);
         $this->display();
     }
     

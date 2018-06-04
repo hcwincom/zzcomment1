@@ -2,11 +2,11 @@
 <foreach name="list_top_job" item="vo">
 	<li>
 		<a href="{:U('Portal/Seller/job_detail',array('id'=>$vo['id'],'sid'=>$vo['sid']))}" class="lf">
-			<img src="__UPLOAD__/{$vo.pic}" alt="{$vo.name}" title="{$vo.name}">
+			<img src="__UPLOAD__/{$vo.pic|default=$company['job_empty']['content']}" alt="{$vo.name}" title="{$vo.name}">
 		</a>
 		<div class="lf news-cont">
 			<a href="{:U('Portal/Seller/job_detail',array('id'=>$vo['id'],'sid'=>$vo['sid']))}" class="lf news-title">{$vo.name}</a>
-			<span class="rt news-date">{$vo.create_time|date="Y-m-d",###}</span>
+			<span class="rt news-date">{$vo.start_time|date="Y-m-d",###}</span>
 			<p class="clear news-about">{$vo.dsc}</p>
 		</div>
 	</li>
@@ -14,11 +14,11 @@
 <foreach name="list_job" item="vo">
 	<li>
 		<a href="{:U('Portal/Seller/job_detail',array('id'=>$vo['id'],'sid'=>$vo['sid']))}" class="lf">
-			<img src="__UPLOAD__/{$vo.pic}" alt="{$vo.name}" title="{$vo.name}">
+			<img src="__UPLOAD__/{$vo.pic|default=$company['job_empty']['content']}" alt="{$vo.name}" title="{$vo.name}">
 		</a>
 		<div class="lf news-cont">
 			<a href="{:U('Portal/Seller/job_detail',array('id'=>$vo['id'],'sid'=>$vo['sid']))}" class="lf news-title">{$vo.name}</a>
-			<span class="rt news-date">{$vo.create_time|date="Y-m-d",###}</span>
+			<span class="rt news-date">{$vo.start_time|date="Y-m-d",###}</span>
 			<p class="clear news-about">{$vo.dsc}</p>
 		</div>
 	</li>

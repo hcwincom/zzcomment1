@@ -1,8 +1,11 @@
 <div class="shop-nav-wrapper" id="shop_nav">
 	<div class="wide-container">
 		<a href="{:U('Portal/Seller/home',array('sid'=>$sid))}" class="<eq name='seller_flag' value='home'>current</eq>">{$seller_info.home}</a>
+	<eq name="info.status" value="2">
 		<a href="{:U('Portal/Seller/news',array('sid'=>$sid))}" class="<eq name='seller_flag' value='news'>current</eq>">{$seller_info.news}</a>
 		<a href="{:U('Portal/Seller/goods',array('sid'=>$sid))}" class="<eq name='seller_flag' value='goods'>current</eq>">{$seller_info.goods}</a>
+		<a href="{:U('Portal/Seller/job',array('sid'=>$sid))}" class="<eq name='seller_flag' value='job'>current</eq>">最新招聘</a>
+	</eq>
 		<a href="{:U('Portal/Seller/comment',array('sid'=>$sid))}" class="<eq name='seller_flag' value='comment'>current</eq>">{$seller_info.comment}</a>
 	</div>
 </div>
@@ -41,6 +44,7 @@
 					</div>
 				</div>
 			</div>
+		<eq name='seller_flag' value='home'>
 			<div class="infor-detail">
 				<div class="infor-rt">
 					<p class="infor-d3">
@@ -72,5 +76,6 @@
 					</p>
 				</div>								
 			</div>
+		</eq>
 		</div>
 	</div>
