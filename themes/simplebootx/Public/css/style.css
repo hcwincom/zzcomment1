@@ -402,9 +402,9 @@ textarea{resize: none;}
 .shop-wrapper{background: #f1f1f1;}
 /*shop main*/
 .shop-nav-wrapper{background:#ff4141;overflow: hidden;margin:0px 0 50px;}
-.shop-nav-wrapper li{float:left;padding:0 30px;font-size:16px;line-height:50px;}
-.shop-nav-wrapper li a{color:#fff;}
-.shop-nav-wrapper li.current,.shop-nav-wrapper li:hover{background: #d00000;}
+.shop-nav-wrapper a{float:left;padding:0 30px;font-size:16px;line-height:50px;}
+.shop-nav-wrapper a{color:#fff;}
+.shop-nav-wrapper a.current,.shop-nav-wrapper li:hover{background: #d00000;}
 .shop-infor-wrapper{border:1px solid #dcdcdc;overflow: hidden;}
 .shop-infor-container{}
 .infor-top{border-bottom: 1px solid #dcdcdc;padding:28px 54px;overflow: hidden;}

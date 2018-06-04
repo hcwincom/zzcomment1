@@ -21,10 +21,8 @@
 	margin-top: 40px;
 }
 .job-infor>ul>li{
-	float: left;
-	width: 20%;
 	font-size: 16px;
-	line-height: 20px;
+	line-height: 28px;
 	color: #666;
 }
 .job-profile{

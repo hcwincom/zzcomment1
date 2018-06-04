@@ -136,13 +136,13 @@ function shoppict() {
         return true;
     }
     else {
-        $(".msg4").text("请上传商品图片");//显示必填
+        $(".msg4").text("请上传图片");//显示必填
         return false;
     }
 };
 
 function send1(){
-    return (tit1()&&cityf()&&sort()&&telnum()&&address()&&shoppict()&&time()&&asd());
+    return (tit1()&&cityf()&&sort()&&telnum()&&address()&&time()&&asd());
 }
 function shopname1(){
 var cval = $("input[name='shopname']").val();    
