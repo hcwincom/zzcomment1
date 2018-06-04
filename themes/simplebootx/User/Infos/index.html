@@ -26,7 +26,7 @@
                     </div>
                  	<input type="hidden" class="id" value="{$vo.id}"/>
                      <div class="lf dynamic_li_lf1">
-                        <a href="{:U('Portal/Seller/info_detail',array('id'=>$vo['id']))}"> 
+                        <a href="{:U('Portal/user/info_detail',array('id'=>$vo['id']))}"> 
                         	<img class="dy_img" src="__UPLOAD__/{$vo['pic']|default=$company['info_empty']['content']}">
                         </a>  
                      </div>
@@ -73,7 +73,6 @@
     
      
 	<tc_include file="Public/user_footer" />
-
 <script>
  
 //推荐获取id值
@@ -196,3 +195,4 @@ $('#top-form0').submit(function(){
     
     
 </script>
+ 
