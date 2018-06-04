@@ -21,7 +21,7 @@
 .line{margin:0 5px;}
 .per_t3{font-size:16px;color:#333;text-align: center;margin-top:200px;}
 .per_t4{display: block;width:110px;height:40px;line-height: 40px;background:#f50000;font-size:16px;margin:0 auto;text-align: center;color:#fff;margin-top:20px;}
-.per_r1{margin-left:50px;float: left;}
+.per_r1{margin-left:20px;float: left;}
 /*photo*/
 .pms{line-height: 25px;color:#ccc;text-align: center;}
 .imgbox{width:110px;height:110px;border:none;position: relative;margin:0 auto;}
@@ -133,6 +133,13 @@ float:right;}
 .form2 input[type="submit"]{width:310px;height:35px;line-height: 35px;background:#eb0000;color:#fff;text-align: center;margin-left:125px;cursor: pointer;font-size: 16px;}
 .form2 select{width:122px;height:43px;border:1px solid #dcdcdc;padding-left:10px;margin-left: 10px;margin-left:15px;}
 .form2 textarea{width:80%;border:1px solid #dcdcdc;padding-left:10px;margin-left:15px;padding-top: 5px;}
+.per_r1 input[type="text"]{
+	width: 380px;
+    height: 43px;
+    border: 1px solid #dcdcdc;
+    padding-left: 10px;
+    margin-left: 15px;
+}
 #start{width: 29%;margin-left: 15px;height: 40px;font-size: 16px;}
 #content2{margin-left: 15px;width: 82%;height: 300px;}
 #provinces,#citys,#countys{width:110px;height:40px;margin:0 15px;}

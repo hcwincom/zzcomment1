@@ -4,7 +4,7 @@
 /*最新招聘详情页*/
 
 .job_detail{
-	width: 70%;
+	width: 88%;
 	margin: 40px auto;
 }
 .job-head{
@@ -21,18 +21,42 @@
 	margin-top: 40px;
 }
 .job-infor>ul>li{
+	width: 96%;
 	font-size: 16px;
-	line-height: 28px;
+	line-height: 24px;
 	color: #666;
+}
+.job-infor>ul>li>span{
+	word-wrap: break-word;
+	word-break: normal; 
+	letter-spacing: 1px;
+}
+.job-infor>ul>li>i{
+	display: inline-block;
+	width: 20%;
+	text-align: right;
+	font-size: 16px;
+	line-height: 24px;
+	letter-spacing: 2px;
 }
 .job-profile{
 	margin-top: 10px;
 }
 .job-profile p{
+	width: 96%;
 	font-size: 16px;
 	line-height: 24px;
 	color: #666;
 	letter-spacing: 2px;
+	word-wrap: break-word;
+	word-break: normal; 
+}
+.job-profile p span{
+	display: inline-block;
+	width: 20%;
+	text-align: right;
+	font-size: 16px;
+	line-height: 28px;
 }
 
 /*商品详情页*/
@@ -161,9 +185,13 @@
 
 @media screen and (max-width: 769px){
 	.job_detail{
-		width: 90%;
+		width: 100%;
 	}
 	.job-infor>ul>li{
+		font-size: 14px;
+	}
+	.job-profile p{
+		width: 100%;
 		font-size: 14px;
 	}
 	.job-profile p{
@@ -183,8 +211,13 @@
 	.job_detail{
 		width: 100%;
 	}
-	.job-infor>ul>li{
-		width: 33.3%;
+	.job-infor>ul>li>i{
+		width: 35%;
+		text-align: left;
+	}
+	.job-profile p>span{
+		width: 35%;
+		text-align: left;
 	}
 	.goods-infor{width: 90%;}
 	.shop-form select{
