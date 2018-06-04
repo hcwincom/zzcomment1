@@ -3,20 +3,20 @@
             <div class="per_rnav">
          		<a class="" href="{:U('index',['sid'=>$sid])}">{$flag}管理</a>
               	<a class="" href="{:U('top',['sid'=>$sid])}">{$flag}置顶记录</a>
-                <a class="rb" href="{:U('add',['sid'=>$sid])}">发布新{$flag}</a> 
+                <a class="" href="{:U('add',['sid'=>$sid])}">发布新{$flag}</a>
+                <a class="rb" href="{:U('edit',['id'=>$info['id'],'sid'=>$sid])}">编辑{$flag}</a> 
          	 </div>
          <div class="addshop">
                <form action="{:U('add_do')}" method="post" onsubmit="return send2()" enctype="multipart/form-data">
                    <input type="hidden" name="sid" value="{$sid}"/>
-                   
-                    <input type="hidden" name="picpath" value="{$picpath}" />
-                   <div class="form1"><span>商品名称:</span><input type="text" name="shopname" placeholder="" onblur="shopname1()"></div>
+                     <input type="hidden" name="id" value="{$info.id}" />
+                   <div class="form1"><span>商品名称:</span><input type="text" name="shopname" value="{$info.name}" onblur="shopname1()"></div>
                    <p class="ml msg1"></p> 
-                   <div class="form1"><span>价格:</span><input type="text" name="shopprice" placeholder="" onblur="shopprice1()"></div>  
+                   <div class="form1"><span>价格:</span><input type="text" name="shopprice" value="{$info.price}" onblur="shopprice1()"></div>  
                    <p class="ml msg2"></p> 
                    <div class="form1"><span class="lf">上传图片：</span>
                        <div class="lf ib imgbox6">
-                       <div id="preview6" class="preview"></div>
+                       <div id="preview6" class="preview"> <img class="imgbox3" src="__UPLOAD__/{$info['pic']}"></div>
                        <label class="btn btn6" for="p6" title="选择图片"><span>选择图片</span></label>
                        <input type="file" class="upload_pic" onchange="preview(this,6)" name="IDpic6" value="" id="p6">
                       <p class="pms">*上传尺寸为980*590的jpg、png图,大小在4M以内</p>
@@ -30,6 +30,6 @@
                </form>
            </div>
         </div>
-       
+      
 	<tc_include file="Public/user_footer" />
-   
+ 
