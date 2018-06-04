@@ -85,45 +85,28 @@ function time(){
     }
 
 function cityf() {
-
-    // var cavl = $("#citysel option:selected").val();
-    //     console.log(cavl);
-    // if (cval != "") { //如果非空 显示正确
-    //     $(".msg6").text("");
-    //     return true;
-    // }
-    // else {
-    //     $(".msg6").text("请选择");//显示必填
-    //     return false;
-    // }
-
-    $(".city1").change(function () {
-        var city1 = $(".city1").val();
-        console.log(city1);
-        if (city1 == "" || city1 == null || city1 == undefined) {
-            $(".msg6").text("必填");
-            return false;
-        }
-    });
-    $(".city2").change(function () {
-        var city2 = $(".city2").val();
-        if (city2 == "" || city2 == null || city2 == undefined) {
-            $(".msg6").text("必填");
-            return false;
-        }
-    });
-
-    $(".city3").change(function () {
-        var city3 = $(".city3").val();
-        if (city3 == "" || city3 == null || city3 == undefined) {
-            $(".msg6").text("必填");
-            return false;
-        }
-    });
+    var cval = $(".form2 select.city3").val();
+    if (cval != 0) {
+        $(".msg6").text("");
+        return true;
+    } else {
+        $(".msg6").text("请选择地区");
+        return false;
+    }
 
 }
-
-
+function sort() {
+    var cval = $(".form2 select.sort").val();
+    console.log(cval);
+    if (cval != 0) {
+        $(".msg8").text("");
+        return true;
+    } else {
+        $(".msg8").text("请选择分类");
+        return false;
+    }
+    
+}
 function telnum() {
     var cval = $("input[name='tel']").val();
     if(cval != ""){
@@ -159,7 +142,7 @@ function shoppict() {
 };
 
 function send1(){
-    return (tit1()&&telnum()&&address()&&shoppict()&&time()&&asd());
+    return (tit1()&&cityf()&&sort()&&telnum()&&address()&&shoppict()&&time()&&asd());
 }
 function shopname1(){
 var cval = $("input[name='shopname']").val();    
