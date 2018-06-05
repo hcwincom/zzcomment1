@@ -5,56 +5,66 @@
             <a class="rb" href="javascript:void(0);">推荐位购买</a>
         </div>
         <form action="{:U('add_top_do')}" method="POST" id="recommend" name="playlist">
-            <div class="form3">
-                <span class="lf">周期</span>
+            <div class="form3 play-list">
+                <span class="lf">周期：</span>
                 <ul class="playtime">
                 <foreach name="top_sellers" item="vo">
                     <li>
-                        <span class="span{$key}"></span>
-                        <div><span>¥<i id="price{$key}">{$vo.price}</i>元/天</span></div>
-                        <div>
-                           <p>已生效：
-                           <empty name="vo.start">
-                           		<span>无</span>
-                           <else/>
-                           		<span>{$vo['start']['start_time']|date='Y.m.d',###}</span>-
-                           		<span>{$vo['start']['end_time']|date='Y.m.d',###}</span>
-                           </empty>
-                           </p>
-                        </div>
-                        <div>
-                           <p> 即将生效:
-							<empty name="vo.end">
-                           		<span>无</span>
-                           <else/>
-                           		<span>{$vo['end']['start_time']|date='Y.m.d',###}</span>-
-                           		<span>{$vo['end']['end_time']|date='Y.m.d',###}</span>
-                           </empty>
-						</p>
-                        </div>
+                        <input type="hidden" value="{$key}">
+                            <span class="span{$key}"></span>
+                            <div class="play_pri1">
+                                <input type="hidden" class="site" value="{$key}">
+                                <span>¥<i id="price{$key}" class="priceSpan">{$vo.price}</i>/天</span>
+                            </div>
+                            <div class="play_pri2">
+                                <p>已生效：
+                                    <empty name="vo.start">
+                                        <span>无</span>
+                                        <else/>
+                                        <span>{$vo['start']['start_time']|date='Y.m.d',###}</span>-
+                                        <span>{$vo['start']['end_time']|date='Y.m.d',###}</span>
+                                    </empty>
+                                </p>
+                            </div>
+                            <div class="play_pri2">
+                                <p> 即将生效:
+                                    <empty name="vo.end">
+                                        <span>无</span>
+                                        <else/>
+                                        <span>{$vo['end']['start_time']|date='Y.m.d',###}</span>-
+                                        <span>{$vo['end']['end_time']|date='Y.m.d',###}</span>
+                                    </empty>
+                                </p>
+                            </div>
+                       
                     </li>
+                        
                   </foreach>
-                     
+                   
                 </ul>
                 
             </div>
-            <div class="form3">
-                <span class="lf">时间</span>
+            <div class="clear"></div>
+            <div class="form3 play-list">
+                <span class="lf">时间：</span>
                 <ul class="form3_list1 lf">
                     <li>
                         <div class="date-sjk">
-                            <input name="start" class="inline laydate-icon" id="start1" readonly>
+                         开始时间： <input name="start" class="inline laydate-icon" id="start1" readonly>
                         </div>
                     </li>
                     <li>
                         <div class="date-sjk">
-                          至  <input name="start" class="inline laydate-icon" id="start2" readonly>
+                          结束时间： <input name="start" class="inline laydate-icon" id="start2" readonly>
                         </div>
                     </li>
                 </ul>
             </div>
-            <div class="form3"><span>总价：</span><i id="price2">100</i>元</div>
-            <div class="form3"><input type="submit" value="购买"></div>
+             <div class="clear"></div>
+            <input type="hidden" name="site" value="{$key}">
+            <input type="hidden" name="price" id="totalprice" value="0">
+            <div class="form3 play_pri"><span>总价：</span><i id="price2" class="totalprice">0</i>元</div>
+            <div class="form3 play_sub"><input type="submit" value="购买"></div>
         </form>
 
     </div>
@@ -87,7 +97,7 @@ $('#recommend').submit(function(){
 });
 !function(){
     laydate.skin('molv');//切换皮肤，请查看skins下面皮肤库
- //    laydate({elem: '#demo'});//绑定元素
+
 }();
 //日期范围限制
 var start = {
@@ -121,22 +131,48 @@ var end = {
     }
 };
 laydate(end);  
+    $(".playtime>li").click(function () {
+        $(this).addClass("active").siblings("li").removeClass("active");
+      
+    })
+
 function editprice() {
-	return 0;
- var start0 = $.trim($("#start1").val()); 
- var end0 = $.trim($("#start2").val()); 
- if (start == '' || end == '' || start0.length == 0 || end0.length == 0) {
-     return false;
- }
- var date_start = (new Date(start0).getTime()) / 1000 / 60 / 60 / 24; 
- var date_end = (new Date(end0).getTime()) / 1000 / 60 / 60 / 24; 
- var days = date_end - date_start;
- var zprice = 0;
- if (days >= 1) { 
-     var price = parseFloat($('#price1').text());
-    zprice = (price * days).toFixed(2); 
- }  
- $('#price2').text(zprice); 
- $('#zprice').val(zprice);    
+     var start0 = $.trim($("#start1").val());
+    var end0 = $.trim($("#start2").val());
+    if (start == '' || end == '' || start0.length == 0 || end0.length == 0) {
+        return false;
+    }
+    var date_start = (new Date(start0).getTime()) / 1000 / 60 / 60 / 24;
+    var date_end = (new Date(end0).getTime()) / 1000 / 60 / 60 / 24;
+    var days = date_end - date_start;
+    var zprice = 0;
+    //  var priceValue = $('.playtime .active .priceSpan').text();
+      if (days >= 1) {
+         var priceValue = parseFloat($('.playtime .active .priceSpan').text());
+         console.log(priceValue);
+         zprice = (priceValue * days).toFixed(2);
+         console.log(zprice);
+        }
+        $(".totalprice").text(zprice);
+        $("#totalprice").val(zprice);   
 }
+// $(function () {
+//      $(".playtime>li").click(function () {
+//          var priceValue =$(this).children(".play_pri1").children("span").children("i").text();
+//          var start0 = $.trim($("#start1").val());
+//          var end0 = $.trim($("#start2").val());
+//          if (start == '' || end == '' || start0.length == 0 || end0.length == 0) {
+//              return false;
+//          }
+//          var date_start = (new Date(start0).getTime()) / 1000 / 60 / 60 / 24;
+//          var date_end = (new Date(end0).getTime()) / 1000 / 60 / 60 / 24;
+//          var days = date_end - date_start;
+//          var zprice = 0;
+//          if (days >= 1) {
+//              priceValue= (priceValue* days).toFixed(2);
+//               $('.totalPrice').html("<span>总价：</span><i id='price2'>"+ priceValue+"</i>元</div>");
+//              $('#zprice').val(priceValue);  
+//          } 
+//     });
+// })
 </script>

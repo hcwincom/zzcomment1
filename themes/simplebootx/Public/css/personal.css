@@ -193,7 +193,40 @@ background-color: rgba(0, 0, 0, .3);}
 .form3 i{font-size: 16px;color: #d00000;}
 .form3 input[type="submit"]{padding:0 20px;height:35px;line-height: 35px;background:#eb0000;color:#fff;text-align: center;margin-left:110px;cursor: pointer;font-size: 16px;}
 .form3{margin:10px 0;}
-.date-sjk{line-height: 45px;}
+.playtime{width: 88%;float: right;}
+.playtime>li{
+	display: inline-block;
+	margin: 10px;
+	width: 260px;
+	border: 1px solid #fff;
+	height: 165px;
+	background: #f3f3f3;
+	cursor: pointer;
+}
+.playtime>li:hover{
+	border: 1px solid #d00000;
+}
+.playtime>li.active{
+	border: 1px solid #d00000;
+}
+
+.play_pri1{text-align: right;font-size: 16px;padding-right: 30px;line-height: 20px;color: #7d7d7d;}
+.play_pri2>p{color: #a4a4a4;margin-top: 10px;font-size: 14px;line-height: 20px;padding-left: 10px;}
+.playtime>li>span{display: inline-block;width: 40px;height: 40px;margin-left: 10px;margin-top: 10px;}
+.span1{background: url("../img/buy1.png") no-repeat center;background-size: contain;}
+.span2{background: url("../img/buy2.png") no-repeat center;background-size: contain;}
+.span3{background: url("../img/buy3.png") no-repeat center;background-size: contain;}
+.span4{background: url("../img/buy4.png") no-repeat center;background-size: contain;}
+.span5{background: url("../img/buy5.png") no-repeat center;background-size: contain;}
+.span6{background: url("../img/buy6.png") no-repeat center;background-size: contain;}
+.span7{background: url("../img/buy7.png") no-repeat center;background-size: contain;}
+.span8{background: url("../img/buy8.png") no-repeat center;background-size: contain;}
+.span9{background: url("../img/buy9.png") no-repeat center;background-size: contain;}
+
+
+.date-sjk{line-height: 45px;padding-left: 18px;}
+.play_pri>i{padding-left: 18px;}
+.play_sub input[type="submit"]{margin-left: 128px;}
 .form3_list1 li{width:300px;font-size:16px;color:#333;line-height: 35px;margin-bottom:10px;float: left;}
 .form3_list1 li span{margin-left:10px;text-align: left;}
 .form3_t1{color:#000;font-size: 18px;line-height: 35px;}

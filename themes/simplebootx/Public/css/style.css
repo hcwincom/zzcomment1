@@ -400,11 +400,15 @@ textarea{resize: none;}
 }
 .edit-detail{
 	width: 90%;
-	line-height: 20px;
-	font-size: 16px;
+	
 	margin: 10px auto;
 }
-
+.edit-detail>p{
+	line-height: 20px;
+	font-size: 16px;
+	word-wrap: break-word;
+	word-break: normal;
+}
 .shop-wrapper{background: #f1f1f1;}
 /*shop main*/
 .shop-nav-wrapper{background:#ff4141;overflow: hidden;margin:0px 0 50px;}
