@@ -62,7 +62,7 @@
             </div>
              <div class="clear"></div>
             <input type="hidden" name="site" value="{$key}">
-            <input type="hidden" name="price" id="totalprice" value="0">
+            <input type="hidden" name="price" id="total" value="0">
             <div class="form3 play_pri"><span>总价：</span><i id="price2" class="totalprice">0</i>元</div>
             <div class="form3 play_sub"><input type="submit" value="购买"></div>
         </form>
@@ -154,7 +154,7 @@ function editprice() {
          console.log(zprice);
         }
         $(".totalprice").text(zprice);
-        $("#totalprice").val(zprice);   
+        $("#total").val(zprice);   
 }
 // $(function () {
 //      $(".playtime>li").click(function () {
