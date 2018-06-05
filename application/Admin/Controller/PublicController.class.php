@@ -100,10 +100,22 @@ class PublicController extends AdminbaseController {
     		}
     	}
     }
-    
+     
     //下载页面
     public function doDownload(){
-        $filename=$_GET['filename'];
+        $type=I('type',1,'intval');
+        $id=I('id',0,'intval');
+        $where='id='.$id;
+        switch($type){
+            case 1:
+                $filename=M('comment')->where($where)->getField('file');
+                break;
+            default:
+                break;
+        }
+        if(empty($filename)){
+            $this->error('数据错误');
+        }
         $file=getcwd().'/data/upload/'.$filename;
         $info=pathinfo($file); 
         $ext=$info['extension'];

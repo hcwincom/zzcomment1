@@ -44,7 +44,20 @@ class IndexController extends HomebaseController {
 	    $page = $this->page($total, C('page_seller_list'));
 	    $sellers=$m_seller->where($where_seller)->order('score desc')->limit($page->firstRow,$page->listRows)->select();
 	   
-	  
+	    $chars=array('A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z');
+	    
+	    //大类
+	    $m_cate=M('Cate');
+	    $cid0=I('cid0',0,'intval');
+	    //小类首字母
+	    $char=I('char','');
+	    //二级分类
+	    $cid1=I('cid1',0,'intval');
+	    $this->assign('cid0',$cid0)
+	    ->assign('cid1',$cid1)
+	    ->assign('chars',$chars)
+	    ->assign('char',$char);
+	    
 	    $this->assign('sellers',$sellers)
 	    ->assign('page',$page->show('Admin'));
 	    

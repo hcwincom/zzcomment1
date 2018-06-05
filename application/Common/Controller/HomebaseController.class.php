@@ -54,7 +54,7 @@ class HomebaseController extends AppframeController {
 		}
 		//session保存时间，1800秒后user以外的session清空
 		$time=time();
-		if(empty(session('online_time0')) || ((session('online_time')+1800)<$time)){
+		if(empty(session('online_time')) || ((session('online_time')+1800)<$time)){
 		    session('online_time',$time);
 		    session('company',null);
 		    session('browse',null);

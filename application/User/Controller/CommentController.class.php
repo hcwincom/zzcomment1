@@ -15,13 +15,23 @@ class CommentController extends MemberbaseController {
     // 会员评价
     public function index() {
         $where=array('uid'=>session('user.id'));
+        $where_join=['p.uid'=>$where['uid']];
         $status=I('status',-1,'intval');
         if($status!=-1){
             $where['status']=$status;
+            $where_join['p.status']=$status;
         }
-        $total=M('Comment')->where($where)->count();
+        $m=$this->m;
+        $total=$m->where($where)->count();
         $page = $this->page($total, C('PAGE'));
-        $list=D('Comment1View')->where($where)->order('id desc')->limit($page->firstRow,$page->listRows)->select();
+        
+        $list=$m->field('p.*,s.name as sname')
+        ->alias('p')
+        ->join('cm_seller as s on s.id=p.sid')
+        ->where($where_join)
+        ->order('create_time desc')
+        ->limit($page->firstRow,$page->listRows)
+        ->select();
        
        $this->assign('page',$page->show('Admin'));
        $this->assign('list',$list)->assign('status',$status);
@@ -30,7 +40,8 @@ class CommentController extends MemberbaseController {
     }
     public function add(){
         set_time_limit(C('TIMEOUT'));
-        $uid=session('user.id');
+        $user=$this->user;
+        $uid=$user['id'];
         $m=$this->m;
         $sid=I('ssid',0,'intval');
         $seller=M('Seller')->where('id='.$sid)->find();
@@ -52,9 +63,9 @@ class CommentController extends MemberbaseController {
         if(!$info) {// 上传错误提示错误信息
             $this->error($upload->getError());
         } 
-        $files='';
+      
         foreach ($info as $v){
-            $files.='comment/'.$subname.'/'.$v['savename'].';';
+            $file='comment/'.$subname.'/'.$v['savename'];
         }
         
         $score=I('core',1,'intval');
@@ -62,7 +73,7 @@ class CommentController extends MemberbaseController {
         
         $content0=str_replace(C('FILTER_CHAR'), '**', $content);
         $data=array(
-            'files'=>$files,
+            'file'=>$file,
             'uid'=>$uid,
             'sid'=>$sid, 
             'score'=>$score,
@@ -72,36 +83,42 @@ class CommentController extends MemberbaseController {
             'ip'=>get_client_ip(0,true),
         );
        
-      
+      $conf=C('option_comment');
+      //评级审核
+      switch($conf['add_check']){
+          case 1:
+              $data['status']=2;
+              break;
+          case 2:
+              $data['status']=($user['name_status']==1)?2:0;
+              break;
+          default:
+              $data['status']=0;
+              break;
+      }
+      $row=$m->add($data);
        //实名认证的评级不审核
-       if(session('user.name_status')==1){
-           $data['status']=2;
-           $row=$m->add($data);
-           if($row>0){
-               $m_seller=M('Seller');
-              
-               $tmp=$m_seller->field('score')->where('id='.$sid)->find();
-               //暂时是多少分就多少级,没有分级
-               $score=$tmp['score']+$score;
-               $data=array(
-                   'score'=>$score,
-                   'grade'=>$score,
-               );
-               $m_seller->data($data)->where('id='.$sid)->save();
-               $this->success('评级上传成功');
-           }else{
-               $this->error('点评失败，请刷新重试');
-           }
-           exit;
+      if($row<=0){
+          $this->error('评级失败，请刷新重试');
+      }
+      $msg='';
+      if($data['status']==2){
+           $m_seller=M('Seller');
+          
+           $tmp=$m_seller->field('score')->where('id='.$sid)->find();
+           //暂时是多少分就多少级,没有分级
+           $score=$tmp['score']+$score;
+           $data=array(
+               'score'=>$score,
+               'grade'=>$score,
+           );
+           $m_seller->data($data)->where('id='.$sid)->save();
+           coin($conf['add_coin'], $uid,'上传评级');
        }else{
-           $row=$m->add($data);
+           $msg=',等待管理员审核';
        }
-      
-       if($row>0){
-           $this->success('评级上传成功，等待管理员审核');
-       }else{
-           $this->error('评级失败，请刷新重试');
-       }
+       $this->success('评级上传成功'.$msg);
+       
        exit;
     }
    /* 会员顶 */
@@ -125,6 +142,29 @@ class CommentController extends MemberbaseController {
         $m_push->add($data);
        
         $m->where('id='.$id)->setInc('push');
-        $this->success('操作成功',['code'=>$info['push']+1]);
+        $this->success('操作成功','',['code'=>$info['push']+1]);
+    }
+    //下载页面
+    public function download(){
+        $id=I('id',0,'intval');
+        $user=$this->user;
+        if($user['name_status']!=1){
+            $this->error('实名认证的会员才能下载');
+        }
+        $m=$this->m;
+        $filename=$m->where('id='.$id)->getField('file');
+        if(empty($filename)){
+            $this->error('数据错误');
+        }
+         
+        $file=getcwd().'/data/upload/'.$filename;
+        $info=pathinfo($file);
+        $ext=$info['extension'];
+        $name=$info['basename'];
+        header('Content-type: application/x-'.$ext);
+        header('content-disposition:attachment;filename='.$name);
+        header('content-length:'.filesize($file));
+        readfile($file);
+        exit;
     }
 }

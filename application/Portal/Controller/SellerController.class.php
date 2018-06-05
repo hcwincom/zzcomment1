@@ -67,9 +67,19 @@ class SellerController extends HomebaseController {
 	     //商品上新
 	     $list_goods=M('Goods')->where($where_top)->order('start_time desc')->limit(0,8)->select();
 	     //最新点评 
+	     $m_comment=M('Comment');
 	     $where_comment=array('sid'=>$sid,'status'=>2);
-	     $count_comment=M('Comment')->where($where_comment)->count(); 
-	     $list_comment=D('Comment0View')->where($where_comment)->order('create_time desc')->limit('0,2')->select();
+	     $count_comment=$m_comment->where($where_comment)->count(); 
+	     $where_comment=[
+	         'p.sid'=>$sid,'p.status'=>2
+	     ]; 
+	     $list_comment=$m_comment->alias('p')
+	     ->field('p.*,u.avatar,u.user_login as uname')
+	     ->join('cm_users as u on u.id=p.uid') 
+	     ->where($where_comment)
+	     ->order('id desc')
+	     ->limit(2)
+	     ->select();
 	     $m_reply=D('Reply0View');
 	     foreach ($list_comment as $k=>$v){
 	         $list_comment[$k]['reply']=$m_reply->where('cid='.$v['id'])->order('id desc')->select();
@@ -153,17 +163,28 @@ class SellerController extends HomebaseController {
         $sid=$this->sid;
        
         //点评
+        $m_comment=M('Comment');
         $where_comment=array('sid'=>$sid,'status'=>2);
-        $total=M('Comment')->where($where_comment)->count();
-        $page = $this->page($total, 5);
-        $list=D('Comment0View')->where($where_comment)->order('id desc')->limit($page->firstRow,$page->listRows)->select();
-        $m_reply=D('Reply0View');
-        foreach ($list as $k=>$v){
-            $list[$k]['reply']=$m_reply->where('cid='.$v['id'])->order('id desc')->select();
+        $count_comment=$m_comment->where($where_comment)->count();
+        $page = $this->page($count_comment, C('page_comment_list'));
+        $where_comment=[
+            'p.sid'=>$sid,'p.status'=>2
+        ];
+        $list_comment=$m_comment->alias('p')
+        ->field('p.*,u.avatar,u.user_login as uname')
+        ->join('cm_users as u on u.id=p.uid')
+        ->where($where_comment)
+        ->order('id desc')
+        ->limit($page->firstRow,$page->listRows)
+        ->select();
+        
+         $m_reply=D('Reply0View');
+         foreach ($list_comment as $k=>$v){
+             $list_comment[$k]['reply']=$m_reply->where('cid='.$v['id'])->order('id desc')->select();
         }
         
-        $this->assign('seller_flag','comment')->assign('count_comment',$total)
-        ->assign('list_comment',$list)
+        $this->assign('seller_flag','comment')->assign('count_comment',$count_comment)
+        ->assign('list_comment',$list_comment)
         ->assign('page',$page->show('Admin'));
         $this->display();
     }

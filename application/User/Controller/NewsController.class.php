@@ -295,13 +295,34 @@ class NewsController extends MemberbaseController {
         //获取时间段内已置顶信息,置顶位满不能置顶
         $m->startTrans(); 
         $num=$conf['top_count'];
+        //1开始时间在范围内
         $where=[
             'status'=>['between','2,3'],
             'start_time'=>['between',[$start+1,$end-1]],
-            'end_time'=>['between',[$start+1,$end-1]],
         ];
         
-        $count=$m->where($where)->count('pid');
+        $ids1=$m->where($where)->getField('pid',true);
+        $ids1=empty($ids1)?[]:$ids1;
+        
+        //2结束时间在范围内
+        $where=[
+            'status'=>['between','2,3'],
+            'end_time'=>['between',[$start+1,$end-1]],
+        ];
+        $ids2=$m->where($where)->getField('pid',true);
+        $ids2=empty($ids2)?[]:$ids2;
+        
+        //3开始和结束时间在范围外包含
+        $where=[
+            'status'=>['between','2,3'],
+            'start_time'=>['elt',$start],
+            'end_time'=>['egt',$end],
+        ];
+        $ids3=$m->where($where)->getField('pid',true);
+        $ids3=empty($ids3)?[]:$ids3;
+        
+        $ids=array_unique(array_merge($ids1,$ids2,$ids3));
+        $count=count($ids); 
         if($count>=$num){
             $m->rollback();
             $this->error('置顶位已满,请重新选择时间'); 
