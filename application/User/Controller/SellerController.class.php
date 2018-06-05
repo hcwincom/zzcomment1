@@ -280,7 +280,7 @@ class SellerController extends MemberbaseController {
             
         }
         
-        $this->assign('type','店铺名')->assign('info',$info)->assign('top_sellers',$top_sellers);
+        $this->assign('flag','店铺推荐位')->assign('info',$info)->assign('top_sellers',$top_sellers);
         $this->display();
     }
     
@@ -319,42 +319,14 @@ class SellerController extends MemberbaseController {
         
         //获取时间段内已置顶信息,置顶位满不能置顶
         $m->startTrans();
-        
          
-        $where=[
-            'site'=>$site,
-            'status'=>['between','2,3'],
-            'start_time'=>['between',[$start+1,$end-1]],
-        ]; 
-        $tmp_seller=$m->where($where)->find();
+        $tmp_seller=site_check($m,$start,$end,$site);
         if(!empty($tmp_seller)){
             $m->rollback();
             $this->error(date('Y-m-d',$tmp_seller['start_time']).'至'.date('Y-m-d',$tmp_seller['end_time']).'的推荐位已被购买');
             exit;
         }
-        $where=[
-            'site'=>$site,
-            'status'=>['between','2,3'],
-            'end_time'=>['between',[$start+1,$end-1]],
-        ];
-        $tmp_seller=$m->where($where)->find();
-        if(!empty($tmp_seller)){
-            $m->rollback();
-            $this->error(date('Y-m-d',$tmp_seller['start_time']).'至'.date('Y-m-d',$tmp_seller['end_time']).'的推荐位已被购买');
-            exit;
-        }
-        $where=[
-            'site'=>$site,
-            'status'=>['between','2,3'],
-            'start_time'=>['elt',$start],
-            'end_time'=>['egt',$end],
-        ];
-        $tmp_seller=$m->where($where)->find();
-        if(!empty($tmp_seller)){
-            $m->rollback();
-            $this->error(date('Y-m-d',$tmp_seller['start_time']).'至'.date('Y-m-d',$tmp_seller['end_time']).'的推荐位已被购买');
-            exit;
-        }
+         
         //扣款
         if($price>0){
             $m_user=M('Users');
@@ -424,13 +396,38 @@ class SellerController extends MemberbaseController {
             }
             $m->commit();
             $coin=bcmul($days,$conf['top_coin']);
-            coin($coin,$uid,'店铺推荐位购买'.$info['name']);
+            if($data_top['status']>0){
+                coin($coin,$uid,'店铺推荐位购买'.$info['name']);
+            }
+           
             $this->success('店铺推荐位购买成功'.$msg,U('top',['sid'=>$info['id']]));
         }else{
             $m->rollback();
             $this->error('店铺推荐位购买失败');
         }
         exit; 
+        
+    }
+    // 商品置顶
+    public function top() {
+        $sid=$this->sid;
+        $m_top=M('TopSeller');
+        
+        $where=[
+            'pid'=>['eq',$sid]
+        ];
+        $total=$m_top->where($where)->count();
+        $page = $this->page($total, C('PAGE'));
+        $list=$m_top 
+        ->where($where)->order('create_time desc')
+        ->limit($page->firstRow,$page->listRows)
+        ->select();
+        $this->assign('page',$page->show('Admin'));
+        $this->assign('list',$list);
+        $this->assign('top_status',C('top_status'));
+       
+        
+        $this->display();
         
     }
     

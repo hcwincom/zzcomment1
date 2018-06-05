@@ -331,3 +331,75 @@ function coin($money,$uid,$dsc=''){
     return 1;
     
 }
+/* 置顶处理 */
+function top_check($m,$start,$end){
+//    $m=M('top_'.$type);
+    //1开始时间在范围内
+    $where=[
+        'status'=>['between','2,3'],
+        'start_time'=>['between',[$start+1,$end-1]],
+    ];
+    
+    $ids1=$m->where($where)->getField('pid',true);
+    $ids1=empty($ids1)?[]:$ids1;
+    
+    //2结束时间在范围内
+    $where=[
+        'status'=>['between','2,3'],
+        'end_time'=>['between',[$start+1,$end-1]],
+    ];
+    $ids2=$m->where($where)->getField('pid',true);
+    $ids2=empty($ids2)?[]:$ids2;
+    
+    //3开始和结束时间在范围外包含
+    $where=[
+        'status'=>['between','2,3'],
+        'start_time'=>['elt',$start],
+        'end_time'=>['egt',$end],
+    ];
+    $ids3=$m->where($where)->getField('pid',true);
+    $ids3=empty($ids3)?[]:$ids3;
+    
+    $ids=array_unique(array_merge($ids1,$ids2,$ids3));
+    return count($ids); 
+    
+}
+/* 置顶处理 */
+function site_check($m,$start,$end,$site){
+    //    $m=M('top_'.$type);
+    //1开始时间在范围内
+    $where=[
+        'site'=>$site,
+        'status'=>['between','2,3'],
+        'start_time'=>['between',[$start+1,$end-1]],
+    ];
+    $tmp_seller=$m->where($where)->find();
+    if(!empty($tmp_seller)){
+        return $tmp_seller; 
+    }
+   
+    //2结束时间在范围内
+    $where=[
+        'site'=>$site,
+        'status'=>['between','2,3'],
+        'end_time'=>['between',[$start+1,$end-1]],
+    ];
+    $tmp_seller=$m->where($where)->find();
+    if(!empty($tmp_seller)){
+        return $tmp_seller;
+    }
+    
+    //3开始和结束时间在范围外包含
+    $where=[
+        'site'=>$site,
+        'status'=>['between','2,3'],
+        'start_time'=>['elt',$start],
+        'end_time'=>['egt',$end],
+    ];
+    $tmp_seller=$m->where($where)->find();
+    if(!empty($tmp_seller)){
+        return $tmp_seller;
+    }
+    return 0;
+    
+}

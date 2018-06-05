@@ -2,15 +2,16 @@
 <div class="per_right rt">
     <div class="dynamic_main">
         <div class="per_rnav">
-            <a class="rb" href="javascript:void(0);">推荐位购买</a>
+           
+             <a class="rb" href="{:U('add_top',['sid'=>$sid])}">{$flag}购买</a>
+            <a class="" href="{:U('top',['sid'=>$sid])}">{$flag}购买记录</a>
         </div>
         <form action="{:U('add_top_do')}" method="POST" id="recommend" name="playlist">
             <div class="form3 play-list">
                 <span class="lf">周期：</span>
                 <ul class="playtime">
                 <foreach name="top_sellers" item="vo">
-                    <li>
-                        
+                    <li> 
                             <span class="span{$key}"></span>
                             <div class="play_pri1">
                                 <input type="hidden" class="site" value="{$key}">
@@ -148,15 +149,13 @@ function editprice() {
     var date_end = (new Date(end0).getTime()) / 1000 / 60 / 60 / 24;
     var days = date_end - date_start;
     var zprice = 0;
-    //  var priceValue = $('.playtime .active .priceSpan').text();
-      if (days >= 1) {
-         var priceValue = parseFloat($('.playtime .active .priceSpan').text());
-
-         zprice = (priceValue * days).toFixed(2);
-      }
-        $(".totalprice").text(zprice);
-        $("#total").val(zprice);   
+   
+    if (days >= 1) {
+       var priceValue = parseFloat($('.playtime .active .priceSpan').text()); 
+       zprice = (priceValue * days).toFixed(2); 
+    } 
+    $(".totalprice").text(zprice);
+    $("#total").val(zprice);   
 }
-
-
+ 
 </script>

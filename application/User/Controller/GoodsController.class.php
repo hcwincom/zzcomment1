@@ -40,29 +40,24 @@ class GoodsController extends MemberbaseController {
     }
     // 商品置顶
     public function top() {
-        $m=$this->m;
-        $where=array('sid'=>$this->sid);
-        $pids=$m->where($where)->getField('id',true);
         $m_top=M('TopGoods');
-        if(!empty($pids)){
-            $where=[
-                'pid'=>['in',$pids]
-            ];
-            $total=$m_top->where($where)->count();
-            $page = $this->page($total, C('PAGE'));
-            $list=$m_top
-            ->alias('t')
-            ->join('cm_goods as p on p.id=t.pid')
-            ->field('t.*,p.name')
-            ->where($where)->order('create_time desc')
-            ->limit($page->firstRow,$page->listRows)
-            ->select(); 
-            $this->assign('page',$page->show('Admin'));
-            $this->assign('list',$list);
-            $this->assign('top_status',C('top_status'));
-        }
-       
+        $where=array('sid'=>$this->sid);
+        
+        $total=$m_top->where($where)->count();
+        $page = $this->page($total, C('PAGE'));
+        $list=$m_top
+        ->alias('t')
+        ->join('cm_goods as p on p.id=t.pid')
+        ->field('t.*,p.name')
+        ->where($where)->order('create_time desc')
+        ->limit($page->firstRow,$page->listRows)
+        ->select();
+        $this->assign('page',$page->show('Admin'));
+        $this->assign('list',$list);
+        $this->assign('top_status',C('top_status'));
         $this->display();
+        exit;
+         
         
     }
     /* 添加 */
@@ -267,6 +262,7 @@ class GoodsController extends MemberbaseController {
     
     //ajax和do
     public function add_top_do(){
+        
         $id=I('id',0); 
         $m=M('TopGoods');
         $start=strtotime(I('start',''));
@@ -289,7 +285,7 @@ class GoodsController extends MemberbaseController {
         $conf=C('option_goods');
         $uid=$this->userid;
         $price0=$conf['top_price'];
-        
+     
         //检查价格是否更新 
         if($price!=bcmul($days,$price0,2)){ 
             $this->error('置顶价格变化，请刷新页面');
@@ -299,34 +295,8 @@ class GoodsController extends MemberbaseController {
         //获取时间段内已置顶信息,置顶位满不能置顶
         $m->startTrans(); 
         $num=$conf['top_count'];
-        //1开始时间在范围内
-        $where=[
-            'status'=>['between','2,3'],
-            'start_time'=>['between',[$start+1,$end-1]],
-        ];
         
-        $ids1=$m->where($where)->getField('pid',true);
-        $ids1=empty($ids1)?[]:$ids1;
-        
-        //2结束时间在范围内
-        $where=[
-            'status'=>['between','2,3'],
-            'end_time'=>['between',[$start+1,$end-1]],
-        ];
-        $ids2=$m->where($where)->getField('pid',true);
-        $ids2=empty($ids2)?[]:$ids2;
-        
-        //3开始和结束时间在范围外包含
-        $where=[
-            'status'=>['between','2,3'],
-            'start_time'=>['elt',$start],
-            'end_time'=>['egt',$end],
-        ];
-        $ids3=$m->where($where)->getField('pid',true);
-        $ids3=empty($ids3)?[]:$ids3;
-        
-        $ids=array_unique(array_merge($ids1,$ids2,$ids3));
-        $count=count($ids); 
+        $count=top_check($m,$start,$end);
         if($count>=$num){
             $m->rollback();
             $this->error('置顶位已满,请重新选择时间'); 
@@ -403,6 +373,7 @@ class GoodsController extends MemberbaseController {
             $m->commit();
             $coin=bcmul($days,$conf['top_coin']);
             coin($coin,$uid,'置顶商品'.$info['name']);
+            
             $this->success('置顶成功'.$msg,U('top',['sid'=>$info['sid']]));
         }else{
             $m->rollback();
