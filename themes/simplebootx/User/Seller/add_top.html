@@ -149,30 +149,11 @@ function editprice() {
     //  var priceValue = $('.playtime .active .priceSpan').text();
       if (days >= 1) {
          var priceValue = parseFloat($('.playtime .active .priceSpan').text());
-         console.log(priceValue);
+
          zprice = (priceValue * days).toFixed(2);
-         console.log(zprice);
-        }
+      }
         $(".totalprice").text(zprice);
         $("#total").val(zprice);   
 }
-// $(function () {
-//      $(".playtime>li").click(function () {
-//          var priceValue =$(this).children(".play_pri1").children("span").children("i").text();
-//          var start0 = $.trim($("#start1").val());
-//          var end0 = $.trim($("#start2").val());
-//          if (start == '' || end == '' || start0.length == 0 || end0.length == 0) {
-//              return false;
-//          }
-//          var date_start = (new Date(start0).getTime()) / 1000 / 60 / 60 / 24;
-//          var date_end = (new Date(end0).getTime()) / 1000 / 60 / 60 / 24;
-//          var days = date_end - date_start;
-//          var zprice = 0;
-//          if (days >= 1) {
-//              priceValue= (priceValue* days).toFixed(2);
-//               $('.totalPrice').html("<span>总价：</span><i id='price2'>"+ priceValue+"</i>元</div>");
-//              $('#zprice').val(priceValue);  
-//          } 
-//     });
-// })
+
 </script>
