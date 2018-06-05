@@ -42,6 +42,7 @@ class ConfController extends AdminbaseController {
             'option_goods'=>'商品',
             'option_info'=>'信息',
             'option_job'=>'招聘',
+            'option_comment'=>'评级',
         ];
         
         $options=[
@@ -67,7 +68,7 @@ class ConfController extends AdminbaseController {
         foreach($types as $k=>$v){
             $conf[$k]=C($k);
         }
-       
+        
         $this->assign('flag','信息操作配置');
         $this->assign('conf',$conf);
         $this->assign('types',$types);
@@ -83,24 +84,15 @@ class ConfController extends AdminbaseController {
             'option_goods'=>'商品',
             'option_info'=>'信息',
             'option_job'=>'招聘',
+            'option_comment'=>'评级',
         ];
-        $options=[
-            'add_coin'=>'添加赠币',
-            'add_check'=>'添加审核',
-            'edit_coin'=>'编辑赠币',
-            'edit_check'=>'编辑审核',
-            'top0_price' => '推荐费用',
-            'top0_coin'=>'推荐赠币',
-            
-            'top_price' => '置顶费用',
-            'top_count' => '置顶位数量',
-            'top_coin'=>'置顶赠币',
-            'top_check'=>'置顶审核',
-        ];
+        
         $conf=[];
+        $old=[];
         foreach($types as $k=>$v){
             $conf[$k]=[];
-            foreach($options as $key=>$vo){
+            $old=C($k);
+            foreach($old as $key=>$vo){
                 $conf[$k][$key]=$data0[$k.'_'.$key];
              }
         } 

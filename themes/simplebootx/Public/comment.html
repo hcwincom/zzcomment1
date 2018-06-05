@@ -1,23 +1,21 @@
 <ul class="shop-comment">
 	<foreach name="list_comment" item="vo">
 		<li>
-			<a href="{:U('Portal/List/comment_list',array('uid'=>$vo['uid']))}" class="lf">
+			<a href="{:U('Portal/List/comments',array('uid'=>$vo['uid']))}" class="lf">
 				<img src="__UPLOAD__/{$vo['avatar']|default=$company['avatar']['content']}" alt="{$vo.uname}" title="{$vo.uname}">
 			</a>
 			<div class="lf comment-cont">
 				<input type="hidden" name="zzcid" class="zzcid" value="{$vo.id}"/>
-				<span class="comment-title">{$vo.sname}</span>
+				<span class="comment-title"><a href="{:U('portal/seller/home',['sid'=>$vo['sid']])}">{$vo.sname|default=''}</a></span>
 				<span class="comment-type"><eq name="vo.score" value="1">加分<else/>减分</eq></span>
 				<span class="rt news-date">{$vo.create_time|date="Y-m-d",###}</span>
 				<p class="comment-about">{$vo.content}</p>
 				<div class="comment-reply zzreply0{$vo.id}">
-					<a href="javascript:void(0);" title="回复" class="comment-rbtn1">回复</a>
-					
+					<a href="javascript:void(0);" title="回复" class="comment-rbtn1">回复</a> 
+					<a href="javascript:void(0);" class="comment-rbtn5 praise_comment" title="点赞">点赞（<em class="likes praise_num">{$vo.praise}</em>）</a>
+					<a href="javascript:void(0);" class="comment-rbtn3 push_comment" title="顶">顶（<em class="push_num">{$vo.push}</em>）</a>
+					<a href="{:U('user/comment/download',['id'=>$vo['id']])}" class="comment-rbtn4" title="附件下载">附件下载</a>
 					<a href="javascript:void(0);" class="comment-rbtn2"><notempty name='vo.reply'>展开回复</notempty></a>
-					 
-					<a href="javascript:void(0);" class="comment-rbtn5" title="点赞">点赞（<em class="likes">11</em>）</a>
-					<a href="javascript:void(0);" class="comment-rbtn3" title="点赞">顶（<em>11</em>）</a>
-					<a href="javascript:void(0);" class="comment-rbtn4" title="附件下载">附件下载</a>
 				</div>
 				<div class="comment-cont2 zzreply{$vo.id}">
 				<foreach name='vo.reply' item='v'>
@@ -31,3 +29,39 @@
 	</foreach>
 		 
 </ul>
+<script>
+var push_url="{:U('user/comment/push')}";
+$(document).on('click','.push_comment',function(){
+	var $div=$(this).parents('.comment-cont');
+	var id=$div.find('.zzcid').val();
+ 	$.post(push_url,{'id':id},function(data){
+ 		console.log(data);
+ 		if(data.status==1){
+ 			$div.find('.push_num').text(data.code);
+ 			$div.find('.comment-rbtn3').removeClass('push_comment');
+ 			 
+ 		}else{
+ 			alert(data.info);
+ 			if(data.code==2){ 
+ 				$div.find('.comment-rbtn3').removeClass('push_comment');
+ 			}
+ 		}
+ 	},'json');
+});
+ 
+var praise_url="{:U('portal/public/praise')}";
+$(document).on('click','.praise_comment',function(){
+	var $div=$(this).parents('.comment-cont');
+	var id=$div.find('.zzcid').val();
+ 	$.post(praise_url,{'id':id},function(data){
+ 		if(data.status==1){
+ 			$div.find('.praise_num').text(data.code);
+ 			$div.find('.comment-rbtn5').removeClass('praise_comment'); 
+ 		}else{ 
+ 			if(data.code==2){
+ 				$div.find('.comment-rbtn5').removeClass('praise_comment'); 
+ 			}
+ 		}
+ 	},'json');
+});
+</script>

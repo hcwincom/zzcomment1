@@ -65,9 +65,7 @@ class CommentController extends AdminbaseController {
             where cm.id={$id} limit 1";
         $info=$m->query($sql);
         $info=$info[0];
-        //得到营业执照照片
-        $info['file']=explode(';', $info['files']);
-         array_pop($info['file']);
+        
         $this->assign('info',$info);
         
         $this->display();

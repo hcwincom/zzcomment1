@@ -11,7 +11,12 @@
                     <ul class="evaluate_list">
                     <foreach name="list" item="vo">
                         <li>
-                            <div class="lf evaluate_li_lf"><p class="per_e1">{$vo.content}</p><span class="time">{$vo.create_time|date='Y-m-d',###}</span></div>
+                            <div class="lf evaluate_li_lf">
+                            	<p class="per_e1">{$vo.content}</p>
+                            	<span class="time">{$vo.sname}</span>
+                            	<span class="time">{$vo.create_time|date='Y-m-d',###}</span>
+                            	<a href="{:U('user/comment/download',['id'=>$vo['id']])}">下载附件</a>
+                            </div>
                             <div class="rt evaluate_li_rt">
 	                            <span class="per_e3"><eq name="vo.score" value='1'>加分<else/>减分</eq></span>
 	                            <span class="per_e4"">
@@ -21,8 +26,7 @@
 	                            	<case value="2">审核完成</case>
 	                            </switch>
 								</span>
-								<!-- <input type="hidden" class="id" value="{$vo.id}"/>
-	                            <span class="per_e5 delete"><img src="__TMPL__Public/img/delete.png"></span> -->
+								 
                             </div> 
                             <div class="clear"></div>
                         </li>

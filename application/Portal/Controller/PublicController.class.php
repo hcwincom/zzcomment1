@@ -78,6 +78,8 @@ class PublicController extends HomebaseController {
              if(in_array($id, $ids)){
                  $this->error('已赞过','',['code'=>2]);
             }
+         }else{
+             $ids=[];
          }
          $m=M('comment');
          $info=$m->where('id='.$id)->find();
@@ -85,9 +87,12 @@ class PublicController extends HomebaseController {
              $this->error('数据错误','',['code'=>3]);
          }
          $m->where('id='.$id)->setInc('praise');
-         $this->success('操作成功',['code'=>$info['praise']+1]);
+         $ids[]=$id;
+         session('praise',$ids);
+         $this->success('操作成功','',['code'=>$info['praise']+1]);
          exit;
      }
+     
       /* 更新原有数据 */
      public function test(){
          //更新所有商品和动态状态2为状态3

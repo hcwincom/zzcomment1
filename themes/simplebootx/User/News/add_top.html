@@ -100,7 +100,6 @@ $('#recommend').submit(function(){
            }
        };
     laydate(end);  
-    
     function editprice() {
         var start0 = $.trim($("#start1").val()); 
         var end0 = $.trim($("#start2").val()); 
@@ -116,8 +115,7 @@ $('#recommend').submit(function(){
            zprice = (price * days).toFixed(2); 
         }  
         $('#price2').text(zprice); 
-        $('#zprice').val(zprice);   
-        console.log($('#zprice').val(zprice)); 
+        $('#zprice').val(zprice);    
     }
 
     

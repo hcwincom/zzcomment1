@@ -269,6 +269,7 @@ class SellerController extends MemberbaseController {
         //计算得到可置顶周期  
         $top_sellers=[];
         $tops0=C('price_top_seller');
+        unset($tops0[10]);
         $m_top=M('top_seller');
         foreach($tops0 as $k=>$v){
             $top_sellers[$k]=['price'=>$v['price']];
@@ -319,20 +320,41 @@ class SellerController extends MemberbaseController {
         //获取时间段内已置顶信息,置顶位满不能置顶
         $m->startTrans();
         
+         
         $where=[
             'site'=>$site,
             'status'=>['between','2,3'],
             'start_time'=>['between',[$start+1,$end-1]],
-            'end_time'=>['between',[$start+1,$end-1]],
-        ];
-        
+        ]; 
         $tmp_seller=$m->where($where)->find();
         if(!empty($tmp_seller)){
             $m->rollback();
             $this->error(date('Y-m-d',$tmp_seller['start_time']).'至'.date('Y-m-d',$tmp_seller['end_time']).'的推荐位已被购买');
             exit;
         }
-        
+        $where=[
+            'site'=>$site,
+            'status'=>['between','2,3'],
+            'end_time'=>['between',[$start+1,$end-1]],
+        ];
+        $tmp_seller=$m->where($where)->find();
+        if(!empty($tmp_seller)){
+            $m->rollback();
+            $this->error(date('Y-m-d',$tmp_seller['start_time']).'至'.date('Y-m-d',$tmp_seller['end_time']).'的推荐位已被购买');
+            exit;
+        }
+        $where=[
+            'site'=>$site,
+            'status'=>['between','2,3'],
+            'start_time'=>['elt',$start],
+            'end_time'=>['egt',$end],
+        ];
+        $tmp_seller=$m->where($where)->find();
+        if(!empty($tmp_seller)){
+            $m->rollback();
+            $this->error(date('Y-m-d',$tmp_seller['start_time']).'至'.date('Y-m-d',$tmp_seller['end_time']).'的推荐位已被购买');
+            exit;
+        }
         //扣款
         if($price>0){
             $m_user=M('Users');
