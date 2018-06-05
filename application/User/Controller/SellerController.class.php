@@ -425,7 +425,7 @@ class SellerController extends MemberbaseController {
         $this->assign('page',$page->show('Admin'));
         $this->assign('list',$list);
         $this->assign('top_status',C('top_status'));
-       
+        $this->assign('flag','店铺推荐位');
         
         $this->display();
         
