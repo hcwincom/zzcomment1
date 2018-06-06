@@ -12,10 +12,10 @@
 				<p class="comment-about">{$vo.content}</p>
 				<div class="comment-reply zzreply0{$vo.id}">
 					<a href="javascript:void(0);" title="回复" class="comment-rbtn1">回复</a> 
+					<a href="javascript:void(0);" class="comment-rbtn2"><notempty name='vo.reply'>展开回复</notempty></a>
 					<a href="javascript:void(0);" class="comment-rbtn5 praise_comment" title="点赞">点赞（<em class="likes praise_num">{$vo.praise}</em>）</a>
 					<a href="javascript:void(0);" class="comment-rbtn3 push_comment" title="顶">顶（<em class="push_num">{$vo.push}</em>）</a>
 					<a href="{:U('user/comment/download',['id'=>$vo['id']])}" class="comment-rbtn4" title="附件下载">附件下载</a>
-					<a href="javascript:void(0);" class="comment-rbtn2"><notempty name='vo.reply'>展开回复</notempty></a>
 				</div>
 				<div class="comment-cont2 zzreply{$vo.id}">
 				<foreach name='vo.reply' item='v'>

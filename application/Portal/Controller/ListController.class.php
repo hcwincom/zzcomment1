@@ -138,7 +138,7 @@ class ListController extends HomebaseController {
 	    $time=time();
 	    $m=M('Goods');
 	    $order='start_time desc';
-	    $field='id,sid,pic,name,start_time';
+	    $field='id,sid,pic,price,name,start_time';
 	    //先找置顶商品
 	    $list_top_goods=[];
 	    $ids=C('count_top_goods');

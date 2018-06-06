@@ -2,7 +2,10 @@
 <foreach name="list_top_goods" item="vo">
 	<li>
 		<a href="{:U('Portal/Seller/goods_detail',array('id'=>$vo['id'],'sid'=>$vo['sid']))}" class="product-content">
-			<img src="__UPLOAD__/{$vo.pic}" alt="{$vo.name}" title="{$vo.name}"><br>
+			<div>
+				<img src="__UPLOAD__/{$vo.pic}" alt="{$vo.name}" title="{$vo.name}">
+				<br>
+			</div>
 			<p>
 				<span class="lf">{$vo.name}</span>
 				<span class="rt">￥{$vo.price}</span>
@@ -13,7 +16,10 @@
  <foreach name="list_goods" item="vo">
 	<li>
 		<a href="{:U('Portal/Seller/goods_detail',array('id'=>$vo['id'],'sid'=>$vo['sid']))}" class="product-content">
-			<img src="__UPLOAD__/{$vo.pic}" alt="{$vo.name}" title="{$vo.name}"><br>
+			<div>
+				<img src="__UPLOAD__/{$vo.pic}" alt="{$vo.name}" title="{$vo.name}">
+				<br>
+			</div>
 			<p>
 				<span class="lf">{$vo.name}</span>
 				<span class="rt">￥{$vo.price}</span>

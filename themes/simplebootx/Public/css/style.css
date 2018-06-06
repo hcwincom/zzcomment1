@@ -115,7 +115,8 @@ textarea{resize: none;}
 .column-shop-container>li>a>p>span:last-child{max-width: 7em;}
 
 /*商品上新*/
-.column-product-container{overflow: hidden;margin: 35px 0;margin-left: 3%;}
+
+.column-product-container{overflow: hidden;margin: 35px auto;}
 .column-product-container>li{
 	display: inline-block;
     width: 24%;
@@ -131,7 +132,7 @@ textarea{resize: none;}
 .column-product-container>li>a{
 	display: block;
 	width: 95%;
-	margin: 6px auto;
+	margin: 4px auto;
 }
 .column-product-container>li>a>div{
 	width: 100%;
@@ -156,7 +157,7 @@ textarea{resize: none;}
 .group-head>li{float:left;padding:0 25px;height:50px;font-size:18px;line-height: 50px;cursor:pointer;}
 .group-head>li.current{background:#d00000;color:#fff;}
 /*页面修改*/
-.group-cont>li{display:none;min-height: 100px;}
+
 .shop-newadd{margin:30px auto;overflow: hidden;}
 .shop-newadd>li{
 	display: inline-block;
@@ -298,7 +299,8 @@ textarea{resize: none;}
 .comment-reply{font-size:16px;line-height: 28px;overflow: hidden;}
 .comment-reply>a{margin-right: 20px;}
 .comment-rbtn1{float:left;font-size:14px;line-height: 28px;padding-left:30px;background:url(../img/replybg.png) no-repeat 0 center;}
-.comment-rbtn2{float:left;font-size:14px;line-height: 28px;padding-left:25px;background:url(../img/praise.png) no-repeat left top;margin-left: 10%;}
+.comment-rbtn2{float:left;font-size:14px;line-height: 28px;}
+.comment-rbtn5{float:left;font-size:14px;line-height: 28px;padding-left:25px;background:url(../img/praise.png) no-repeat left top;margin-left: 10%;}
 .comment-rbtn3{float: left;font-size:14px;line-height: 28px;padding-left:25px;background:url(../img/top.png) no-repeat 0 center;margin-left: 10%;}
 .comment-rbtn4{float: left;font-size:14px;line-height: 28px;padding-left:25px;color: #EC080C;}
 .comment-reply>a:hover{text-decoration: underline;}
@@ -400,6 +402,7 @@ textarea{resize: none;}
 }
 .edit-detail{
 	width: 90%;
+	padding-bottom: 30px;
 	
 	margin: 10px auto;
 }
@@ -516,7 +519,8 @@ a.captcha img{width:100px;height:44px;}
 .shop-detailcontainer .cont-head{text-align:center;font-size: 24px;line-height: 34px;padding: 10px 0;}
 .shop-detailcontainer .cont-date{text-align: right;padding:15px 0;}
 .cont-date>span{font-size:16px;color: #999;line-height: 26px;letter-spacing:4px;}
-
+.shop-detailcontainer .cont{font-size: 16px;line-height: 20px;word-wrap: break-word;letter-spacing: 2px;text-indent: 32px;margin-bottom: 10px;}
+.shop-detailcontainer .cont p{font-size: 16px;line-height: 20px;word-wrap: break-word;letter-spacing: 2px;text-indent: 32px;}
 .shop-detailcontainer2{width:85%;margin:0 auto;padding:0 0 80px;}
 .shop-detailcontainer2 .cont-head2{text-align:center;font-size: 24px;line-height: 34px;padding:30px 0 30px;}
 .cont2{width:96%;margin:0 auto;}
