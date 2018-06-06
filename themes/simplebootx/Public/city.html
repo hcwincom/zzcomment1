@@ -2,7 +2,7 @@
 	<select name="city1" class="city1">
 		<option class="city10" value="0">省份</option>
 	<foreach name="add_city1" item="vo">
-		<option class="city1s{$key}" value="{$key}" <if condition="$city1 eq $key">select</if>>{$vo}</option>
+		<option class="city1s{$key}" value="{$key}" <if condition="$city1 eq $key">selected</if>>{$vo}</option>
 	</foreach>
 	</select>
 	<select name="city2" class="city2">

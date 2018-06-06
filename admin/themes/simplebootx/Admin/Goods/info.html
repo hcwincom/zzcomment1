@@ -63,11 +63,7 @@
 			 <div class="control-group fleft">
 					<span class="control-label" >审核状态：</span>
 					<div class="controls">
-						<input class="red" type="text" value="<switch name="info.status">
-					<case value="0">未审核</case>
-					<case value="1">审核不通过</case>
-					<case value="2">审核通过</case> 
-					</switch>" readonly/>
+						<input class="red" type="text" value="{$info_status[$info['status']]}" readonly/>
 					</div>
 				</div>
 			 

@@ -140,7 +140,7 @@ class SellerController extends HomebaseController {
         $time=time();
         $m=M('Goods');
         $order='start_time desc';
-        $field='id,sid,pic,name,start_time';
+        $field='id,sid,pic,price,name,start_time';
         $sid=$this->sid;
         //0申请。，1不同意，2同意3=>'上架',4=>'下架'
         $where=['status'=>['eq',3],'sid'=>$sid];
