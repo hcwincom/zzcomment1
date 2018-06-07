@@ -1,3 +1,4 @@
+
 <!-- top -->
 		<div class="top-wrapper">
 			<div class="lf logo">
@@ -57,18 +58,7 @@
 				
 				<div class="catecory">
 					<label>店铺分类</label>
-					<select name="catecory" id="add-cate1">
-						<option value="0">分类</option>
-					<foreach name="add_cate1" item="vo">
-						<option value="{$key}">{$vo}</option>
-					</foreach>	 
-					</select>
-					<select name="letter" id="add-cate2">
-						<option class="cate20" value="0">行业</option>
-					<foreach name="add_cate2" item="vo">
-						<option class="cate2{$vo.fid}" value="{$vo.id}">{$vo.first_char}{$vo.name}</option>
-					</foreach>
-					</select>
+					 <tc_include file="Public:cates" />
 				</div>
 				<div>
 					<label for="shop_name">店铺名称</label>
@@ -86,7 +76,7 @@
 				 
 				<div>
 					<span for="shop_phone">经营范围</span>
-					<input type="text" placeholder="请输入经营范围" name="shop_phone" class="shopphone" id="shop_phone">
+					<input type="text" placeholder="请输入经营范围" name="shop_area" class="shopphone" id="shop_phone">
 				</div>
 				
 				<div>
@@ -124,3 +114,51 @@
 		</div>
 	</div>
 <!-- comment reply end -->
+<script  type="text/javascript">
+var userid=paeseInt("{$Think.session.user.id|default=0}");
+ 
+$('.shop-add-form').submit(function(){
+	if(userid==0){
+		$('#message').show();
+		$('#message').text('未登录不能创建店铺');
+		return false;
+	}
+	 
+	 
+	var verify=$('#captcha').val();
+	if(verify.length!=4){
+		$('#message').show();
+		$('#message').text('验证码不正确');
+		
+		return false;
+	}
+	var status=true;
+	$.ajax({
+		url: "{:U('User/Public/ajaxVerify')}",
+		type:'post',
+		cacash:false,
+		async:false,	//不设置则默认true代表异步,false同步
+		data:{'verify':verify},
+		dataType:'json',
+		error:function(data){
+			alert('错误，刷新页面');
+			location.reload(true);
+		},
+		success:function(data){
+			if(data.errno!=1){
+			  status=false;
+			  $('#message').show();
+			$('#message').text('验证码不正确');
+			  $('.verify_img').attr('src',$('.verify_img').attr('src')+'&time=1');
+			}
+		}
+	});
+	 if( status==false){
+		 return false;
+	 }else{
+		 return true;
+	 }
+	return false;
+});
+ 
+</script>

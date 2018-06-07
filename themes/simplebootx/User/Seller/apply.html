@@ -17,11 +17,12 @@
                             <label class="btn btn3" for="p3" title="选择图片"><span>选择图片</span></label> 
                                 <input type="file" id="p3" class="upload_pic" onchange="preview(this,3)" name="IDpic3" value="" >
                             <p class="pms">*上传尺寸为500*300的jpg、png图,4M以内</p>
+                             
                         </div>
                         <p class="ml2 msg1"></p>
                     </div>
                     <div class="per_r1">
-                    	<input type="hidden" name="sid" value="{$info.id}"/>
+                    	<input type="hidden" name="ssid" value="{$info.id}"/>
                         <div class="form2"><span>店铺名称:</span><i class="fml">{$info.name}</i></div> <p class="ml2 msg2"></p>
                         <div class="form2"><span>法人:</span><input type="text" name="fname" placeholder="" onblur="fname1()"></div> 
                         <p class="ml2 msg3"></p>  
@@ -31,6 +32,7 @@
                         <div class="form2"><span>座机号码：</span><input type="text" name="tell" placeholder="请加上区号，如021-88888888" ></div><p class="ml2 msg8"></p>
                         
                         <div class="form2"><span>网站地址：</span><input type="text" name="webaddr" placeholder="请填写完整地址,如http://www.zypjw.cn/"></div>
+                         <div class="form2"><span>店铺关键字：</span><input type="text" name="keywords" placeholder="关键字用英文逗号分隔"></div>
                         <p class="ml2 msg10"></p>
                         <div class="form2">
                             <span class="lf">二维码：</span>
@@ -58,20 +60,18 @@
                             <div class="clear"></div>
                         </div>
                         <p class="ml2 msg11"></p> 
+                         <p class="">领用需押金{$info.deposit}元,从账户余额中扣除，审核不通过或主动注销后押金返还至余额</p>
                         <div class="form2 mtc"><input type="submit" value="确认上传"></div>
                     </div>
                     <div class="clear"></div>
                 </form>
         </div>
 		 
-			 
+	 
 	<!-- main end -->
 
 	<!-- bottom -->
 	 <tc_include file="Public:user_footer" />
 	<!-- bottom end -->
 
-	<!-- js -->	
-	 
-</body>
-</html>
+ 

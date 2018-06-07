@@ -42,8 +42,10 @@ class ListController extends HomebaseController {
         if(!empty($tmp)){
             $where_seller['city']=$tmp;
         }
+        
         //处理分类
         $tmp=$this->cate(1);
+       
         if(!empty($tmp)){
             $where_seller['cid']=$tmp;
         }
@@ -282,7 +284,9 @@ class ListController extends HomebaseController {
 	    if($citys['city3']!=0){
 	        return ['eq',$citys['city3']];
 	    }elseif($citys['city2']!=0){
-	        $tmp=$m_city->where('type=3 and fid='.$citys['city2'])->getField('id',true);
+	       // $tmp=$m_city->where('type=3 and fid='.$citys['city2'])->getField('id',true);
+// 	        $tmps=session('add_city3');
+	        $tmp=array_keys(session('add_city3'));
 	        return ['in',$tmp];
 	    }elseif($citys['city1']!=0){
 	        $tmp1=$m_city->where('type=2 and fid='.$citys['city1'])->getField('id',true);

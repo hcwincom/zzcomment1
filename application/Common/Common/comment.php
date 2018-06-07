@@ -314,7 +314,7 @@ function seller_del($info0){
 }
 
 /* 赠币处理 */
-function coin($money,$uid,$dsc=''){
+function coin($money,$uid,$dsc='会员操作'){
    if($money==0){
        return 2;
    }
@@ -325,7 +325,7 @@ function coin($money,$uid,$dsc=''){
         'uid'=>$uid,
         'money'=>$money,
         'time'=>time(),
-        'content'=>$dsc.'赠币'.$money,
+        'content'=>'('.$dsc.')赠币'.$money,
     );
     M('Pay')->add($data_pay); 
     return 1;

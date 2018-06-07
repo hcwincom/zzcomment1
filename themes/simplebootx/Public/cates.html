@@ -1,0 +1,14 @@
+<select name="catecory" id="add-cate1">
+	<option value="0">分类</option>
+<foreach name="add_cate1" item="vo">
+	<option value="{$key}">{$vo}</option>
+</foreach>	 
+</select>
+<select name="letter" id="add-cate2">
+	<option class="cate20" value="0">行业</option>
+<foreach name="add_cate2" item="vo">
+	<option class="cate2{$vo.fid}" value="{$vo.id}">{$vo.first_char}{$vo.name}</option>
+</foreach>
+</select>
+	 
+	 

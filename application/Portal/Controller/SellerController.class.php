@@ -62,7 +62,7 @@ class SellerController extends HomebaseController {
 	     $where_top=array();
 	     $where_top['sid']=array('eq',$sid);
 	     //0申请。，1不同意，2同意
-	     $where_top['status']=array('eq',2);
+	     $where_top['status']=array('eq',3);
 	      
 	     //商品上新
 	     $list_goods=M('Goods')->where($where_top)->order('start_time desc')->limit(0,8)->select();
@@ -101,7 +101,7 @@ class SellerController extends HomebaseController {
         $sid=$this->sid;
         
         //0申请。，1不同意，2同意3=>'上架',4=>'下架'
-        $where=['status'=>['eq',3],'sid'=>$sid];
+        $where=['status'=>['eq',3],'sid'=>['eq',$sid]];
         
         $total=$m->where($where)->count();
         $page = $this->page($total, C('page_news_list'));
@@ -122,7 +122,7 @@ class SellerController extends HomebaseController {
         $field='id,sid,pic,name,dsc,start_time';
         $sid=$this->sid; 
         //0申请。，1不同意，2同意3=>'上架',4=>'下架'
-        $where=['status'=>['eq',3],'sid'=>$sid];
+        $where=['status'=>['eq',3],'sid'=>['eq',$sid]];
         
         $total=$m->where($where)->count();
         $page = $this->page($total, C('page_job_list'));
@@ -143,9 +143,10 @@ class SellerController extends HomebaseController {
         $field='id,sid,pic,price,name,start_time';
         $sid=$this->sid;
         //0申请。，1不同意，2同意3=>'上架',4=>'下架'
-        $where=['status'=>['eq',3],'sid'=>$sid];
+        $where=['status'=>['eq',3],'sid'=>['eq',$sid]];
         
         $total=$m->where($where)->count();
+        echo $total;
         $page = $this->page($total, C('page_goods_list'));
         
         $list=$m->field($field)->where($where)->order($order)->limit($page->firstRow,$page->listRows)->select();

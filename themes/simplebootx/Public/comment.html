@@ -31,11 +31,16 @@
 </ul>
 <script>
 var push_url="{:U('user/comment/push')}";
+
 $(document).on('click','.push_comment',function(){
+	if(userid==0){
+		alert('未登录不能顶');
+		return false;
+	}
 	var $div=$(this).parents('.comment-cont');
 	var id=$div.find('.zzcid').val();
  	$.post(push_url,{'id':id},function(data){
- 		console.log(data);
+ 		 
  		if(data.status==1){
  			$div.find('.push_num').text(data.code);
  			$div.find('.comment-rbtn3').removeClass('push_comment');

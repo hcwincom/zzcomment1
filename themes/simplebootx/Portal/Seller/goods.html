@@ -13,19 +13,7 @@
 					<span class="">{$seller_info.goods_all}</span>
 				</div>
 				<div class="shop-colcontainer">
-					<ul class="column-product-container">
-					<foreach name="list" item="vo">
-						<li>
-							<a href="{:U('Portal/Seller/goods_detail',array('id'=>$vo['id'],'sid'=>$vo['sid']))}" class="product-content">
-								<img src="__UPLOAD__/{$vo.pic}" alt="{$vo.name}" title="{$vo.name}"><br>
-								<p>
-									<span class="lf">{$vo.name}</span>
-									<span class="rt">￥{$vo.price}</span>
-								</p>
-							</a>
-						</li>
-					</foreach>
-					</ul>
+					<tc_include file="Public:goods" />
 				 
 					<div class="page">{$page}</div>
 				</div>

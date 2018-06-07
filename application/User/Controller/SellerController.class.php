@@ -12,7 +12,7 @@ class SellerController extends MemberbaseController {
 		 
 	}
 	public function create(){
-	    $city=I('town',0);
+	    $city=I('city3',0);
 	    $cid=I('letter',0);
 	    
 	    $name=I('shop_name','');
@@ -26,32 +26,7 @@ class SellerController extends MemberbaseController {
 	    }
 	   
 	    $pic='';
-	    if(!empty($_FILES['shop_pic']['name'])){
-	          
-	        $subname=date('Y-m-d');
-	         
-	        $upload = new \Think\Upload();// 实例化上传类
-	        //20M
-	        $upload->maxSize   =  C('SIZE') ;// 设置附件上传大小
-	        $upload->rootPath=getcwd().'/';
-	        $upload->subName = $subname;
-	        $upload->savePath  =C("UPLOADPATH").'/seller/';
-	        $info   =   $upload->upload();
-	         
-	        if(!$info) {// 上传错误提示错误信息
-	            $this->error($upload->getError());
-	        }
-	        foreach ($info as $v){
-	            $pic0='seller/'.$subname.'/'.$v['savename'];
-	            $pic=$pic0.'.jpg';
-	        }
-	        $image = new \Think\Image();
-	        $image->open(C("UPLOADPATH").$pic0);
-	        // 生成一个固定大小为150*150的缩略图并保存为thumb.jpg
-	        $image->thumb(500, 300,\Think\Image::IMAGE_THUMB_FIXED)->save(C("UPLOADPATH").$pic);
-	        
-	        unlink(C("UPLOADPATH").$pic0);
-	    }
+	    
 	    $m=$this->m;
 	    $data=array(
 	        'name'=>$name,
@@ -64,21 +39,71 @@ class SellerController extends MemberbaseController {
 	        'create_time'=>time(),
 	        'pic'=>$pic,
 	        'scope'=>I('shop_area',''),
+	        'link'=>I('shop_net','')
 	    );
+	    //是否审核
+	    $check=C('option_seller.add_check');
+	    $user=$this->user;
+	    //status0未审核，1未认领，2已认领,3已冻结
+	    switch($check){
+	        case 1:
+	            $data['status']=1;
+	            break;
+	        case 2:
+	            $data['status']=($user['name_status']==1)?1:0;
+	            break;
+	        default:
+	            $data['status']=0;
+	            break;
+	    }
+	    $msg=($data['status']==0)?'，等待审核':'';
 	    $insert=$m->add($data);
-	    
+	    if(!empty($_FILES['shop_pic']['name'])){
+	        
+	        $subname=$insert;
+	        $upload = new \Think\Upload();// 实例化上传类
+	        //20M
+	        $upload->maxSize   =  C('SIZE') ;// 设置附件上传大小
+	        $upload->rootPath=getcwd().'/';
+	        $upload->subName = $insert;
+	        $upload->savePath  =C("UPLOADPATH").'/seller/';
+	        $info   =   $upload->upload();
+	        
+	        if(!$info) {// 上传错误提示错误信息
+	            $this->error($upload->getError());
+	        }
+	        foreach ($info as $v){
+	            $pic0='seller/'.$subname.'/'.$v['savename'];
+	            $pic=$pic0.'.jpg';
+	        }
+	        $image = new \Think\Image();
+	        $image->open(C("UPLOADPATH").$pic0);
+	        // 生成一个固定大小为150*150的缩略图并保存为thumb.jpg
+	        $image->thumb(500, 300,\Think\Image::IMAGE_THUMB_FIXED)->save(C("UPLOADPATH").$pic);
+	        $m->where('id='.$insert)->save(['pic'=>$pic]);
+	        unlink(C("UPLOADPATH").$pic0);
+	    }
 	    if($insert>=1){
-	        $this->success('创建成功，等待管理员审核');
+	        $this->success('创建成功'.$msg);
 	    }else{
 	        $this->error('创建失败，请重试');
 	    }
 	}
     //领用店铺
     public function apply(){
-        $sid=I('sid',0);
+        $deposits=C('money_seller');
+        $sid=I('ssid',0);
         $m=$this->m;
-        $info=$m->where('id='.$sid)->find();
+        $info=$m->field('s.*,c.fid as cid0')
+        ->alias('s')
+        ->join('cm_cate as c on c.id=s.cid')
+        ->where('s.id='.$sid)->find();
+        if(empty($info['city']) || $info['status']!=1){
+            $this->error('该店铺不能领用');
+        }
+        $info['deposit']=$deposits[$info['cid0']];
         $this->assign('info',$info);
+       
         $this->display();
     }
     //领用店铺
@@ -91,13 +116,27 @@ class SellerController extends MemberbaseController {
         if(empty($_FILES['IDpic5']['name'])){
             $this->error('营业执照必须上传');
         } 
-        $sid=I('sid',0);
+        $sid=I('ssid',0);
         
-        $m=M('SellerApply');
+        $deposits=C('money_seller');
+        $m=$this->m;
+        $info=$m->field('s.*,c.fid as cid0')
+        ->alias('s')
+        ->join('cm_cate as c on c.id=s.cid')
+        ->where('s.id='.$sid)->find();
+        if(empty($info['city']) || $info['status']!=1){
+            $this->error('该店铺不能领用');
+        }
+        $info['deposit']=$deposits[$info['cid0']];
+        $user=$this->user;
+        if($info['deposit']>=$user['account']){
+            $this->error('账户余额不足，请先充值');
+        }
+      
         $time=time();
-        $subname=date('Y-m-d',$time);
+        $subname=$sid;
         $data=array(
-            'uid'=>$this->userid,
+            'uid'=>$user['id'],
             'sid'=>$sid,
             'create_time'=>$time,
             'corporation'=>$fname,
@@ -106,58 +145,106 @@ class SellerController extends MemberbaseController {
             'mobile'=>I('phone',''),
             'bussiness_time'=>I('jysj',''),
             'link'=>I('webaddr',''),
-            
+            'keywords'=>I('keywords',''),
+            'deposit'=>$info['deposit'], 
         );
         $upload = new \Think\Upload();// 实例化上传类
+        $uploadpath=C("UPLOADPATH");
         //20M
         $upload->maxSize   =  C('SIZE') ;// 设置附件上传大小
         $upload->rootPath=getcwd().'/';
         $upload->subName = $subname;
-        $upload->savePath  =C("UPLOADPATH").'/seller/';
-        $info   =   $upload->upload();
-        if(!$info) {// 上传错误提示错误信息
+        $upload->savePath  =$uploadpath.'/seller/';
+        $fileinfos  =   $upload->upload();
+        if(!$fileinfos) {// 上传错误提示错误信息
             $this->error($upload->getError());
         }
         
-        foreach ($info as $v){ 
+        foreach ($fileinfos as $v){ 
             switch ($v['key']){
                 case 'IDpic3':$pic0='seller/'.$subname.'/'.$v['savename'];break;
                 case 'IDpic4':$qrcode0='seller/'.$subname.'/'.$v['savename'];break;
                 case 'IDpic5':$data['cards']='seller/'.$subname.'/'.$v['savename'];break; 
+                default:break;
             } 
         }
         
         if(!empty($pic0)){
             $pic=$pic0.'.jpg';
             $image = new \Think\Image();
-            $image->open(C("UPLOADPATH").$pic0);
+            $image->open($uploadpath.$pic0);
             // 生成一个固定大小为 的缩略图并保存为 .jpg
-            $image->thumb(500, 300,\Think\Image::IMAGE_THUMB_FIXED)->save(C("UPLOADPATH").$pic);
+            $image->thumb(500, 300,\Think\Image::IMAGE_THUMB_FIXED)->save($uploadpath.$pic);
             
-            unlink(C("UPLOADPATH").$pic0);
+            unlink($uploadpath.$pic0);
             $data['pic']=$pic;
         }
          
         if(!empty($qrcode0)){
             $qrcode=$qrcode0.'.jpg';
             $image = new \Think\Image();
-            $image->open(C("UPLOADPATH").$qrcode0);
+            $image->open($uploadpath.$qrcode0);
             // 生成一个固定大小为 的缩略图并保存为 .jpg
-            $image->thumb(114, 114,\Think\Image::IMAGE_THUMB_FIXED)->save(C("UPLOADPATH").$qrcode);
+            $image->thumb(114, 114,\Think\Image::IMAGE_THUMB_FIXED)->save($uploadpath.$qrcode);
             
-            unlink(C("UPLOADPATH").$qrcode0);
+            unlink($uploadpath.$qrcode0);
             $data['qrcode']=$qrcode;
         }
-        
-        $row=$m->add($data);
-        if($row>=1){
+        //是否审核
+        $conf=C('option_seller');
+       
+        $user=$this->user;
+        //status0未处理，1通过，2不通过
+        switch($conf['apply_check']){
+            case 1:
+                $data['status']=1;
+                break;
+            case 2:
+                $data['status']=($user['name_status']==1)?1:0;
+                break;
+            default:
+                $data['status']=0;
+                break;
+        }
+       
+        $m->startTrans();
+        $m_apply=M('SellerApply');
+       
+        M('users')->where('id='.$user['id'])->setDec('account',$info['deposit']);
+        //如果通过审核就可以直接生效，没通过就等待审核
+        if($data['status']==0){
+            $insert=$m_apply->add($data);
+            $m->commit();
             $this->success('已提交申请，等待管理员审核',U('Portal/Seller/home',array('sid'=>$sid)));
         }else{
-            $this->error('操作失败');
+           //领用申请审核
+            $data['rid']=1;
+            $data['review_time']=$time;
+            $insert=$m_apply->add($data);
+            //保存店铺信息
+            $data2=array(
+                'reply_time'=>$data['create_time'],
+                'status'=>2,
+                'uid'=>$data['uid'],
+                'tel'=>$data['tel'],
+                'mobile'=>$data['mobile'],
+                'pic'=>$data['pic'],
+                'corporation'=>$data['corporation'],
+                'scope'=>$data['scope'],
+                'bussiness_time'=>$data['bussiness_time'],
+                'cards'=>$data['cards'],
+                'link'=>$data['link'],
+                'qrcode'=>$data['qrcode'],
+            );
+            $m->where('id='.$sid)->save($data2);
+            coin($conf['apply_coin'],$data['uid'],'领用店铺');
+            $m->commit();
+            $this->success('认领已通过，可以在个人中心编辑店铺，添加信息了',U('user/Seller/index',array('sid'=>$sid)));
         }
+        
          exit;   
     }
-    
+     
     public function index(){
        $sid=I('sid',0);
        $m=$this->m;
