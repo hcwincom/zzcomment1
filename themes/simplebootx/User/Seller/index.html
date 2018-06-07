@@ -19,18 +19,7 @@
 							<span class="lf">类别：</span>
 							<div class="lf">
 							 <tc_include file="Public:cates" />
-								<!-- <select class="te" name="cate1" id="add-cate1">
-									<option value="0">分类</option>
-									<foreach name="add_cate1" item="vo">
-									<option id="cate1{$vo.id}" value="{$vo.id}"  >{$vo.name}</option>
-									</foreach>
-									<select>
-									<select name="cate2" id="add-cate2">
-										<option class="cate20" value="0">行业</option>
-										<foreach name="add_cate2" item="vo">
-										<option class="cate2{$vo.fid}" id="cate2{$vo.id}" value="{$vo.id}"  >{$vo.name}</option>
-										</foreach>
-									</select> -->
+							 
 							</div>
 							<div class="clear"></div>
 						</div>
@@ -51,6 +40,8 @@
                         <p class="ml2 msg9"></p>
                         <div class="form2"><span>网站地址：</span><input type="text" name="webaddr" value="{$info.link}" placeholder="请填写完整地址,如http://www.zypjw.cn/"></div>
                         <p class="ml2 msg10"></p>
+                         <div class="form2"><span>网站关键字：</span><input type="text" name="keywords" value="{$info.keywords}" placeholder="网站关键字，用引文逗号,分隔"></div>
+                        <p class="ml2 "></p>
                         <div class="form2">
                             <span class="lf">二维码：</span>
                             <div class="wxp">

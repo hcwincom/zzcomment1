@@ -497,6 +497,7 @@ class SellerController extends AdminbaseController {
                     'cards'=>$info['cards'],
                     'link'=>$info['link'],
                     'qrcode'=>$info['qrcode'],
+                    'keywords'=>$info['keywords'], 
                 );
                 $row2=$m_seller->data($data2)->where('id='.$info['sid'])->save();
                 if($row2!==1){
@@ -687,7 +688,7 @@ class SellerController extends AdminbaseController {
                 $data_action['descr']='通过了'.$desc;
                 $data_msg['content'].='审核通过了';
                 $data2=array(
-                    'status'=>2, 
+                    
                     'tel'=>$info1['tel'],
                     'mobile'=>$info1['mobile'], 
                     'corporation'=>$info1['corporation'],
@@ -698,7 +699,7 @@ class SellerController extends AdminbaseController {
                     'cid'=>$info1['cid'],
                     'name'=>$info1['name'],
                     'address'=>$info1['address'],
-                    
+                    'keywords'=>$info1['keywords'], 
                    
                 );
                 if(!empty($info1['pic'])){

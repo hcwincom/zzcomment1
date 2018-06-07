@@ -450,29 +450,20 @@ class JobController extends MemberbaseController {
         if(empty($data['city']) || empty($data['cid'])){
             $this->error('请选择城市和分类');
        }
-        //是否审核 
-        $check=C('option_job.add_check');
-        $user=$this->user;
          
-        switch($check){
-            case 1:
-                $data['status']=3;
-                break;
-            case 2:
-                $data['status']=($user['name_status']==1)?3:0;
-                break;
-            default:
-                $data['status']=0;
-                break;
-        }
-        $msg=($data['status']==0)?'，等待审核':'';
+        //执行添加，添加中有判断状态，处理赠币
         $m=$this->m;
-        $insert=$m->add($data);
-        if($insert>=1){
-            $this->success('发布招聘成功'.$msg, U('index',['sid'=>$this->sid]));
-        }else{
+        $m->startTrans();
+        $res=pro_add($m,$data,$this->user,C('option_job'),'添加招聘');
+        
+        if(empty($res['code'])){
+            $m->rollback();
             $this->error('发布失败');
+        }else{
+            $m->commit();
+            $this->success($res['msg'], U('index'));
         }
+        
         exit;
     }
     //编辑

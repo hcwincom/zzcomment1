@@ -315,7 +315,7 @@ function seller_del($info0){
 
 /* 赠币处理 */
 function coin($money,$uid,$dsc='会员操作'){
-   if($money==0){
+   if(empty($money)){
        return 2;
    }
     $m_user=M('users');
@@ -330,6 +330,26 @@ function coin($money,$uid,$dsc='会员操作'){
     M('Pay')->add($data_pay); 
     return 1;
     
+}
+/* 信息添加 */
+function pro_add($m,$data,$user,$conf,$desc='添加信息'){
+    
+    switch($conf['add_check']){
+        case 1:
+            $data['status']=3;
+            break;
+        case 2:
+            $data['status']=($user['name_status']==1)?3:0;
+            break;
+        default:
+            $data['status']=0;
+            break;
+    }
+    $msg=($data['status']==0)?($desc.'成功，等待审核'):($desc.'成功');
+    $insert=$m->add($data);
+     
+    coin($conf['add_coin'],$user['id'],$desc);
+    return ['code'=>1,'msg'=>$msg];
 }
 /* 置顶处理 */
 function top_check($m,$start,$end){

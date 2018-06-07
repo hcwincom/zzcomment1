@@ -435,29 +435,19 @@ class GoodsController extends MemberbaseController {
             'price'=>$price,
             'pic0'=>$pic0,
         );
-        //是否审核 
-        $check=C('option_goods.add_check');
-        $user=$this->user;
-        
-        switch($check){
-            case 1:
-                $data['status']=3;
-                break;
-            case 2:
-                $data['status']=($user['name_status']==1)?3:0;
-                break;
-            default:
-                $data['status']=0;
-                break;
-        }
-        $msg=($data['status']==0)?'，等待审核':'';
+        //执行添加，添加中有判断状态，处理赠币
         $m=$this->m;
-        $insert=$m->add($data);
-        if($insert>=1){
-            $this->success('发布商品成功'.$msg, U('index',['sid'=>$this->sid]));
-        }else{
+        $m->startTrans();
+        $res=pro_add($m,$data,$this->user,C('option_goods'),'添加商品');
+        
+        if(empty($res['code'])){
+            $m->rollback();
             $this->error('发布失败');
+        }else{
+            $m->commit();
+            $this->success($res['msg'], U('index'));
         }
+        
         exit;
     }
     //编辑

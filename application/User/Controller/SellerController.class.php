@@ -42,10 +42,10 @@ class SellerController extends MemberbaseController {
 	        'link'=>I('shop_net','')
 	    );
 	    //是否审核
-	    $check=C('option_seller.add_check');
+	    $conf=C('option_seller');
 	    $user=$this->user;
 	    //status0未审核，1未认领，2已认领,3已冻结
-	    switch($check){
+	    switch($conf['add_check']){
 	        case 1:
 	            $data['status']=1;
 	            break;
@@ -57,7 +57,12 @@ class SellerController extends MemberbaseController {
 	            break;
 	    }
 	    $msg=($data['status']==0)?'，等待审核':'';
+	    $m->startTrans();
 	    $insert=$m->add($data);
+	    if($insert<1){
+	        $m->rollback();
+	        $this->error('创建失败，请重试');
+	    }
 	    if(!empty($_FILES['shop_pic']['name'])){
 	        
 	        $subname=$insert;
@@ -83,11 +88,12 @@ class SellerController extends MemberbaseController {
 	        $m->where('id='.$insert)->save(['pic'=>$pic]);
 	        unlink(C("UPLOADPATH").$pic0);
 	    }
-	    if($insert>=1){
-	        $this->success('创建成功'.$msg);
-	    }else{
-	        $this->error('创建失败，请重试');
+	    if($data['status']==1 && !empty($conf['add_coin'])){
+	        coin($conf['add_coin'],$data['author'],'创建店铺');
 	    }
+	    $m->commit();
+	    $this->success('创建成功'.$msg);
+	    
 	}
     //领用店铺
     public function apply(){
@@ -259,7 +265,13 @@ class SellerController extends MemberbaseController {
        
        $info=$m->query($sql);
        $info=$info[0];
-       $this->assign('info',$info)->assign('sid',$sid);;
+       $city3=M('city')->where('type=3 and fid='.$info['city2'])->getField('id,name');
+      
+       $this->assign("add_city3",$city3);
+       $this->assign('info',$info)->assign('sid',$sid);
+       $this->assign('city1',$info['city1'])->assign('city2',$info['city2'])->assign('city3',$info['city']);
+       $this->assign('cateid1',$info['cate1'])->assign('cateid2',$info['cate2']);
+       
        $this->display();
        exit;
     }
@@ -268,22 +280,23 @@ class SellerController extends MemberbaseController {
         set_time_limit(C('TIMEOUT'));
         $sid=I('sid',0);
         $name=I('sname','');
-        $cid=I('cate2',0);
-        $city=I('town',0);
+        $cid=I('letter',0);
+        $city=I('city3',0);
         $address=I('shopaddr','');
         if(empty($name) || empty($cid) || empty($city) || empty($address)){
             $this->error('店铺名称、地址、分类不能为空');
         }
         $time=time();
+        $uploadpath=C("UPLOADPATH");
         if(!empty($_FILES['IDpic3']['name']) || !empty($_FILES['IDpic4']['name']) ){
             
-            $subname=date('Y-m-d',$time);
+            $subname=$sid;
             $upload = new \Think\Upload();// 实例化上传类
             //20M
             $upload->maxSize   =  C('SIZE') ;// 设置附件上传大小
             $upload->rootPath=getcwd().'/';
             $upload->subName = $subname;
-            $upload->savePath  =C("UPLOADPATH").'/seller/';
+            $upload->savePath  =$uploadpath.'/seller/';
             $info   =   $upload->upload();
             if(!$info) {// 上传错误提示错误信息
                 $this->error($upload->getError());
@@ -310,39 +323,90 @@ class SellerController extends MemberbaseController {
             'city'=>$city,
             'address'=>$address,
             'link'=>I('webaddr',''), 
+            'keywords'=>I('keywords',''), 
             'create_time'=>$time,
         );
         if(!empty($avatar)){
             $pic=$avatar.'.jpg';
             $image = new \Think\Image();
-            $image->open(C("UPLOADPATH").$avatar);
+            $image->open($uploadpath.$avatar);
             // 生成一个固定大小为 的缩略图并保存为 .jpg
-            $image->thumb(500, 300,\Think\Image::IMAGE_THUMB_FIXED)->save(C("UPLOADPATH").$pic);
+            $image->thumb(500, 300,\Think\Image::IMAGE_THUMB_FIXED)->save($uploadpath.$pic);
             
-            unlink(C("UPLOADPATH").$avatar);
+            unlink($uploadpath.$avatar);
             $data['pic']=$pic;
            
         }
         if(!empty($qrcode0)){
             $qrcode=$qrcode0.'.jpg';
             $image = new \Think\Image();
-            $image->open(C("UPLOADPATH").$qrcode0);
+            $image->open($uploadpath.$qrcode0);
             // 生成一个固定大小为 的缩略图并保存为 .jpg
-            $image->thumb(114, 114,\Think\Image::IMAGE_THUMB_FIXED)->save(C("UPLOADPATH").$qrcode);
+            $image->thumb(114, 114,\Think\Image::IMAGE_THUMB_FIXED)->save($uploadpath.$qrcode);
             
-            unlink(C("UPLOADPATH").$qrcode0);
+            unlink($uploadpath.$qrcode0);
             $data['qrcode']=$qrcode;
         }
+         
         
+        //是否审核
+        $conf=C('option_seller');
         
-        
-        $insert=M('SellerEdit')->add($data);
-        if($insert>=1){
-            $this->success('新资料已经提交，等待管理员审核后生效，请不要重复操作');
-        }else{
-            $this->error('操作失败');
+        $user=$this->user;
+        //status0未处理，1通过，2不通过
+        switch($conf['edit_check']){
+            case 1:
+                $data['status']=1;
+                break;
+            case 2:
+                $data['status']=($user['name_status']==1)?1:0;
+                break;
+            default:
+                $data['status']=0;
+                break;
         }
-        exit;
+        $m=$this->m;
+        $m->startTrans();
+        $m_apply=M('SellerEdit');
+         
+        //如果通过审核就可以直接生效，没通过就等待审核
+        if($data['status']==0){
+            $insert=$m_apply->add($data);
+            $m->commit();
+            $this->success('已提交申请，等待管理员审核',U('user/Seller/index',array('sid'=>$sid)));
+        }else{
+             
+            $insert=$m_apply->add($data);
+            //保存店铺信息 
+            $data2=array( 
+                'tel'=>$data['tel'],
+                'mobile'=>$data['mobile'],
+                'corporation'=>$data['corporation'],
+                'scope'=>$data['scope'],
+                'bussiness_time'=>$data['bussiness_time'],
+                'link'=>$data['link'],
+                'city'=>$data['city'],
+                'cid'=>$data['cid'],
+                'name'=>$data['name'],
+                'address'=>$data['address'], 
+                'keywords'=>$data['keywords'], 
+            );
+            if(!empty($data['pic'])){
+                $data2['pic']=$data['pic'];
+            }
+            if(!empty($data['cards'])){
+                $data2['cards']=$data['cards'];
+            }
+            if(!empty($data['qrcode'])){
+                $data2['qrcode']=$data['qrcode'];
+            }
+            $m->where('id='.$sid)->save($data2);
+            coin($conf['edit_coin'],$user['id'],'编辑店铺');
+            $m->commit();
+            $this->success('店铺信息已更新',U('user/Seller/index',array('sid'=>$sid)));
+        }
+        
+        exit;   
     }
     //购买置顶
     public function add_top(){

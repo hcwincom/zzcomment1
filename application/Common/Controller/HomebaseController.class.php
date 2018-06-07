@@ -71,7 +71,7 @@ class HomebaseController extends AppframeController {
 		}
 		$m_city=M('City');
 		//给头文件读取数据保存到session 
-		if(empty(session('company'))){
+		if(empty(session('company0'))){
 		    if(empty(session('city'))){
 		        session('city',['city1'=>0,'city2'=>0,'city3'=>0]);
 		    }
