@@ -49,7 +49,11 @@
 			<a href="javascript:void(0);" class="close" id="close"><img src="__TMPL__Public/img/close.png" alt="关闭" title="关闭"></a>
 			<form action="{:U('User/Seller/create')}" method="post" class="shop-add-form" enctype="multipart/form-data">
 				<p class="message" id="message">请输入店铺信息！(登录后才能创建店铺)</p>
-				<div class="ciyt_addshop"><tc_include file="Public:city" /></div>
+				
+				<div class="ciyt_addshop">
+					<label>城市</label>
+					<tc_include file="Public:city" />
+				</div>
 				
 				<div class="catecory">
 					<label>店铺分类</label>
@@ -71,7 +75,7 @@
 					<input type="text" placeholder="请输入店铺名称" name="shop_name" class="shopname" id="shop_name">
 				</div>
 				<div>
-					<label for="shop_net">网址</label>
+					<span for="shop_net">网址</span>
 					<input type="text" placeholder="请输入网址" name="shop_net" class="shopnet" id="shop_net">
 				</div>
 				
@@ -81,7 +85,7 @@
 				</div>
 				 
 				<div>
-					<span for="shop_phone">店铺电话</span>
+					<span for="shop_phone">经营范围</span>
 					<input type="text" placeholder="请输入经营范围" name="shop_phone" class="shopphone" id="shop_phone">
 				</div>
 				

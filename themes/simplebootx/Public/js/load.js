@@ -69,18 +69,15 @@ $(document).ready(function(){
 	// 	$("#group-cont>li").eq(suoyin).fadeIn();
 	// });
 
-
-	
-
 	// shop nav
 	$("#shop_nav a").click(function(){
 		$(this).addClass("current").siblings().removeClass("current");
-	})
+	});
 
 	// shop message
 	$(".core").click(function(){
 		$(this).addClass("checked").siblings().removeClass("checked");
-	})
+	});
 
 	// comment
 	// $(".comment-rbtn5").click(function() {
@@ -88,6 +85,7 @@ $(document).ready(function(){
 	// 	num++;
 	// 	$(this).children().text(num);
 	// });
+
 
 	$(".comment-rbtn2").click(function(){
 		if($(this).text()=="展开回复"){
@@ -98,7 +96,7 @@ $(document).ready(function(){
 			$(this).parent(".comment-reply").next(".comment-cont2").fadeOut();
 			$(this).text("展开回复");
 		}
-	})
+	});
 
 	$(".comment-rbtn1").click(function(){
 		$("#reply_layer").fadeIn();
@@ -108,7 +106,7 @@ $(document).ready(function(){
 	});
 	$("#rclose").click(function(){
 		$("#reply_layer").fadeOut();
-	})
+	});
 	
 	// $(".comment-rbtn3").click(function(){
 	// 	var num = $(this).children().text();
