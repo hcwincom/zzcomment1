@@ -9,7 +9,7 @@ class TimeController extends HomebaseController {
 	
     
      /* 定时操作系统任务，在linux中crontab设置每日0点1分启动 */
-     public function time(){ 
+     public function task(){ 
          //0点
          $time0=strtotime(date('Y-m-d'));
         

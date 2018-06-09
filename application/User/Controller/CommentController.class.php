@@ -77,7 +77,7 @@ class CommentController extends MemberbaseController {
             'uid'=>$uid,
             'sid'=>$sid, 
             'score'=>$score,
-            'city'=>$seller['city'],
+           
             'content'=>$content0,
             'create_time'=>time(),
             'ip'=>get_client_ip(0,true),

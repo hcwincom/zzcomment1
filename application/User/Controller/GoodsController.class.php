@@ -424,10 +424,10 @@ class GoodsController extends MemberbaseController {
         if(!preg_match('/^\d{1,8}(\.\d{1,2})?$/', $price)){
             $price=0;
         }
-        $city=M('seller')->where(['id'=>$this->sid])->getField('city');
+       
         $data=array(
             'sid'=>$this->sid,
-            'city'=>$city,
+           
             'pic'=>$pic,
             'create_time'=>$time,
             'start_time'=>$time,
@@ -445,7 +445,7 @@ class GoodsController extends MemberbaseController {
             $this->error('发布失败');
         }else{
             $m->commit();
-            $this->success($res['msg'], U('index'));
+            $this->success($res['msg'], U('index',['sid'=>$data['sid']]));
         }
         
         exit;

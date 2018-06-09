@@ -203,10 +203,10 @@ class SellerController extends MemberbaseController {
         //status0未处理，1通过，2不通过
         switch($conf['apply_check']){
             case 1:
-                $data['status']=1;
+                $data['status']=2;
                 break;
             case 2:
-                $data['status']=($user['name_status']==1)?1:0;
+                $data['status']=($user['name_status']==1)?2:0;
                 break;
             default:
                 $data['status']=0;
@@ -353,13 +353,13 @@ class SellerController extends MemberbaseController {
         $conf=C('option_seller');
         
         $user=$this->user;
-        //status0未处理，1通过，2不通过
+        //status0未处理，1bu通过，2通过
         switch($conf['edit_check']){
             case 1:
-                $data['status']=1;
+                $data['status']=2;
                 break;
             case 2:
-                $data['status']=($user['name_status']==1)?1:0;
+                $data['status']=($user['name_status']==1)?2:0;
                 break;
             default:
                 $data['status']=0;

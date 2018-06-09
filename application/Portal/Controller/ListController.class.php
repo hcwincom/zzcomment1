@@ -123,7 +123,19 @@ class ListController extends HomebaseController {
 	    $where=['status'=>['eq',3]]; 
 	    $tmp=$this->city();
 	    if(!empty($tmp)){
-	        $where['city']=$tmp;
+	        $where_tmp=[
+	            'status'=>['between','1,2'],
+	            'city'=>$tmp
+	        ];
+	        $sids=M('seller')->where($where_tmp)->getField('id',true);
+	        if(!empty($sids)){
+	            if(is_array($sids)){
+	                $where['sid']=['in',$sids];
+	            }else{
+	                $where['sid']=['eq',$sids];
+	            }
+	        }
+	        
 	    } 
 	    $total=$m->where($where)->count();
 	    $page = $this->page($total, C('page_news_list')-$len);
@@ -154,9 +166,22 @@ class ListController extends HomebaseController {
 	    //0申请。，1不同意，2同意3=>'上架',4=>'下架'
 	    $where=['status'=>['eq',3]];
 	    $tmp=$this->city();
+	    
 	    if(!empty($tmp)){
-	        $where['city']=$tmp;
-	    }
+	        $where_tmp=[
+	            'status'=>['between','1,2'],
+	            'city'=>$tmp
+	        ];
+	        $sids=M('seller')->where($where_tmp)->getField('id',true);
+	        if(!empty($sids)){
+	            if(is_array($sids)){
+	                $where['sid']=['in',$sids];
+	            }else{
+	                $where['sid']=['eq',$sids];
+	            }
+	        }
+	        
+	    } 
 	    $total=$m->where($where)->count();
 	    $page = $this->page($total, C('page_goods_list')-$len);
 	    
@@ -176,8 +201,20 @@ class ListController extends HomebaseController {
 	    $where_comment=array('status'=>2);
 	    $tmp=$this->city();
 	    if(!empty($tmp)){
-	        $where_comment['city']=$tmp;
-	    }
+	        $where_tmp=[
+	            'status'=>['between','1,2'],
+	            'city'=>$tmp
+	        ];
+	        $sids=M('seller')->where($where_tmp)->getField('id',true);
+	        if(!empty($sids)){
+	            if(is_array($sids)){
+	                $where['sid']=['in',$sids];
+	            }else{
+	                $where['sid']=['eq',$sids];
+	            }
+	        }
+	        
+	    } 
 	     $uid=I('uid',0);
 	     if($uid>0){
 	         $where_comment['uid']=$uid;

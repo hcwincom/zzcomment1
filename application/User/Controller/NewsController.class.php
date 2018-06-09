@@ -420,11 +420,11 @@ class NewsController extends MemberbaseController {
         if($start<=$time){
             $this->error('请选择有效时间');
         }
-        $city=M('seller')->where(['id'=>$this->sid])->getField('city');
+        
         $data=array(
             'sid'=>$this->sid,
             'pic'=>$pic,
-            'city'=>$city,
+          
             'create_time'=>$time,
             'start_time'=>$time,
             'end_time'=>$start,
@@ -443,7 +443,7 @@ class NewsController extends MemberbaseController {
             $this->error('发布失败');
         }else{
             $m->commit();
-            $this->success($res['msg'], U('index'));
+            $this->success($res['msg'], U('index',['sid'=>$data['sid']]));
         }
         
         exit;

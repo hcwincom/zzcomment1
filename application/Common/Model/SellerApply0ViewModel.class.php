@@ -19,6 +19,8 @@ class SellerApply0ViewModel extends ViewModel {
             'scope', 
             'create_time', 
             'status',
+            'keywords',
+            'deposit',
             '_type'=>'LEFT'
             
         ), 

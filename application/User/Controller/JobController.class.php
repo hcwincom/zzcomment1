@@ -461,7 +461,7 @@ class JobController extends MemberbaseController {
             $this->error('发布失败');
         }else{
             $m->commit();
-            $this->success($res['msg'], U('index'));
+            $this->success($res['msg'], U('index',['sid'=>$data['sid']]));
         }
         
         exit;

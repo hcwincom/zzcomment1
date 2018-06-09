@@ -18,6 +18,9 @@ class TopSeller0ViewModel extends ViewModel {
             'start_time',
             'end_time', 
             'price',
+            'site',
+            'money',
+            'coin',
             '_type'=>'LEFT'
         ), 
         

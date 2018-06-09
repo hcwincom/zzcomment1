@@ -19,6 +19,8 @@ class Seller0ViewModel extends ViewModel {
             'create_time', 
             'address',
             'city',
+            'link',
+            
             '_type'=>'LEFT'
             
         ), 
