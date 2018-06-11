@@ -128,7 +128,10 @@ class ListController extends HomebaseController {
 	            'city'=>$tmp
 	        ];
 	        $sids=M('seller')->where($where_tmp)->getField('id',true);
-	        if(!empty($sids)){
+	        
+	        if(empty($sids)){
+	            $where['sid']=['eq',0];
+	        }else{
 	            if(is_array($sids)){
 	                $where['sid']=['in',$sids];
 	            }else{
@@ -173,7 +176,9 @@ class ListController extends HomebaseController {
 	            'city'=>$tmp
 	        ];
 	        $sids=M('seller')->where($where_tmp)->getField('id',true);
-	        if(!empty($sids)){
+	        if(empty($sids)){
+	            $where['sid']=['eq',0];
+	        }else{
 	            if(is_array($sids)){
 	                $where['sid']=['in',$sids];
 	            }else{
@@ -357,7 +362,13 @@ class ListController extends HomebaseController {
        if($cid1>0){
            $where_tmp=array('eq',$cid1);
        }else{
-          $where_tmp=array('in',array_keys($cate1)); 
+           
+           if(empty($cate1)){
+               $where_tmp=array('eq',0);
+           }else{
+               $where_tmp=array('in',array_keys($cate1)); 
+           } 
+          
        }
        $this->assign('cid0',$cid0)
        ->assign('cid1',$cid1)

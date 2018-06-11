@@ -395,9 +395,9 @@ class NewsController extends MemberbaseController {
             $upload = new \Think\Upload();// 实例化上传类
             //20M
             $upload->maxSize   =  C('SIZE') ;// 设置附件上传大小
-            $upload->rootPath=getcwd().'/';
-            $upload->subName = '';
-            $upload->savePath  =$path.$picpath;
+            $upload->rootPath='./'.$path;
+            $upload->autoSub  = false;
+            $upload->savePath  =$picpath;
             $fileinfo=   $upload->upload();
             if(!$fileinfo) {// 上传错误提示错误信息
                 $this->error($upload->getError());
@@ -503,9 +503,9 @@ class NewsController extends MemberbaseController {
             $upload = new \Think\Upload();// 实例化上传类
             //20M
             $upload->maxSize   =  C('SIZE') ;// 设置附件上传大小
-            $upload->rootPath=getcwd().'/';
-            $upload->subName = '';
-            $upload->savePath  =$path.$info['picpath'];
+            $upload->rootPath='./'.$path;
+            $upload->autoSub  = false;
+            $upload->savePath  =$info['picpath'];
             $fileinfo   =   $upload->upload();
             if(!$fileinfo) {// 上传错误提示错误信息
                 $this->error($upload->getError());

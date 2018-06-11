@@ -402,9 +402,7 @@ class GoodsController extends MemberbaseController {
             $upload = new \Think\Upload();// 实例化上传类
             //20M
             $upload->maxSize   =  C('SIZE') ;// 设置附件上传大小
-//             $upload->rootPath=getcwd().'/';
             $upload->rootPath='./'.$path;
-//             $upload->subName = '';
             $upload->autoSub  = false;
             $upload->savePath  =$picpath;
             $fileinfo=   $upload->upload();
@@ -429,7 +427,7 @@ class GoodsController extends MemberbaseController {
        
         $data=array(
             'sid'=>$this->sid,
-           
+            'picpath'=>$picpath,
             'pic'=>$pic,
             'create_time'=>$time,
             'start_time'=>$time,
@@ -502,9 +500,10 @@ class GoodsController extends MemberbaseController {
             $upload = new \Think\Upload();// 实例化上传类
             //20M
             $upload->maxSize   =  C('SIZE') ;// 设置附件上传大小
-            $upload->rootPath=getcwd().'/';
-            $upload->subName = '';
-            $upload->savePath  =$path.$info['picpath'];
+            $upload->rootPath='./'.$path;
+            $upload->autoSub  = false;
+            $upload->savePath  =$info['picpath'];
+           
             $fileinfo   =   $upload->upload();
             if(!$fileinfo) {// 上传错误提示错误信息
                 $this->error($upload->getError());
