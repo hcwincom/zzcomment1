@@ -402,8 +402,10 @@ class GoodsController extends MemberbaseController {
             $upload = new \Think\Upload();// 实例化上传类
             //20M
             $upload->maxSize   =  C('SIZE') ;// 设置附件上传大小
-            $upload->rootPath=getcwd().'/';
-            $upload->subName = '';
+//             $upload->rootPath=getcwd().'/';
+            $upload->rootPath='./';
+//             $upload->subName = '';
+            $upload->autoSub  = false;
             $upload->savePath  =$path.$picpath;
             $fileinfo=   $upload->upload();
             if(!$fileinfo) {// 上传错误提示错误信息
