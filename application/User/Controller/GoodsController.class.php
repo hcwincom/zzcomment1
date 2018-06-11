@@ -403,10 +403,10 @@ class GoodsController extends MemberbaseController {
             //20M
             $upload->maxSize   =  C('SIZE') ;// 设置附件上传大小
 //             $upload->rootPath=getcwd().'/';
-            $upload->rootPath='./';
+            $upload->rootPath='./'.$path;
 //             $upload->subName = '';
             $upload->autoSub  = false;
-            $upload->savePath  =$path.$picpath;
+            $upload->savePath  =$picpath;
             $fileinfo=   $upload->upload();
             if(!$fileinfo) {// 上传错误提示错误信息
                 $this->error($upload->getError());
