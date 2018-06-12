@@ -53,7 +53,7 @@ input,textarea{border-radius:0;}
 }
 textarea{resize: none;}
 /*home main*/
-.hmain-wrapper{background: #f0f0f0;overflow:hidden;}
+.hmain-wrapper{background: #f0f0f0;overflow:hidden;min-height: 100%;}
 .column-head{border-bottom: 2px solid #dcdcdc;padding:0 20px 4px 60px;margin-top:40px;overflow: hidden;position: relative;}
 .column1-wrapper .column-head{background: url(../img/homeico.png) no-repeat 0 9px;}
 .column2-wrapper .column-head{background: url(../img/homeico.png) no-repeat 0 -39px;}

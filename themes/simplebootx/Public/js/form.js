@@ -305,5 +305,10 @@ return false;
 }
     };
 function send4(){
-    return(fname1()&&sp()&&asd());
+    return (fname1()&&phone1()&&tell1()&&sp()&&asd());
 }
+
+
+
+
+

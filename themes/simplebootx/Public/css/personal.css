@@ -135,12 +135,39 @@ float:right;}
 .form2 input[type="submit"]{width:310px;height:35px;line-height: 35px;background:#eb0000;color:#fff;text-align: center;margin-left:125px;cursor: pointer;font-size: 16px;}
 .form2 select{width:122px;height:43px;border:1px solid #dcdcdc;padding-left:10px;margin-left: 10px;margin-left:15px;}
 .form2 textarea{width:80%;border:1px solid #dcdcdc;padding-left:10px;margin-left:15px;padding-top: 5px;}
+.form2Info{font-size: 18px;color: #d00000;margin: 20px 0;letter-spacing: 2px;text-indent: 40px;}
 .per_r1 input[type="text"]{
 	width: 380px;
     height: 43px;
     border: 1px solid #dcdcdc;
     padding-left: 10px;
     margin-left: 15px;
+}
+.btnout #logout{
+	font-size: 18px;
+	background: #d00000;
+	padding: 0 10px;
+	color: #fff;
+	line-height: 40px;
+	cursor: pointer;
+}
+.btnout #logout2{
+	font-size: 18px;
+	background: #999999;
+	padding: 0 10px;
+	color: #fff;
+	line-height: 40px;
+}
+.btnout #receivePrice{
+	font-size: 16px;
+	line-height: 40px;
+}
+.btnout #receivePrice em{
+	color: #d00000;
+}
+.btnout #receivePrice i{
+	color: #d00000;
+	font-size: 16px;
 }
 #start{width: 29%;margin-left: 15px;height: 40px;font-size: 16px;}
 .form2.textbaidu{height: 400px;}
