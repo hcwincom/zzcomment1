@@ -243,6 +243,13 @@ class SellerController extends MemberbaseController {
                 'qrcode'=>$data['qrcode'],
             );
             $m->where('id='.$sid)->save($data2);
+            $data_pay=array(
+                'uid'=>$user['id'],
+                'money'=>'-'.$info['deposit'],
+                'time'=>time(),
+                'content'=>'领用店铺，支付押金',
+            );
+            M('Pay')->add($data_pay);
             coin($conf['apply_coin'],$data['uid'],'领用店铺');
             $m->commit();
             $this->success('认领已通过，可以在个人中心编辑店铺，添加信息了',U('user/Seller/index',array('sid'=>$sid)));
@@ -579,6 +586,58 @@ class SellerController extends MemberbaseController {
         $this->assign('flag','店铺推荐位');
         
         $this->display();
+        
+    }
+    // 店铺注销
+    public function cancel() {
+        $sid=$this->sid;
+        //是否审核
+        $conf=C('option_seller');
+        $m=$this->m; 
+        $info=$m->where('id='.$sid)->find();
+        if(empty($info['status']) ||$info['status']!=2){
+            $this->error('数据错误，请刷新');
+        }
+        $user=$this->user;
+        $data=[];
+        //0未审核，1未认领，2已认领,3已冻结，4已申请注销
+        switch($conf['cancel_check']){
+            case 1:
+                $data['status']=1;
+                break;
+            case 2:
+                $data['status']=($user['name_status']==1)?1:4;
+                break;
+            default:
+                $data['status']=4;
+                break;
+        }
+        
+      
+        if($data['status']==4){
+            $m->where('id='.$sid)->save($data); 
+            $this->success('已提交申请，等待管理员审核',U('user/seller/index',array('sid'=>$sid)));
+            exit;
+         }
+         $m->startTrans();
+         $data['uid']=0;
+         $m->where('id='.$sid)->save($data); 
+         $msg='';
+         if($info['deposit']>0){
+             M('users')->where('id='.$user['id'])->setInc('account',$info['deposit']);
+             $msg=',已退回押金到账户余额';
+             $data_pay=array(
+                 'uid'=>$user['id'],
+                 'money'=>'+'.$info['deposit'],
+                 'time'=>time(),
+                 'content'=>'注销店铺，退还押金',
+             );
+             M('Pay')->add($data_pay);
+         }
+         $m->commit();
+         $this->success('已注销'.$msg,U('user/info/index'));
+       
+        exit;   
         
     }
     

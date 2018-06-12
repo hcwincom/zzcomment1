@@ -11,9 +11,13 @@
                         </div>
                         <p class="ml2 msg1"></p>
                         <div class="btnout">
-                            <p id="receivePrice">领用金额：<em>¥</em><i>123</i></p>
-                            <button id="logout">注销店铺</button>
-                            <button id="logout2">注销店铺</button>
+                            <p id="receivePrice">领用押金：<em>¥</em><i>{$info.deposit}</i></p>
+                            <eq name="info.status" value="2">
+                            <button type="button" id="logout">注销店铺</button>
+                            <else/>
+                             <button type="button" id="logout2">注销店铺</button>
+                            </eq> 
+                           
                         </div>
                     </div>
                     <div class="per_r1">
@@ -68,4 +72,22 @@
             </div>
        
 	<tc_include file="Public/user_footer" />
- 
+ <script>
+ $('#logout').click(function(){
+	 if(!confirm('确认注销吗？注销后会退还押金至余额，此店铺与你脱离关系')){
+		 return false;
+	 }
+	 
+	var sid='{$info.id}';
+	 
+    $.post("{:U('cancel')}",{'sid':sid},function(data){
+    	alert(data.info);
+		if(data.url!=''){ 
+			location.href=data.url;
+		} 	
+	},'json');
+	return false;
+			 
+	 
+ });
+ </script>
