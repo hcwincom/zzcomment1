@@ -16,6 +16,8 @@ class Top0Active0ViewModel extends ViewModel {
             'create_time',
             'status',
             'price',
+            'money',
+            'coin',
             '_type'=>'LEFT'
         ), 
         'Active'=>array(

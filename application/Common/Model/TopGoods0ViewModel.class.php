@@ -18,6 +18,8 @@ class TopGoods0ViewModel extends ViewModel {
             'start_time',
             'end_time', 
             'price',
+            'money',
+            'coin',
             '_type'=>'LEFT'
         ), 
         'Goods'=>array(

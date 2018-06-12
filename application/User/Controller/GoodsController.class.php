@@ -402,9 +402,9 @@ class GoodsController extends MemberbaseController {
             $upload = new \Think\Upload();// 实例化上传类
             //20M
             $upload->maxSize   =  C('SIZE') ;// 设置附件上传大小
-            $upload->rootPath=getcwd().'/';
-            $upload->subName = '';
-            $upload->savePath  =$path.$picpath;
+            $upload->rootPath='./'.$path;
+            $upload->autoSub  = false;
+            $upload->savePath  =$picpath;
             $fileinfo=   $upload->upload();
             if(!$fileinfo) {// 上传错误提示错误信息
                 $this->error($upload->getError());
@@ -424,10 +424,10 @@ class GoodsController extends MemberbaseController {
         if(!preg_match('/^\d{1,8}(\.\d{1,2})?$/', $price)){
             $price=0;
         }
-        $city=M('seller')->where(['id'=>$this->sid])->getField('city');
+       
         $data=array(
             'sid'=>$this->sid,
-            'city'=>$city,
+            'picpath'=>$picpath,
             'pic'=>$pic,
             'create_time'=>$time,
             'start_time'=>$time,
@@ -445,7 +445,7 @@ class GoodsController extends MemberbaseController {
             $this->error('发布失败');
         }else{
             $m->commit();
-            $this->success($res['msg'], U('index'));
+            $this->success($res['msg'], U('index',['sid'=>$data['sid']]));
         }
         
         exit;
@@ -500,9 +500,10 @@ class GoodsController extends MemberbaseController {
             $upload = new \Think\Upload();// 实例化上传类
             //20M
             $upload->maxSize   =  C('SIZE') ;// 设置附件上传大小
-            $upload->rootPath=getcwd().'/';
-            $upload->subName = '';
-            $upload->savePath  =$path.$info['picpath'];
+            $upload->rootPath='./'.$path;
+            $upload->autoSub  = false;
+            $upload->savePath  =$info['picpath'];
+           
             $fileinfo   =   $upload->upload();
             if(!$fileinfo) {// 上传错误提示错误信息
                 $this->error($upload->getError());

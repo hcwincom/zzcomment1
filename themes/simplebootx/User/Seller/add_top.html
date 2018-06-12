@@ -89,7 +89,7 @@ $('#recommend').submit(function(){
     $.post("{:U('add_top_do')}",{'sid':sid,'start':start0,'end':end0,'zprice':zprice,'site':site},function(data){
     	alert(data.info);
 		if(data.status==1){ 
-			//location.href=data.url;
+			location.href=data.url;
 		} 	
 	},'json');
 	return false;

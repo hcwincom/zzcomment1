@@ -107,13 +107,7 @@ class PublicController extends HomebaseController {
          $list=$m->getfield('id,dsc,content');
          $tmp=[];
          foreach($list as $k=>$v){
-             if(empty($v['dsc'])){
-                 $content_01 = $v['content'];//从数据库获取富文本content
-                 $content_02 = htmlspecialchars_decode($content_01); //把一些预定义的 HTML 实体转换为字符
-                 $content_03 = str_replace("&nbsp;","",$content_02);//将空格替换成空
-                 $tmp[$k]= strip_tags($content_03);//函数剥去字符串中的 HTML、XML 以及 PHP 的标签,获取纯文本内容
-                 $m->where('id='.$k)->save(['dsc'=>$tmp[$k]]);
-            }
+              
              
          }  
         //设置所有动态城市为安庆潜山

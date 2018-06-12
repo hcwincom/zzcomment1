@@ -69,9 +69,9 @@ class SellerController extends MemberbaseController {
 	        $upload = new \Think\Upload();// 实例化上传类
 	        //20M
 	        $upload->maxSize   =  C('SIZE') ;// 设置附件上传大小
-	        $upload->rootPath=getcwd().'/';
+	        $upload->rootPath='./'.C("UPLOADPATH");
 	        $upload->subName = $insert;
-	        $upload->savePath  =C("UPLOADPATH").'/seller/';
+	        $upload->savePath  ='/seller/';
 	        $info   =   $upload->upload();
 	        
 	        if(!$info) {// 上传错误提示错误信息
@@ -158,9 +158,9 @@ class SellerController extends MemberbaseController {
         $uploadpath=C("UPLOADPATH");
         //20M
         $upload->maxSize   =  C('SIZE') ;// 设置附件上传大小
-        $upload->rootPath=getcwd().'/';
+        $upload->rootPath='./'.$uploadpath;
         $upload->subName = $subname;
-        $upload->savePath  =$uploadpath.'/seller/';
+        $upload->savePath  ='/seller/';
         $fileinfos  =   $upload->upload();
         if(!$fileinfos) {// 上传错误提示错误信息
             $this->error($upload->getError());
@@ -203,10 +203,10 @@ class SellerController extends MemberbaseController {
         //status0未处理，1通过，2不通过
         switch($conf['apply_check']){
             case 1:
-                $data['status']=1;
+                $data['status']=2;
                 break;
             case 2:
-                $data['status']=($user['name_status']==1)?1:0;
+                $data['status']=($user['name_status']==1)?2:0;
                 break;
             default:
                 $data['status']=0;
@@ -294,9 +294,9 @@ class SellerController extends MemberbaseController {
             $upload = new \Think\Upload();// 实例化上传类
             //20M
             $upload->maxSize   =  C('SIZE') ;// 设置附件上传大小
-            $upload->rootPath=getcwd().'/';
+            $upload->rootPath='./'.$uploadpath;
             $upload->subName = $subname;
-            $upload->savePath  =$uploadpath.'/seller/';
+            $upload->savePath  ='/seller/';
             $info   =   $upload->upload();
             if(!$info) {// 上传错误提示错误信息
                 $this->error($upload->getError());
@@ -353,13 +353,13 @@ class SellerController extends MemberbaseController {
         $conf=C('option_seller');
         
         $user=$this->user;
-        //status0未处理，1通过，2不通过
+        //status0未处理，1bu通过，2通过
         switch($conf['edit_check']){
             case 1:
-                $data['status']=1;
+                $data['status']=2;
                 break;
             case 2:
-                $data['status']=($user['name_status']==1)?1:0;
+                $data['status']=($user['name_status']==1)?2:0;
                 break;
             default:
                 $data['status']=0;
@@ -559,7 +559,7 @@ class SellerController extends MemberbaseController {
         exit; 
         
     }
-    // 商品置顶
+    // 店铺推荐位
     public function top() {
         $sid=$this->sid;
         $m_top=M('TopSeller');

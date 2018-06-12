@@ -17,6 +17,8 @@ class SellerController extends AdminbaseController {
 	    $this->m1 = M('SellerApply');
 	    $this->order='id desc';
 	    $this->order1='id desc';
+	    $this->assign('info_status',C('info_status'));
+	    $this->assign('top_status',C('top_status'));
 	}
     //店铺管理首页
     public function index(){
@@ -781,10 +783,7 @@ class SellerController extends AdminbaseController {
         
         $info=$m->query($sql);
         $info=$info[0];
-        
-        $count=M('TopSeller')->where(array('status'=>2,'start_time'=>$info['start_time']))->count();
-        
-        $info['count']=10-$count;
+         
         $this->assign('info',$info);
         
         $this->display();
@@ -816,7 +815,7 @@ class SellerController extends AdminbaseController {
         );
         $desc='店铺'.$info['pid'].'的置顶申请'.$id;
         
-        $sql="select s.name as sname,u.id,u.account
+        $sql="select s.name as sname,u.id,u.account,u.coin
         from cm_seller as s
         left join cm_users as u on u.id=s.uid
         where s.id={$info['pid']} limit 1";
@@ -861,11 +860,12 @@ class SellerController extends AdminbaseController {
                 if($status!=0){
                     $this->error('错误，已审核过');
                 }
-                $count=M('TopSeller')->where(array('status'=>2,'start_time'=>$info['start_time']))->count();
-                if($count>=10){
+                $tmp_seller=site_check($m,$info['start_time'],$info['end_time'],$info['site']);
+                if(!empty($tmp_seller)){
                     $m->rollback();
                     $this->error('置顶位已满');
                 }
+                
                 $data_action['descr']=$desc.'审核通过';
                 $data_msg['content'].='审核通过';
                 $row=$m->where('id='.$id)->data(array('status'=>2))->save();
@@ -889,7 +889,11 @@ class SellerController extends AdminbaseController {
                     $data_action['descr'].='，且退还未生效的置顶费用￥'.$price;
                     $data_msg['content'].='，且退还未生效的置顶费用￥'.$price;
                     $account=bcadd($price, $user['account']);
-                    $row_account=M('Users')->data(array('account'=>$account))->where('id='.$user['id'])->save();
+                    $data_tmp=[
+                        'account'=>bcadd($info['money'], $user['account']),
+                        'coin'=>bcadd($info['coin'], $user['coin']),
+                    ];
+                    $row_account=M('Users')->data($data_tmp)->where('id='.$user['id'])->save();
                     if($row_account!==1){
                         $m->rollback();
                         $this->error('操作失败，请刷新重试');
@@ -901,6 +905,12 @@ class SellerController extends AdminbaseController {
                         'content'=>'店铺'.$user['sname'].'于'.date('Y-m-d',$info['start_time']).'至'.date('Y-m-d',$info['end_time']).'的置顶申请不通过，退还费用'
                     );
                     M('Pay')->add($data_pay);
+                }
+            }elseif($review==2){
+                //赠币处理
+                $coin=C('option_seller.top_coin');
+                if($coin>0){
+                    coin($coin,$user['id'],'店铺置顶');
                 }
             }
             $m->commit();
