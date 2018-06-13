@@ -353,9 +353,17 @@ class ListController extends HomebaseController {
        if($char!=''){
            $where_cate['first_char']=$char;
        }
-       if($type==1 && $cid0>0){
-           $where_cate['fid']=$cid0; 
-       } 
+      
+       if($type==1 ){
+           if($cid0>0){
+               $where_cate['fid']=['eq',$cid0];
+           }else{
+               $where_cate['fid']=['neq',0];
+           }
+           
+       }else{
+           $where_cate['fid']=['eq',0];
+       }
        $cate1=$m_cate->where($where_cate)->order('sort desc,first_char asc')->getField('id,name');
        $where_tmp=0;
        //如果有点击分类
