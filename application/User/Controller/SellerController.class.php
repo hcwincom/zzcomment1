@@ -174,7 +174,9 @@ class SellerController extends MemberbaseController {
                 default:break;
             } 
         }
-        
+        if(empty($data['cards'])){
+            $this->error('营业执照相关证件必须上传');
+        }
         if(!empty($pic0)){
             $pic=$pic0.'.jpg';
             $image = new \Think\Image();
@@ -184,6 +186,8 @@ class SellerController extends MemberbaseController {
             
             unlink($uploadpath.$pic0);
             $data['pic']=$pic;
+        }else{
+            $data['pic']='';
         }
          
         if(!empty($qrcode0)){
@@ -195,6 +199,8 @@ class SellerController extends MemberbaseController {
             
             unlink($uploadpath.$qrcode0);
             $data['qrcode']=$qrcode;
+        }else{
+            $data['qrcode']='';
         }
         //是否审核
         $conf=C('option_seller');

@@ -51,7 +51,7 @@ class InfoController extends MemberbaseController {
             $upload = new \Think\Upload();// 实例化上传类
             //20M
             $upload->maxSize   =  C('SIZE') ;// 设置附件上传大小
-            $upload->rootPath='/'.C("UPLOADPATH");
+            $upload->rootPath='./'.C("UPLOADPATH");
             $upload->subName = $subname;
             $upload->savePath  ='/user/';
             $info   =   $upload->upload();
