@@ -18,9 +18,9 @@ textarea,input,button,select,img{border: none;outline: none;}
 i,em{ font-style: normal; }
 
 /*top*/
-.top-wrapper{width: 100%;margin: 0 auto;background: #fff;}
-.topFixed{position: fixed;top:0;left: 0;margin: 0 auto;width: 100%;z-index: 10000;background: #fff;}
-.top-wrapper-nav{width:1200px;margin:0 auto;position: relative;}
+.top-wrapperNav{width: 100%;background: #fff;}
+.top-wrapper{width: 1200px;margin: 0 auto;width:1200px;position: relative;}
+.topFixed{position: fixed;top:0;left: 0;right:0;margin:auto;z-index: 10000;}
 .foot-container{width:1200px;margin:0 auto;}
 .logo{padding:22px 0;}
 

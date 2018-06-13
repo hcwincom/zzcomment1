@@ -304,8 +304,9 @@ $(".msg11").text("请上传证明");//显示必填
 return false;
 }
     };
-function send4(){
-    return (fname1()&&phone1()&&tell1()&&sp()&&asd());
+function send4(){ 
+    return (fname1() && phone1() && tell1() && sp() && asd());
+  
 }
 
 
