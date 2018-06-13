@@ -167,17 +167,15 @@ $('.shop-add-form').submit(function(){
 	return false;
 });
 $(window).scroll(function(){
-	var scrollTop = $(window).scrollTop();
+	
+	var scrollTop = $(window).scrollTop()+20;
 	var heightTop = $(".top-wrapper").height();
-	if(scrollTop > heightTop){
-		$(".top-wrapper").css({
-			"position":"fixed",
-			"top":"0"
-		});
+	if(scrollTop >= heightTop){
+		$(".top-wrapper").addClass("topFixed");
+		
 	}else{
-		$(".top-wrapper").css(
-			"position", "static"
-		);
+		$(".top-wrapper").removeClass("topFixed");
+		 
 	}
 });
  
