@@ -74,6 +74,9 @@ $('.city2').change(function(){
 	city3(this.value,$(this).parent()); 
 	
 });
+$('.sear-info select').change(function(){
+	$('.sear-info form').submit();
+});
 function city2(fid,$div){
 	$div.find('.city2 option').hide();
 	$div.find('.city2 .city20').show();
