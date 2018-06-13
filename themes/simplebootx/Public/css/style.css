@@ -749,7 +749,7 @@ a.captcha img{width:100px;height:44px;}
 	.shop-job>li img{width: 100%;height: auto;}
 	.shop-infor>li img{width: 100%;height: auto;}
 	.shop-newadd>li{width: 49%;}
-	..shop-newadd>li>a>div{height: 120px;}
+	.shop-newadd>li>a>div{height: 120px;}
 	/*shop main*/
 	.infor-lf{width:100%;padding-left:0px;}
 	.infor-rt{width:100%;}
@@ -757,7 +757,7 @@ a.captcha img{width:100px;height:44px;}
 	.sm-c2{width:96%;padding:0 2%;}
 	label.upload{clear:both;margin:20px 0 0;}
 	label.core{margin:6px 26px 6px 0;}
-	.pop-container{max-height:462px;overflow-y:scroll;}
+	.pop-container{max-height:650px;overflow-y:scroll;}
 	/*login register*/
 	.login-lf{display:none;}
 	.login-rt{width:100%;float:none;padding:20px 0;}
@@ -774,7 +774,7 @@ a.captcha img{width:100px;height:44px;}
 	.info-deliver .signup{
 		margin-left: 28%;
 	}
-	
+		
 }
 @media screen and (max-width:600px){
 	/*homemain*/
@@ -811,7 +811,7 @@ a.captcha img{width:100px;height:44px;}
 	.info-deliver>.shop-add-form{
 		width: 90%;
 	}
-	input.shopname,input.shopphone,input.shopaddress,input.infodate{
+	input.shopname,input.shopphone,input.shopaddress,input.infodate,input.shopnet{
 		width: 70%;
 	}
 	.info-deliver>.shop-add-form select{width: 50%;}
@@ -864,4 +864,7 @@ a.captcha img{width:100px;height:44px;}
 	.set-step li>i{font-size: 12px;}
 	.set-step li:after{display: none;}
 	.setinfor ul{margin-left:10px;}	
+	input.shopname,input.shopphone,input.shopaddress,input.infodate,input.shopnet{
+		width: 70%;
+	}
 }

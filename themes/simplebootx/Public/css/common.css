@@ -18,7 +18,8 @@ textarea,input,button,select,img{border: none;outline: none;}
 i,em{ font-style: normal; }
 
 /*top*/
-.top-wrapper{width:1200px;margin:0 auto;position: relative;}
+.top-wrapper{width: 100%;margin: 0 auto;background: #fff;z-index: 15;}
+.top-wrapper-nav{width:1200px;margin:0 auto;position: relative;}
 .foot-container{width:1200px;margin:0 auto;}
 .logo{padding:22px 0;}
 
@@ -32,7 +33,7 @@ i,em{ font-style: normal; }
 .shop-type a.select{color:#d00000;}
 .login-link{position: absolute;right:0;z-index: 5;}
 .login-link a{color:#fff;background: #d00000;float:left;width:60px;height:32px;font-size:16px;line-height:32px;margin:3px 0;text-align: center;}
-.login-link a:first-child{color: #d50000;background: #fff;width: 80px;}
+.login-link a:first-child{color: #d50000;background: #fff;width: 100px;}
 .login-link a:nth-child(2){color:#333;background: #e5e5e5;}
 .login-link2,.lg-title{padding:26px 0;}
 .lg-title span{float:left;font-size:18px;color:#666;line-height: 26px;margin:6px 0;padding:0 14px;text-align: center;border-left:1px solid #dcdcdc;}
@@ -79,8 +80,12 @@ i,em{ font-style: normal; }
 	.research input[type="submit"]{width:27%;}
 	.foot-cont3{width:100%;}
 	.lg-title+.login-link{position: static;clear:both;margin-top:-10px;padding:0 0 15px 0;}
+	
 	.login-link2{clear:both;margin-top:-10px;padding:0 0 15px 0;}
 }
 @media screen and (max-width: 500px){
 	.logo h1 img{margin-right: 20px;}
+	.login-link .publish{
+		display: none;
+	}
 }

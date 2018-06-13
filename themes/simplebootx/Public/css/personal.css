@@ -170,8 +170,8 @@ float:right;}
 	font-size: 16px;
 }
 #start{width: 29%;margin-left: 15px;height: 40px;font-size: 16px;}
-.form2.textbaidu{height: 400px;}
-#content2{margin-left: 15px;width: 82%;height: 80%;}
+/* .form2.textbaidu{height: 400px;} */
+#content2{margin-left: 15px;width: 82%;}
 #provinces,#citys,#countys{width:110px;height:40px;margin:0 15px;}
 .wxp{margin-left:15px;float: left}
 .te{margin-right:18px;margin-left:15px;}
