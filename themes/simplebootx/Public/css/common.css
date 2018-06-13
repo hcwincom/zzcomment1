@@ -19,7 +19,7 @@ i,em{ font-style: normal; }
 
 /*top*/
 .top-wrapper{width: 100%;margin: 0 auto;background: #fff;}
-.topFixed{position: fixed;top:0;left: 0;margin: 0 auto;width: 100%;z-index: 10000;}
+.topFixed{position: fixed;top:0;left: 0;margin: 0 auto;width: 100%;z-index: 10000;background: #fff;}
 .top-wrapper-nav{width:1200px;margin:0 auto;position: relative;}
 .foot-container{width:1200px;margin:0 auto;}
 .logo{padding:22px 0;}
