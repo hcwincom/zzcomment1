@@ -3,7 +3,7 @@
 .crumbs{font-size:16px;color:#333;line-height: 50px;}
 .crumbs a{color:#333;}
 .w1200{width:1200px;margin:0 auto;}
-.per_main{margin-top:30px;margin-bottom: 100px;}
+.per_main{margin-top:30px;margin-bottom: 100px;min-height: 80%;}
 .per_main:after{content: "";display: block;height: 0;clear: both;}
 .per_left{width: 200px;background:#f5f5f5;padding-bottom: 20px;float:left;}
 .plt{display: inline-block;font-size:18px;color:#333;line-height:45px;text-align: center;width:100%;word-wrap:break-word; word-break:normal;}

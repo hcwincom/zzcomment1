@@ -1,0 +1,33 @@
+<tc_include file="Public/user_head" />
+<div class="per_right rt">
+    <div class="per_rnav">
+        <a class="" href="{:U('User/Info/pay')}">充值</a>
+        <a class="" href="{:U('User/Info/paylist')}">消费/充值记录</a>
+        <a class="rb" href="{:U('User/Info/withdraw')}">提现</a>
+        <a class="" href="{:U('User/Info/withdraw_info')}">提现记录</a>
+    </div>
+    <div class="per_draw">
+        <form action="" class="" method="post" enctype="multipart/form-data">
+            <div class="per_account">
+               <p><span>账户余额 ：</span>¥<i id="acc_blance">0</i></p>
+            </div>
+            <div class="per-account">
+                <p><span>可提现余额 ：</span>¥<i id="acc_draw">0</i></p>
+            </div>
+            <div class="form2"><span>提现金额 ：</span><input type="text" name="acc_money" placeholder="请输入提现金额"><p>提现金额必须为整数</p></div>
+            <p class="ml acc_msg"></p>
+            <div class="form2"><span>支付宝账户 ：</span><input type="text" name="zhifu" placeholder="请输入支付宝账号"></div>
+            <p class="ml acc_msg1"></p>
+            <div class="form2"><span>支付宝姓名 ：</span><input type="text" name="zhifu_name" placeholder="请输入支付宝姓名"></div>
+            <p class="ml acc_msg2"></p>
+            <div class="form2 mtc">
+                <input type="submit" value="申请">
+            </div>
+        </form>
+    </div>
+
+</div>
+<tc_include file="Public/user_footer" />
+<script type="text/javascript" src="__TMPL__Public/js/laydate.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.all.min.js"></script>
