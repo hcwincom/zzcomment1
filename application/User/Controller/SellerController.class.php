@@ -125,6 +125,7 @@ class SellerController extends MemberbaseController {
         $sid=I('ssid',0);
         
         $deposits=C('money_seller');
+       
         $m=$this->m;
         $info=$m->field('s.*,c.fid as cid0')
         ->alias('s')
@@ -134,6 +135,7 @@ class SellerController extends MemberbaseController {
             $this->error('该店铺不能领用');
         }
         $info['deposit']=$deposits[$info['cid0']];
+       
         $user=$this->user;
         if($info['deposit']>=$user['account']){
             $this->error('账户余额不足，请先充值');
@@ -505,9 +507,10 @@ class SellerController extends MemberbaseController {
                     $this->error('你的余额不足，请充值');
                     exit;
                 }
-                $tmp['coin']=0;
+                
                 $price_coin=$user['coin'];
                 $price_money=abs($tmp['coin']);
+                $tmp['coin']=0; 
             }else{
                 $price_coin=$price;
                 $price_money=0;

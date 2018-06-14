@@ -312,9 +312,10 @@ class NewsController extends MemberbaseController {
                    $this->error('你的余额不足，请充值');
                    exit;
                } 
-               $tmp['coin']=0; 
+                
                $price_coin=$user['coin'];
                $price_money=abs($tmp['coin']);
+               $tmp['coin']=0;
             }else{ 
                 $price_coin=$price;
                 $price_money=0;
