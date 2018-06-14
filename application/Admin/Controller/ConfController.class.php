@@ -118,6 +118,7 @@ class ConfController extends AdminbaseController {
             'top_check'=>'置顶审核',
             'apply_coin' => '领用赠币',
             'apply_check' => '领用审核', 
+            'cancel_check'=>'注销审核',
         ];
         $conf_seller=C('option_seller');
         $types=[
@@ -156,6 +157,7 @@ class ConfController extends AdminbaseController {
             'top_check'=>'置顶审核',
             'apply_coin' => '领用赠币',
             'apply_check' => '领用审核',
+            'cancel_check'=>'注销审核',
             
         ];
         foreach($option_seller as $key=>$vo){

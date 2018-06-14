@@ -1,72 +1,76 @@
 <?php
 
 namespace Admin\Controller;
-use Common\Controller\AdminbaseController;
+use Common\Controller\AdminproController;
 /**
  *
  * 店铺动态
  */
-class ActiveController extends AdminbaseController {
+class ActiveController extends AdminproController {
 
-    private $m;
-    private $order;
-    private $info_status;
-    private $top_status;
+     
     public function _initialize() {
         parent::_initialize();
         $this->m = M('Active');
-        $this->order='create_time desc';
-        $this->info_status=C('info_status');
-        $this->top_status=C('top_status');
-        $this->assign('flag','店铺动态'); 
-        $this->assign('info_status',($this->info_status)); 
-        $this->assign('top_status',($this->top_status)); 
+        $this->type='active';
+        $this->flag='店铺动态';
+        $this->assign('flag',$this->flag); 
        
     }
-    /* 获取城市信息 */
-    public function city(){
-        $city1=I('city1',0);
-        $city2=I('city2',0);
-        $city3=I('city3',0);
-        $m_city=M('City');
-        $city1s=$m_city->where('type=1')->getField('id,name');
-        $city2s=$m_city->where('type=2')->getField('id,fid,name');
-        $citys3=[];
-        if($city2!=0){
-            $city3s=$m_city->where('type=3 and fid='.$city2)->getField('id,name'); 
-        }
-        $this->assign("add_city3",$city3s)->assign("add_city1",$city1s)->assign("add_city2",$city2s);
-        $this->assign("city1",$city1)->assign("city2",$city2)->assign("city3",$city3);
-        
-    }
+     
     //编辑
     function index(){
-        $m=D('Active0View');
+        $m=$this->m;
         $id=trim(I('id',''));
         $name=trim(I('name',''));
         $sid=trim(I('sid',''));
         $sname=trim(I('sname',''));
         $status=I('status',-1);
         $where=array();
+        $field='p.id,p.sid,p.pic,p.name,p.dsc,p.create_time,p.start_time,p.end_time,p.status,s.name as sname';
+        $order='p.create_time desc';
         if($id!=''){
-            $where['id']=array('like','%'.$id.'%');
+            $where['p.id']=array('like','%'.$id.'%');
         }
         if($sid!=''){
-            $where['sid']=array('like','%'.$sid.'%');
+            $where['p.sid']=array('like','%'.$sid.'%');
         }
         if($name!=''){
-            $where['name']=array('like','%'.$name.'%');
+            $where['p.name']=array('like','%'.$name.'%');
         }
         if($sname!=''){
-            $where['sname']=array('like','%'.$sname.'%');
+            $where['p.sname']=array('like','%'.$sname.'%');
         }
         if($status!=-1){
-            $where['status']=array('eq',$status);
+            $where['p.status']=array('eq',$status);
         }
-        $this->city();
-        $total=$m->where($where)->count();
+        
+        $tmp=$this->city();
+        if(!empty($tmp)){
+            $where_tmp=[ 
+                'city'=>$tmp
+            ];
+            $sids=M('seller')->where($where_tmp)->getField('id',true);
+            
+            if(empty($sids)){
+                $where['p.sid']=['eq',0];
+            }else{
+                if(is_array($sids)){
+                    $where['p.sid']=['in',$sids];
+                }else{
+                    $where['p.sid']=['eq',$sids];
+                }
+            }
+            
+        } 
+        $total=$m->alias('p')->where($where)->count();
         $page = $this->page($total, 10);
-        $list=$m->where($where)->order($this->order)->limit($page->firstRow,$page->listRows)->select();
+        $list=$m->alias('p')->field($field)
+        ->join('cm_seller as s on s.id=p.sid')
+        ->where($where)
+        ->order($order)
+        ->limit($page->firstRow,$page->listRows)
+        ->select();
         $this->assign('page',$page->show('Admin'));
         $this->assign('list',$list);
         $this->assign('id',$id)
@@ -77,13 +81,7 @@ class ActiveController extends AdminbaseController {
         $this->display();
     }
     
-    //详情
-    function info(){
-        $id=I('id',0);
-        $info=D('Active0View')->where('Active.id='.$id)->find();
-        $this->assign('info',$info);
-        $this->display();
-    }
+    
     //动态审核
     function review(){
         $url=I('url','');
