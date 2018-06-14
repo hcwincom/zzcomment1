@@ -16,18 +16,18 @@
     <ul class="dynamic_list rnav_list">
     <foreach name="list" item="vo">
         <li>
-            <div class="">
+            <div class="draw_msg">
                 <p class="draw_re">{$vo.time|date='Y-m-d H:i',###}</p>
             </div>
-            <div class="">
+            <div class="draw_msg">
                 <p class="draw_re2">¥<span>{$vo.money}</span></p>
             </div>
-            <div>
+            <div class="draw_msg">
                 <p class="draw_re3">
                     <span>{$withdraw_status[$vo['status']]}</span> 
                 </p>
             </div>
-            <div>
+            <div class="draw_msg">
                 <p class="draw_re4">{$vo.dsc}</p>
             </div>
         </li>

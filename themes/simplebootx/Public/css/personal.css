@@ -65,6 +65,7 @@
 .per_rnav{width:100%;background:#e5e5e5;}
 .rnav-two{margin-top:10px;position: relative;}
 .rnav-two div{display:inline-block;height:40px;;line-height:40px;margin-left:20px;cursor: pointer;width: 13%;}
+.rnav-two div.draw_msg{width: 20%;}
 .check-all{margin-left:10px!important;position:absolute;}
 .all-reds{color: #d50000;}
 .checked-alls{width:20px;float:left;margin-left:10px;}
@@ -94,7 +95,6 @@
 .per_rnav .rb{background:#d00000;color:#fff;}
 .pay_main{padding-left:30px;margin-top:40px;font-size: 16px;}
 .pay_main p{font-size: 16px;margin:30px 0;color:#333;}
-.acount{}
 .acount li{float:left;margin:10px;}
 .acount li a{display:block;width: 100px;height: 30px;line-height: 30px;text-align: center;color: #666;border: 1px solid #dcdcdc;}
 .acount li a.ss{background:url(../img/check.png) no-repeat right bottom;color:#f00;}
@@ -136,6 +136,7 @@ float:right;}
 .form2 select{width:122px;height:43px;border:1px solid #dcdcdc;padding-left:10px;margin-left: 10px;margin-left:15px;}
 .form2 textarea{width:80%;border:1px solid #dcdcdc;padding-left:10px;margin-left:15px;padding-top: 5px;}
 .form2Info{font-size: 18px;color: #d00000;margin: 20px 0;letter-spacing: 2px;text-indent: 40px;}
+.form2 .per_p{font-size: 14px;color: orange;line-height: 20px;width: 70%;margin: 0 auto;}
 .per_r1 input[type="text"]{
 	width: 380px;
     height: 43px;
@@ -169,6 +170,28 @@ float:right;}
 	color: #d00000;
 	font-size: 16px;
 }
+.per-account{
+	margin-top: 20px;
+}
+.per-account p{
+	line-height: 48px;
+	font-size: 16px;
+}
+.per-account p span{
+	display: inline-block;
+	line-height:45px;
+	width:110px;
+	font-size: 16px;
+	text-align: right;
+	padding-right: 15px;
+}
+
+.per-account p i{
+	font-size: 18px;
+	color: #d00000;
+	padding-left: 10px;
+}
+
 #start{width: 29%;margin-left: 15px;height: 40px;font-size: 16px;}
 /* .form2.textbaidu{height: 400px;} */
 #content2{margin-left: 15px;width: 82%;}
@@ -201,6 +224,8 @@ background-color: rgba(0, 0, 0, .3);}
 .dynamic_list li{border-bottom: 1px solid #dcdcdc;margin-top:15px;padding-bottom:30px;position:relative}
 .rnav_list li{padding-bottom: 15px;}
 .rnav_list li div{display: inline-block;margin-left: 20px;width: 13%;}
+.rnav_list li div.draw_msg{width: 20%;}
+.rnav_list li div p{font-size: 14px;color: #666;line-height: 20px;}
 .dy_img{width:144px;}
 .dynamic_li_lf1{width:170px;margin-left: 48px;}
 .dynamic_li_lf2{width:400px;overflow: hidden;}

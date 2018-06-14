@@ -7,19 +7,12 @@
         <a class="" href="{:U('User/Info/withdraw_info')}">提现记录</a>
     </div>
     <div class="per_draw">
-<<<<<<< HEAD
-        <form action="" class="" method="post" enctype="multipart/form-data" onsubmit="return applyFor()">
-            <div class="per_account">
-               <p><span>账户余额 ：</span>¥<i id="acc_blance">0</i></p>
-            </div>
-=======
-        <form action="{:U('withdraw_do')}" class="" method="post" >
+        <form action="{:U('withdraw_do')}" class="" method="post">
             
->>>>>>> d81b150177bff5d80e6444a4b908d6978450b7fa
             <div class="per-account">
                 <p><span>可提现余额 ：</span>¥<i id="acc_draw">{$user.account}</i></p>
             </div>
-            <div class="form2"><span>提现金额 ：</span><input type="text" name="acc_money" placeholder="请输入提现金额"><p>提现金额必须为整数</p></div>
+            <div class="form2"><span>提现金额 ：</span><input type="text" name="acc_money" placeholder="请输入提现金额"><p class="per_p">提现金额必须为整数</p></div>
             <p class="ml acc_msg"></p>
             <div class="form2"><span>支付宝账户 ：</span><input type="text" name="zhifu" value="{$user.mobile}" placeholder="请输入支付宝账号"></div>
             <p class="ml acc_msg1"></p>
@@ -33,20 +26,4 @@
 
 </div>
 <tc_include file="Public/user_footer" />
-<<<<<<< HEAD
-<script type="text/javascript" src="__TMPL__Public/js/laydate.js"></script>
-<script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.config.js"></script>
-<script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.all.min.js"></script>
-
-<script>
-    var $accMoney = $("input[name=acc_money]").val();
-    
-</script>
-
-
-
-
-
-=======
  
->>>>>>> d81b150177bff5d80e6444a4b908d6978450b7fa
