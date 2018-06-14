@@ -48,7 +48,30 @@ $(function () {
         $(".pri").html("￥" + toDecimal2(money));
         $("input[name='money']").val(toDecimal2(money));
     });
-});          
+});    
+
+// 提现 
+$("#acc_money").blur(function () {
+    var money = parseInt($(this).val());
+    var moneyText = parseInt($("#acc_draw").text());
+    if (money < 1) {
+        money = 1;
+        $(this).val(toDeci2(money));
+    } else {
+        $(this).val(toDeci2(money));
+    }
+    if (money > moneyText){
+        money = moneyText;
+        $(this).val(toDeci2(money));
+        $(".acc_msg").text("不能大于总金额");
+    }else{
+        $(this).val(toDeci2(money));
+    }
+    $("input[name='acc_money']").val(toDeci2(money));
+})
+
+
+
 function powAmount(amount, _pow_) {
     var amount_bak = amount;
     var base = 10;
@@ -115,6 +138,30 @@ function anycheck(form){
         while (s.length <= rs + 2) {    
             s += '0';    
         }    
+        return s;    
+    }
+
+
+    function toDeci2(money) {
+        var f = parseFloat(money);
+        if (isNaN(f)) {
+            return "0.00";
+        }
+        var f = Math.round(money * 100) / 100;
+        var s = f.toString();
+        var rs = s.indexOf('.');
+        // console.log(f)
+        // console.log(s)
+        // console.log(rs)
+        if (rs < 0) {
+            rs = s.length;
+            s += '.';
+        }
+        // console.log(s)
+        // console.log(rs)
+        while (s.length <= rs + 2) {
+            s += '0';
+        }
         return s;    
     }
 
