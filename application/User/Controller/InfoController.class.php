@@ -74,7 +74,7 @@ class InfoController extends MemberbaseController {
             'update_time'=>$time,
             'sex'=>I('sex',0),
             'qq'=>I('qq',''),
-            
+            'user_nicename'=>I('user_nicename',''), 
         );
        
         $m=M('Users');
@@ -386,6 +386,51 @@ class InfoController extends MemberbaseController {
         
         $this->display();
         
+    }
+    
+    //提现记录
+    public function withdraw_info(){
+        $m=M('withdraw');
+        $where=array('uid'=>($this->userid));
+        $total=$m->where($where)->count();
+        $page = $this->page($total, C('PAGE'));
+        $list=$m->where($where)->order('time desc')->limit($page->firstRow,$page->listRows)->select();
+        
+        $this->assign('page',$page->show('Admin'));
+        $this->assign('list',$list);
+        $this->assign('withdraw_status',C('withdraw_status'));
+        $this->display();
+    }
+    //提现
+    public function withdraw(){
+        
+        $this->assign('user',$this->user);
+        
+        $this->display();
+    }
+    //提现申请
+    public function withdraw_do(){
+         $param=I('post.','');
+         $user=$this->user;
+         $data=[
+             'uid'=>$user['id'],
+             'money'=>intval($param['acc_money']),
+             'transfer_id'=>$param['zhifu'],
+             'transfer_name'=>$param['zhifu_name'],
+             'transfer_type'=>1,
+             'time'=>time(),
+         ];
+        
+         
+         if($user['account']<$data['money']){
+             $this->error('余额不足，不能提现');
+         }
+         $m=M('withdraw');
+         $m->startTrans();
+         $m->where('id='.$user['id'])->setDec('account',$data['money']);
+         M('withdraw')->add($data);
+         $m->commit();
+         $this->success('已申请提现，等待管理员审核',U('index'));
     }
     
 }

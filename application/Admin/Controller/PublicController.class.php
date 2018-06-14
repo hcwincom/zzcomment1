@@ -139,5 +139,5 @@ class PublicController extends AdminbaseController {
         readfile($file);
         exit;
     }
-
+    
 }

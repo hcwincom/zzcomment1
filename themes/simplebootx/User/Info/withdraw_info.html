@@ -9,35 +9,33 @@
     <div class="per_rnav rnav-two">
         <div class="draw_msg">时间</div>
         <div class="draw_msg">提现金额</div>
+       
         <div class="draw_msg">状态</div>
         <div class="draw_msg">说明</div>
     </div>
     <ul class="dynamic_list rnav_list">
+    <foreach name="list" item="vo">
         <li>
             <div class="">
-                <p class="draw_re">2018-5-6</p>
+                <p class="draw_re">{$vo.time|date='Y-m-d H:i',###}</p>
             </div>
             <div class="">
-                <p class="draw_re2">¥<span>50</span></p>
+                <p class="draw_re2">¥<span>{$vo.money}</span></p>
             </div>
             <div>
                 <p class="draw_re3">
-                    <span>待审核</span>
-                    <span>已审核</span>
-                    <span>已驳回</span>
-                    <span>已完成</span>
+                    <span>{$withdraw_status[$vo['status']]}</span> 
                 </p>
             </div>
             <div>
-                <p class="draw_re4">提现完成</p>
+                <p class="draw_re4">{$vo.dsc}</p>
             </div>
         </li>
+     </foreach>
     </ul>
     <div class="page">{$page}</div>
 
 </div>
 
 <tc_include file="Public/user_footer" />
-<script type="text/javascript" src="__TMPL__Public/js/laydate.js"></script>
-<script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.config.js"></script>
-<script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.all.min.js"></script>
+ 

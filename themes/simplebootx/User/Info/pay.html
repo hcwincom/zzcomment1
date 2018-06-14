@@ -4,7 +4,8 @@
                  
                 	<a class="rb" href="{:U('User/Info/pay')}">充值</a>
                 	<a class="" href="{:U('User/Info/paylist')}">消费/充值记录</a>
-                	 
+                	  <a class="" href="{:U('User/Info/withdraw')}">提现</a>
+       				 <a class="" href="{:U('User/Info/withdraw_info')}">提现记录</a>
                 </div>
                 <div class="pay_main">
                     <div>充值的面额(默认￥100.00,最小￥1.00)：</div>
@@ -31,22 +32,14 @@
                     </form>
                 </div>
             </div>
-        </div>
-
+       
 	<tc_include file="Public/user_footer" />
 <script>
 $('.pay_cont_m').submit(function(){
-	if($("#alipay1").prop('checked')){
-		 
-	}else{
-		 
-		$(this).attr('action',"{:U('User/Info/wxpay')}");
-		 
-	}
-	 
-	
-	 
+	if($("#alipay1").prop('checked')){ 
+	}else{ 
+		$(this).attr('action',"{:U('User/Info/wxpay')}"); 
+	} 
 });
 </script>
-</body>
-</html>
+ 
