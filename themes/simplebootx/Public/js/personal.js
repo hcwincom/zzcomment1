@@ -66,6 +66,7 @@ $("#acc_money").blur(function () {
         $(".acc_msg").text("不能大于总金额");
     }else{
         $(this).val(toDeci2(money));
+        $(".acc_msg").text("");
     }
     $("input[name='acc_money']").val(toDeci2(money));
 })
