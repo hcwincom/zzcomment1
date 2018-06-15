@@ -109,4 +109,11 @@ i,em{ font-style: normal; }
 }
 @media screen and (max-width: 360px){
 	.shop-type a{line-height: 36px;font-size: 14px; margin:0 0 0 12px; }
+	.login-link{
+    	top: -15px;
+	}
+	.logo h1 img {
+		height: 34px;
+	}
+	.research{padding:0 0 2px;}
 }
