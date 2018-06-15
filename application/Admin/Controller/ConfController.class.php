@@ -122,10 +122,10 @@ class ConfController extends AdminbaseController {
         ];
         $conf_seller=C('option_seller');
         $types=[
-            1 => '个人',
-            2 => '个体',
-            3 => '企业',
-            4 => '行政',
+            8 => '个人',
+            4 => '个体',
+            10 => '企业',
+            9 => '行政',
         ];
         $money_seller=C('money_seller');
         $this->assign('flag','店铺操作配置');

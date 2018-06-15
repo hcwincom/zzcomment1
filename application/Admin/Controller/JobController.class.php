@@ -4,16 +4,16 @@ namespace Admin\Controller;
 use Common\Controller\AdminproController;
 /**
  *
- * 店铺商品
+ * 店铺招聘
  */
-class GoodsController extends AdminproController {
+class JobController extends AdminproController {
 
      
     public function _initialize() {
         parent::_initialize();
-        $this->m = M('goods');
-        $this->type='goods';
-        $this->flag='店铺商品';
+        $this->m = M('job');
+        $this->type='job';
+        $this->flag='店铺招聘';
         $this->assign('flag',$this->flag); 
        
     }
@@ -27,7 +27,7 @@ class GoodsController extends AdminproController {
         $sname=trim(I('sname',''));
         $status=I('status',-1);
         $where=array();
-        $field='p.id,p.sid,p.pic,p.name,p.create_time,p.status,s.name as sname';
+        $field='p.id,p.sid,p.pic,p.name,p.dsc,p.create_time,p.start_time,p.end_time,p.status,s.name as sname';
         $order='p.create_time desc';
         if($id!=''){
             $where['p.id']=array('eq',$id);

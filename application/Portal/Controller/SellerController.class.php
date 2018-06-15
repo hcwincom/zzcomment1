@@ -128,7 +128,7 @@ class SellerController extends HomebaseController {
         $page = $this->page($total, C('page_job_list'));
         
         $list=$m->field($field)->where($where)->order($order)->limit($page->firstRow,$page->listRows)->select();
-        
+         
         $this->assign('list_job',$list)
         ->assign('page',$page->show('Admin'));
         $this->assign('seller_flag','job');

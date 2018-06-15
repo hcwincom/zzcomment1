@@ -37,7 +37,8 @@
 					<th>图片</th>
                     
                     <th>创建时间</th>
-                   
+                    <th>开始时间</th>
+                    <th>过期时间</th> 
                     <th>状态</th> 
                     <th>操作</th> 
 				</tr>
@@ -52,7 +53,7 @@
 						 </a>
 					</td> 
                     <td>
-                    	<a href="{:U('portal/seller/goods_detail',['sid'=>$vo['sid'],'id'=>$vo['id']])}" target="_blank"> 
+                    	<a href="{:U('portal/seller/job_detail',['sid'=>$vo['sid'],'id'=>$vo['id']])}" target="_blank"> 
 	                    {$vo.name}
 	                     </a>
                     </td>  
@@ -60,7 +61,8 @@
                     <td><img src="__ROOT__/data/upload/{$vo.pic}" alt="暂无图片" style="width:200px;height:50px"/></td>      
                     
                      <td> {$vo.create_time|date="Y-m-d H:i:s",###}</td>
-                    
+                     <td> {$vo.start_time|date="Y-m-d",###}</td>
+                     <td> {$vo.end_time|date="Y-m-d",###}</td>
                    <td>{$info_status[$vo['status']]}</td>
                     <td>
                     <a href="{:U('info',array('id'=>$vo['id']))}">查看</a> 

@@ -217,8 +217,8 @@ function pro_dels($type,$list){
         }
     }
     $where=['pid'=>['in',$ids]];
-    M('Top'.$type)->where($where)->delete();
-    M('Top'.$type.'0')->where($where)->delete();
+    M('top_'.$type)->where($where)->delete();
+    M('top_'.$type.'0')->where($where)->delete();
     
 }
 /*
@@ -246,8 +246,8 @@ function pro_del($type,$info){
         rmdir($dir); 
     }
     $where=['pid'=>['eq',$info['id']]];
-    M('Top'.$type)->where($where)->delete();
-    M('Top'.$type.'0')->where($where)->delete();
+    M('top_'.$type)->where($where)->delete();
+    M('top_'.$type.'0')->where($where)->delete();
     
 }
 /*
