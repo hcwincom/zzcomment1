@@ -144,6 +144,7 @@ float:right;}
     padding-left: 10px;
     margin-left: 15px;
 }
+.btnout{text-align: center;}
 .btnout #logout{
 	font-size: 18px;
 	background: #d00000;
@@ -472,6 +473,7 @@ td.msgmaner_td3 ul li{
 		vertical-align: middle;
 		height: 80px;
 	}
+	
 }
 @media screen and (max-width:850px) {
  .dynamic_li_rt{width:50%;}

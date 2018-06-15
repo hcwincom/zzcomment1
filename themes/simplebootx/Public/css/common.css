@@ -78,10 +78,18 @@ i,em{ font-style: normal; }
 }
 @media screen and (max-width: 769px){
 	.research{width:100%;padding:0 0 8px;}
-	.shop-type a{line-height: 40px;font-size: 16px; margin:0 0 0 22px; }
+	.shop-type a{line-height: 36px;font-size: 14px; margin:0 0 0 26px; }
 	.foot-cont1{width:100%;padding:10px 0 0;}
 	.foot-cont2{float:none;margin:0 auto;width:96px;}
-	.logo{padding: 18px 0;}
+	.logo{padding: 10px 0;}
+	.research input{
+		height: 29px;
+		font-size: 14px;
+		line-height: 29px;
+	}
+	.login-link{
+    	top: -10px;
+	}
 }
 @media screen and (max-width: 600px){
 	.research form{width:100%;}
@@ -94,5 +102,9 @@ i,em{ font-style: normal; }
 }
 @media screen and (max-width: 500px){
 	.logo h1 img{margin-right: 20px;}
+	.shop-type a{line-height: 36px;font-size: 14px; margin:0 0 0 20px; }
+}
+@media screen and (max-width: 400px){
 	
+	.shop-type a{line-height: 36px;font-size: 14px; margin:0 0 0 12px; }
 }
