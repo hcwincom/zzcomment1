@@ -1,5 +1,5 @@
 <tc_include file="Public/user_head" />
-		 <div class="per_right rt">
+		<div class="per_right rt">
                 <div class="evaluate_main">
                     <div class="per_rnav">
 	                    <a class="<eq name='status' value='-1'>rb</eq>" href="{:U('User/Comment/index',array('status'=>-1))}">全部</a>
@@ -9,38 +9,38 @@
                     	
                     </div>
                     <ul class="evaluate_list">
-                    <foreach name="list" item="vo">
-                        <li>
-                            <div class="lf evaluate_li_lf">
-                            	<p class="per_e1">{$vo.content}</p>
-                            	<span class="time">{$vo.sname}</span>
-                            	<span class="time">{$vo.create_time|date='Y-m-d',###}</span>
-                            	<a href="{:U('user/comment/download',['id'=>$vo['id']])}">下载附件</a>
-                            </div>
-                            <div class="rt evaluate_li_rt">
-	                            <span class="per_e3"><eq name="vo.score" value='1'>加分<else/>减分</eq></span>
-	                            <span class="per_e4"">
-	                            <switch name="vo.status">
-	                            	<case value="0">审核中</case>
-	                            	<case value="1">审核失败</case>
-	                            	<case value="2">审核完成</case>
-	                            </switch>
-								</span>
-								 
-                            </div> 
-                            <div class="clear"></div>
-                        </li>
-                     </foreach>
+						<foreach name="list" item="vo">
+							<li>
+								<div class="lf evaluate_li_lf">
+									<p class="per_e1">{$vo.content}</p>
+									<span class="time">{$vo.sname}</span>
+									<span class="time">{$vo.create_time|date='Y-m-d',###}</span>
+									<a href="{:U('user/comment/download',['id'=>$vo['id']])}">下载附件</a>
+								</div>
+								<div class="rt evaluate_li_rt">
+									<span class="per_e3"><eq name="vo.score" value='1'>加分<else/>减分</eq></span>
+									<span class="per_e4">
+										<switch name="vo.status">
+											<case value="0">审核中</case>
+											<case value="1">审核失败</case>
+											<case value="2">审核完成</case>
+										</switch>
+									</span>
+									
+								</div> 
+								<div class="clear"></div>
+							</li>
+						</foreach>
                     </ul>
                   <div class="page">{$page}</div>
                  
                 </div>
-            </div>
-        </div>	 
+        </div>
+        
 	<tc_include file="Public/user_footer" />
-<script>
 
-/* $('.delete').click(function(){
+<script>
+ $('.delete').click(function(){
 	var $li=$(this).parents('li');
 	var id=$li.find('.id').val();
 	$.post("{:U('User/Comment/del')}",{'id':id},function(data){
@@ -50,7 +50,5 @@
 		location.reload(true);
 	});
 	
-}); */
+}); 
 </script>
-</body>
-</html>

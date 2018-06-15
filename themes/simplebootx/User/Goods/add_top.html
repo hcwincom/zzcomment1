@@ -1,45 +1,58 @@
 <tc_include file="Public/user_head" />
 	 <div class="per_right rt">
-         <div class="per_rnav">
+            <div class="per_rnav">
              	<a class="" href="{:U('index',['sid'=>$sid])}">{$flag}管理</a>
              	<a class="" href="{:U('top',['sid'=>$sid])}">{$flag}置顶记录</a>
                 <a class="" href="{:U('add',['sid'=>$sid])}">发布新{$flag}</a> 
                 <a class="rb" href="{:U('add_top',['sid'=>$sid,'id'=>$info['id']])}">{$flag}置顶</a> 
              </div>
-                <div class="adddynamic">
-                    <form action="{:U('add_top_do')}" method="post" id="recommend" name="playlist">
-                        <div class="form3"><span class="">{$type}：</span><i>{$info.name}</i></div>
-                        <input name="id" type="hidden" value="{$info.id}" > 
-                        <div class="form3"><span class="lf">置顶时间：</span>
-                            <ul class="form3_list1 lf">
-                                <li>
-                                    <div class="date-sjk">
- 
-                                       起始时间： <input name="start" class="inline laydate-icon" id="start1" readonly >
-                                    </div>
-                                    <div style="color:#f00;font-size:12px;">
-						                                        起始时间最早为今天，起始和结束时间都为当日0点。<br/>
-						                                        置顶优先级最高，即使过期也会显示，除非手动下架，手动下架置顶费用不退。<br/>
-              					       	 同一时间置顶{$flag}不会重复显示,重复购买费用不退。<br/>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="date-sjk">
- 
-                                       结束时间： <input name="end" class="inline laydate-icon" id="start2" readonly >
-                                    </div>
- 
-                                </li>
-                            </ul>
-                            <div class="clear"></div>
-                        </div>
-                        <div class="form3"><span>单价：</span><i id="price1">{$price}</i>元/天</div>
-                        <div class="form3"><span>总价：</span><i id="price2">0</i>元</div>
-                         <input id="zprice" name="zprice" type="hidden" value="0" >
-                        <div class="form3"><input type="submit" value="购买"></div>
-                    </form>
-                </div>
+            <div class="adddynamic">
+                <form action="{:U('add_top_do')}" method="post" id="recommend" name="playlist">
+                    <div class="form3">
+                        <span class="">{$type}：</span>
+                        <i>{$info.name}</i>
+                    </div>
+                    <input name="id" type="hidden" value="{$info.id}">
+                    <div class="form3">
+                        <span class="lf">置顶时间：</span>
+                        <ul class="form3_list1 lf">
+                            <li>
+                                <div class="date-sjk">
+            
+                                    起始时间：
+                                    <input name="start" class="inline laydate-icon" id="start1" readonly>
+                                </div>
+                                <div style="color:#f00;font-size:12px;">
+                                    起始时间最早为今天，起始和结束时间都为当日0点。
+                                    <br/> 置顶优先级最高，即使过期也会显示，除非手动下架，手动下架置顶费用不退。
+                                    <br/> 同一时间置顶{$flag}不会重复显示,重复购买费用不退。
+                                    <br/>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="date-sjk">
+            
+                                    结束时间：
+                                    <input name="end" class="inline laydate-icon" id="start2" readonly>
+                                </div>
+            
+                            </li>
+                        </ul>
+                        <div class="clear"></div>
+                    </div>
+                    <div class="form3">
+                        <span>单价：</span>
+                        <i id="price1">{$price}</i>元/天</div>
+                    <div class="form3">
+                        <span>总价：</span>
+                        <i id="price2">0</i>元</div>
+                    <input id="zprice" name="zprice" type="hidden" value="0">
+                    <div class="form3">
+                        <input type="submit" value="购买">
+                    </div>
+                </form>
             </div>
+    </div>
         
 	<tc_include file="Public/user_footer" />
 <script type="text/javascript" src="__TMPL__Public/js/laydate.js"></script>      

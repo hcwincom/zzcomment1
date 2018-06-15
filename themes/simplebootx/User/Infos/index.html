@@ -18,42 +18,42 @@
                  
              </div>
              <ul class="dynamic_list">
-             <foreach name="list" item="vo">
-                 <li>
-                    <div class="checked-alls">
-                        <label class="labei-all-check" for="cheched-box{$vo.id}"></label>
-                        <input id="cheched-box{$vo.id}" style="display:none;" type="checkbox" value="{$vo.id}">
-                    </div>
-                 	<input type="hidden" class="id" value="{$vo.id}"/>
-                     <div class="lf dynamic_li_lf1">
-                        <a href="{:U('Portal/user/info_detail',array('id'=>$vo['id']))}"> 
-                        	<img class="dy_img" src="__UPLOAD__/{$vo['pic']|default=$company['info_empty']['content']}">
-                        </a>  
-                     </div>
-                      <div class="lf dynamic_li_lf2">
-                         <p class="per_d1">{$vo.name}</p>
-                         <p class="per_d2">{$vo.dsc}</p>
-                     </div>
-                     <div class="rt dynamic_li_rt">
-                      	<span class="per_d3 time">{$vo.create_time|date='Y-m-d',###}</span>
-                     <eq name="vo.status" value="3">
-                      	<a href="javascript:void(0);" class="per_d6 dyml"><img src="__TMPL__Public/img/groom.png"></a>
-                      	<a href="{:U('add_top',array('id'=>$vo['id']))}" class="per_d6"><img src="__TMPL__Public/img/addtop.png"></a>
-                     	 
-                     <else/>
-                      	<a href="javascript:void(0);" class="per_d6 dyml2"><img src="__TMPL__Public/img/groom_1.png"></a>
-                    	<a href="javascript:void(0);" class="per_d6"><img src="__TMPL__Public/img/addtop_1.png"></a> 
-                     </eq> 
-                    <div class="per_d4">
-                        <span>{$statuss[$vo['status']]}</span>
-                        <a href="{:U('edit',['id'=>$vo['id']])}" class="">编辑</a>
-                    </div>
-                      <span class="per_d5 delete"><img src="__TMPL__Public/img/delete.png"></span>
-                     </div>
-                     <div class="clear"></div>
-                 </li>
-                 
-              </foreach>
+                <foreach name="list" item="vo">
+                    <li>
+                        <div class="checked-alls">
+                            <label class="labei-all-check" for="cheched-box{$vo.id}"></label>
+                            <input id="cheched-box{$vo.id}" style="display:none;" type="checkbox" value="{$vo.id}">
+                        </div>
+                        <input type="hidden" class="id" value="{$vo.id}"/>
+                        <div class="lf dynamic_li_lf1">
+                            <a href="{:U('Portal/user/info_detail',array('id'=>$vo['id']))}"> 
+                                <img class="dy_img" src="__UPLOAD__/{$vo['pic']|default=$company['info_empty']['content']}">
+                            </a>  
+                        </div>
+                        <div class="lf dynamic_li_lf2">
+                            <p class="per_d1">{$vo.name}</p>
+                            <p class="per_d2">{$vo.dsc}</p>
+                        </div>
+                        <div class="rt dynamic_li_rt">
+                            <span class="per_d3 time">{$vo.create_time|date='Y-m-d',###}</span>
+                        <eq name="vo.status" value="3">
+                            <a href="javascript:void(0);" class="per_d6 dyml"><img src="__TMPL__Public/img/groom.png"></a>
+                            <a href="{:U('add_top',array('id'=>$vo['id']))}" class="per_d6"><img src="__TMPL__Public/img/addtop.png"></a>
+                            
+                        <else/>
+                            <a href="javascript:void(0);" class="per_d6 dyml2"><img src="__TMPL__Public/img/groom_1.png"></a>
+                            <a href="javascript:void(0);" class="per_d6"><img src="__TMPL__Public/img/addtop_1.png"></a> 
+                        </eq> 
+                        <div class="per_d4">
+                            <span>{$statuss[$vo['status']]}</span>
+                            <a href="{:U('edit',['id'=>$vo['id']])}" class="">编辑</a>
+                        </div>
+                        <span class="per_d5 delete"><img src="__TMPL__Public/img/delete.png"></span>
+                        </div>
+                        <div class="clear"></div>
+                    </li>
+                    
+                </foreach>
                
              </ul>
              

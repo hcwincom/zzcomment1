@@ -4,7 +4,6 @@
                 <a class="" href="{:U('index',['sid'=>$sid])}">{$flag}管理</a>
                 <a class="" href="{:U('top',['sid'=>$sid])}">{$flag}置顶记录</a>
                 <a class="rb" href="{:U('add',['sid'=>$sid])}">发布新{$flag}</a>
-            
             </div>
             <div class="adddynamic">
                 <form action="{:U('add_do')}" method="post" onsubmit="return send1()" enctype="multipart/form-data">
@@ -22,7 +21,8 @@
                     <p class="ml msg6"></p>
                     <div class="form2">
                         <span>分类：</span>
-                        <tc_include file="Public/cate" /> </div>
+                        <tc_include file="Public/cate" />
+                     </div>
                     <p class="ml msg8"></p>
                     <div class="form2">
                         <span>联系方式：</span>

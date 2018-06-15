@@ -139,20 +139,13 @@ i,em{ font-style: normal; }
 	.logo h1 img{margin-right: 20px;}
 	.shop-type a{line-height: 36px;font-size: 14px; margin:0 0 0 20px; }
 		.research form{
-		width:49%;
-		left: 21%;
+		width:46%;
+		left: 22%;
 		top:9px;
 	}
 	.research input[type="text"]{width:60%;}
 	.research input[type="submit"]{width:40%;}
-	.research input::-webkit-input-placeholder { /* WebKit browsers */ 
-		color: red; 
-		font-size: 12px;
-		} 
-
-
-
-
+	
 }
 @media screen and (max-width: 400px){
 	.shop-type a{line-height: 36px;font-size: 14px; margin:0 0 0 17px; }

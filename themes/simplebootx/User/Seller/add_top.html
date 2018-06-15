@@ -12,38 +12,35 @@
                 <ul class="playtime">
                 <foreach name="top_sellers" item="vo">
                     <li> 
-                            <span class="span{$key}"></span>
-                            <div class="play_pri1">
-                                <input type="hidden" class="site" value="{$key}">
-                                <span>¥<i id="price{$key}" class="priceSpan">{$vo.price}</i>/天</span>
-                            </div>
-                            <div class="play_pri2">
-                                <p>已生效：
-                                    <empty name="vo.start">
-                                        <span>无</span>
-                                        <else/>
-                                        <span>{$vo['start']['start_time']|date='Y.m.d',###}</span>-
-                                        <span>{$vo['start']['end_time']|date='Y.m.d',###}</span>
-                                    </empty>
-                                </p>
-                            </div>
-                            <div class="play_pri2">
-                                <p> 即将生效:
-                                    <empty name="vo.end">
-                                        <span>无</span>
-                                        <else/>
-                                        <span>{$vo['end']['start_time']|date='Y.m.d',###}</span>-
-                                        <span>{$vo['end']['end_time']|date='Y.m.d',###}</span>
-                                    </empty>
-                                </p>
-                            </div>
-                       
-                    </li>
-                        
-                  </foreach>
-                   
-                </ul>
-                
+                        <span class="span{$key}"></span>
+                        <div class="play_pri1">
+                            <input type="hidden" class="site" value="{$key}">
+                            <span>¥
+                                <i id="price{$key}" class="priceSpan">{$vo.price}</i>/天</span>
+                        </div>
+                        <div class="play_pri2">
+                            <p>已生效：
+                                <empty name="vo.start">
+                                    <span>无</span>
+                                    <else/>
+                                    <span>{$vo['start']['start_time']|date='Y.m.d',###}</span>-
+                                    <span>{$vo['start']['end_time']|date='Y.m.d',###}</span>
+                                </empty>
+                            </p>
+                        </div>
+                        <div class="play_pri2">
+                            <p> 即将生效:
+                                <empty name="vo.end">
+                                    <span>无</span>
+                                    <else/>
+                                    <span>{$vo['end']['start_time']|date='Y.m.d',###}</span>-
+                                    <span>{$vo['end']['end_time']|date='Y.m.d',###}</span>
+                                </empty>
+                            </p>
+                        </div>
+                    </li>     
+                  </foreach>      
+                </ul>               
             </div>
             <div class="clear"></div>
             <div class="form3 play-list">

@@ -35,23 +35,19 @@
 						<p class="ml"></p>	
 							<div class="lf">
 								<div class="lf ib imgbox2">身份证正面：
-								<div id="preview2" class="preview">
-							 
-								<img class="imgbox2" src="__UPLOAD__/{$user.name_pic1}">
-							 
-								</div>
-								<label class="btn btn2" for="p2" title="选择图片"><span>选择图片</span></label>
-								<input type="file" class="upload_pic" onchange="preview(this,2)" id="p2" name="IDpic2" value="" >
+									<div id="preview2" class="preview">
+										<img class="imgbox2" src="__UPLOAD__/{$user.name_pic1}">
+									</div>
+									<label class="btn btn2" for="p2" title="选择图片"><span>选择图片</span></label>
+									<input type="file" class="upload_pic" onchange="preview(this,2)" id="p2" name="IDpic2" value="" >
 								</div>
 								<div class="lf ib imgbox3">身份证反面：
-								<div id="preview3" class="preview">
-							 
-								<img class="imgbox3" src="__UPLOAD__/{$user.name_pic2}">
-								 
-								</div>
-								<label class="btn btn3" for="p3" title="选择图片"><span>选择图片</span></label>
+									<div id="preview3" class="preview">
+									<img class="imgbox3" src="__UPLOAD__/{$user.name_pic2}">
+									</div>
+									<label class="btn btn3" for="p3" title="选择图片"><span>选择图片</span></label>
 									<input type="file" class="upload_pic" onchange="preview(this,3)" id="p3" name="IDpic3" value="" >
-								<p class="ml msg4"></p>
+									<p class="ml msg4"></p>
 								</div>
 								<div class="clear"></div>
 								<p class="pms">*上传格式为jpg、png图,大小在4M以内</p>
@@ -59,19 +55,17 @@
 							
 						</eq>
 						<div class="clear"></div>
-						</div>
+					</div>
 						<p class="ml msg3"></p>
 					<neq name="user.name_status" value="1">
 						<div class="form1">
 							<span class="lf">手持身份证照：</span>
                             <div class="lf ib imgbox8">
                                 <div id="preview8" class="preview">
-                             
-                                <img class="imgbox8" src="__UPLOAD__/{$user.name_pic3}">
-                               
-                                </div>
-                            <label class="btn btn8" for="p8" title="选择图片"><span>选择图片</span></label>
-                            <input type="file" class="upload_pic" id="p8" onchange="preview(this,8)" name="IDpic8" value="" > 
+                                 	<img class="imgbox8" src="__UPLOAD__/{$user.name_pic3}">
+									</div>
+								<label class="btn btn8" for="p8" title="选择图片"><span>选择图片</span></label>
+								<input type="file" class="upload_pic" id="p8" onchange="preview(this,8)" name="IDpic8" value="" > 
                             </div>
                             <div class="clear"></div>
 							<p class="pms">*上传格式为jpg、png图,大小在4M以内</p>
@@ -80,14 +74,10 @@
 						<p class="ml"></p>
 					</neq>
 						<div class="form1"><input type="submit" value="保存"><input type="reset" value="取消"></div>
-					</div>
+				
 					<div class="clear"></div>
 
 				</form>
-				
-			</div>
 		</div>		 
 
 	<tc_include file="Public/user_footer" />
-</body>
-</html>
