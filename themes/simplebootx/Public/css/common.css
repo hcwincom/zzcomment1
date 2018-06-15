@@ -82,38 +82,86 @@ i,em{ font-style: normal; }
 	.foot-cont1{width:100%;padding:10px 0 0;}
 	.foot-cont2{float:none;margin:0 auto;width:96px;}
 	.logo{padding: 10px 0;}
+
 	.research input{
 		height: 29px;
 		font-size: 14px;
 		line-height: 29px;
 	}
+
 	.login-link{
-    	top: -10px;
+    	top: -20px;
 	}
+	.login-link a{
+		width: 48px;
+		height: 30px;
+		line-height: 30px;
+	}
+	.login-link a.login-status{
+		line-height: 32px;
+	}
+	.login-link a.login-status img{
+		width: 32px;
+		height: 32px;
+		line-height: 32px;
+		border-radius: 50%;
+	}
+	.research form{
+		width:40%;
+		position: absolute;
+		top: 14px;
+		left: 30%;
+	}
+	.research input[type="text"]{
+		width:73%;
+		font-size: 12px;
+		padding-left: 0.5em;
+	}
+	.research input[type="submit"]{width:27%;}
 }
 @media screen and (max-width: 600px){
-	.research form{width:100%;}
+	.research form{width:40%;}
 	.research input[type="text"]{width:73%;}
 	.research input[type="submit"]{width:27%;}
 	.foot-cont3{width:100%;}
 	.lg-title+.login-link{position: static;clear:both;margin-top:-10px;padding:0 0 15px 0;}
 	
 	.login-link2{clear:both;margin-top:-10px;padding:0 0 15px 0;}
+	.logo h1 img {
+			height: 22px;
+		}
+	.login-link>a.login-status {
+		line-height: 20px;
+		margin: 0;
+	}
 }
 @media screen and (max-width: 500px){
 	.logo h1 img{margin-right: 20px;}
 	.shop-type a{line-height: 36px;font-size: 14px; margin:0 0 0 20px; }
+		.research form{
+		width:49%;
+		left: 21%;
+		top:9px;
+	}
+	.research input[type="text"]{width:60%;}
+	.research input[type="submit"]{width:40%;}
+	.research input::-webkit-input-placeholder { /* WebKit browsers */ 
+		color: red; 
+		font-size: 12px;
+		} 
+
+
+
+
 }
 @media screen and (max-width: 400px){
 	.shop-type a{line-height: 36px;font-size: 14px; margin:0 0 0 17px; }
 }
 @media screen and (max-width: 360px){
 	.shop-type a{line-height: 36px;font-size: 14px; margin:0 0 0 12px; }
-	.login-link{
-    	top: -15px;
-	}
+	
 	.logo h1 img {
-		height: 34px;
+		height: 20px;
 	}
 	.research{padding:0 0 2px;}
 }

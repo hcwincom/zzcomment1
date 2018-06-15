@@ -13,8 +13,8 @@
 		
 			<div class="lf research">
 				<form action="{:U('portal/list/index')}" method="post" class="lf">
-					<input type="text" placeholder="请输入感兴趣的商家名称" value="{$keyword}" name="keyword" class="lf">
-					<input type="submit" value="立即搜索" class="lf">
+					<input type="text" placeholder="请输入商家名称" value="{$keyword}" name="keyword" class="lf">
+					<input type="submit" value="搜索" class="lf">
 				</form>
 				<div class="lf shop-type" id="shop-type">
 					<foreach name="add_cate1" item="vo">
@@ -36,7 +36,7 @@
 					<a href="{:U('User/Info/index')}" class="login-status">
 						<img src="__UPLOAD__/{$Think.session.user.avatar|default=$company['avatar']['content']}" title="个人头像">
 					</a>
-					<a href="{:U('User/Index/logout')}" class="login-status ">退出登录</a>
+					<a href="{:U('User/Index/logout')}" class="login-status ">退出</a>
 		
 				</empty>
 			</div>
