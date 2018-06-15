@@ -63,10 +63,9 @@ $("#acc_money").blur(function () {
     if (money > moneyText){
         money = moneyText;
         $(this).val(toDeci2(money));
-        $(".acc_msg").text("不能大于总金额");
+       
     }else{
         $(this).val(toDeci2(money));
-        $(".acc_msg").text("");
     }
     $("input[name='acc_money']").val(toDeci2(money));
 })
@@ -142,7 +141,7 @@ function anycheck(form){
         return s;    
     }
 
-
+// 保留2位小数
     function toDeci2(money) {
         var f = parseFloat(money);
         if (isNaN(f)) {

@@ -7,22 +7,22 @@
         <a class="" href="{:U('User/Info/withdraw_info')}">提现记录</a>
     </div>
     <div class="per_draw">
-        <form action="{:U('withdraw_do')}" class="" method="post">
+        <form action="{:U('withdraw_do')}" method="post" onsubmit="return send5()" enctype="multipart/form-data">
             
             <div class="per-account">
                 <p><span>可提现余额 ：</span>¥<i id="acc_draw">{$user.account}</i></p>
             </div>
-            <div class="form2"><span>提现金额 ：</span><input id="acc_money" type="text" name="acc_money" placeholder="请输入提现金额" value=""><p class="per_p">提现金额必须为整数</p></div>
+            <div class="form2"><span>提现金额 ：</span><input id="acc_money" type="text" name="acc_money" placeholder="请输入提现金额" value="">
+                <p class="per_p">提现金额必须为整数, 且不能小于0，不能大于可提现余额</p></div>
             <p class="ml acc_msg"></p>
             <div class="form2"><span>支付宝账户 ：</span><input type="text" name="zhifu" value="{$user.mobile}" placeholder="请输入支付宝账号"></div>
             <p class="ml acc_msg1"></p>
             <div class="form2"><span>支付宝姓名 ：</span><input type="text" name="zhifu_name" value="{$user.user_nicename}" placeholder="请输入支付宝姓名"></div>
             <p class="ml acc_msg2"></p>
             <div class="form2 mtc">
-                <input type="submit" value="申请">
+                <input type="submit" value="申请" class="subdraw">
             </div>
         </form>
     </div>
-
 </div>
 <tc_include file="Public/user_footer" />

@@ -316,42 +316,40 @@ function sconfirm() {
     
 }
 
-// function fmoney() {
-//     var cval = $("input[name=acc_money]").val();
-//     if(cval != ""){
-//         $(".acc_msg").text("");
-//         return true;  
-//     }else{
-//         $(".acc_msg").text("请输入提现金额");
-//         return false;
-//     }
-// }
-// function zhifubao() {
-//     var cval = $("input[name=zhifu]").val();
-//     if (cval != "") {
-//         $(".acc_msg1").text("");
-//         return true;
-//     } else {
-//         $(".acc_msg1").text("请输入支付宝账号");
-//         return false;
-//     }
-// }
-// function zhiframe() {
-//     var cval = $("input[name=zhifu_name]").val();
-//     if (cval != "") {
-//         $(".acc_msg2").text("");
-//         return true;
-//     } else {
-//         $(".acc_msg2").text("请输入支付宝姓名");
-//         return false;
-//     }
-// }
+function fmoney() {
+    var cval = $("input[name=acc_money]").val();
+    if(cval != ""){
+        $(".acc_msg").text("");
+        return true;  
+    }else{
+        $(".acc_msg").text("请输入提现金额");
+        return false;
+    }
+}
+function zhifubao() {
+    var cval = $("input[name=zhifu]").val();
+    if (cval != "") {
+        $(".acc_msg1").text("");
+        return true;
+    } else {
+        $(".acc_msg1").text("请输入支付宝账号");
+        return false;
+    }
+}
+function zhiframe() {
+    var cval = $("input[name=zhifu_name]").val();
+    if (cval != "") {
+        $(".acc_msg2").text("");
+        return true;
+    } else {
+        $(".acc_msg2").text("请输入支付宝姓名");
+        return false;
+    }
+}
 
-
-
-// function applyFor() {
-//     return (fmoney() && zhifubao() && zhiframe() && asd());
-// }
+function send5() {
+    return (fmoney() && zhifubao() && zhiframe() && asd());
+}
 
 
 
