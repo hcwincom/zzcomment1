@@ -13,7 +13,7 @@ input,textarea{border-radius:0;}
 	display: inline-block;
 	width:100%;height:100%;
 }
-.flexslider .slides img {width: 100%; display: block;}
+.flexslider .slides img {width: 100%;height: 100%; display: block;}
 .flex-control-nav{
 	position:absolute;bottom:10px;z-index:2;
 	width:100%;text-align:center;
@@ -153,7 +153,7 @@ textarea{resize: none;}
 .column-product-container>li>a>p.column-product-title>span:last-child{float: right; color:#666666;max-width: 7em;font-size: 14px;}
 .column-product-container>li>a>p>button{color: #fff;border: none;background: #d00000;padding: 6px 15px;margin-top: 10px;}
 
-.group-head{width:100%;background:#fff;margin:50px 0 20px;overflow: hidden;}
+.group-head{width:100%;background:#fff;margin:34px 0 20px;overflow: hidden;}
 .group-head>li{float:left;padding:0 25px;height:50px;font-size:18px;line-height: 50px;cursor:pointer;}
 .group-head>li.current{background:#d00000;color:#fff;}
 /*页面修改*/
@@ -490,8 +490,8 @@ a.captcha img{width:100px;height:44px;}
 .shop-detailcontainer .cont-head{text-align:center;font-size: 24px;line-height: 34px;padding: 10px 0;}
 .shop-detailcontainer .cont-date{text-align: right;padding:15px 0;}
 .cont-date>span{font-size:16px;color: #999;line-height: 26px;letter-spacing:4px;}
-.shop-detailcontainer .cont{font-size: 16px;line-height: 20px;word-wrap: break-word;letter-spacing: 2px;text-indent: 32px;margin-bottom: 10px;}
-.shop-detailcontainer .cont p{font-size: 16px;line-height: 20px;word-wrap: break-word;letter-spacing: 2px;text-indent: 32px;}
+.edit_cont{font-size: 16px;line-height: 20px;word-wrap: break-word;letter-spacing: 2px;text-indent: 32px;margin-bottom: 10px;}
+#edit_cont p{font-size: 16px;line-height: 20px;word-wrap: break-word;letter-spacing: 2px;text-indent: 32px;}
 .shop-detailcontainer2{width:85%;margin:0 auto;padding:0 0 80px;}
 .shop-detailcontainer2 .cont-head2{text-align:center;font-size: 24px;line-height: 34px;padding:30px 0 30px;}
 .cont2{width:96%;margin:0 auto;}
@@ -642,6 +642,9 @@ a.captcha img{width:100px;height:44px;}
 
 @media screen and (max-width: 1410px){
 	.shop-erwei{right:5px;margin-left:50%;}
+	/* .slides li a{		
+		height:346px;
+	} */
 }
 @media screen and (max-width: 1200px){
 	.wide-container{width:96%;margin:0 2%;}
@@ -742,7 +745,10 @@ a.captcha img{width:100px;height:44px;}
 	.info-deliver .signup{
 		margin-left: 28%;
 	}
-		
+	.shop-type2{margin: 20px auto 0px;}	
+	.shop-character{margin: 20px 0;}
+	.shop-character-list{margin-top: 20px;}
+	.shop-character{font-size: 16px;}
 }
 @media screen and (max-width:600px){
 	/*homemain*/

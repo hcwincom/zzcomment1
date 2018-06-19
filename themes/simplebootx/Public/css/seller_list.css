@@ -174,8 +174,14 @@
 	.shop-form .catecory{
 		margin-left: 0;
 	}
-	
-	
+	.shop-form{
+		margin-top: 10px;
+	}
+	.shop-form select{
+		height: 32px;
+		font-size: 14px;
+		width: 150px;
+	}
 	
 	
 }
@@ -204,12 +210,20 @@
 
 @media screen and (max-width: 500px){
 	.shop-form select{
-		width: 100px;
+		width: 120px;
 	}
 	.catecory>select{
 		width: 100px;
 	}
 }
+@media screen and (max-width: 400px){
+	.shop-form select{
+		width: 100px;
+	}
+
+}
+
+
 
 
 
