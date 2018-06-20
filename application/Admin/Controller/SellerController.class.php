@@ -8,110 +8,177 @@ use Think\Model;
  *  */
 class SellerController extends AdminbaseController {
 	private $m;
-	private $m1;
+ 
 	private $order;
-	private $order1;
+ 
 	public function _initialize() {
 	    parent::_initialize();
 	    $this->m = M('Seller');
-	    $this->m1 = M('SellerApply');
+	   
 	    $this->order='id desc';
-	    $this->order1='id desc';
-	    $this->assign('info_status',C('info_status'));
-	    $this->assign('top_status',C('top_status'));
+	    
+	    $this->assign('seller_status',C('seller_status'));
+	    $this->assign('review_status',C('review_status'));
+	   
 	}
+	/* 获取城市信息 */
+	public function city(){
+	    $m_city=M('City');
+	    if(empty(session('city'))){
+	        session('city',['city1'=>0,'city2'=>0,'city3'=>0]);
+	        $city1=$m_city->where('type=1')->getField('id,name');
+	        $city2=$m_city->where('type=2')->getField('id,fid,name');
+	        
+	        session('add_city1',$city1);
+	        session('add_city2',$city2);
+	    }
+	    
+	    $city['city1']=I('city1',-1);
+	    $city['city2']=I('city2',0);
+	    $city['city3']=I('city3',0);
+	    
+	    $citys=session('city');
+	    //如果没提交城市，选择原session.如果有选择就更新
+	    
+	    if( $city['city1']==-1){
+	        $city=$citys;
+	        $add_city3=session('add_city3');
+	    }else{
+	        session('city',$city);
+	        if($city['city2']!=0){
+	            $add_city3=$m_city->where('type=3 and fid='.$city['city2'])->getField('id,name');
+	        }else{
+	            $add_city3=[];
+	        }
+	        session('add_city3',$add_city3);
+	    }
+	    
+	    $add_city1=session('add_city1');
+	    $add_city2=session('add_city2');
+	    
+	    $this->assign("add_city1",$add_city1)
+	    ->assign("add_city2",$add_city2)
+	    ->assign("add_city3",$add_city3);
+	    
+	    $this->assign("city1", $city['city1'])
+	    ->assign("city2", $city['city2'])
+	    ->assign("city3", $city['city3']);
+	    
+	    if($city['city3']!=0){
+	        return ['eq',$city['city3']];
+	    }elseif($city['city2']!=0){
+	        $tmp=array_keys($add_city3);
+	        return ['in',$tmp];
+	    }elseif($city['city1']!=0){
+	        $tmp1=$m_city->where('fid='.$city['city1'])->getField('id',true);
+	        if(is_array($tmp1)){
+	            $tmp2=$m_city->where(['fid'=>['in',$tmp1]])->getField('id',true);
+	        }else{
+	            $tmp2=$m_city->where(['fid'=>['eq',$tmp1]])->getField('id',true);
+	        }
+	        if(is_array($tmp2)){
+	            return ['in',$tmp2];
+	        }else{
+	            return ['eq',$tmp2];
+	        }
+	        
+	    }else{
+	        return 0;
+	    }
+	    
+	}
+	/* 分类处理 */
+	public function cate($type=1){
+	    
+	    //大类
+	    $m_cate=M('Cate');
+	    $add_cate1=$m_cate->where('type=1 and fid=0')->order('sort desc,name asc')->getField('id,name');
+	    $add_cate2=$m_cate->where('type=1 and fid>0')->order('sort desc,first_char asc')->getField('id,fid,name');
+	    
+	    
+	    $cateid1=I('catecory',0,'intval');
+	  
+	    //二级分类
+	    $cateid2=I('letter',0,'intval');
+	    
+	    $this->assign("add_cate1",$add_cate1)
+	    ->assign('add_cate2',$add_cate2);
+	    $this->assign('cateid1',$cateid1)
+	    ->assign('cateid2',$cateid2);
+	     
+	     //大类未选择则是全部，小类选择则直接返回
+	    if($cateid1==0){
+	        return 0; 
+	    }elseif($cateid2==0){
+	        $where_cate=array('type'=>$type,'fid'=>$cateid1);
+	        $cates=$m_cate->where($where_cate)->order('sort desc,first_char asc')->getField('id',true);
+	        if(is_array($cates)){
+	            return ['in',$cates];
+	        }else{
+	            return array('eq',$cates);
+	        }
+        }else{
+            return array('eq',$cateid2);
+        }
+	   
+	}
+	
     //店铺管理首页
     public function index(){
-        
-        
-        //这是选择框的分类
-        $list0=M('Cate')->where('type=1')->order('fid asc,sort desc,first_char asc,id asc')->select();
-       //1一级分类，2二级分类
-        $cates2=array();
-        $cates1=array();
-        $tmp=array();
-       
-        //得到分类
-       foreach ($list0 as $v){
-           if($v['fid']==0){
-               $cates1[]=$v;
-           }else{
-               $cates2[]=$v;
-               $tmp[$v['fid']][]=$v['id'];
-           }
-       }
+        $where=[];
+        //id
+        $id=I('id',0,'intval');
+        if($id!=0){
+            $where['s.id']=['eq',$id];
+        }
+        //状态
+        $status=I('status',-1,'intval');
+        if($status!=-1){
+            $where['s.status']=['eq',$status];
+        }
+        //分类
+        $tmp=$this->cate(1);
+         if(!empty($tmp)){
+             $where['s.cid']=$tmp;
+         }
+         //分类
+         $tmp=$this->city();
+         if(!empty($tmp)){
+             $where['s.city']=$tmp;
+         }
+         //店铺名搜索
+         $name=trim(I('name',''));
+         if($name!=''){
+             $where['s.name']=['like','%'.$name.'%'];
+         }
        //排序
-       $sort=I('sort',0,'intval');
-       $order=' order by ';
+       $sort=I('sort',0,'intval'); 
        switch ($sort){ 
-           case 2:$order.=' s.score desc,s.id desc ';break;
-           case 3:$order.=' s.browse desc,s.id desc ';break;
-           default:$order.=' s.id desc ';break;
+           case 2:$order=' s.score desc,s.id desc ';break;
+           case 3:$order=' s.browse desc,s.id desc ';break;
+           default:$order=' s.id desc ';break;
        }
-       $status=I('status',-1);
-       //$where=array();
-       $where=' where s.status>0 ';
-       switch ($status){
-           case -1:$where=' where s.status>0 ';break;
-           case 1:$where=' where s.status=1 ';break;
-           case 2:$where=' where s.status=2 ';break;
-           case 3:$where=' where s.status=3 ';break; 
-       }
-       $id=trim(I('id',''));
-       if($id!=''){
-           $where.=" and s.id like '%{$id}%' ";
-       }
-       //分类查询条件
-       $fid1=I('fid1',0,'intval');
-       $fid2=I('fid2',0,'intval');
-    	
-    	if($fid2==0 ){
-    	    if($fid1==0){
-    	        
-    	    }elseif(empty($tmp[$fid1])){
-    	        //$where['cid']=array('eq',0,'intval');
-    	        $where.=' and s.cid=0 ';
-    	    }else{
-    	        //$where['cid']=array('in',$tmp[$fid1]);
-    	        $str=implode(',', $tmp[$fid1]);
-    	        $where.=' and s.cid in ('.$str.')';
-    	    }
-    	}else{
-    	    //$where['cid']=array('eq',$fid2);
-    	    $where.=" and s.cid=".$fid2;
-    	}
-    	//店铺名搜索
-    	$name=trim(I('name',''));
-    	if($name!=''){
-    	    $where.=" and s.name like '%{$name}%' ";
-    	}
-    	
-    	$m=M();
+        
+        $m= $this->m ;
+        $total=$m->alias('s')->where($where)->count();
+        $page = $this->page($total, 10);
+        $list=$m->alias('s')->field("s.*,concat(c1.name,'-',c2.name) as cname")
+        ->join('cm_cate as c2 on c2.id=s.cid')
+        ->join('cm_cate as c1 on c1.id=c2.fid')
+        ->where($where)
+        ->order($order)
+        ->limit($page->firstRow,$page->listRows)
+        ->select();
+        
+        //得到城市
+        foreach($list as $k=>$v){
+            $list[$k]['city_name']=getCityNames($v['city']);
+        }
     	 
-    	$sql="select count(s.id) as total from cm_seller as s {$where}";
-    	//$total=$m->where($where)->count();
-    	$tmp=$m->query($sql);
-    	 
-    	$total=$tmp[0]['total'];
-    	$page = $this->page($total, 10);
-    	
-    	//$list=$m->where($where)->order($this->order)->limit($page->firstRow,$page->listRows)->select();
-    	$sql="select s.*,c3.name as name3,c3.id as city1,c3.fid as city2,c2.name as name2,c2.fid as city1,c1.name as name1
-    	from cm_seller as s
-        left join cm_city as c3 on c3.id=s.city
-    	left join cm_city as c2 on c2.id=c3.fid
-    	left join cm_city as c1 on c1.id=c2.fid
-    	{$where} {$order}
-        limit {$page->firstRow},{$page->listRows}";
-    	$list=$m->query($sql);
-    	
     	$this->assign('page',$page->show('Admin'));
         $this->assign('list',$list);
-        $this->assign('cates1',$cates1);
-        $this->assign('cates2',$cates2);
-        $this->assign('sort',$sort)
-        ->assign('fid1',$fid1)
-        ->assign('fid2',$fid2)
+      
+        $this->assign('sort',$sort) 
         ->assign('name',$name)
         ->assign('status',$status)
         ->assign('id',$id);
@@ -142,51 +209,35 @@ class SellerController extends AdminbaseController {
             'sname'=>'seller',
         );
         $desc='店铺'.$id;
-        $m->startTrans();
+        $row=0;
+      
         switch ($review){
             case 1:
-                $desc='冻结了'.$desc;
-                if($info['status']=='3'){
-                    $m->commit();
-                    $this->error('已冻结');
-                    exit;
-                }
+                $desc='冻结了'.$desc; 
                 $row=$m->data(array('status'=>3))->where('id='.$id)->save();
-                if($row===1){
-                    $m->commit();
-                    
-                    $data_action['descr']=$desc;
-                    $m_action->add($data_action);
-                    $this->success($desc);
-                    exit;
-                }
+                 
                 break;
             case 2:
                 $desc='解冻了'.$desc;
                 if($info['status']!='3'){
-                    $m->commit();
+                    $m->rollback();
                     $this->error('数据错误');
                     exit;
                 }
                 $new_status=empty($info['uid'])?1:2;
                 $row=$m->data(array('status'=>$new_status))->where('id='.$id)->save();
-                if($row===1){
-                    $m->commit();
-                    
-                    $data_action['descr']=$desc;
-                    $m_action->add($data_action);
-                    $this->success($desc);
-                    exit;
-                }
-                break;
-            case 3:
-                $m->commit();
-                  $this->redirect(U('seller_del',array('id'=>$id)));
-                break;
+                
+                break; 
             default:break;
         }
-        $m->rollback();
-        $this->error('操作失败，请刷新重试');
+        if($row===1){ 
+            $data_action['descr']=$desc;
+            $m_action->add($data_action);
+            $this->success($desc); 
+        }else{ 
+            $this->error('操作失败，请刷新重试'); 
+        }
+       
         exit;
     }
     //删除店铺
@@ -212,54 +263,106 @@ class SellerController extends AdminbaseController {
             'sid'=>$id,
             'sname'=>'seller',
         );
-        $desc='店铺'.$id;
+        $desc='店铺'.$id.'('.$info['name'].')';
         $m->startTrans();
         $desc='删除了'.$desc;
         $row=$m->where('id='.$id)->delete();
-        if($row===1){
-            seller_del($info);
-            $m->commit();
-            $data_action['descr']=$desc;
-            $m_action->add($data_action);
-            $this->success($desc,U('index')); 
-        }else{
+        if($row!==1){
             $m->rollback();
             $this->error('操作失败，请刷新重试'); 
+        } 
+        $where=['sid'=>$id];
+        //删除店铺后还要删除店铺动态，，商品，点评回复，各种推荐
+        
+        //商品
+        $m_goods=M('goods');
+        $goods=$m_goods->where($where)->getField('id,pic,pic0,picpath');
+        $m_goods->where($where)->delete();
+       
+        //动态
+        $m_active=M('active');
+        $active=$m_active->where($where)->getField('id,pic,picpath');
+        $m_active->where($where)->delete();
+       
+        //招聘
+        $m_job=M('job');
+        $job=$m_job->where($where)->getField('id,pic,picpath');
+        $m_job->where($where)->delete();
+        
+        //点评,还要删除回复
+        $m_comment=M('comment');
+        $comments=$m_comment->where($where)->getField('id,uid,file');
+        $m_comment->where($where)->delete(); 
+        //店铺推荐
+        M('TopSeller')->where('pid='.$info['id'])->delete();
+        M('SellerEdit')->where($where)->delete();
+        M('SellerApply')->where($where)->delete();
+        $m->commit();
+        //下属店铺信息的图片和置顶删除
+        pro_dels('goods',$goods);
+        pro_dels('active',$active);
+        pro_dels('job',$job);
+        //评级文件
+        foreach ($comments as $v){
+            comment_del($v);
         }
+        //相关图片 
+        $path=getcwd().'/'.C("UPLOADPATH").'/';
+        if(is_file($path.$info['pic'])){
+            unlink($path.$info['pic']);
+        }
+        if(is_file($path.$info['qrcode'])){
+            unlink($path.$info['qrcode']);
+        }
+        if(is_file($path.$info['cards'])){
+            unlink($path.$info['cards']);
+        }
+       
+        $data_action['descr']=$desc;
+        $m_action->add($data_action);
+        $this->success($desc,U('index'));
         exit;
     }
     //新创建店铺 待审核
     public function create(){ 
-        //$where=array();
-        $where=' where s.status=0 ';
-        $order=' order by id desc ';
+        $where=[];
+         
+        //状态
+        $where['s.status']=['eq',0];
         
+        //分类
+        $tmp=$this->cate(1);
+        if(!empty($tmp)){
+            $where['s.cid']=$tmp;
+        }
+        //分类
+        $tmp=$this->city();
+        if(!empty($tmp)){
+            $where['s.city']=$tmp;
+        }
         //店铺名搜索
         $name=trim(I('name',''));
         if($name!=''){
-            $where.=" and s.name like '%{$name}%' ";
+            $where['s.name']=['like','%'.$name.'%'];
         }
-        $m=M();
+        //排序
+        $order=' s.id desc ';
         
-        $sql="select count(s.id) as total from cm_seller as s {$where}";
-       
-        $tmp=$m->query($sql);
-        
-        $total=$tmp[0]['total'];
+        $m= $this->m ;
+        $total=$m->alias('s')->where($where)->count();
         $page = $this->page($total, 10);
-        
-        $sql="select s.*,concat(c1.name,'-',c2.name,'-',c3.name) as citys,
-            concat(cate1.name,'-',cate2.name) as cate,u.user_login as authorname
-        from cm_seller as s
-        left join cm_city as c3 on c3.id=s.city
-        left join cm_city as c2 on c2.id=c3.fid
-        left join cm_city as c1 on c1.id=c2.fid
-        left join cm_cate as cate2 on cate2.id=s.cid
-        left join cm_cate as cate1 on cate1.id=cate2.fid
-        left join cm_users as u on u.id=s.author
-        {$where} {$order}
-        limit {$page->firstRow},{$page->listRows}";
-        $list=$m->query($sql);
+        $list=$m->alias('s')->field("s.*,concat(c1.name,'-',c2.name) as cname,u.user_login as authorname")
+        ->join('cm_cate as c2 on c2.id=s.cid')
+        ->join('cm_cate as c1 on c1.id=c2.fid')
+        ->join('cm_users as u on u.id=s.author')
+        ->where($where)
+        ->order($order)
+        ->limit($page->firstRow,$page->listRows)
+        ->select();
+        //得到城市
+        foreach($list as $k=>$v){
+            $list[$k]['city_name']=getCityNames($v['city']);
+        }
         
         $this->assign('page',$page->show('Admin'));
         $this->assign('list',$list);
@@ -303,6 +406,11 @@ class SellerController extends AdminbaseController {
             $row=$m->where('id='.$id)->delete();
             $desc.='删除成功';
             $data_msg['content'].='审核不通过，被删除了';
+            //相关图片
+            $path=getcwd().'/'.C("UPLOADPATH").'/';
+            if(is_file($path.$info['pic'])){
+                unlink($path.$info['pic']);
+            }
         }
         if($row===1){
             $data_action['descr']=$desc;
@@ -319,13 +427,9 @@ class SellerController extends AdminbaseController {
     public function info(){
         $id=I('id',0,'intval');
         $m=M();
-       // $sql="select s.*,c3.name as name3,c3.id as city1,c3.fid as city2,c2.name as name2,c2.fid as city1,c1.name as name1,
-        $sql="select s.*,concat(c1.name,'-',c2.name,'-',c3.name) as citys,
+         $sql="select s.*,
             u.user_login as uname,au.user_login as author_name,concat(cate1.name,'-',cate2.name) as cname
-        from cm_seller as s
-        left join cm_city as c3 on c3.id=s.city
-        left join cm_city as c2 on c2.id=c3.fid
-        left join cm_city as c1 on c1.id=c2.fid
+        from cm_seller as s 
         left join cm_users as u on s.uid=u.id
         left join cm_users as au on au.id=s.author
         left join cm_cate as cate2 on cate2.id=s.cid
@@ -334,25 +438,8 @@ class SellerController extends AdminbaseController {
          
         $info=$m->query($sql);
         $info=$info[0];
-        
-        
-        //判断状态
-        switch ($info['status']){
-            case 1:
-                $info['status_name']='未领用';
-                break;
-            case 2:
-                $info['status_name']='已领用';
-                
-                break;
-            case 3:
-                $info['status_name']='已冻结';
-               
-                break;
-            default:
-                $info['status_name']='错误状态';
-                break;
-        }
+        $info['citys']=getCityNames($info['city']);
+         
         $this->assign('info',$info);
         
         $this->display();
@@ -360,29 +447,54 @@ class SellerController extends AdminbaseController {
     }
     //待审核
     public function applying(){
-        $m=D('SellerApply0View');
-        $order=$this->order1;
-        $sid=trim(I('sid',''));
-        $sname=trim(I('sname',''));
-        $status=I('status',-1);
-        $where=array();
-        if($sid!=''){
-            $where['sid']=array('like','%'.$sid.'%');
+        $where=[];
+        //id
+        $sid=I('sid',0,'intval');
+        if($sid!=0){
+            $where['a.sid']=['eq',$sid];
+        }else{
+            $sid='';
         }
-        if($sname!=''){
-            $where['sname']=array('like','%'.$sname.'%');
-        }
+        //状态
+        $status=I('status',-1,'intval');
         if($status!=-1){
-            $where['status']=array('eq',$status);
+            $where['a.status']=['eq',$status];
         }
-         
-        $total=$m->where($where)->count();
+        
+        //店铺名搜索
+        $sname=trim(I('sname',''));
+        if($sname!=''){
+            $where['s.name']=['like','%'.$sname.'%'];
+        }
+        //排序
+        $order='a.id desc'; 
+        
+        $m= M('seller_apply');
+        $total=$m->alias('a')
+        ->join('cm_seller as s on a.sid=s.id')
+        ->where($where)->count();
         $page = $this->page($total, 10);
-        $list=$m->where($where)->order($this->order)->limit($page->firstRow,$page->listRows)->select();
+       
+        $list=$m->alias('a')
+        ->field("a.*,s.name as sname,u.user_login as uname")
+        ->join('cm_seller as s on a.sid=s.id')
+        ->join('cm_users as u on a.uid=u.id')
+        ->where($where)
+        ->order($order)
+        ->limit($page->firstRow,$page->listRows)
+        ->select();
+        
+         
+        
         $this->assign('page',$page->show('Admin'));
-        $this->assign('list',$list)->assign('sid',$sid)->assign('sname',$sname)->assign('status',$status);
+        $this->assign('list',$list);
+        
+        $this->assign('sname',$sname)
+        ->assign('status',$status)
+        ->assign('sid',$sid);
         
         $this->display();
+       
     }
     
     //查看店铺领用申请详情
@@ -391,13 +503,10 @@ class SellerController extends AdminbaseController {
         $m=M();
        
         $sql="select sa.*,s.create_time as stime,s.name as sname,s.author,s.address,s.city,s.status as sstatus,
-                concat(c1.name,'-',c2.name,'-',c3.name) as citys,concat(cate1.name,'-',cate2.name) as cname,
+                concat(cate1.name,'-',cate2.name) as cname,
                 u.user_login as uname,au.user_login as authorname
             from cm_seller_apply as sa
-            left join cm_seller as s on sa.sid=s.id 
-            left join cm_city as c3 on c3.id=s.city
-            left join cm_city as c2 on c2.id=c3.fid
-            left join cm_city as c1 on c1.id=c2.fid
+            left join cm_seller as s on sa.sid=s.id  
             left join cm_cate as cate2 on cate2.id=s.cid
             left join cm_cate as cate1 on cate1.id=cate2.fid
             left join cm_users as u on sa.uid=u.id
@@ -405,7 +514,7 @@ class SellerController extends AdminbaseController {
             where sa.id={$id} limit 1";
         $info=$m->query($sql);
         $info=$info[0];
-        
+        $info['citys']=getCityNames($info['city']);
          
         $this->assign('info',$info);
         
@@ -418,14 +527,14 @@ class SellerController extends AdminbaseController {
         $old_status=I('status',0,'intval');
         $status=I('review',0,'intval');
         $id=I('id',0,'intval');
-        $url=I('url','');
+        
         $m=$this->m1;
         if($status==0 || $id==0){
             $this->error('数据错误');
         }
         $info=$m->where('id='.$id)->find();
         //查看是否被他人审核或已审核通过
-        if(empty($info) || $info['status'] != $old_status){
+        if(empty($info) || $info['status'] != 0 ){
             $this->error('错误，申请已被审核,请刷新');
         }
         //删除
@@ -544,6 +653,75 @@ class SellerController extends AdminbaseController {
         $this->error('审核失败，请刷新重试');
          
         exit;
+    }
+    //领用删除
+    function apply_del(){
+        $old_status=I('status',-1,'intval');
+       
+        $id=I('id',0,'intval');
+        $url=I('url','');
+        $m=M('seller_apply');
+        if($old_status==-1 || $id==0){
+            $this->error('数据错误');
+        }
+        $info=$m->where('id='.$id)->find();
+        //查看是否被他人审核或已审核通过
+        if(empty($info) || $info['status'] != $old_status){
+            $this->error('数据错误,请刷新');
+        }
+        //删除
+        $uid=session('ADMIN_ID');
+        $time=time();
+        $data_action=array(
+            'uid'=>$uid,
+            'time'=>$time,
+            'sid'=>$id,
+            'sname'=>'seller_apply',
+            'descr'=>'删除了用户'.$info['uid'].'领用店铺'.$info['sid'].'的申请',
+        );
+        $data_msg=array(
+            'aid'=>$uid,
+            'time'=>$time,
+            'uid'=>$info['uid'],
+            'content'=>date('Y-m-d',$info['create_time']).'提交的领用店铺申请不通过',
+        );
+        $m->startTrans();
+        $row=$m->where('id='.$id)->delete();
+        if($row!==1){
+            $m->rollback();
+            $this->error('操作失败'); 
+        } 
+        M('AdminAction')->add($data_action);
+        
+        if($info['status']==0){
+            $data_msg=array(
+                'aid'=>$uid,
+                'time'=>$time,
+                'uid'=>$info['uid'],
+                'content'=>date('Y-m-d',$info['create_time']).'提交的领用店铺申请不通过',
+            ); 
+            if($info['deposit']>0){
+                $data_msg['content'].=',退还保证金';
+                M('users')->where('id='.$info['uid'])->setInc('account',$info['deposit']);
+                $data_pay=array(
+                    'uid'=>$info['uid'],
+                    'money'=>$info['deposit'],
+                    'content'=>$data_msg['content'],
+                    'time'=>$time,
+                ); 
+                M('Pay')->add($data_pay);
+            }
+            M('Msg')->add($data_msg);
+           
+        }
+        $m->commit();
+        if($url=='applying'){
+            $this->success('删除成功');
+        }else{
+            $this->success('删除成功',U('applying'),3);
+        }
+        exit;
+         
     }
     //修改申请
     public function edit(){

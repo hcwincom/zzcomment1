@@ -4,16 +4,16 @@ namespace Admin\Controller;
 use Common\Controller\AdminproController;
 /**
  *
- * 店铺招聘
+ * 便民信息
  */
-class JobController extends AdminproController {
+class InfoController extends AdminproController {
 
      
     public function _initialize() {
         parent::_initialize();
-        $this->m = M('job');
-        $this->type='job';
-        $this->flag='店铺招聘';
+        $this->m = M('info');
+        $this->type='info';
+        $this->flag='便民信息';
         $this->assign('flag',$this->flag); 
        
     }
@@ -23,12 +23,12 @@ class JobController extends AdminproController {
         $m=$this->m;
         $id=trim(I('id',''));
         $name=trim(I('name',''));
-        $sid=trim(I('sid',''));
-        $sname=trim(I('sname',''));
+        $uid=trim(I('uid',''));
+        $uname=trim(I('uname',''));
         $status=I('status',-1);
         $where=array();
         
-        $field='p.id,p.sid,p.pic,p.name,p.dsc,p.create_time,p.start_time,p.end_time,p.status,s.name as sname';
+        $field='p.id,p.uid,p.pic,p.name,p.dsc,p.create_time,p.start_time,p.end_time,p.status,u.user_login as uname';
         $order='p.create_time desc';
         if($id!=''){
             $where['p.id']=array('eq',$id);
@@ -36,17 +36,17 @@ class JobController extends AdminproController {
         if($status!=-1){
             $where['p.status']=array('eq',$status);
         }
-        if($sid!=''){
-            $where['p.sid']=array('eq',$sid);
+        if($uid!=''){
+            $where['p.uid']=array('eq',$uid);
         }
         if($name!=''){
             $where['p.name']=array('like','%'.$name.'%');
         }
-        if($sname!=''){
-            $where['s.name']=array('like','%'.$sname.'%');
+        if($uname!=''){
+            $where['u.user_login']=array('like','%'.$uname.'%');
         }
         //分类
-        $tmp=$this->cate(2);
+        $tmp=$this->cate(3);
         if(!empty($tmp)){
             $where['p.cid']=$tmp;
         }
@@ -58,11 +58,11 @@ class JobController extends AdminproController {
         
         $total=$m
         ->alias('p')
-        ->join('cm_seller as s on s.id=p.sid')
+        ->join('cm_users as u on u.id=p.uid')
         ->where($where)->count();
         $page = $this->page($total, 10);
         $list=$m->alias('p')->field($field)
-        ->join('cm_seller as s on s.id=p.sid')
+        ->join('cm_users as u on u.id=p.uid')
         ->where($where)
         ->order($order)
         ->limit($page->firstRow,$page->listRows)
@@ -70,9 +70,9 @@ class JobController extends AdminproController {
         $this->assign('page',$page->show('Admin'));
         $this->assign('list',$list);
         $this->assign('id',$id)
-        ->assign('sid',$sid)
+        ->assign('uid',$uid)
         ->assign('name',$name)
-        ->assign('sname',$sname)
+        ->assign('uname',$uname)
         ->assign('status',$status);
         $this->display();
     }
@@ -80,8 +80,8 @@ class JobController extends AdminproController {
     function info(){
         $id=I('id',0);
         $m=$this->m;
-        $info=$m->alias('p')->field('p.*,s.name as sname,c.name as cname')
-        ->join('cm_seller as s on s.id=p.sid')
+        $info=$m->alias('p')->field('p.*,u.user_login as uname,c.name as cname')
+        ->join('cm_users as u on u.id=p.uid')
         ->join('cm_cate as c on c.id=p.cid') 
         ->where('p.id='.$id)
         ->find();

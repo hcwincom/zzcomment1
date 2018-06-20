@@ -13,12 +13,9 @@ class SellerController extends HomebaseController {
         $sid=$this->sid;
         $m=M();
         //店铺信息
-        $sql="select s.*,concat(c1.name,'-',c2.name,'-',c3.name) as citys, cate2.fid as cid0,
+        $sql="select s.*, cate2.fid as cid0,
         u.user_login as uname,au.user_login as author_name,concat(cate1.name,'-',cate2.name) as cname
-         from cm_seller as s
-        left join cm_city as c3 on c3.id=s.city
-        left join cm_city as c2 on c2.id=c3.fid
-        left join cm_city as c1 on c1.id=c2.fid
+         from cm_seller as s 
         left join cm_users as u on s.uid=u.id
         left join cm_users as au on au.id=s.author
         left join cm_cate as cate2 on cate2.id=s.cid
@@ -29,7 +26,7 @@ class SellerController extends HomebaseController {
         if(empty($info)){
            $this->error('该店铺不存在'); 
         }
-       
+        $info['citys']=getCityNames($info['city']);
         //行政，企业，个体，个人的前台显示
         switch($info['cid0']){
             case 9:$seller_info=C('SELLERINFO1');break;
@@ -216,17 +213,14 @@ class SellerController extends HomebaseController {
     public function job_detail(){
         
         $detail=M('Job')
-        ->field('job.*,cate.name as cate_name,concat(city1.name,city2.name,city3.name) as city_name') 
+        ->field('job.*,cate.name as cate_name') 
         ->alias('job')
-        ->join('cm_cate as cate on cate.id=job.cid')
-        ->join('cm_city as city3 on city3.id=job.city')
-        ->join('cm_city as city2 on city2.id=city3.fid')
-        ->join('cm_city as city1 on city1.id=city2.fid')
+        ->join('cm_cate as cate on cate.id=job.cid') 
         ->where('job.id='.I('id',0,'intval'))->find();
         if(empty($detail)){
             $this->error('该信息不存在');
         }
-        
+        $detail['city_name']=getCityNames($detail['city']);
         $this->assign('detail',$detail);
         $this->assign('html_title',$detail['name']);
         $this->display();

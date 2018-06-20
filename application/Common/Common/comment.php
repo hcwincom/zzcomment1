@@ -146,52 +146,13 @@ function sendMsg($mobile,$type){
    return $data;
 }
 
-/* 
- * 删除商品的图片和推荐置顶 */
-function goods_del($info0){
-    //删除图片和推荐置顶
-    $path=getcwd().'/'.C("UPLOADPATH").'/';
-    $file=$path.$info0['pic'];
-    if(is_file($file)){
-        unlink($file);
-    }
-    $file=$path.$info0['pic0'];
-    if(is_file($file)){
-        unlink($file);
-    }
-    M('TopGoods')->where('pid='.$info0['id'])->delete();
-    M('TopGoods0')->where('pid='.$info0['id'])->delete();
-}
-/*
- * 删除动态的图片 */
-function active_del($info0){
-    //删除图片 
-    $file=getcwd().'/'.C("UPLOADPATH").'/'.$info0['pic'];
-    if(is_file($file)){
-        unlink($file);
-    } 
-    M('TopActive')->where('pid='.$info0['id'])->delete();
-    M('TopActive0')->where('pid='.$info0['id'])->delete();
-}
-/*
- * 删除动态的图片和推荐置顶 */
-function active_dels($list){
-    //删除图片和推荐置顶
-    $path=getcwd().'/'.C("UPLOADPATH").'/';
-    $ids=[];
-    foreach($list as $k=>$v){
-        $ids[]=$k;
-        if(is_file($path.$v)){
-            unlink($path.$v);
-        } 
-    } 
-    $where=['pid'=>['in',$ids]];
-    M('TopActive')->where($where)->delete();
-    M('TopActive0')->where($where)->delete(); 
-}
+ 
 /*
  * 删除店铺信息的图片和推荐置顶 */
 function pro_dels($type,$list){
+    if(empty($list)){
+        return 0;
+    }
     //删除图片和推荐置顶
     $path=getcwd().'/'.C("UPLOADPATH").'/';
     $ids=[];
@@ -253,66 +214,16 @@ function pro_del($type,$info){
 /*
  * 删除评级 */
 function comment_del($info0){
-    //
-    $files=explode(';', $info0['files']);
-    array_pop($info['file']);
+    
     $path=getcwd().'/'.C("UPLOADPATH").'/';
-    foreach($files as $v){
-        if(is_file($path.$v)){
-            unlink($path.$v);
-        }
-    }  
-    
-    M('Reply')->where('cid='.$info0['id'])->delete(); 
-}
-/*
- * 删除商品动态的图片和推荐置顶,评论 */
-function seller_del($info0){
-    $where='sid='.$info0['id'];
-    //删除店铺后还要删除店铺动态，，商品，点评回复，各种推荐
    
-    //商品
-    $m_goods=M('Goods');
-    $goods=$m_goods->where($where)->select();
-    
-    foreach ($goods as $v){
-        goods_del($v);
-    }
-    
-    //动态
-    $m_active=M('Active');
-    $goods=$m_active->where($where)->select(); 
-    foreach ($goods as $v){
-        active_del($v);
-    }
-    //点评,还要删除回复
-    $m_comment=M('Comment');
-    $comments=$m_comment->where($where)->select();
-    $m_comment->where($where)->delete();
-    //
-    foreach ($comments as $v){
-        comment_del($v);
-    }
-    
-    //店铺推荐
-    M('TopSeller')->where('pid='.$info0['id'])->delete();
-    M('SellerEdit')->where($where)->delete();
-    M('SellerApply')->where($where)->delete();
-    //相关图片
-   
-    $path=getcwd().'/'.C("UPLOADPATH").'/';
-    if(is_file($path.$info0['pic'])){
-        unlink($path.$info0['pic']);
-    }
-    if(is_file($path.$info0['qrcode'])){
-        unlink($path.$info0['qrcode']);
-    }
-    if(is_file($path.$info0['cards'])){
-        unlink($path.$info0['cards']);
+    if(is_file($path.$info0['file'])){
+        unlink($path.$info0['file']);
     }
      
+    M('Reply')->where('cid='.$info0['id'])->delete(); 
 }
-
+ 
 /* 赠币处理 */
 function coin($money,$uid,$dsc='会员操作'){
    if(empty($money)){

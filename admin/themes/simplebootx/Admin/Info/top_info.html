@@ -4,14 +4,14 @@
 <body>
 	<div class="wrap">
 		<ul class="nav nav-tabs">
-			 
 			<li class=""><a href="{:U('index')}">{$flag}列表</a></li>
 			<li class=""><a href="{:U('top')}">{$flag}置顶列表</a></li>
 			<li class=""><a href="{:U('top0')}">{$flag}推荐列表</a></li>
-			<li class="active"><a href="{:U('info',array('id'=>$info['id']))}">{$flag}详情</a></li>
+			 
+			<li class="active"><a href="{:U('top_info',array('id'=>$info['id']))}">{$flag}置顶详情</a></li>
 		</ul>
 		<!--  -->
-		<form class="form-horizontal js-ajax-form11" method="post" action="{:U('review')}" >
+		<form class="form-horizontal js-ajax-form" method="post" action="{:U('top_review')}" >
 			<fieldset>
 				<div class="control-group fleft">
 					<span class="control-label" >Id：</span>
@@ -23,67 +23,20 @@
 				<div class="control-group fleft">
 					<span class="control-label">店铺名称：</span>
 					<div class="controls">
-					<input type="text"  value="{$info.sname}" readonly/>
-						<a href="{:U('portal/seller/home',['sid'=>$info['sid']])}" target="_blank">
-							查看
-						</a>
+						<a href="{:U('portal/seller/home',['sid'=>$info['sid']])}" target="_blank">{$info.sname}</a>
+						 
 					</div>
 				</div>
 				 
 				<div class="control-group fleft">
 					<span class="control-label" >{$flag}标题：</span>
 					<div class="controls">
-						<input type="text"  value="{$info.name}" readonly/>
-						 <a href="{:U('portal/seller/job_detail',['sid'=>$info['sid'],'id'=>$info['id']])}" target="_blank">
-						 	查看
-						 </a> 
-					 </div>
-				</div>
-				 <div class="control-group fleft">
-					<span class="control-label" >分类：</span>
-					<div class="controls">
-						<input type="text"  value=" {$info.cname}" readonly/> 
-					</div>
-				</div>
-				<div class="control-group fleft">
-					<span class="control-label" >城市：</span>
-					<div class="controls"> 
-						<input type="text"  value=" {$info.city_name}" readonly/>
-					</div>
-				</div> 
-				<div class="control-group fleft">
-					<span class="control-label" >地点：</span>
-					<div class="controls">
-						<input type="text"  value=" {$info.address}" readonly/> 
-					</div>
-				</div>
-				<div class="control-group fleft">
-					<span class="control-label" >联系方式：</span>
-					<div class="controls">
-						<input type="text"  value=" {$info.tel}" readonly/> 
+						 <a href="{:U('portal/seller/news_detail',['sid'=>$info['sid'],'id'=>$info['pid']])}" target="_blank">{$info.pname}</a>
+					
 					</div>
 				</div>
 				 
-			 
-				<div class="control-group fleft">
-					<span class="control-label" >创建时间：</span>
-					<div class="controls">
-						<input type="text"  value="{$info.create_time|date='Y-m-d H:i:s',###}" readonly/>
-					</div>
-				</div>
-				<div class="control-group fleft">
-					<span class="control-label" >开始时间：</span>
-					<div class="controls">
-						<input type="text"  value="{$info.start_time|date='Y-m-d',###}" readonly/>
-					</div>
-				</div>
-				<div class="control-group fleft">
-					<span class="control-label" >过期时间：</span>
-					<div class="controls">
-						<input type="text" value="{$info.end_time|date='Y-m-d',###}" readonly/>
-					</div>
-				</div>
-				
+				 
 				 
 				<div style="clear:both"></div>
 				<div class="control-group">
@@ -93,22 +46,53 @@
 						 
 					</div>
 				</div>
-				<div class="control-group">
-					<span class="control-label" >{$flag}简介：</span>
+				 
+				<div class="control-group fleft">
+					<span class="control-label" >置顶申请时间：</span>
 					<div class="controls">
-					 {$info.dsc}
+						<input type="text"  value="{$info.create_time|date='Y-m-d H:i',###}" readonly/>
 					</div>
 				</div>
-				<div class="control-group">
-					<span class="control-label" >{$flag}内容：</span>
+			 	<div class="control-group fleft">
+					<span class="control-label" >置顶开始时间：</span>
 					<div class="controls">
-					 {$info.content}
+						<input type="text"  value="{$info.start_time|date='Y-m-d',###}" readonly/>
 					</div>
 				</div>
-			 <div class="control-group fleft">
-					<span class="control-label" >状态：</span>
+				<div class="control-group fleft">
+					<span class="control-label" >置顶结束时间：</span>
 					<div class="controls">
-						<input class="red" type="text" value="{$info_status[$info['status']]}" readonly/>
+						<input type="text"  value="{$info.end_time|date='Y-m-d',###}" readonly/>
+					</div>
+				</div>
+				<div class="control-group fleft">
+					<span class="control-label" >置顶申请费用：</span>
+					<div class="controls">
+						<input type="text" value="￥{$info.price}({$info.coin})" readonly/>
+					</div>
+				</div>
+			 	<div class="control-group fleft">
+					<span class="control-label" >置顶时段内置顶数：</span>
+					<div class="controls">
+						<input type="text" value="{$info.count}" readonly/>
+					</div>
+				</div>
+				 <div class="control-group fleft">
+					<span class="control-label" >{$flag}最大置顶数：</span>
+					<div class="controls">
+						<input type="text" value="{$info.conf_count}" readonly/>
+					</div>
+				</div>
+				<div class="control-group fleft">
+					<span class="control-label" >{$flag}每日置顶费用：</span>
+					<div class="controls">
+						<input type="text" value="{$info.conf_price}" readonly/>
+					</div>
+				</div>
+				<div class="control-group fleft">
+					<span class="control-label" >置顶申请状态：</span>
+					<div class="controls">
+						<input class="red" type="text" value="{$top_status[$info['status']]}" readonly/>
 					</div>
 				</div>
 			<div style="clear:both"></div>
@@ -116,7 +100,7 @@
 					<input type="hidden" name="id" value="{$info.id}">
 					 <input type="hidden" id="review" name="review" value="0">
 					 <input type="hidden" name="status" value="{$info.status}">
-				<eq name="info.status" value="0"> 
+				<eq name="info.status" value="0">
 					<button type="submit" class="btn btn-primary js-ajax-submit" id="sub1">
 						审核不通过
 					</button>
@@ -124,19 +108,19 @@
 					<button type="submit" class="btn btn-primary js-ajax-submit" id="sub2">
 						审核通过
 					</button>
-				</eq>
-					<button type="submit" class="btn btn-primary js-ajax-submit22" id="sub3">
-						删除{$flag}
+				</eq>	
+					<button type="submit" class="btn btn-primary js-ajax-submit" id="sub3">
+						删除置顶 
 					</button>
 					 
 					<a class="btn" href="javascript:history.back(-1);">返回</a>
-				 </div>
+					 
 			</fieldset>
 		</form>
 	</div>
 <script src="__PUBLIC__/js/common.js"></script> 
 <script>
-
+ 
 $('#sub1').click(function(){
 	if(!confirm('确认审核不通过吗？')){
 		return false;
@@ -156,7 +140,7 @@ $('#sub3').click(function(){
 		return false;
 	}
 	$('#review').val('3');
-	$('form').attr('action',"{:U('del')}");
+	$('form').attr('action',"{:U('top_del')}");
 	return true;
 });
 </script>

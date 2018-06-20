@@ -9,9 +9,9 @@
 		 <form class="well form-search" method="post" action="{:U('applying')}">
 			状态：<select name="status" id="status">
 				<option value="-1" <if condition="$status eq -1">selected</if>>所有</option>
-				<option value="0" <if condition="$status eq 0">selected</if>>未审核</option>
-				<option value="1" <if condition="$status eq 1">selected</if>>审核不通过</option>
-				<option value="2" <if condition="$status eq 2">selected</if>>审核通过</option>
+			<foreach name="review_status" item="vo">
+				<option value="{$key}" <if condition="$status eq $key">selected</if>>{$vo}</option>
+			</foreach>
 				 
 			</select>
 			 
@@ -40,7 +40,7 @@
 				<foreach name="list" item="vo">
 					<tr> 
 	                    <td>{$vo.id}</td>      
-	                    <td> {$vo.sname}</td>
+	                    <td>{$vo.sname}</td>
 	                    <td> {$vo.uname}</td>
 	                    
 	                    <td> {$vo.corporation}</td>
@@ -56,7 +56,7 @@
 	                    <td>
 	                    <a  href="{:U('applyinfo',array('id'=>$vo['id']))}"  >审核</a> 
 	                     &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-	                <a class="js-ajax-dialog-btn" href="{:U('review',array('id'=>$vo['id'],'status'=>$vo['status'],'review'=>3,'url'=>'applying'))}" data-msg="确认删除吗？">删除</a> 
+	                <a class="js-ajax-dialog-btn" href="{:U('apply_del',array('id'=>$vo['id'],'status'=>$vo['status'],'url'=>'applying'))}" data-msg="确认删除吗？">删除</a> 
 	               
 	                    </td>
 						
