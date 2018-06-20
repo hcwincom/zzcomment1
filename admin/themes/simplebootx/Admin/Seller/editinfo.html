@@ -271,23 +271,31 @@
 		</form>
 	</div>
 <script src="__PUBLIC__/js/common.js"></script> 
+ 
 <script>
-var status=$('#status').val();
+ 
 $('#sub1').click(function(){
-	
+	if(!confirm('确认不通过吗？')){
+		return false;
+	}
 	$('#review').val('1');
 	return true;
 });
 $('#sub2').click(function(){
-	
+	if(!confirm('确认通过吗？')){
+		return false;
+	}
 	$('#review').val('2');
 	return true;
 });
 $('#sub3').click(function(){
-	
-	$('#review').val('3');
+	if(!confirm('确认删除吗？')){
+		return false;
+	}
+	$('form').attr('action',"{:U('edit_del')}");
 	return true;
 });
+ 
 </script>
 </body>
 </html>

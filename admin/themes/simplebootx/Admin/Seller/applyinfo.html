@@ -182,7 +182,7 @@
 					<button type="submit" class="btn btn-primary js-ajax-submit" id="sub1">
 						不通过
 					</button>
-					<button type="submit" class="btn btn-primary js-ajax-submit" id="sub2">
+					<button type="submit" class="btn btn-primary js-ajax-submit22" id="sub2">
 						审核通过
 					</button>
 				</eq>
@@ -219,7 +219,7 @@ $('#sub3').click(function(){
 	if(!confirm('确认删除吗？')){
 		return false;
 	}
-	$('form').attr('action',"{:U('apply_del')}")
+	$('form').attr('action',"{:U('apply_del')}");
 	return true;
 });
  

@@ -33,11 +33,18 @@ class AdminActionController extends AdminbaseController {
             'top_active'=>'动态置顶',
             'top_active0'=>'动态推荐',
             'goods'=>'店铺商品',
-            'top_goods'=>'商品推荐',
+            'top_goods0'=>'商品推荐',
             'top_goods'=>'商品置顶',
+            'job'=>'店铺招聘',
+            'top_job'=>'招聘置顶',
+            'top_job0'=>'招聘推荐',
+            'info'=>'便民信息',
+            'top_info'=>'信息置顶',
+            'top_info0'=>'信息推荐',
             'comment'=>'点评',
             'reply'=>'回复',
             'users'=>'用户',
+            'withdraw'=>'提现',
         );
         $sname=I('sname','0');
         $uname=trim(I('uname',''));

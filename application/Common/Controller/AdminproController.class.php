@@ -548,24 +548,19 @@ class AdminproController extends AdminbaseController{
 	            // 还钱了
 	            if($price>0 ){
 	                $data_action['descr'].='，且退还未生效的置顶费用￥'.$price;
-	              
-	                $account=bcadd($price, $user['account']);
-	                $row_account=M('Users')->data(array('account'=>$account))->where('id='.$user['id'])->save();
+	                $row_account=account($price,$user['id'],$data_action['descr']);
 	                if($row_account!==1){
 	                    $m_top->rollback();
 	                    $this->error('操作失败，请刷新重试');
-	                }
-	                $data_pay=array(
-	                    'uid'=>$user['id'],
-	                    'money'=>$price,
-	                    'time'=>$time,
-	                    'content'=>$data_action['descr'],
-	                );
-	                M('Pay')->add($data_pay);
+	                } 
 	            }
 	            break;
 	        case 2: 
 	            //检查置顶位
+	            if($info['end_time']<=$time){
+	                $m_top->rollback();
+	                $this->error('置顶已过期');
+	            }
 	            $top_count=C('option_'.$type.'.top_count'); 
 	            $count=top_check($m_top,$info['start_time'],$info['end_time']);
 	             
@@ -573,10 +568,7 @@ class AdminproController extends AdminbaseController{
 	                $m_top->rollback();
 	                $this->error('置顶位已满');
 	            }
-	            if($info['end_time']<=$time){
-	                $m_top->rollback();
-	                $this->error('置顶已过期');
-	            }
+	            
 	            if($info['start_time']<=$time){
 	                 $tmp_status=3;
 	            }else{

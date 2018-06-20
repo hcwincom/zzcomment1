@@ -9,10 +9,10 @@
 		 <form class="well form-search" method="post" action="{:U('edit')}">
 			  状态：<select name="status" id="status">
 					<option value="-1" <if condition="$status eq -1">selected</if>>所有</option>
-					<option value="0" <if condition="$status eq 0">selected</if>>未审核</option>
-					<option value="1" <if condition="$status eq 1">selected</if>>审核不通过</option>
-					<option value="2" <if condition="$status eq 2">selected</if>>审核通过</option>
-					 
+				<foreach name="review_status" item="vo">
+					<option value="{$key}" <if condition="$status eq $key">selected</if>>{$vo}</option>
+				</foreach>
+				 
 				</select>
 			 
 			店铺ID： 
@@ -45,18 +45,12 @@
 	                    
 	                    <td> {$vo.corporation}</td>
 	                    <td>{$vo.scope}</td>
-	                    <td> {$vo.create_time|date="Y-m-d H:i:s",###}</td>
-	                  <td>
-	                  <switch name="vo.status">
-	                  	<case value="0">未审核</case>
-	                  	<case value="1">不通过</case>
-	                  	<case value="2">审核通过</case>
-	                  </switch>
-	                  </td>
+	                    <td> {$vo.create_time|date="Y-m-d H:i",###}</td>
+	                  <td>{$review_status[$vo['status']]} </td>
 	                    <td>
 	                    <a  href="{:U('editinfo',array('id'=>$vo['id']))}"  >审核</a> 
 	                     &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-	                <a class="js-ajax-dialog-btn" href="{:U('edit_review',array('id'=>$vo['id'],'status'=>$vo['status'],'review'=>3,'url'=>'edit'))}" data-msg="确认删除吗？">删除</a> 
+	                <a class="js-ajax-dialog-btn" href="{:U('edit_del',array('id'=>$vo['id'],'status'=>$vo['status'],'url'=>'edit'))}" data-msg="确认删除吗？">删除</a> 
 	               
 	                    </td>
 						
@@ -72,18 +66,6 @@
 		
 	</div>
 	<script src="__PUBLIC__/js/common.js"></script>
-	<script>
-		$('#fid1').change(function(){
-			var fid1=$(this).val();
-			if(fid1=='0'){
-				$('#fid2 option').show();
-				return true;
-			}
-			$('#fid2 option').hide();
-			$('.fid20').show();
-			$('.fid20').prop('selected',true);
-			$('.fid2'+fid1).show();
-		});
-	</script>
+	 
 </body>
 </html>

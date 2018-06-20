@@ -21,7 +21,11 @@
 				<div class="control-group fleft">
 					<span class="control-label">店铺名称：</span>
 					<div class="controls">
-						<input type="text" value="{$info.name}" readonly/> 
+						<input type="text"  value="{$info.name}" readonly/>
+						<a href="{:U('portal/seller/home',['sid'=>$info['pid']])}" target="_blank">
+						 	查看
+						</a> 
+						 
 					</div>
 				</div>
 				<div class="control-group fleft">
@@ -79,12 +83,17 @@
 					</div>
 				</div>
 				<div class="control-group fleft">
-					<span class="control-label" >置顶位：</span>
+					<span class="control-label" >置顶位置：</span>
 					<div class="controls">
 						<input type="text" value="{$info.site}" readonly/>
 					</div>
 				</div>
-				 
+				 <div class="control-group fleft">
+					<span class="control-label" >同期有效置顶：</span>
+					<div class="controls">
+						<input type="text" value="<empty name='seller'>无<else/>店铺{$seller.pid}</empty>" readonly/>
+					</div>
+				</div>
 				<div class="control-group fleft">
 					<span class="control-label" >置顶申请状态：</span>
 					<div class="controls">
@@ -136,6 +145,7 @@ $('#sub3').click(function(){
 		return false;
 	}
 	$('#review').val('3');
+	$('form').attr('action',"{:U('top_del')}");
 	return true;
 });
 </script>

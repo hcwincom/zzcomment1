@@ -140,10 +140,10 @@ class ConfController extends AdminbaseController {
     function seller_option_do(){
         $data0=I('post.',0);
         $types=[
-            1 => '个人',
-            2 => '个体',
-            3 => '企业',
-            4 => '行政',
+            8 => '个人',
+            4 => '个体',
+            10 => '企业',
+            9 => '行政',
         ];
         
         $conf=[];

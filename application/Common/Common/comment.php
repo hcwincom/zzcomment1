@@ -231,17 +231,39 @@ function coin($money,$uid,$dsc='会员操作'){
    }
     $m_user=M('users');
     $where=['id'=>$uid];
+    
     $tmp=$m_user->where($where)->setInc('coin',$money);
     $data_pay=array(
         'uid'=>$uid,
         'money'=>$money,
         'time'=>time(),
-        'content'=>'('.$dsc.')赠币'.$money,
+        'content'=>(empty($dsc)?'':($dsc.',')).'赠币'.$money,
     );
+     
     M('Pay')->add($data_pay); 
     return 1;
     
 }
+/* 余额处理 */
+function account($money,$uid,$dsc='会员操作'){
+    if(empty($money)){
+        return 2;
+    }
+    $m_user=M('users');
+    $where=['id'=>$uid];
+   
+    $tmp=$m_user->where($where)->setInc('account',$money);
+    $data_pay=array(
+        'uid'=>$uid,
+        'money'=>$money,
+        'time'=>time(),
+        'content'=>(empty($dsc)?'':($dsc.',')).'账户余额'.$money,
+    ); 
+    M('Pay')->add($data_pay);
+    return 1;
+    
+}
+
 /* 信息添加 */
 function pro_add($m,$data,$user,$conf,$desc='添加信息'){
     

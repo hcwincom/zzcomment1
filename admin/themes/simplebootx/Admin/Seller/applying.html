@@ -46,19 +46,12 @@
 	                    <td> {$vo.corporation}</td>
 	                    <td>{$vo.scope}</td>
 	                    <td> {$vo.create_time|date="Y-m-d H:i:s",###}</td>
+	                  <td>{$review_status[$vo['status']]} </td>
 	                  <td>
-	                  <switch name="vo.status">
-	                  	<case value="0">未审核</case>
-	                  	<case value="1">不通过</case>
-	                  	<case value="2">审核通过</case>
-	                  </switch>
-	                  </td>
-	                    <td>
 	                    <a  href="{:U('applyinfo',array('id'=>$vo['id']))}"  >审核</a> 
 	                     &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-	                <a class="js-ajax-dialog-btn" href="{:U('apply_del',array('id'=>$vo['id'],'status'=>$vo['status'],'url'=>'applying'))}" data-msg="确认删除吗？">删除</a> 
-	               
-	                    </td>
+	                	<a class="js-ajax-dialog-btn" href="{:U('apply_del',array('id'=>$vo['id'],'status'=>$vo['status'],'url'=>'applying'))}" data-msg="确认删除吗？">删除</a> 
+	                  </td>
 						
 					</tr>
 				</foreach>
@@ -72,18 +65,6 @@
 		
 	</div>
 	<script src="__PUBLIC__/js/common.js"></script>
-	<script>
-		$('#fid1').change(function(){
-			var fid1=$(this).val();
-			if(fid1=='0'){
-				$('#fid2 option').show();
-				return true;
-			}
-			$('#fid2 option').hide();
-			$('.fid20').show();
-			$('.fid20').prop('selected',true);
-			$('.fid2'+fid1).show();
-		});
-	</script>
+	 
 </body>
 </html>
