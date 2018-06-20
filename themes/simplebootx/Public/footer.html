@@ -37,27 +37,27 @@
 if(navigator.appName == "Microsoft Internet Explorer"&&parseInt(navigator.appVersion.split(";")[1].replace(/[ ]/g, "").replace("MSIE",""))<9){
 	alert("当前浏览器版本过低，为不影响网站体验效果，请下载最新版本的浏览器！");
 }
+ 
 var cateid1=parseInt("{$cateid1|default=0}");
 var cateid2=parseInt("{$cateid2|default=0}");
 $('.add-cate2 option').hide();
-$('.add-cate2 .cate20').show();
-$('.add-cate2 .cate2'+cateid1).show();
-$('.add-cate2 .cate21'+cateid2).prop('selected',true);
+$('.add-cate2 .cate2s0').show();
+$('.add-cate2 .cate2s'+cateid1).show();
+$('.add-cate2 .cate2'+cateid2).prop('selected',true);
 $('.add-cate1').change(function(){
 	var fid=this.value;
 	$('.add-cate2 option').hide();
-	$('.add-cate2 .cate20').show();
+	$('.add-cate2 .cate2s0').show();
 	$('.add-cate2 .cate20').prop('selected',true);
-	$('.add-cate2 .cate2'+fid).show();
+	$('.add-cate2 .cate2s'+fid).show();
 	
 });
-
 
 var province=parseInt("{$city1|default=0}");
 var city=parseInt("{$city2|default=0}");
 var town=parseInt("{$city3|default=0}");
 var city_url="{:U('portal/public/city')}";
-//$('.city1s'+province).prop('selected',true);
+ 
 $('.city2 option').hide();
 $('.city2 .city20').show();
 $('.city2 .city2'+province).show();
