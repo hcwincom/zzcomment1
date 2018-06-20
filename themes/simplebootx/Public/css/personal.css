@@ -43,7 +43,7 @@
 #preview7{width:176px;height:104px;background:#e5e4e4;}
 #preview8{width:200px;height:120px;background:#e5e4e4;}
 .btn{position: absolute;left:0;top:0;display: inline-block;z-index: 9;text-align: center;}
-.btn span{display: inline-block;color:#fff;font-size:20px;width:100%;line-height: 25px;background:#f00;}
+.btn p{display: inline-block;color:#fff;font-size:20px;width:100%;line-height: 25px;background:#f00;}
 .btn1{width:110px;height:110px;line-height: 110px;}
 .btn2{width:200px;height:120px;line-height: 120px;top:15px;}
 .btn3{width:200px;height:120px;line-height: 120px;top:15px;}
@@ -55,7 +55,17 @@
 .upload_pic{display: block; width: 0; height: 0px;opacity: 0;}
 .preview img{width:100%;height:100%;}
 
-.form1>span{display: inline-block;line-height:45px;width:85px;font-size: 16px;}
+.form1 span{display: inline-block;line-height:45px;width:85px;font-size: 16px;position: relative;text-align: right;padding-right: 10px;margin-right: 10px;}
+.form1 span::after{
+	content: "*";
+    font-size: 16px;
+    line-height: 44px;
+    color: #d00000;
+    position: absolute;
+  	top: 2px;
+    right: -5px;
+    z-index: 1;
+}
 .form1 input[type="text"]{width:380px;height:43px;border:1px solid #dcdcdc;padding-left:10px;}
 .sex{display: inline-block;width:60px;font-size:16px;}
 .form1 i{font-size: 16px;}  .form1 tt{font-size:16px;color:#666;margin-left:10px;white-space:nowrap}
@@ -130,13 +140,24 @@ float:right;}
 .per_e5 img,.per_d5 img{ vertical-align:middle;}
 .time{font-size: 16px;color:#333;}
 .per_r2{margin-left:50px;}
-.form2>span{display: inline-block;line-height:45px;width:110px;font-size: 16px;text-align: right;}
+.form2 span{display: inline-block;line-height:45px;width:110px;font-size: 16px;text-align: right;position: relative;}
+.form2>label{display: inline-block;line-height:45px;width:110px;font-size: 16px;text-align: right;}
 .form2 input[type="text"]{width:80%;height:43px;border:1px solid #dcdcdc;padding-left:10px;margin-left:15px;}
 .form2 input[type="submit"]{width:310px;height:35px;line-height: 35px;background:#eb0000;color:#fff;text-align: center;margin-left:125px;cursor: pointer;font-size: 16px;}
 .form2 select{width:122px;height:43px;border:1px solid #dcdcdc;padding-left:10px;margin-left: 10px;margin-left:15px;}
 .form2 textarea{width:80%;border:1px solid #dcdcdc;padding-left:10px;margin-left:15px;padding-top: 5px;}
 .form2Info{font-size: 18px;color: #d00000;margin: 20px 0;letter-spacing: 2px;text-indent: 40px;}
 .form2 .per_p{font-size: 14px;color: orange;line-height: 20px;width: 70%;margin: 0 auto;}
+.form2 span::after{
+	content: "*";
+    font-size: 16px;
+    line-height: 44px;
+    color: #d00000;
+    position: absolute;
+  	top: 2px;
+    right: -5px;
+    z-index: 1;
+}
 .per_r1 input[type="text"]{
 	width: 380px;
     height: 43px;
@@ -221,6 +242,7 @@ background-color: rgba(0, 0, 0, .3);}
 
 .addshop{margin-left:25px;margin-top:30px;}
 .adddynamic{margin-top:30px;}
+
 .dynamic_list{width:100%;}
 .dynamic_list li{border:1px solid #dcdcdc;border-top:0 ;position:relative;line-height: 48px;}
 
@@ -229,7 +251,7 @@ background-color: rgba(0, 0, 0, .3);}
 .rnav_list li div.draw_msg{width: 20%;}
 .rnav_list li div p{font-size: 14px;color: #666;line-height: 20px;}
 .dy_img{width:144px;}
-.dynamic_li_lf1{width:170px;margin-left: 48px;}
+.dynamic_li_lf1{width:170px;margin-left: 48px;padding-top: 20px;}
 .dynamic_li_lf2{width:400px;overflow: hidden;}
 .dynamic_li_rt{width:340px;margin-top:10px;}
 .per_d1,.per_d2{font-size: 16px;color:#666;line-height: 35px;}
@@ -595,8 +617,8 @@ td.msgmaner_td3 ul li{
 }
 @media screen and (max-width:400px) {
     .form1 input[type="submit"],.form1 input[type="reset"]{padding:0 20px;height:35px;line-height: 35px;background:#eb0000;color:#fff;text-align: center;margin-right:30px;cursor: pointer;font-size: 16px;}
-    .form3>span{width:90px;}
-	.form2>span{text-align: left;margin-left:10px;}
+    .form3 span{width:90px;}
+	.form2 span{text-align: right;margin-left:10px;}
 
 /*    .form3_list1 li{width:150px;}*/
     .evaluate_li_rt{width:80%;margin-top:5px;}

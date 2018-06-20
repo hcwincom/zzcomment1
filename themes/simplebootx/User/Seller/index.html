@@ -5,7 +5,7 @@
                     <div class="per_r1" >
                         <div class="ib imgbox3">
                             <div id="preview3" class="preview" ><img class="imgbox3" src="__UPLOAD__/{$info.pic}"></div>
-                            <label class="btn btn3" for="p3" title="选择图片"><span>选择图片</span></label> 
+                            <label class="btn btn3" for="p3" title="选择图片"><p>选择图片</p></label> 
                                 <input type="file" id="p3" class="upload_pic" onchange="preview(this,3)" name="IDpic3" value="" >
                             <p class="pms">*上传尺寸为500*300的jpg、png图,4M以内</p>
                         </div>
@@ -21,11 +21,11 @@
                         </div>
                     </div>
                     <div class="per_r1">
-                        <div class="form2"><span>店铺名称:</span><input type="text" name="sname" value="{$info.name}" onblur="sname1()"></div> <p class="ml2 msg2"></p>
-                        <div class="form2"><span>法人:</span><input type="text" name="fname" value="{$info.corporation}" onblur="fname1()"></div> 
+                        <div class="form2"><span>店铺名称 :&nbsp;</span><input type="text" name="sname" value="{$info.name}" onblur="sname1()"></div> <p class="ml2 msg2"></p>
+                        <div class="form2"><span>法人 :&nbsp; </span><input type="text" name="fname" value="{$info.corporation}" onblur="fname1()"></div> 
                         <p class="ml2 msg3"></p>
 						<div class="form2">
-							<span class="lf">类别：</span>
+							<span class="lf">类别 ：</span>
 							<div class="lf">
 							 <tc_include file="Public:cates" />
 							 
@@ -45,18 +45,18 @@
                             <div class="clear"></div>
  
                         </div><p class="ml2 msg"></p>
-                        <div class="form2"><span></span><input type="text" name="shopaddr" value="{$info.address}" onblur="shopaddr1()"></div>
+                        <div class="form2"><label></label><input type="text" name="shopaddr" value="{$info.address}" onblur="shopaddr1()"></div>
                         <p class="ml2 msg9"></p>
-                        <div class="form2"><span>网站地址：</span><input type="text" name="webaddr" value="{$info.link}" placeholder="请填写完整地址,如http://www.zypjw.cn/"></div>
+                        <div class="form2"><label>网站地址：</label><input type="text" name="webaddr" value="{$info.link}" placeholder="请填写完整地址,如http://www.zypjw.cn/"></div>
                         <p class="ml2 msg10"></p>
-                         <div class="form2"><span>网站关键字：</span><input type="text" name="keywords" value="{$info.keywords}" placeholder="网站关键字，用引文逗号,分隔"></div>
+                         <div class="form2"><label>网站关键字：</label><input type="text" name="keywords" value="{$info.keywords}" placeholder="网站关键字，用引文逗号,分隔"></div>
                         <p class="ml2 "></p>
                         <div class="form2">
                             <span class="lf">二维码：</span>
                             <div class="wxp">
                             <div class="ib imgbox4">
                                 <div id="preview4" class="preview"><img class="imgbox4" src="__UPLOAD__/{$info.qrcode}"></div>
-                            <label class="btn btn4" for="p4" title="选择图片"><span>选择图片</span></label>
+                            <label class="btn btn4" for="p4" title="选择图片"><p>选择图片</span></p>
                             <input type="file" class="upload_pic" id="p4" onchange="preview(this,4)" name="IDpic4" value="" > 
                             </div>
                             <p class="pms">*上传尺寸为114*114的jpg、png图,4M以内</p>

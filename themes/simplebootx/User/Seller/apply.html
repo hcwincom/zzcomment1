@@ -23,24 +23,24 @@
                     </div>
                     <div class="per_r1">
                     	<input type="hidden" name="ssid" value="{$info.id}"/>
-                        <div class="form2"><span>店铺名称:</span><i class="fml">{$info.name}</i></div> <p class="ml2 msg2"></p>
-                        <div class="form2"><span>法人:</span><input type="text" name="fname" placeholder="" onblur="fname1()"></div> 
+                        <div class="form2"><span>店铺名称 :&nbsp;</span><i class="fml">{$info.name}</i></div> <p class="ml2 msg2"></p>
+                        <div class="form2"><span>法人 :&nbsp;</span><input type="text" name="fname" placeholder="" onblur="fname1()"></div> 
                         <p class="ml2 msg3"></p>  
-                        <div class="form2"><span>经营范围：</span><input type="text" name="jyfw" value="{$info.scope}"></div> <p class="ml2 msg5"></p>
-                        <div class="form2"><span>经营时间：</span><input type="text" name="jysj" placeholder=""></div> <p class="ml2 msg6"></p>
+                        <div class="form2"><label>经营范围：</label><input type="text" name="jyfw" value="{$info.scope}"></div> <p class="ml2 msg5"></p>
+                        <div class="form2"><label>经营时间：</label><input type="text" name="jysj" placeholder=""></div> <p class="ml2 msg6"></p>
                         <div class="form2"><span>手机号：</span><input type="text" name="phone" placeholder="" ></div><p class="ml2 msg7"></p>
                         <div class="form2"><span>座机号码：</span><input type="text" name="tell" placeholder="请加上区号，如021-88888888" ></div><p class="ml2 msg8"></p>
                         
-                        <div class="form2"><span>网站地址：</span><input type="text" name="webaddr" placeholder="请填写完整地址,如http://www.zypjw.cn/"></div>
+                        <div class="form2"><label>网站地址：</label><input type="text" name="webaddr" placeholder="请填写完整地址,如http://www.zypjw.cn/"></div>
                         <p class="ml2"></p>
-                         <div class="form2"><span>店铺关键字：</span><input type="text" name="keywords" placeholder="关键字用英文逗号分隔"></div>
+                         <div class="form2"><label>店铺关键字：</label><input type="text" name="keywords" placeholder="关键字用英文逗号分隔"></div>
                         <p class="ml2 msg10"></p>
                         <div class="form2">
-                            <span class="lf">二维码：</span>
+                            <label class="lf">二维码：</label>
                             <div class="wxp">
                             <div class="ib imgbox4">
                                 <div id="preview4" class="preview"></div>
-                            <label class="btn btn4" for="p4" title="选择图片"><span>选择图片</span></label>
+                            <label class="btn btn4" for="p4" title="选择图片"><p>选择图片</p></label>
                             <input type="file" class="upload_pic" id="p4" onchange="preview(this,4)" name="IDpic4" value="" > 
                             </div>
                             <p class="pms">*上传尺寸为114*114的jpg、png图,4M以内</p>
@@ -53,7 +53,7 @@
                             <div class="wxp">
                             <div class="ib imgbox5">
                                 <div id="preview5" class="preview"></div>
-                            <label class="btn btn5" for="p5" title="选择图片"><span>选择图片</span></label>
+                            <label class="btn btn5" for="p5" title="选择图片"><p>选择图片</p></label>
                             <input type="file" class="upload_pic" id="p5" onchange="preview(this,5)" name="IDpic5" value="" > 
                             </div>
                             <p class="pms">*上传jpg、png图,4M以内。企业上传营业执照，个人可上传手持身份证照片</p>
