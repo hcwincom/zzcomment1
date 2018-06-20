@@ -27,12 +27,7 @@
 				 <div class="control-group fleft">
 					<span class="control-label">店铺状态：</span>
 					<div class="controls">
-						<input type="text" value='<switch name="info.sstatus">
-					<case value="0">未审核</case>
-					<case value="1">未认领</case>
-					<case value="2">已认领</case> 
-					<case value="3">已冻结</case> 
-					</switch>' class="red" readonly/> 
+						<input type="text" value="{$seller_status[$info['sstatus']]}" class="red" readonly/> 
 					</div>
 				</div>
 				
@@ -45,7 +40,7 @@
 				<div class="control-group fleft">
 					<span class="control-label" >创评时间：</span>
 					<div class="controls">
-						<input type="text" value="{$info.stime|date='Y-m-d H:i:s',###}" readonly/>
+						<input type="text" value="{$info.stime|date='Y-m-d H:i',###}" readonly/>
 					</div>
 				</div>
 				<div class="control-group fleft">
@@ -139,6 +134,12 @@
 						<input type="text" value="{$info.keywords}" readonly/>
 					</div>
 				</div>
+				<div class="control-group fleft">
+					<span class="control-label">店铺押金：</span>
+					<div class="controls">
+						<input type="text" value="{$info.deposit}" readonly/>
+					</div>
+				</div>
 				<div style="clear:both"></div>
 				<div class="control-group">
 					<span class="control-label" >店铺图片：</span>
@@ -218,7 +219,7 @@ $('#sub3').click(function(){
 	if(!confirm('确认删除吗？')){
 		return false;
 	}
-	$('#review').val('3');
+	$('form').attr('action',"{:U('apply_del')}")
 	return true;
 });
  

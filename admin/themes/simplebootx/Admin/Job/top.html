@@ -9,10 +9,19 @@
 			<li class=""><a href="{:U('top0')}">{$flag}推荐列表</a></li>
 		</ul>
         <form class="well form-search" method="post" action="{:U('top')}">
-			置顶状态：<select name="status" id="status">
+			置顶状态：
+			<select name="status" id="status">
 				<option value="-1" <if condition="$status eq -1">selected</if>>所有</option>
 				<foreach name="top_status" item="vo">
 				<option value="{$key}" <if condition="$status eq $key">selected</if>>{$vo}</option>
+				</foreach>
+				 
+			</select>
+			分类：
+			<select name="cid1" >
+				<option value="0" <if condition="$cid1 eq 0">selected</if>>所有</option>
+				<foreach name="cate1" item="vo">
+				<option value="{$key}" <if condition="$cid1 eq $key">selected</if>>{$vo}</option>
 				</foreach>
 			</select>
 			地区：
@@ -54,9 +63,9 @@
 						 {$vo.sid}-{$vo.sname}
 						 </a>
 					</td> 
-                    <td>
-                    	<a href="{:U('portal/seller/news_detail',['sid'=>$vo['sid'],'id'=>$vo['pid']])}" target="_blank"> 
-	                    {$vo.pid}-{$vo.pname}
+                   <td>
+                    	<a href="{:U('portal/seller/job_detail',['sid'=>$vo['sid'],'id'=>$vo['id']])}" target="_blank"> 
+	                    {$vo.name}
 	                     </a>
                     </td> 
                     <td><img src="__ROOT__/data/upload/{$vo.pic}" alt="暂无图片" style="width:200px;height:50px"/></td>      

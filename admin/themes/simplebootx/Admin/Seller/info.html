@@ -28,7 +28,7 @@
 				 <div class="control-group fleft">
 					<span class="control-label">店铺状态：</span>
 					<div class="controls">
-						<input type="text" value="{$info.status_name}" readonly/> 
+						<input type="text" value="{$seller_status[$info['status']]}" readonly/> 
 					</div>
 				</div>
 				
@@ -245,6 +245,7 @@ $('#sub3').click(function(){
 		return false;
 	}
 	$('#review').val('3');
+	$('form').attr('action',"{:U('seller_del')}");
 	return true;
 });
 </script>

@@ -23,19 +23,22 @@
 				<div class="control-group fleft">
 					<span class="control-label">店铺名称：</span>
 					<div class="controls">
-						<a href="{:U('portal/seller/home',['sid'=>$info['sid']])}" target="_blank">{$info.sname}</a>
-						 
+					<input type="text"  value="{$info.sname}" readonly/>
+						<a href="{:U('portal/seller/home',['sid'=>$info['sid']])}" target="_blank">
+							查看
+						</a>
 					</div>
 				</div>
 				 
 				<div class="control-group fleft">
 					<span class="control-label" >{$flag}标题：</span>
 					<div class="controls">
-						 <a href="{:U('portal/seller/news_detail',['sid'=>$info['sid'],'id'=>$info['pid']])}" target="_blank">{$info.pname}</a>
-					
-					</div>
-				</div>
-				 
+						<input type="text"  value="{$info.name}" readonly/>
+						 <a href="{:U('portal/seller/job_detail',['sid'=>$info['sid'],'id'=>$info['id']])}" target="_blank">
+						 	查看
+						 </a> 
+					 </div>
+				</div> 
 				 
 				 
 				<div style="clear:both"></div>

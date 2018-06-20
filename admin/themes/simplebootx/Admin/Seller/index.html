@@ -7,29 +7,21 @@
 			 
 		</ul>
 		 <form class="well form-search" role="form" method="post" action="{:U('index')}">
-		 	<label for="fid1">行业分类:</label>
-				 <select name="fid1" id="fid1">
-					<option value="0">所有</option>
-				<foreach name="cates1" item="vo"> 
-					<option value="{$vo.id}" <if condition="$vo['id'] eq $fid1">selected</if>>{$vo.name}</option>
-				</foreach>
-				</select>
-				
-				<select name="fid2" id="fid2">
-					<option class="fid20" value="0">所有</option>
-				<foreach name="cates2" item="vo"> 
-					<option class="fid2{$vo.fid}" value="{$vo.id}" <if condition="$vo['id'] eq $fid2">selected</if>>{$vo.name}</option>
-				</foreach>
-				</select>
-			
-				<label for="status">店铺状态:</label>
+		 		
+		 		<label for="status">店铺状态:</label>
 				<select name="status" id="status">
 					<option value="-1" <if condition="$status eq -1">selected</if>>所有</option>
-					<option value="1" <if condition="$status eq 1">selected</if>>未领用</option>
-					<option value="2" <if condition="$status eq 2">selected</if>>已认领</option>
-					<option value="3" <if condition="$status eq 3">selected</if>>已冻结</option>
 				 
+				<foreach name="seller_status" item="vo">
+					<option value="{$key}" <if condition="$status eq $key">selected</if>>{$vo}</option>
+				</foreach>
+					 
 				</select>
+		 		<label  >行业分类:</label>
+				  <admintpl file="cates" />
+				<label  >城市:</label>
+				  <admintpl file="city" />
+				 
 			
 			<label for="sort">排序:</label> 
 				<select name="sort" id="sort">
@@ -52,7 +44,7 @@
 						 
 						<th width="50">ID</th>
 						<th>店铺名称</th>
-						
+						<th>店铺类别</th>
 						<th>店铺所在地区</th>
 						<th>店铺详细地址</th>
 						<th>店铺经营范围</th>
@@ -69,22 +61,15 @@
 					<tr> 
 	                    <td>{$vo.id}</td>      
 	                    <td> {$vo.name}</td>
-	                    <td> {$vo.name1}-{$vo.name2}-{$vo.name3}</td>
+	                     <td> {$vo.cname}</td>
+	                    <td> {$vo.city_name}</td>
 	                    <td> {$vo.address}</td>
 	                    <td> {$vo.scope}</td>
 	                    <td> {$vo.grade}</td>
 	                    <td> {$vo.score}</td>
 	                    <td> {$vo.browse}</td>
-	                   <td> {$vo.create_time|date="Y-m-d H:i:s",###}</td>
-	                   <td>
-	                   <switch name="vo.status">
-	                   		<case value="0">未审核</case>
-	                   		<case value="1">未领用</case>
-	                   		<case value="2">已领用</case>
-	                   		<case value="3">已冻结</case>
-	                   		<default />异常状态
-	                   </switch>
-	                   </td>
+	                   <td> {$vo.create_time|date="Y-m-d H:i",###}</td>
+	                   <td>{$seller_status[$vo['status']]} </td>
 	                    <td> 
 	                    	<a href="{:U('info',array('id'=>$vo['id']))}">详情</a>  
 	                    </td>

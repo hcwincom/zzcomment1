@@ -84,7 +84,47 @@ class AdminproController extends AdminbaseController{
 	    }
 	    
 	}
-	
+	/* 分类处理 */
+	public function cate($type=1){
+	    
+	    //大类
+	    $m_cate=M('Cate');
+	    $cid0=I('cid0',0,'intval');
+	   
+	    //二级分类
+	    $cid1=I('cid1',0,'intval');
+	    $where_cate=array('type'=>$type);
+	    
+	    if($type==1 ){
+	        if($cid0>0){
+	            $where_cate['fid']=['eq',$cid0];
+	        }else{
+	            $where_cate['fid']=['neq',0];
+	        }
+	        
+	    }else{
+	        $where_cate['fid']=['eq',0];
+	    }
+	    $cate1=$m_cate->where($where_cate)->order('sort desc,first_char asc')->getField('id,name');
+	    $where_tmp=0;
+	    //如果有点击分类
+	    if($cid1>0){
+	        $where_tmp=array('eq',$cid1);
+	    }else{
+	        
+	        if(empty($cate1)){
+	            $where_tmp=array('eq',0);
+	        }else{
+	            $where_tmp=array('in',array_keys($cate1));
+	        }
+	        
+	    }
+	    $this->assign('cid0',$cid0)
+	    ->assign('cid1',$cid1)
+	    ->assign('cate1',$cate1);
+	    
+	    return $where_tmp;
+	}
 	 
 	//动态审核
 	function review(){
@@ -345,6 +385,22 @@ class AdminproController extends AdminbaseController{
 	        }
 	        $field='t.*,p.name as pname,p.pic,s.name as sname,p.sid';
 	        $join='cm_seller as s on p.sid=s.id'; 
+	    }
+	    //分类
+	    switch($type){
+	        case 'info':
+	            $tmp=$this->cate(3);
+	            break;
+	        case 'job':
+	            $tmp=$this->cate(2);
+	            break;
+	        default:
+	            $tmp=[];
+	            break;
+	    }
+	    
+	    if(!empty($tmp)){
+	        $where['p.cid']=$tmp;
 	    }
 	    //城市判断
 	    $tmp=$this->city();
@@ -718,6 +774,22 @@ class AdminproController extends AdminbaseController{
 	        }
 	        $field='t.*,p.name as pname,p.pic,s.name as sname,p.sid';
 	        $join='cm_seller as s on p.sid=s.id';
+	    }
+	    //分类
+	    switch($type){
+	        case 'info':
+	            $tmp=$this->cate(3);
+	            break;
+	        case 'job':
+	            $tmp=$this->cate(2);
+	            break;
+	        default:
+	            $tmp=[];
+	            break;
+	    }
+	    
+	    if(!empty($tmp)){
+	        $where['p.cid']=$tmp;
 	    }
 	    //城市判断
 	    $tmp=$this->city();
