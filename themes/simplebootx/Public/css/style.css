@@ -459,7 +459,7 @@ label.upload{width:215px;height:36px;position:relative;overflow: hidden;}
 .close2>a:hover{color:#d00000;}
 
 /*shop add*/
-.shop-add-list{position: fixed;right:0px;top:300px;z-index:9;height: 85px;width: 120px;background: #ffffff;text-align:center;}
+.shop-add-list{position: fixed;right:0px;top:400px;z-index:9;height: 85px;width: 120px;background: #ffffff;text-align:center;}
 .shop-add-list>a{display: inline-block;font-size: 14px;background: #d50000;color: #fff;padding: 0 5px;border-radius: 5px;height: 20px;line-height: 20px;}
 .shop-add{height: 20px;line-height: 20px;margin: 15px 0;}
 .shop-add>a{font-size: 14px;background: #d50000;color: #fff;line-height: 18px;padding: 0 5px;border-radius: 5px;}
