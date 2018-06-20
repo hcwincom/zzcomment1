@@ -91,7 +91,7 @@
 }
 
 .per_rnav p{width:120px;line-height: 40px;background:#d00000;color:#fff;text-align:center;font-size: 16px;}
-.per_rnav a{display: inline-block; padding:0 25px;line-height: 40px;color:#333;text-align:center;font-size: 16px;}
+.per_rnav a{display: inline-block; padding:0 20px;line-height: 40px;color:#333;text-align:center;font-size: 16px;}
 .per_rnav .rb{background:#d00000;color:#fff;}
 .pay_main{padding-left:30px;margin-top:40px;font-size: 16px;}
 .pay_main p{font-size: 16px;margin:30px 0;color:#333;}
@@ -222,9 +222,10 @@ background-color: rgba(0, 0, 0, .3);}
 .addshop{margin-left:25px;margin-top:30px;}
 .adddynamic{margin-top:30px;}
 .dynamic_list{width:100%;}
-.dynamic_list li{border-bottom: 1px solid #dcdcdc;margin-top:15px;padding-bottom:30px;position:relative}
-.rnav_list li{padding-bottom: 15px;}
+.dynamic_list li{border:1px solid #dcdcdc;border-top:0 ;position:relative;line-height: 48px;}
+
 .rnav_list li div{display: inline-block;margin-left: 20px;width: 13%;}
+.rnav_list li div:nth-child(6){width: 20%;}
 .rnav_list li div.draw_msg{width: 20%;}
 .rnav_list li div p{font-size: 14px;color: #666;line-height: 20px;}
 .dy_img{width:144px;}
@@ -294,9 +295,9 @@ background-color: rgba(0, 0, 0, .3);}
 .ml2{margin-left:125px;color:#f00;height:20px;line-height: 20px;}
 .cl{font-size:18px;text-align:center;float: right;margin-right:10px;margin-bottom: 5px;}
 .fml{font-size: 16px;margin-left:15px;color:#f00;white-space: nowrap;}
-.webmsg{margin-top:20px;border:1px solid #dcdcdc; border-collapse:collapse;overflow-y: auto;_overflow:auto;min-width:100%;font-size:16px;text-align: left;}
+.webmsg{margin-top:10px;border:1px solid #dcdcdc; border-collapse:collapse;overflow-y: auto;_overflow:auto;min-width:100%;font-size:16px;text-align: left;}
 .webmsg thead{background:#eeeeee;}
-.webmsg th{line-height:50px;font-size:16px;color:#333;padding-left:10px;}
+.webmsg th{line-height:40px;font-size:16px;color:#333;padding-left:10px;}
 .webmsg td{text-align:left;font-size: 16px;color:#333;line-height:50px;padding-left:10px;}
 .webmsg tbody tr{border-top:1px solid #dcdcdc;}
 .webmsg_t1{width:120px;min-width: 60px;} .webmsg_t2{width:200px;min-width: 150px;}.webmsg_t3{width:600px;min-width: 300px;}
@@ -336,8 +337,8 @@ background-color: rgba(0, 0, 0, .3);}
 	text-align: center;
 }
 .webmsg td{
-	text-align: center;
-	line-height: 120px;
+	/* text-align: center; */
+	line-height: 70px;
 }
 
 .msgmaner_td2 img{
