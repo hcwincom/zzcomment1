@@ -101,12 +101,4 @@ function city3(fid,$div){
 }
  
  
-$('.zzlink').click(function(){
-	var link=$(this).attr('href');
-	var exp=/^(http|ftp|https):\/\/([\w.]+\/?)\S*/;
-	if(!exp.test(link)){
-		$(this).attr('href','http://'+link);
-	}  
-	return true;
-});
 </script>

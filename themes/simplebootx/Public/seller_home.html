@@ -57,9 +57,12 @@
 						<span>类别： {$info.cname}</span><br>
 						<span>{$seller_info.corporation}： {$info.corporation}</span><br>
 						<span>{$seller_info.scope}：{$info.scope}</span><br>
-					<eq name='info.author_status' value='1'>
+					<eq name="info.status" value="1">
+					 
 						<span class="adduser">创评人：{$info.author_name}</span><br>
+					 
 					</eq>
+					 
 						<span>网址：<a href="{$info.link}" target="_blank" class="zzlink">{$info.link}</a></span><br>
 					</p>
 				</div>

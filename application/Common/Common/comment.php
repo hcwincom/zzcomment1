@@ -356,3 +356,12 @@ function site_check($m,$start,$end,$site){
     return 0;
     
 }
+/* 为网址补加http:// */
+function zz_link($link){
+    //处理网址，补加http://
+    $exp='/^(http|ftp|https):\/\//';
+    if(preg_match($exp, $link)==0){
+        $link='http://'.$link;
+    }
+    return $link;
+}

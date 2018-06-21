@@ -39,8 +39,9 @@ class SellerController extends MemberbaseController {
 	        'create_time'=>time(),
 	        'pic'=>$pic,
 	        'scope'=>I('shop_area',''),
-	        'link'=>I('shop_net','')
+	        'link'=>zz_link(I('shop_net','')),
 	    );
+	     
 	    //是否审核
 	    $conf=C('option_seller');
 	    $user=$this->user;
@@ -152,7 +153,8 @@ class SellerController extends MemberbaseController {
             'tel'=>I('tell',''),
             'mobile'=>I('phone',''),
             'bussiness_time'=>I('jysj',''),
-            'link'=>I('webaddr',''),
+            
+            'link'=>zz_link(I('webaddr','')),
             'keywords'=>I('keywords',''),
             'deposit'=>$info['deposit'], 
         );
@@ -223,8 +225,9 @@ class SellerController extends MemberbaseController {
        
         $m->startTrans();
         $m_apply=M('SellerApply');
+        $desc='领用店铺'.$info['id'].'('.$info['name'].')';
+        account('-'.$info['deposit'], $user['id'],$desc.'，支付押金');
        
-        M('users')->where('id='.$user['id'])->setDec('account',$info['deposit']);
         //如果通过审核就可以直接生效，没通过就等待审核
         if($data['status']==0){
             $insert=$m_apply->add($data);
@@ -251,14 +254,8 @@ class SellerController extends MemberbaseController {
                 'qrcode'=>$data['qrcode'],
             );
             $m->where('id='.$sid)->save($data2);
-            $data_pay=array(
-                'uid'=>$user['id'],
-                'money'=>'-'.$info['deposit'],
-                'time'=>time(),
-                'content'=>'领用店铺，支付押金',
-            );
-            M('Pay')->add($data_pay);
-            coin($conf['apply_coin'],$data['uid'],'领用店铺');
+            
+            coin($conf['apply_coin'],$data['uid'],$desc);
             $m->commit();
             $this->success('认领已通过，可以在个人中心编辑店铺，添加信息了',U('user/Seller/index',array('sid'=>$sid)));
         }
@@ -337,7 +334,7 @@ class SellerController extends MemberbaseController {
             'tel'=>I('tell',''),
             'city'=>$city,
             'address'=>$address,
-            'link'=>I('webaddr',''), 
+            'link'=>zz_link(I('webaddr','')),
             'keywords'=>I('keywords',''), 
             'create_time'=>$time,
         );
@@ -492,37 +489,42 @@ class SellerController extends MemberbaseController {
             $this->error(date('Y-m-d',$tmp_seller['start_time']).'至'.date('Y-m-d',$tmp_seller['end_time']).'的推荐位已被购买');
             exit;
         }
-         
+        $desc='店铺'.$info['id'].'('.$info['name'].')的置顶';
         //扣款
         if($price>0){
+            
             $m_user=M('Users');
             $user=$m_user->where('id='.$uid)->find();
+            $price_coin=0;
+            $price_money=0;
             /* 处理赠币,优先扣除赠币，不足扣除余额，再不足则扣款失败 */
-            $tmp=[];
-            $tmp['coin']=bcsub($user['coin'],$price);
-            if($tmp['coin']<0){
-                $tmp['account']=bcadd($tmp['coin'],$user['account']);
-                if($tmp['account']<0){
+            if($user['coin']>=$price){ 
+                $price_coin=$price; 
+            }elseif($user['coin']<=0){
+                $price_money=$price; 
+            }else{
+                $price_coin=$user['coin'];
+                $price_money=bcsub($price,$user['coin']);
+                if($user['account']<$price_money){
                     $m->rollback();
                     $this->error('你的余额不足，请充值');
                     exit;
                 }
-                
-                $price_coin=$user['coin'];
-                $price_money=abs($tmp['coin']);
-                $tmp['coin']=0; 
-            }else{
-                $price_coin=$price;
-                $price_money=0;
             }
-            
-            
-            $row_user=$m_user->data($tmp)->where('id='.$uid)->save();
-            if($row_user!==1){
-                $m->rollback();
-                $this->error('扣款失败');
-                exit;
+            if($price_coin>0){
+                $row_pay=coin('-'.$price_coin, $uid,$desc.'费用');
+                if($row_pay!==1){
+                    $m->rollback();
+                    $this->error('操作失败，请刷新');
+                }
             }
+            if($price_money>0){
+                $row_pay=account('-'.$price_money, $uid,$desc.'费用');
+                if($row_pay!==1){
+                    $m->rollback();
+                    $this->error('操作失败，请刷新');
+                }
+            } 
         }
         //推荐
         //0申请，1不同意，2同意，3，生效中，4过期
@@ -552,19 +554,15 @@ class SellerController extends MemberbaseController {
         $row=$m->add($data_top);
         if($row>=1){
             $data=array('errno'=>1,'error'=>'置顶成功');
-            if(!empty($row_user)){
-                $data_pay=array(
-                    'uid'=>$uid,
-                    'money'=>'-'.$price,
-                    'time'=>$time,
-                    'content'=>'店铺推荐位购买'.$id.'-'.$info['name'],
-                );
-                M('Pay')->add($data_pay);
-            }
+            
             $m->commit();
             $coin=bcmul($days,$conf['top_coin']);
             if($data_top['status']>0){
-                coin($coin,$uid,'店铺推荐位购买'.$info['name']);
+                $row_pay=coin($coin,$uid,$desc);
+                if($row_pay!==1){
+                    $m->rollback();
+                    $this->error('操作失败，请刷新');
+                }
             }
            
             $this->success('店铺推荐位购买成功'.$msg,U('top',['sid'=>$info['id']]));
@@ -633,15 +631,13 @@ class SellerController extends MemberbaseController {
          $m->where('id='.$sid)->save($data); 
          $msg='';
          if($info['deposit']>0){
-             M('users')->where('id='.$user['id'])->setInc('account',$info['deposit']);
-             $msg=',已退回押金到账户余额';
-             $data_pay=array(
-                 'uid'=>$user['id'],
-                 'money'=>'+'.$info['deposit'],
-                 'time'=>time(),
-                 'content'=>'注销店铺，退还押金',
-             );
-             M('Pay')->add($data_pay);
+             $desc='店铺'.$info['id'].'('.$info['name'].')注销';
+             $row_pay=account($info['deposit'], $user['id'],$desc.'，退还押金');
+             if($row_pay!==1){
+                 $m->rollback();
+                 $this->error('操作失败，请刷新');
+             }
+             
          }
          $m->commit();
          $this->success('已注销'.$msg,U('user/info/index'));

@@ -43,7 +43,7 @@ class BannerController extends AdminbaseController {
         $data=array(
             'title'=>I('title',''), 
             'pic'=>I('pic',''),
-            'link'=>I('link',''),
+            'link'=>zz_link(I('link','')),
             'sort'=>I('sort',0)
         );
         $id=I('id',0);
@@ -86,7 +86,7 @@ class BannerController extends AdminbaseController {
             'pic'=>I('pic',''),
             'title'=>I('title',''),
             'sort'=>I('sort',0),
-            'link'=>I('link','')
+            'link'=>zz_link(I('link',''))
             
         );
         $row=$m->data($data)->add();
