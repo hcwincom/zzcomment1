@@ -6,24 +6,25 @@ use Common\Controller\HomebaseController;
 class ListController extends HomebaseController {
     function _initialize(){
         parent::_initialize();
-//         $banners=M('Banner')->order('sort desc')->select();
-//         $this->assign('banners',$banners);
+ 
         //推荐商家
-        $m_seller=M('Seller');
-        $top_sellers=[];
-        $tops0=C('price_top_seller');
-        $tops=C('count_top_seller');
-        foreach($tops0 as $k=>$v){
-            if(empty($tops[$k])){
-                $top_sellers[$k]=$tops0[$k];
-                $top_sellers[$k]['url']='javascript:void(0)';
-            }else{
-                $top_sellers[$k]=$m_seller->where('id='.$tops[$k])->find();
-                $top_sellers[$k]['url']=U('Portal/Seller/home',array('sid'=>$tops[$k]));
-            }
-        }
-        
-       
+        if(sp_is_mobile()){
+            $top_sellers=[];
+        }else{
+            $m_seller=M('Seller');
+            $top_sellers=[];
+            $tops0=C('price_top_seller');
+            $tops=C('count_top_seller');
+            foreach($tops0 as $k=>$v){
+                if(empty($tops[$k])){
+                    $top_sellers[$k]=$tops0[$k];
+                    $top_sellers[$k]['url']='javascript:void(0)';
+                }else{
+                    $top_sellers[$k]=$m_seller->where('id='.$tops[$k])->find();
+                    $top_sellers[$k]['url']=U('Portal/Seller/home',array('sid'=>$tops[$k]));
+                }
+            } 
+        } 
         $this->assign('top_seller',$top_sellers);
     }
     // 店铺列表
