@@ -1,0 +1,94 @@
+<admintpl file="header" />
+<link href="__TMPL__Public/assets/css/zzinfo.css" rel="stylesheet" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li><a href="{:U('top')}">{$flag}列表</a></li>
+			  <li class="active"><a href="{:U('top_add')}">保留{$flag}设置</a></li>
+			 
+		</ul>
+		<!--  -->
+		<form class="form-horizontal js-ajax-form" method="post" action="{:U('top_add_do')}" >
+			<fieldset>
+				 
+				 
+				<div class="control-group">
+					<span class="control-label">店铺ID：</span>
+					<div class="controls">
+						<input type="text"  value="{$info.pid}" name='pid'/>
+						<button type="button" id="find">搜索id</button>
+						<a  href="{:U('portal/seller/home',['sid'=>$info['pid']])}" target="_blank">
+						 	{$info.name}
+						</a> 
+						 
+					</div>
+				</div>
+				 
+				 
+				<div style="clear:both"></div>
+				 
+				<div class="control-group fleft">
+					<span class="control-label" >置顶最新保存时间：</span>
+					<div class="controls">
+						<input type="text"  value="{$info.create_time|date='Y-m-d H:i',###}" readonly/>
+					</div>
+				</div>
+			 	<div class="control-group fleft">
+					<span class="control-label" >置顶开始时间：</span>
+					<div class="controls">
+					   <input class="js-date" type="text" value="{$info.start_time|date='Y-m-d',###}" name="start_time"  >
+						 
+					</div>
+				</div>
+				<div class="control-group fleft">
+					<span class="control-label" >置顶结束时间：</span>
+					<div class="controls">
+						<input class="js-date" type="text" value="{$info.end_time|date='Y-m-d',###}" name="end_time"  >
+						
+					</div>
+				</div>
+				<div class="control-group fleft">
+					<span class="control-label" >置顶费用(仅供参考，无价值)：</span>
+					<div class="controls">
+						<input type="text" value="{$info.price}" name='price'/>
+					</div>
+				</div>
+				 
+			<div style="clear:both"></div>
+				<div class="form-actions"> 
+					 <input type="hidden" name="status" value="{$info.status}">
+				 
+					<button type="submit" class="btn btn-primary js-ajax-submit55" >
+						保存
+					</button>
+					 
+					<a class="btn" href="javascript:history.back(-1);">返回</a>
+					 
+			</fieldset>
+		</form>
+	</div>
+<script src="__PUBLIC__/js/common.js"></script> 
+ <script>
+var find_url="{:U('seller_find')}";
+var home_url="{:U('portal/seller/home')}"+'?sid=';
+ $('#find').click(function(){
+	 var $div=$(this).parent();
+	 var id=parseInt($div.find('input').val());
+	 $div.find('input').val(id);
+	 if(id<=0){
+		 alert('请输入正确的店铺id');
+	 }
+	 $.post(find_url,{'id':id},function(data){
+		 
+		 if(data.status==0){
+			 alert(data.info); 
+		 }else{
+			 $div.find('a').text(data.info);
+			 $div.find('a').attr('href',home_url+id);
+		 } 
+	 },'json');
+ });
+ </script>
+</body>
+</html>

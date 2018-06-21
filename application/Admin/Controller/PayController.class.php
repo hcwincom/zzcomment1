@@ -202,6 +202,9 @@ class PayController extends AdminbaseController {
         if($data1['fee']<0 || $data1['fee']>=$info['money']){
             $this->error('手续费错误');
         }
+        if(empty($data1['oid'])){
+            $this->error('转账单号未填写');
+        }
         $data1['account']=bcsub($info['money'],  $data1['fee']);
         
         $m->startTrans();

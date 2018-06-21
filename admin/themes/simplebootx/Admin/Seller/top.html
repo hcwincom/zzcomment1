@@ -4,7 +4,7 @@
 	<div class="wrap js-check-wrap">
 		<ul class="nav nav-tabs">
 			<li class="active"><a href="{:U('top')}">{$flag}列表</a></li>
-			 
+			 <li class=""><a href="{:U('top_add')}">保留{$flag}设置</a></li>
 		</ul>
         <form class="well form-search" method="post" action="{:U('top')}">
 			状态：<select name="status" id="status">
@@ -14,7 +14,7 @@
 			</foreach>
 				 
 			</select>
-			 
+			
 			店铺ID： 
 			<input type="text" name="sid" style="width: 100px;" value="{$sid}" >
 			店铺名： 

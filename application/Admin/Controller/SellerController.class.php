@@ -2,7 +2,7 @@
 namespace Admin\Controller;
 
 use Common\Controller\AdminbaseController;
-use Think\Model;
+ 
 /* 
  * 店铺后台控制
  *  */
@@ -884,7 +884,7 @@ class SellerController extends AdminbaseController {
             $where['s.name']=['like','%'.$sname.'%'];
         }
         //排序
-        $order='a.id desc';
+        $order='a.create_time desc';
         
         $m= M('top_seller');
         $total=$m->alias('a')
@@ -1109,7 +1109,9 @@ class SellerController extends AdminbaseController {
         
         $id=I('id',0);
         $status=I('status',-1);
-        
+        if($id==1){
+            $this->error('保留置顶位推荐不能删除');
+        }
         if($id==0 || $status==-1 ){
             $this->error('数据错误，请刷新重试');
         }
@@ -1188,5 +1190,76 @@ class SellerController extends AdminbaseController {
         $m_top->commit();
         $this->success('删除成功',$url);
         exit;
+    }
+    //保留推荐位设置
+    function top_add(){
+        $this->assign('flag','店铺置顶');
+       
+        $m=M('top_seller');
+        $info=$m->alias('top')->field('top.*,s.name,s.pic')
+        ->join('cm_seller as s on s.id=top.pid')
+        ->where('top.id=1')->find();
+       
+        
+        $this->assign('info',$info);
+       
+        $this->assign('top_status',C('top_status'));
+        $this->display();
+    }
+    //保留推荐位设置do
+    function top_add_do(){
+         
+        $time=time();
+        $data=[
+            'pid'=>I('pid',0,'intval'),
+            'create_time'=>$time,
+            'start_time'=>strtotime(I('start_time','')),
+            'end_time'=>strtotime(I('end_time','')),
+            'price'=>round(I('price',''),2),
+        ];
+        if($data['pid']<=0){
+            $this->error('输入正确的店铺id');
+        }
+        if($data['price']<0){
+            $this->error('金额出入错误');
+        }
+        if($data['end_time']<=$data['start_time']){
+            $this->error('时间选择错误');
+        }
+        if($data['end_time']<=$data['create_time']){
+            $this->error('已过期');
+        }
+        if($data['create_time']<$data['start_time']){
+            $data['status']=2;
+        }else{
+            $data['status']=3;
+        }
+        $data['money']=$data['price'];
+        $seller=M('seller')->where('id='.$data['pid'])->find();
+        if(empty($seller['status'])){
+            $this->error('输入正确的店铺id');
+        }
+        M('top_seller')->where('id=1')->data($data)->save();
+      
+        $data_action=array(
+            'uid'=>session('ADMIN_ID'),
+            'time'=>$time,
+            'sid'=>1,
+            'sname'=>'top_seller',
+            'descr'=>'更改保留置顶位，置顶店铺'.$data['pid'].'('.$seller['name'].')',
+        );
+        M('AdminAction')->add($data_action);
+        $this->success('保存成功');
+    }
+    function seller_find(){
+        $id=I('id',0,'intval');
+        if($id<=0){
+            $this->error('输入正确的店铺id');
+        }
+        $seller=M('seller')->where('id='.$id)->getField('name');
+        if(empty($seller)){
+            $this->error('没有该店铺');
+        }
+        $this->success($seller);
     }
 }
