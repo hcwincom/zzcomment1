@@ -191,7 +191,14 @@
 						冻结店铺
 					</button>
 				</eq>
-					
+				<eq name="info.status" value="4">
+					<button type="submit" class="btn btn-primary js-ajax-submit" id="sub4">
+						驳回注销
+					</button>
+					<button type="submit" class="btn btn-primary js-ajax-submit" id="sub5">
+						同意注销
+					</button>
+				</eq>
 					<button type="submit" class="btn btn-primary js-ajax-submit" id="sub3">
 						删除店铺
 					</button>
@@ -227,6 +234,7 @@ $('#sub1').click(function(){
 	if(!confirm('确认冻结该店铺吗？')){
 		return false;
 	}
+	$('form').attr('action',"{:U('index_del')}");
 	$('#review').val('1');
 	return true;
 });
@@ -237,6 +245,7 @@ $('#sub2').click(function(){
 	if(!confirm('确认为该店铺解冻吗？')){
 		return false;
 	}
+	$('form').attr('action',"{:U('index_del')}");
 	$('#review').val('2');
 	return true;
 });
@@ -246,6 +255,22 @@ $('#sub3').click(function(){
 	}
 	$('#review').val('3');
 	$('form').attr('action',"{:U('seller_del')}");
+	return true;
+});
+$('#sub4').click(function(){
+	if(!confirm('确认驳回注销吗？')){
+		return false;
+	}
+	$('#review').val('4');
+	$('form').attr('action',"{:U('cancel_do')}");
+	return true;
+});
+$('#sub5').click(function(){
+	if(!confirm('确认同意注销吗？')){
+		return false;
+	}
+	$('#review').val('5');
+	$('form').attr('action',"{:U('cancel_do')}");
 	return true;
 });
 </script>

@@ -1251,6 +1251,7 @@ class SellerController extends AdminbaseController {
         M('AdminAction')->add($data_action);
         $this->success('保存成功');
     }
+    //搜索店铺
     function seller_find(){
         $id=I('id',0,'intval');
         if($id<=0){
@@ -1261,5 +1262,55 @@ class SellerController extends AdminbaseController {
             $this->error('没有该店铺');
         }
         $this->success($seller);
+    }
+    //审核注销
+    function cancel_do(){
+        $id=I('id',0,'intval'); 
+        $m=$this->m;
+        $where=['id'=>$id,'status'=>4];
+        $info=$m->where($where)->find();
+        if(empty($info)){
+            $this->error('数据错误,请刷新');
+        }
+        $review=I('review',0,'intval');
+        $data_action=array(
+            'uid'=>session('ADMIN_ID'),
+            'time'=>time(),
+            'sid'=>$id,
+            'sname'=>'seller',
+        );
+       
+        $desc='店铺'.$id.'('.$info['name'].')的注销申请';
+        $data_msg=array(
+            'aid'=>session('ADMIN_ID'),
+            'time'=>time(),
+            'uid'=>$info['uid'], 
+        );
+        $m->startTrans();
+        if($review==4){
+            $row=$m->data(array('status'=>2))->where('id='.$id)->save(); 
+            $data_action['descr']= '驳回了'.$desc;
+            $data_msg['content']='管理员驳回了'.$desc;
+        }elseif($review==5){
+            $row=$m->data(array('status'=>1,'uid'=>0))->where('id='.$id)->save();
+            $data_action['descr']= '同意了'.$desc;
+            $data_msg['content']='管理员同意了'.$desc;
+            if($info['deposit']>0){  
+                $row_pay=account($info['deposit'], $info['uid'],$data_msg['content'].'，退还押金');
+                if($row_pay!==1){
+                    $m->rollback();
+                    $this->error('退还押金操作失败，请刷新');
+                } 
+            }
+        }else{
+            $m->rollback();
+            $this->error('数据错误,请刷新');
+        } 
+       
+        M('AdminAction')->add($data_action);
+        M('Msg')->add($data_msg);
+        $m->commit();
+        $this->success('审核成功');
+        exit;
     }
 }

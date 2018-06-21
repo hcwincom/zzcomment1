@@ -233,6 +233,9 @@ function coin($money,$uid,$dsc='会员操作'){
     $where=['id'=>$uid];
     
     $tmp=$m_user->where($where)->setInc('coin',$money);
+    if(!$tmp){
+        return 0;
+    }
     $data_pay=array(
         'uid'=>$uid,
         'money'=>$money,
@@ -253,6 +256,9 @@ function account($money,$uid,$dsc='会员操作'){
     $where=['id'=>$uid];
    
     $tmp=$m_user->where($where)->setInc('account',$money);
+    if(!$tmp){
+        return 0;
+    }
     $data_pay=array(
         'uid'=>$uid,
         'money'=>$money,

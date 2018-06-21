@@ -623,7 +623,7 @@ class SellerController extends MemberbaseController {
       
         if($data['status']==4){
             $m->where('id='.$sid)->save($data); 
-            $this->success('已提交申请，等待管理员审核',U('user/seller/index',array('sid'=>$sid)));
+            $this->success('已提交申请，等待管理员审核',U('user/info/index'));
             exit;
          }
          $m->startTrans();
@@ -635,7 +635,7 @@ class SellerController extends MemberbaseController {
              $row_pay=account($info['deposit'], $user['id'],$desc.'，退还押金');
              if($row_pay!==1){
                  $m->rollback();
-                 $this->error('操作失败，请刷新');
+                 $this->error('退还押金操作失败，请刷新');
              }
              
          }
