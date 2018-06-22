@@ -96,7 +96,7 @@ class TimeController extends HomebaseController {
          
          $result=sp_set_dynamic_config($conf);
          error_log(date('Y-m-d H:i:s')."检查置顶系统任务执行完成\r\n",'3',$log);
-         exit('结束');
+         exit('置顶更新结束');
      }
      /* 定时操作系统任务备用，手动检查 */
      public function time1(){
