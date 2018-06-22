@@ -56,6 +56,7 @@
 .preview img{width:100%;height:100%;}
 
 .form1 span{display: inline-block;line-height:45px;width:85px;font-size: 16px;position: relative;text-align: right;padding-right: 10px;margin-right: 10px;}
+.form1>p{display: inline-block;line-height:45px;width:85px;font-size: 16px;position: relative;text-align: right;padding-right: 10px;margin-right: 10px;}
 .form1 span::after{
 	content: "*";
     font-size: 16px;
@@ -73,6 +74,7 @@
 .form1 input[type="submit"],.form1 input[type="reset"]{width:105px;height:35px;line-height: 35px;background:#eb0000;color:#fff;text-align: center;margin-right:50px;cursor: pointer;font-size: 16px;}
 .form1{font-size: 16px;}
 .per_rnav{width:100%;background:#e5e5e5;}
+.rnav_title{margin-bottom: 10px;}
 .rnav-two{margin-top:10px;position: relative;}
 .rnav-two div{display:inline-block;height:40px;;line-height:40px;margin-left:20px;cursor: pointer;width: 13%;}
 .rnav-two div.draw_msg{width: 20%;}
@@ -126,9 +128,9 @@ float:right;}
 .ewm_l p{margin-top:20px;color:16px;}
 .gn{color:#049200;}
 .evaluate_list{width:100%;font-size:16px;color:#333;}
-.evaluate_list li{border-bottom:1px solid #dcdcdc;padding-bottom:10px;margin-top:15px;}
+.evaluate_list li{border-bottom:1px solid #dcdcdc;padding-bottom:10px;margin-top:10px;}
 .evaluate_li_lf{width:680px;padding-left:20px;}
-.evaluate_li_lf p{line-height: 35px;font-size: 16px;color:#333;max-height:70px;text-overflow:ellipsis;overflow: hidden;position: relative;}
+.evaluate_li_lf p{line-height: 24px;font-size: 16px;color:#666;max-height:70px;text-overflow:ellipsis;overflow: hidden;position: relative;}
 .evaluate_li_lf span{display: inline-block;width: 30%;}
 .evaluate_li_lf a{color: #d00000;}
 .evaluate_li_rt{width:271px;margin-top:10px;}
@@ -138,7 +140,7 @@ float:right;}
 .per_e4{display: inline-block;width:100px;height:40px;text-align: center;line-height: 40px;border-left:1px solid #d2d2d2;}
 .per_e5{display: inline-block;width:80px;height:40px;text-align: center;line-height: 40px;border-left:1px solid #d2d2d2;}
 .per_e5 img,.per_d5 img{ vertical-align:middle;}
-.time{font-size: 16px;color:#333;}
+.time{font-size: 16px;color:#333;line-height: 28px;}
 .per_r2{margin-left:50px;}
 .form2 span{display: inline-block;line-height:45px;width:110px;font-size: 16px;text-align: right;position: relative;}
 .form2>label{display: inline-block;line-height:45px;width:110px;font-size: 16px;text-align: right;}
@@ -320,7 +322,7 @@ background-color: rgba(0, 0, 0, .3);}
 .webmsg{margin-top:10px;border:1px solid #dcdcdc; border-collapse:collapse;overflow-y: auto;_overflow:auto;min-width:100%;font-size:16px;text-align: left;}
 .webmsg thead{background:#eeeeee;}
 .webmsg th{line-height:40px;font-size:16px;color:#333;padding-left:10px;}
-.webmsg td{text-align:left;font-size: 16px;color:#333;line-height:50px;padding-left:10px;white-space: normal;}
+.webmsg td{text-align:left;font-size: 16px;color:#333;line-height:24px;padding-left:10px;white-space: normal;padding: 10px;}
 .webmsg tbody tr{border-top:1px solid #dcdcdc;}
 .webmsg_t1{width:120px;min-width: 60px;} 
 .webmsg_t2{width:200px;min-width: 150px;}

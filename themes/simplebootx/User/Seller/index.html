@@ -1,5 +1,8 @@
 <tc_include file="Public/user_head" />
 	<div class="per_right rt">
+            <div class="per_rnav rnav_title">
+                <a class="rb" href="javascript:void(0);">店铺管理</a>
+            </div>
                 <form action="{:U('User/Seller/edit')}" method="post" onsubmit="return send3()" enctype="multipart/form-data">
                 	<input type="hidden" name="sid" value="{$info.id}"/>
                     <div class="per_r1" >
@@ -16,8 +19,7 @@
                             <button type="button" id="logout">注销店铺</button>
                             <else/>
                              <button type="button" id="logout2">注销店铺</button>
-                            </eq> 
-                           
+                            </eq>   
                         </div>
                     </div>
                     <div class="per_r1">

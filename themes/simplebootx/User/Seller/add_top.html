@@ -2,7 +2,6 @@
 <div class="per_right rt">
     <div class="dynamic_main">
         <div class="per_rnav">
-           
              <a class="rb" href="{:U('add_top',['sid'=>$sid])}">{$flag}购买</a>
             <a class="" href="{:U('top',['sid'=>$sid])}">{$flag}购买记录</a>
         </div>
@@ -151,6 +150,12 @@ function editprice() {
        var priceValue = parseFloat($('.playtime .active .priceSpan').text()); 
        zprice = (priceValue * days).toFixed(2); 
     } 
+
+     if (isNaN(zprice)) {
+         alert(zprice + "不是数字");
+         return false;
+    } 
+
     $(".totalprice").text(zprice);
     $("#total").val(zprice);   
 }

@@ -1,5 +1,8 @@
 <tc_include file="Public/user_head" />
 	<div class="per_right">
+		<div class="per_rnav rnav_title">
+			<a class="rb" href="javascript:void(0);">资料设置</a>
+		</div>
 				<form action="{:U('User/Info/edit')}" method="post" onsubmit="return send()" enctype="multipart/form-data">
 					<div class="per_r1" >
 						<div class="ib imgbox">
@@ -10,27 +13,27 @@
 						<p class="pms">*上传格式为jpg、png图,大小在4M以内</p>
 					</div>
 					<div class="per_r1">
-						<div class="form1"><span>用户名:</span><input type="text" name="user_login" value="{$user.user_login}" onblur="name1()"></div>
+						<div class="form1"><p>用户名:</p><input type="text" name="user_login" value="{$user.user_login}" onblur="name1()"></div>
 						<p class="ml msg1"></p>	
-						<div class="form1"><span>QQ:</span><input type="text" name="qq" value="{$user.qq}" onblur="qq1()"></div>
+						<div class="form1"><p>QQ:</p><input type="text" name="qq" value="{$user.qq}" onblur="qq1()"></div>
 						<p class="ml msg2"></p>	
 						<div class="form1">
-							<span>性别:</span>
+							<p>性别:</p>
 							<label class="sex"><input name="sex" <eq name='user.sex' value='0'>checked</eq> type="radio" value="0">&nbsp;保密</label>
 							<label class="sex"><input name="sex" <eq name='user.sex' value='1'>checked</eq> type="radio" value="1">&nbsp;男</label>
 							<label class="sex"><input name="sex" <eq name='user.sex' value='2'>checked</eq> type="radio" value="2">&nbsp;女</label>
 						</div>
 						<div class="form1">
-							<span>手机号：</span><i>{$user.mobile}</i>
+							<p>手机号：</p><i>{$user.mobile}</i>
 					 		<a class="red" href="{:U('User/Info/mobile')}">(点击修改)</a> 
 						</div>
-						<div class="form1"><span>密码：</span><a class="red" href="{:U('User/Info/psw')}">更改</a></div> 
+						<div class="form1"><p>密码：</p><a class="red" href="{:U('User/Info/psw')}">更改</a></div> 
 						<p class="ml"></p>	
 						<div class="form1">
 						<eq name="user.name_status" value="1">
-							<span class="lf rz">已实名验证</span>
+							<p class="lf rz">已实名验证</p>
 						<else/>
-							<span class="lf">实名认证：</span>
+							<p class="lf">实名认证：</p>
 						<div class="form1"><span>姓名:</span><input type="text" name="user_nicename" value="{$user.user_nicename}" ></div>
 						<p class="ml"></p>	
 							<div class="lf">
