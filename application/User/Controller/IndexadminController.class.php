@@ -37,7 +37,13 @@ class IndexadminController extends AdminbaseController {
     	->order("update_time DESC")
     	->limit($page->firstRow . ',' . $page->listRows)
     	->select();
-    	
+    	$name_statuss=[
+    	    0=>'未认证',
+    	    1=>'已认证',
+    	    2=>'认证不通过',
+    	    3=>'待审核',
+    	];
+    	$this->assign('name_statuss',$name_statuss);
     	$this->assign('list', $list)->assign('name_status',$name_status);
     	$this->assign("page", $page->show('Admin'));
     	
@@ -75,6 +81,13 @@ class IndexadminController extends AdminbaseController {
     }
     // 后台本站用户查看详情
     public function info(){
+        $name_statuss=[
+            0=>'未认证',
+            1=>'已认证',
+            2=>'认证不通过',
+            3=>'待审核',
+        ];
+        $this->assign('name_statuss',$name_statuss);
         $id= I('id',0,'intval');
         if ($id) {
             $info = M("Users")->where(array("id"=>$id,"user_type"=>2))->find();

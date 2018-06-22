@@ -242,11 +242,8 @@ class UserproController extends MemberbaseController{
         }
         $user=$this->user;
         $uid=$user['id'];
-        if($type=='info'){
-            $where=['id'=>$id,'uid'=>$uid,'status'=>3]; 
-        }else{
-            $where=['id'=>$id,'sid'=>($this->sid),'status'=>3]; 
-        }
+        
+        $where=['id'=>$id,'status'=>3]; 
         //未上架不能置顶
         $info=M($type)->where($where)->find();
         if(empty($info)){

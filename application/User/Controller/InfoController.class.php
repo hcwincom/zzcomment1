@@ -78,7 +78,8 @@ class InfoController extends MemberbaseController {
         );
        
         $m=M('Users');
-        if($user_login!=session('user.user_login')){
+        $user=$this->user;
+        if($user_login!=$user['user_login']){
             $tmp=$m->where(array('user_login'=>$user_login))->find();
             if(!empty($tmp)){
                 $this->error('用户名已被占用');
@@ -96,7 +97,11 @@ class InfoController extends MemberbaseController {
             unlink(C("UPLOADPATH").$avatar);
             $data['avatar']=$avatar0;
         }
-        //有图片要保存还要更新实名认证状态
+        //有图片要保存或姓名修改还要更新实名认证状态
+        if(!empty($data['user_nicename']) && $data['user_nicename']!=$user['user_nicename']){
+           
+            $data['name_status']=3;
+        }
         if(!empty($pic1)){
             $data['name_pic1']=$pic1;
             $data['name_status']=3;

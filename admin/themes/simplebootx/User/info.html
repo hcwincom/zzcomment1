@@ -63,11 +63,7 @@
 				  <div class="control-group fleft">
 					<span class="control-label" >实名认证：</span>
 					<div class="controls">
-						<input type="text"  value="<switch name='info.name_status'>
-							<case value='0'>未认证</case>
-							<case value='1'>已认证</case>
-							<case value='2'>认证不通过</case>
-						</switch>" readonly/>
+						<input type="text"  value="{$name_statuss[$info['name_status']]}" readonly/>
 					</div>
 				</div>
 				<div style="clear:both"></div>
