@@ -18,7 +18,7 @@
 				</form>
 				<div class="lf shop-type" id="shop-type">
 					<foreach name="add_cate1" item="vo">
-						<a href="{:U('portal/list/index',array('cid0'=>$key,'char'=>$char,'keyword'=>$keyword))}" class='<if condition="$key eq $cid0">select</if>'>{$vo}</a>
+						<a href="{:U('portal/list/index',array('cid0'=>$key))}" class='<if condition="$key eq $cid0">select</if>'>{$vo}</a>
 					</foreach>
 
 					<a href="javascript:void(0);" id="shopAddBtn">创建店铺</a>
