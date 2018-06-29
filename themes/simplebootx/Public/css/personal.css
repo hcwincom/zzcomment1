@@ -537,6 +537,17 @@ td.msgmaner_td3 ul li{
 .ewm_r{display: none;}
 .ewm_l{width:100%;}
 .dingo{width:90%;}
+.form2{padding-left: 10px;}
+.form2 span{
+	width: 400px;
+	text-align: left;
+	padding-left: 20px;
+}
+.form2 span::after{
+	right: 74%;
+}
+.form2 select{width:100px;padding-left: 20px;margin-left: 10px;}
+.form2>label{width: 400px;text-align: left;padding-left: 20px;}
 }
 @media screen and (max-width:550px) {
      .form1 input[type="text"]{width:200px;height:43px;border:1px solid #dcdcdc;padding-left:10px;}
@@ -544,7 +555,7 @@ td.msgmaner_td3 ul li{
 	.form2 input[type="submit"]{ width:260px;height:35px;line-height: 35px;background:#eb0000;color:#fff;text-align: center;cursor: pointer;font-size: 16px;margin:0 auto;margin-left: 30px;}
 	#start{width: 230px;padding-left:10px;margin-left:15px;}
     .dynamic_li_rt{width:91%;}
-    .form2 select{width:72px;padding-left: 5px;}
+    /* .form2 select{width:72px;padding-left: 5px;} */
 #provinces,#citys,#countys{width:95px;margin:0 0 0 15px;padding-left:3px;}
 .imgbox2{margin-bottom: 10px;}
 .addshop{margin-left:0px;}
@@ -620,7 +631,7 @@ td.msgmaner_td3 ul li{
 @media screen and (max-width:400px) {
     .form1 input[type="submit"],.form1 input[type="reset"]{padding:0 20px;height:35px;line-height: 35px;background:#eb0000;color:#fff;text-align: center;margin-right:30px;cursor: pointer;font-size: 16px;}
     .form3 span{width:90px;}
-	.form2 span{text-align: right;margin-left:10px;}
+	/* .form2 span{text-align: right;margin-left:10px;} */
 
 /*    .form3_list1 li{width:150px;}*/
     .evaluate_li_rt{width:80%;margin-top:5px;}
