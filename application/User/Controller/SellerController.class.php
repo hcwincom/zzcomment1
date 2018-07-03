@@ -153,7 +153,7 @@ class SellerController extends MemberbaseController {
             'tel'=>I('tell',''),
             'mobile'=>I('phone',''),
             'bussiness_time'=>I('jysj',''),
-            
+            'deposit'=> $info['deposit'],
             'link'=>zz_link(I('webaddr','')),
             'keywords'=>I('keywords',''),
             'deposit'=>$info['deposit'], 
@@ -252,6 +252,7 @@ class SellerController extends MemberbaseController {
                 'cards'=>$data['cards'],
                 'link'=>$data['link'],
                 'qrcode'=>$data['qrcode'],
+                'deposit'=> $data['deposit'],
             );
             $m->where('id='.$sid)->save($data2);
             
