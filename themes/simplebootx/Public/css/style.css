@@ -490,6 +490,7 @@ a.captcha img{width:100px;height:44px;}
 .shop-detailcontainer .cont-head{text-align:center;font-size: 24px;line-height: 34px;padding: 10px 0;}
 .shop-detailcontainer .cont-date{text-align: right;padding:15px 0;}
 .cont-date>span{font-size:16px;color: #999;line-height: 26px;letter-spacing:4px;}
+.cont{font-size: 16px;letter-spacing: 2px;line-height: 20px;}
 .edit_cont{font-size: 16px;line-height: 20px;word-wrap: break-word;letter-spacing: 2px;text-indent: 32px;margin-bottom: 10px;}
 #edit_cont p{font-size: 16px;line-height: 26px;word-wrap: break-word;letter-spacing: 2px;text-indent: 32px;color: #666;margin-top: 10px;}
 #edit_cont p img{margin: 0 auto;display:block;}

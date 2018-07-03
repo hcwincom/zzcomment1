@@ -165,3 +165,13 @@ i,em{ font-style: normal; }
 	}
 	.research{padding:0 0 2px;}
 }
+@media screen and (max-width:330px){
+		.research form{
+		width:50%;
+		left: 23%;
+		top:9px;
+	}
+	.research input[type="text"]{width:70%;}
+	.research input[type="submit"]{width:30%;}
+	.form1 span{text-align: left;}
+}

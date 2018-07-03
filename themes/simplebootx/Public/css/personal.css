@@ -625,8 +625,15 @@ td.msgmaner_td3 ul li{
     .dynamic_li_lf2 {
         width: 50%;
 	}
-	.rnav-two div{width: 16%;margin-left: 10px;}
-	.rnav_list li div{width: 16%;margin-left: 10px;padding-bottom: 20px;}
+	.rnav_list li div:nth-child(2) p{font-size: 12px;}
+	.rnav_list li{width: 100%;}
+	.rnav_list li div{padding-bottom: 0;margin: 0;text-align: center;}
+	.rnav_list li div:nth-child(1){width: 30%;}
+	.rnav_list li div:nth-child(2){width: 33%;}
+	.rnav_list li div:nth-child(3){width: 33%;}
+	.rnav_list li div:nth-child(4){width: 25%;}
+	.rnav_list li div:nth-child(5){width: 25%;}
+	.rnav_list li div:nth-child(6){width: 45%;}
 }
 @media screen and (max-width:400px) {
     .form1 input[type="submit"],.form1 input[type="reset"]{padding:0 20px;height:35px;line-height: 35px;background:#eb0000;color:#fff;text-align: center;margin-right:30px;cursor: pointer;font-size: 16px;}
@@ -653,8 +660,7 @@ td.msgmaner_td3 ul li{
 	.rcont_main_list>.per_li5{display: none;}
 	.rcont_main_list>.per_li6{display: none;}
     
-	.rnav-two div{width: 18%;margin-left: 10px;}
-	.rnav_list li div{width: 18%;margin-left: 10px;padding-bottom: 20px;}
+	
  }
 
 
