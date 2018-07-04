@@ -308,7 +308,7 @@ function send4(){
     return (fname1() && phone1() && tell1() && sp() && sconfirm() && asd()); 
 }
 function sconfirm() {
-    if(confirm("确认提交吗")){
+    if (confirm("确认提交吗？确认提交将会扣除相应的押金！！！")){
         return true;
     }else{
         return false;
