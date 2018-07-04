@@ -43,7 +43,10 @@ class IndexController extends HomebaseController {
 	    
 	    $total=$m_seller->where($where_seller)->count();
 	    $page = $this->page($total, C('page_seller_list'));
-	    $sellers=$m_seller->where($where_seller)->order('score desc')->limit($page->firstRow,$page->listRows)->select();
+	    $sellers=$m_seller
+	    ->where($where_seller)
+	    ->order('score desc,browse desc')
+	    ->limit($page->firstRow,$page->listRows)->select();
 	   
 	    $chars=array('A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z');
 	    $where_cate=['type'=>['eq',1],'fid'=>['neq',0]];

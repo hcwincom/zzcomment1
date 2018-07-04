@@ -56,7 +56,11 @@ class ListController extends HomebaseController {
         }
         $total=$m_seller->where($where_seller)->count();
         $page = $this->page($total, C('page_seller_list'));
-        $sellers=$m_seller->where($where_seller)->order('score desc,browse desc')->limit($page->firstRow,$page->listRows)->select();
+        $sellers=$m_seller
+        ->where($where_seller)
+        ->order('score desc,browse desc')
+        ->limit($page->firstRow,$page->listRows)
+        ->select();
         
         $this->assign('sellers',$sellers)
         ->assign('page',$page->show('Admin'));
@@ -90,7 +94,11 @@ class ListController extends HomebaseController {
         
         $total=$m_seller->where($where_seller)->count();
         $page = $this->page($total, C('page_seller_list'));
-        $sellers=$m_seller->where($where_seller)->order('create_time desc')->limit($page->firstRow,$page->listRows)->select();
+        $sellers=$m_seller
+        ->where($where_seller)
+        ->order('create_time desc')
+        ->limit($page->firstRow,$page->listRows)
+        ->select();
         
         $this->assign('sellers',$sellers)
         ->assign('page',$page->show('Admin'));
