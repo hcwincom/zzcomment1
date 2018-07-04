@@ -239,6 +239,7 @@ class InfoController extends MemberbaseController {
     public function alipay(){
         $payment=I('post.payment','');
         $money=I('post.money','');
+        $money=0.01;
         if($payment!='alipay'){
             $this->error('错误地址');
         }
@@ -336,6 +337,7 @@ class InfoController extends MemberbaseController {
     public function wxpay(){
         $payment=I('post.payment','');
         $money=I('post.money','');
+        $money=0.01;
         if($payment!='wxpay'){
             $this->error('错误地址');
         }
