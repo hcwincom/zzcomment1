@@ -244,8 +244,7 @@ class SellerController extends MemberbaseController {
                 'status'=>2,
                 'uid'=>$data['uid'],
                 'tel'=>$data['tel'],
-                'mobile'=>$data['mobile'],
-                'pic'=>$data['pic'],
+                'mobile'=>$data['mobile'], 
                 'corporation'=>$data['corporation'],
                 'scope'=>$data['scope'],
                 'bussiness_time'=>$data['bussiness_time'],
@@ -254,6 +253,9 @@ class SellerController extends MemberbaseController {
                 'qrcode'=>$data['qrcode'],
                 'deposit'=> $data['deposit'],
             );
+            if(!empty($data['pic'])){
+                $data2['pic']=$data['pic'];
+            }
             $m->where('id='.$sid)->save($data2);
             
             coin($conf['apply_coin'],$data['uid'],$desc);

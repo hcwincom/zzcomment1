@@ -58,13 +58,16 @@ class UserController extends HomebaseController {
         ->field('info.*,cate.name as cate_name')
         ->alias('info')
         ->join('cm_cate as cate on cate.id=info.cid')
+        ->join('cm_users as u on u.id=info.uid')
         ->where('info.id='.$id)->find();
         if(empty($detail)){
             $this->error('该信息不存在');
         }
         $detail['city_name']=getCityNames($detail['city']);
         $user=M('users')->where('id='.$detail['uid'])->find();
-        $this->assign('user',$user);
+        $detail['upic']=$user['avatar'];
+        $detail['uname']=$user['user_login'];
+      
         $this->assign('detail',$detail);
         $this->assign('html_title',$detail['name']);
         $this->display();
