@@ -36,6 +36,8 @@ class SellerController extends HomebaseController {
             default:$this->error('该店铺不存在'); break;
         }
         $this->assign('sid',$sid)->assign('info',$info)->assign('seller_info',$seller_info);
+        $this->assign('keywords',$info['keywords']);
+        
         //店铺浏览量+1
         
         $m_seller=M('Seller'); 

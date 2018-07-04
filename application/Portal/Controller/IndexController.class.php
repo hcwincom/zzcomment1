@@ -9,6 +9,7 @@ class IndexController extends HomebaseController {
 	
     //首页
 	public function index() { 
+	    
 	    $time=time();
 	    //banner图 
 	    $banners=M('Banner')->order('sort desc')->select();
