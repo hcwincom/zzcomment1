@@ -266,8 +266,8 @@ class InfoController extends MemberbaseController {
             "payment_type"	=> $alipay_config['payment_type'],
             
             "notify_url"	=> $alipay_config['notify_url'],
-            "return_url"	=> $alipay_config['return_url'],
-            
+            "return_url"	=>U('User/Info/alipay_return','',true,true),
+         
             "anti_phishing_key"=>$alipay_config['anti_phishing_key'],
             "exter_invoke_ip"=>$alipay_config['exter_invoke_ip'],
             "out_trade_no"	=> $out_trade_no,
@@ -378,9 +378,9 @@ class InfoController extends MemberbaseController {
         $input->SetTime_start(date("YmdHis"),$time);
         $input->SetTime_expire(date("YmdHis", $time+3600));
         $input->SetGoods_tag("充值");
-       // $input->SetNotify_url("http://www.zypjw.cn/wxpay/notify.php");
-        $input->SetNotify_url("http://www.zypjw.cn/Portal/Pay/wx_notify");
-        
+      
+//         $input->SetNotify_url("http://www.zypjw.cn/Portal/Pay/wx_notify");
+        $input->SetNotify_url(U('portal/pay/wx_notify','',true,true));
         $input->SetTrade_type("NATIVE");
         $input->SetProduct_id("123456789");
         $result = $notify->GetPayUrl($input);

@@ -61,7 +61,7 @@ class PayController extends HomebaseController {
     
     public function wx_notify(){
         $log='wx.log';
-        $line=PHP_EOL;
+        $line="\r\n";
         error_log(date('Y-m-d H:i:s').'支付wx_notify开始'.$line,3,$log); 
         $dir=getcwd();
         require_once $dir.'/wxpay/Wxpay.php';
