@@ -5,7 +5,7 @@
 	<meta name="renderer" content="webkit|ie-stand|ie-comp">
 	
 	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
-	<meta name="keywords" content="{$company['keywords']['content']}">
+	<meta name="keywords" content="{$company['keywords']['content']},{$keywords|default=''}">
     <meta name="description" content="{$company['description']['content']}">
     <meta name="baidu-site-verification" content="xNRtrmerYv" /> 
 	<title>{$html_title|default=$company['title']['content']}</title>
