@@ -23,7 +23,7 @@ class UserproController extends MemberbaseController{
     public function add(){
         $type=$this->type;
         if($type=='info'){
-            $id=$this->uid;
+            $id=$this->userid;
             $cate=M('cate')->where('type=3')->getField('id,name');
             $this->assign('cate',$cate);
         }else{
@@ -69,7 +69,7 @@ class UserproController extends MemberbaseController{
         $type=$this->type;
         $id=I('id',0);
         if($type=='info'){ 
-            $where=['id'=>$id,'uid'=>($this->uid)];
+            $where=['id'=>$id,'uid'=>($this->userid)];
         }else{
             $where=['id'=>$id,'sid'=>($this->sid)];
         }
@@ -99,7 +99,7 @@ class UserproController extends MemberbaseController{
         $id=I('id',0);
         $field='id,pic,picpath';
         if($type=='info'){
-            $where=['id'=>['in',$ids],'uid'=>['eq',($this->uid)]];
+            $where=['id'=>['in',$ids],'uid'=>['eq',($this->userid)]];
         }else{
             $where=['id'=>['in',$ids],'sid'=>['eq',($this->sid)]];
             if($type=='goods'){
@@ -347,7 +347,7 @@ class UserproController extends MemberbaseController{
         $type=$this->type;
         $m_top=M('top_'.$type);
         if($type=='info'){
-            $where=array('p.uid'=>$this->uid);
+            $where=array('p.uid'=>$this->userid);
         }else{
             $where=array('p.sid'=>$this->sid);
         }

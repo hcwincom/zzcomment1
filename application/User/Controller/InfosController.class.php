@@ -24,7 +24,7 @@ class InfosController extends UserproController{
         $m=$this->m;
         $where=array('uid'=>$this->userid);
          
-        $status=I('status',-1);
+        $status=I('status',-1); 
         if($status!=-1){
             $where['status']=$status;
         }
