@@ -252,6 +252,7 @@ class SellerController extends MemberbaseController {
                 'link'=>$data['link'],
                 'qrcode'=>$data['qrcode'],
                 'deposit'=> $data['deposit'],
+                'keywords'=>$data['keywords'],
             );
             if(!empty($data['pic'])){
                 $data2['pic']=$data['pic'];
