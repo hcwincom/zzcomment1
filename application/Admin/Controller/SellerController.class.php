@@ -593,6 +593,9 @@ class SellerController extends AdminbaseController {
                 'keywords'=>$info['keywords'], 
                 'deposit'=>$info['deposit'], 
             );
+            if(!empty($info['pic'])){
+                $data2['pic']=$info['pic'];
+            }
             $row2=$m_seller->data($data2)->where('id='.$info['sid'])->save();
             if($row2!==1){
                 $m_apply->rollback();
