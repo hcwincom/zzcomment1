@@ -37,54 +37,88 @@
 if(navigator.appName == "Microsoft Internet Explorer"&&parseInt(navigator.appVersion.split(";")[1].replace(/[ ]/g, "").replace("MSIE",""))<9){
 	alert("当前浏览器版本过低，为不影响网站体验效果，请下载最新版本的浏览器！");
 }
- 
+
 var cateid1=parseInt("{$cateid1|default=0}");
 var cateid2=parseInt("{$cateid2|default=0}");
-$('.add-cate2 option').hide();
-$('.add-cate2 .cate2s0').show();
+
+	var cata2Array = new Array();
+		var cata2Select = $(".add-cate2").find("option");
+
+			for (var i = 0; i < cata2Select.length; i++) {
+				var cata2String = cata2Select.eq(i).attr("class") + ";" + cata2Select.eq(i).val() + ";" + cata2Select.eq(i).text();
+				cata2Array.push(cata2String);
+			}
+
 $('.add-cate2 .cate2s'+cateid1).show();
 $('.add-cate2 .cate2'+cateid2).prop('selected',true);
 $('.add-cate1').change(function(){
-	var fid=this.value;
-	$('.add-cate2 option').hide();
-	$('.add-cate2 .cate2s0').show();
-	$('.add-cate2 .cate20').prop('selected',true);
-	$('.add-cate2 .cate2s'+fid).show();
+	 var fid=this.value;
 	
+	$(".add-cate2").empty();
+	var cata2Html = "<option class='cate2s0 cate20' value='0'>行业 </option>";
+	fid = "cate2s" + fid;
+	for (var i = 0; i < cata2Array.length; i++) {
+		if (-1 !== cata2Array[i].indexOf(fid)) {
+			var arr = cata2Array[i].split(";")
+			cata2Html += "<option class='" + arr[0] + "' value='" + arr[1] + "'>" + arr[2] + "</option>"
+		}
+
+	}
+	$(".add-cate2").html(cata2Html);
 });
+
 
 var province=parseInt("{$city1|default=0}");
 var city=parseInt("{$city2|default=0}");
 var town=parseInt("{$city3|default=0}");
 var city_url="{:U('portal/public/city')}";
- 
-$('.city2 option').hide();
-$('.city2 .city20').show();
-$('.city2 .city2'+province).show();
-$('.city2s'+city).prop('selected',true);
+
+	var cityArray = new Array();
+
+		var citySelect = $(".city2").eq(0).find("option");
+
+		for (var i = 0; i < citySelect.length; i++) {
+
+			var selectString = citySelect.eq(i).attr("class") + ";" + citySelect.eq(i).val() + ";" + citySelect.eq(i).text();
+			cityArray.push(selectString);
+		}
+
+		city2(province, $('body'));
+		$('.city2s' + city).prop('selected', true);
+	
+
 $('.city31').show(); 
 $('.city3s'+town).prop('selected',true);
-
 
 $('.city1').change(function(){ 
 	 
 	city2(this.value,$(this).parent()); 
+	$(".city3").val("0");
+
 });
 $('.city2').change(function(){
 	city3(this.value,$(this).parent()); 
 	
 });
 $('.sear-info select').change(function(){
+	
 	$('.sear-info form').submit();
 });
+
 function city2(fid,$div){
-	$div.find('.city2 option').hide();
-	$div.find('.city2 .city20').show();
-	$div.find('.city2 .city20').prop('selected',true);
-	$div.find('.city2 .city2'+fid).show();
-	$div.find('.city3 option').hide();
-	$div.find('.city3 .city30').show(); 
-	$div.find('.city3 .city30').prop('selected',true);
+	
+	 $div.find('.city2').empty();
+	var cityHtml = "<option class='city20' value='0'>地级市</option>";
+	for(var i = 0; i < cityArray.length; i++ ){
+		if(-1 !== cityArray[i].indexOf(fid)){
+
+			var arr = cityArray[i].split(";");
+ 			cityHtml += "<option class='" + arr[0] + "' value='" + arr[1] + "'>" + arr[2] + "</option>";
+			 
+		}
+	}
+	$div.find('.city2').html(cityHtml);
+	
 }
 function city3(fid,$div){
 	var $select3=$div.find('.city3');
@@ -100,5 +134,8 @@ function city3(fid,$div){
 	}
 }
  
- 
+	
+ 	
 </script>
+
+
