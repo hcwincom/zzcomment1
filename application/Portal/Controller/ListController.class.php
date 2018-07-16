@@ -79,8 +79,8 @@ class ListController extends HomebaseController {
         //商家//商家排名10
         $where_seller=array();
         //0未审核，1未认领，2已认领,3已冻结
-        $where_seller['status']=array('between','1,2');
-        
+//         $where_seller['status']=array('between','1,2');
+        $where_seller['status']=array('eq',1);
         //处理城市
         $tmp=$this->city();
         if(!empty($tmp)){
