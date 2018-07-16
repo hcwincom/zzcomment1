@@ -285,11 +285,12 @@ textarea{resize: none;}
 .shop-news>li{padding:40px 0;border-bottom:1px solid #dcdcdc;overflow: hidden;}
 .shop-news>li img{width:176px;height:104px;}
 .news-cont{width:1024px;padding:10px 0 10px 25px;-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;}
-.news-title{width:50%;font-size:18px;line-height: 40px;height:40px;white-space:nowrap;overflow: hidden;text-overflow: ellipsis;}
+.news-title{width:50%;font-size:18px;line-height: 40px;height:40px;white-space:nowrap;overflow: hidden;text-overflow: ellipsis;color: #333;}
 .job-title{width:50%;font-size:18px;line-height: 40px;height:40px;white-space:nowrap;overflow: hidden;text-overflow: ellipsis;color: #d50000;}
 .news-title:hover{color:#d00000;}
 .news-date{font-size:16px;color: #999;line-height: 40px;padding:0 75px 0 10px;letter-spacing:4px;}
-.news-about{color:#666;font-size:14px;line-height:20px;height:40px;overflow:hidden;width: 90%;}
+.news-about{color:#666;font-size:14px;line-height:20px;height:40px;overflow:hidden;width: 90%;text-overflow: ellipsis !important;
+	display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;position: relative;}
 .showmore a{display: block;width:7em;line-height: 35px;color:#d00000;font-size:16px;border:1px solid #d00000;text-align: center;margin:75px auto 100px;}
 
 /*最新招聘*/
@@ -364,7 +365,7 @@ textarea{resize: none;}
 	padding-left: 30px;
 }
 .shop-infor-article{
-	width: 55%;
+	width: 80%;
 	margin: 0 auto;
 	text-align: center;
 }
@@ -385,10 +386,14 @@ textarea{resize: none;}
 	font-size: 16px;
 	word-wrap: break-word;
 	word-break: normal;
+	margin: 0 auto;
 }
 .edit-detail>p>img{
+	display: block;
 	max-width: 100%;
 	max-height: 100%;
+	text-align: center;
+	margin: 0 auto;
 }
 .shop-wrapper{background: #f1f1f1;min-height: 100%;box-sizing: border-box;}
 /*shop main*/
@@ -494,7 +499,7 @@ a.captcha img{width:100px;height:44px;}
 .shop-detailcontainer .cont-head{text-align:center;font-size: 24px;line-height: 34px;padding: 10px 0;}
 .shop-detailcontainer .cont-date{text-align: right;padding:15px 0;}
 .cont-date>span{font-size:16px;color: #999;line-height: 26px;letter-spacing:4px;}
-.cont{font-size: 16px;letter-spacing: 2px;line-height: 20px;}
+.cont{font-size: 16px;letter-spacing: 2px;line-height: 24px;text-indent: 32px;word-wrap: break-word;}
 .edit_cont{font-size: 16px;line-height: 20px;word-wrap: break-word;letter-spacing: 2px;text-indent: 32px;margin-bottom: 10px;}
 #edit_cont p{font-size: 16px;line-height: 26px;word-wrap: break-word;letter-spacing: 2px;text-indent: 32px;color: #666;margin-top: 10px;}
 #edit_cont p img{margin: 0 auto;display:block;}

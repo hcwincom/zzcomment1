@@ -41,16 +41,14 @@ if(navigator.appName == "Microsoft Internet Explorer"&&parseInt(navigator.appVer
 var cateid1=parseInt("{$cateid1|default=0}");
 var cateid2=parseInt("{$cateid2|default=0}");
 
-	var cata2Array = new Array();
-		var cata2Select = $(".add-cate2").find("option");
+var cata2Array = new Array();
+var cata2Select = $(".add-cate2").find("option");
 
-			for (var i = 0; i < cata2Select.length; i++) {
-				var cata2String = cata2Select.eq(i).attr("class") + ";" + cata2Select.eq(i).val() + ";" + cata2Select.eq(i).text();
-				cata2Array.push(cata2String);
-			}
+for (var i = 0; i < cata2Select.length; i++) {
+	var cata2String = cata2Select.eq(i).attr("class") + ";" + cata2Select.eq(i).val() + ";" + cata2Select.eq(i).text();
+	cata2Array.push(cata2String);
+}
 
-$('.add-cate2 .cate2s'+cateid1).show();
-$('.add-cate2 .cate2'+cateid2).prop('selected',true);
 $('.add-cate1').change(function(){
 	 var fid=this.value;
 	
@@ -73,21 +71,20 @@ var city=parseInt("{$city2|default=0}");
 var town=parseInt("{$city3|default=0}");
 var city_url="{:U('portal/public/city')}";
 
-	var cityArray = new Array();
+var cityArray = new Array();
 
-		var citySelect = $(".city2").eq(0).find("option");
+var citySelect = $(".city2").eq(0).find("option");
 
-		for (var i = 0; i < citySelect.length; i++) {
+for (var i = 0; i < citySelect.length; i++) {
 
-			var selectString = citySelect.eq(i).attr("class") + ";" + citySelect.eq(i).val() + ";" + citySelect.eq(i).text();
-			cityArray.push(selectString);
-		}
+	var selectString = citySelect.eq(i).attr("class") + ";" + citySelect.eq(i).val() + ";" + citySelect.eq(i).text();
+	cityArray.push(selectString);
+}
 
-		city2(province, $('body'));
-		$('.city2s' + city).prop('selected', true);
+city2(province, $('body'));
+$('.city2s' + city).prop('selected', true);
 	
 
-$('.city31').show(); 
 $('.city3s'+town).prop('selected',true);
 
 $('.city1').change(function(){ 

@@ -6,7 +6,7 @@
 .per_main{margin-top:30px;margin-bottom: 100px;min-height: 80%;}
 .per_main:after{content: "";display: block;height: 0;clear: both;}
 .per_left{width: 200px;background:#f5f5f5;padding-bottom: 20px;float:left;}
-.plt{display: inline-block;font-size:18px;color:#333;line-height:45px;text-align: center;width:100%;word-wrap:break-word; word-break:normal;}
+.plt{display: inline-block;font-size:18px;color:#333;line-height:45px;text-align: center;width:100%;word-wrap:break-word; word-break:normal;text-overflow: ellipsis;}
 .per_lf{width:100%;border-top:1px solid #dcdcdc;}
 .per_lf_list{}
 .per_lf_list li{font-size:16px;line-height: 35px;list-style: disc!important;text-align:left;width:100px;margin-left:85px;color:#666;}
@@ -256,8 +256,8 @@ background-color: rgba(0, 0, 0, .3);}
 .dynamic_li_lf1{width:170px;margin-left: 48px;padding-top: 20px;}
 .dynamic_li_lf2{width:400px;overflow: hidden;}
 .dynamic_li_rt{width:340px;margin-top:10px;}
-.per_d1,.per_d2{font-size: 16px;color:#666;line-height: 35px;}
-.per_d2{width:450px;line-height: 20px;max-height:40px;text-overflow:ellipsis;overflow: hidden;}
+.per_d1,.per_d2{font-size: 16px;color:#333;line-height: 35px;}
+.per_d2{line-height: 20px;max-height:40px;overflow: hidden;text-overflow:ellipsis;color:#666;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;width: 400px;}
 .per_d3{display: block;width:70px;color:#999;font-size:12px;text-align: center;}
 .per_d4{margin-left:10px;margin-right:10px;width:48px;padding:0 20px;line-height: 35px;text-align: center;display: inline-block;}
 .per_d4 span{display: block;color: #d50000;}
