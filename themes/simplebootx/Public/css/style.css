@@ -354,8 +354,8 @@ textarea{resize: none;}
 .person-content>p{
 	font-size: 16px;
 	line-height: 20px;
-	height: 40px;
 	letter-spacing: 2px;
+	margin-bottom: 10px;
 }
 .person-content>p.mess{
 	font-weight: 600;
