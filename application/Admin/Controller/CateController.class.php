@@ -18,12 +18,12 @@ class CateController extends AdminbaseController {
     //分类管理首页
     public function index(){
         $m=$this->m ;
-        //这是选择框的一级分类
-        $list0=$m->where('fid=0')->order($this->order)->select();
+       
     	$fid=I('parent',0,'intval');
     	$type=I('type',1,'intval');
     	$where=array('fid'=>$fid,'type'=>$type);
-    	 
+    	//这是选择框的一级分类
+    	$list0=$m->where(['fid'=>0,'type'=>$type])->order($this->order)->select();
     	$total=$m->where($where)->count();
     	$page = $this->page($total, 10);
     	$list=$m->where($where)->order($this->order)->limit($page->firstRow,$page->listRows)->select();
@@ -42,7 +42,7 @@ class CateController extends AdminbaseController {
         
         $fid=I('fid',0);
         $m=$this->m ;
-        $list=$m->where('fid=0')->order($this->order)->select();
+        $list=$m->where(['fid'=>0,'type'=>1])->order($this->order)->select();
          
         $this->assign('fid',$fid);
         $this->assign('list',$list);
@@ -57,16 +57,28 @@ class CateController extends AdminbaseController {
         $fid=I('parent',0);
         $name=I('name','');
         $sort=I('sort',0);
-        $type=I('type',1);
+        
         if(empty($name)){
             $this->error('类名不能为空');
         }
         $firstChar=getFirstChar($name);
-        if($firstChar===false){
-            
+        if($firstChar===false){ 
             $this->error('类名只能以字母或汉字开头');
         }
-        
+         
+        switch ($fid){
+            case -2:
+                $type=2;
+                $fid=0;
+                break;
+            case -3:
+                $type=3;
+                $fid=0;
+                break;
+            default:
+                $type=1;
+                break; 
+        }
         $data=array(
             'name'=>$name,
             'fid'=>$fid,
@@ -90,9 +102,23 @@ class CateController extends AdminbaseController {
         $id=I('id',0);
         $m=$this->m;
         $info=$m->where('id='.$id)->find(); 
-        $list=$m->where('fid=0')->order($this->order)->select();
+        switch ($info['type']){
+            case 2:
+                $info['fname']='招聘分类';
+                break;
+            case 3:
+                $info['fname']='便民信息分类';
+                break;
+            default:
+                if($info['fid']==0){
+                    $info['fname']='店铺分类';
+                }else{
+                    $info['fname']=$m->where('fid',$info['fid'])->getField('name');
+                }
+                break;
+        }
         
-        $this->assign('list',$list);
+        
         $this->assign('info',$info); 
         $this->display();
     }
@@ -100,7 +126,7 @@ class CateController extends AdminbaseController {
     //分类修改执行
     public function edit_do(){
         $id=I('id',0);
-        $fid=I('parent',0);
+       
         $name=I('name','');
         $sort=I('sort',0);
        
@@ -115,8 +141,7 @@ class CateController extends AdminbaseController {
         }
         $m=$this->m;
         $data=array(
-            'name'=>$name,
-            'fid'=>$fid,
+            'name'=>$name, 
             'sort'=>$sort, 
             'first_char'=>$firstChar, 
         );
@@ -131,28 +156,24 @@ class CateController extends AdminbaseController {
     
     //分类删除
     public function del(){
-        $id=I('id',0);
+        $id=I('id',0,'intval');
         //删除分类还要删除子类和所属关于
         $m=$this->m;
         $info=$m->where('id='.$id)->find();
-        $ids=array($id);
-        //一级分类还有子类
-        if($info['fid']==0){
-            $childs=$m->field('id')->where('fid='.$id)->select();
-            foreach($childs as $v){
-                $ids[]=$v['id'];
-            }
+        //店铺一级分类不能删除 
+        if($info['fid']==0 && $info['type']==1){
+            $this->error('店铺一级分类不能删除');
         }
         
-        //检查分类下是否有店铺，有就不能删除
-        $map_product['cid']=array('in',$ids);
+        //检查分类下是否有信息，有就不能删除
+        $map_product['cid']=array('eq',$info['id']);
         $types=[1=>'seller',2=>'job',3=>'info'];
         $temp=M($types[$info['type']])->where($map_product)->find();
         if(!empty($temp)){
             $this->error('分类下还有信息，不能删除');
         }
         //删除分类
-        $map['id']=array('in',$ids);
+        $map['id']=$info['id'];
         $row=$m->where($map)->delete();
         if($row>0){
             $this->success('删除成功');

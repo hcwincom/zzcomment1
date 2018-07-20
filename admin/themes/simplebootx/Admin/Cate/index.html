@@ -47,6 +47,7 @@
 	                    <td> {$vo.name}</td>
 	                   <td> {$vo.create_time|date="Y-m-d H:i:s",###}</td>
 	                    <td>
+	               <eq name="vo.type" value="1">
 	                    <eq name="vo.fid" value="0">
 	                    	<a href="{:U('add',array('fid'=>$vo['id']))}">添加子类</a>
 	                    	&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
@@ -62,6 +63,15 @@
 	                    	<a  class="js-ajax-dialog-btn" href="{:U('del',array('id'=>$vo['id']))}" data-msg="确认删除吗？">删除</a> 
 	               
 	                    </eq>	
+	               <else/>
+	               			<span>添加子类</span>
+	                   		&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+	                    	<a href="{:U('edit',array('id'=>$vo['id']))}">编辑</a> 
+	                    	&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; 
+	                    	<a  class="js-ajax-dialog-btn" href="{:U('del',array('id'=>$vo['id']))}" data-msg="确认删除吗？">删除</a> 
+	               
+	               
+	              </eq>
 	                  </td>
 						
 					</tr>
