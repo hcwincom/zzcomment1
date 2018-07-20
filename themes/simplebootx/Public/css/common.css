@@ -97,7 +97,8 @@ i,em{ font-style: normal; }
 	}
 
 	.login-link{
-    	top: -20px;
+		top: -20px;
+		padding: 26px 0 0 0;
 	}
 	.login-link a{
 		width: 48px;
@@ -171,7 +172,7 @@ i,em{ font-style: normal; }
 		left: 23%;
 		top:9px;
 	}
-	.research input[type="text"]{width:70%;}
-	.research input[type="submit"]{width:30%;}
+	.research input[type="text"]{width:67%;}
+	.research input[type="submit"]{width:27%;}
 	.form1 span{text-align: left;}
 }

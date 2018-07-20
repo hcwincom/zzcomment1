@@ -104,7 +104,7 @@ $('.sear-info select').change(function(){
 
 function city2(fid,$div){
 	
-	 $div.find('.city2').empty();
+	 $div.find('.city2 option').remove();
 	var cityHtml = "<option class='city20' value='0'>地级市</option>";
 	for(var i = 0; i < cityArray.length; i++ ){
 		if(-1 !== cityArray[i].indexOf(fid)){
@@ -131,8 +131,7 @@ function city3(fid,$div){
 	}
 }
  
-	
- 	
+		
 </script>
 
 

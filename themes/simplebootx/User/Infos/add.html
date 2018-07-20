@@ -32,7 +32,7 @@
                             <div class="clear"></div>
                         </div>
                         <p class="ml msg4"></p> 
-                        <div class="form2"><label class="lf">简介（纯文字）：</label><textarea name="dsc" id="" cols="30" rows="10" ></textarea></div>
+                        <div class="form2"><label class="lf">简介（纯文字）：</label><textarea name="dsc" id="textareaEmoji" cols="30" rows="10" onkeyup="this.value=this.value.replace(/\uD83C[\uDF00-\uDFFF]|\uD83D[\uDC00-\uDE4F]/g,'')"></textarea></div>
                         <p class="ml msg2"></p>
                         <div class="clear"></div>
                         <div class="form2"><label style="vertical-align: top;">详情（可编辑样式，上传图片）：</label><textarea style="display: inline-block" name="content2" id="content2" ></textarea></div>
@@ -82,5 +82,7 @@
            istoday: false,
        };
        laydate(start);  
+
+     
 </script>
  
