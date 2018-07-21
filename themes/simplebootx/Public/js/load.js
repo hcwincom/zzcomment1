@@ -244,6 +244,7 @@ $(document).ready(function(){
 	// 限制文本框的字符长度
 	$("input[type='text']").attr("maxlength","50");
 	$("input[name='webaddr']").attr("maxlength","100");
+	$("input[name='jyfw']").attr("maxlength","100");
 	// 验证禁止输入表情符
 
 
