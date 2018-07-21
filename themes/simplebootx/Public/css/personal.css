@@ -35,8 +35,8 @@
 .imgbox8{width:200px;position: relative;}
 #preview1{width:110px;height:110px;background:#e5e4e4;}
 .img{width:100%;height:100%;}
-#preview2{width:200px;height:120px;background:#e5e4e4;}
-#preview3{width:200px;height:120px;background:#e5e4e4;}
+#preview2{width:200px;height:120px;background:#e5e4e4;margin-top: 10px;}
+#preview3{width:200px;height:120px;background:#e5e4e4;margin-top: 10px;}
 #preview4{width:200px;height:120px;background:#e5e4e4;}
 #preview5{width:200px;height:120px;background:#e5e4e4;}
 #preview6{width:290px;height:175px;background:#e5e4e4;}

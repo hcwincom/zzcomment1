@@ -241,9 +241,32 @@ $(document).ready(function(){
 			$(".must:checkbox").parent("div").next(".lg-infor").text("");
 		}
 	})
+	// 限制文本框的字符长度
+	$("input[type='text']").attr("maxlength","50");
+	$("input[name='webaddr']").attr("maxlength","100");
+	$("textarea[name='userreply']").attr("maxlength", "200");
+	$("textarea[name='usermessage']").attr("maxlength","200");
 
+	// 验证禁止输入表情符
+
+
+	$("input").keyup(function () {
+		noEmoji($(this).val());
+	});
 
 });
+
+
+// 限制文本框不能输入表情符
+
+function noEmoji(param) {
+	var regRule = /[^\u0020-\u007E\u00A0-\u00BE\u2E80-\uA4CF\uF900-\uFAFF\uFE30-\uFE4F\uFF00-\uFFEF\u0080-\u009F\u2000-\u201f\u2026\u2022\u20ac\r\n]/g;
+	if (param.match(regRule)) {
+		param = param.replace(regRule, "");
+	}
+}
+
+
 
 // regular expression
 var nameR=/^[\dA-Za-z_\u4e00-\u9fa5]{2,14}$/;
@@ -393,3 +416,16 @@ var mR=/^(0|86|17951)?(13[0-9]|15[012356789]|17[013678]|18[0-9]|14[57])[0-9]{8}$
 			$(":submit").parent("div").next(".lg-infor").text("");			
 		}
 	}
+
+
+
+
+
+
+
+
+
+
+
+
+

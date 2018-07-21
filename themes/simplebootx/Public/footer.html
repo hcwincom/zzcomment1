@@ -42,29 +42,32 @@ var cateid1=parseInt("{$cateid1|default=0}");
 var cateid2=parseInt("{$cateid2|default=0}");
 
 var cata2Array = new Array();
-var cata2Select = $(".add-cate2").find("option");
+var cata2Select = $(".add-cate2").eq(0).find("option");
 
 for (var i = 0; i < cata2Select.length; i++) {
 	var cata2String = cata2Select.eq(i).attr("class") + ";" + cata2Select.eq(i).val() + ";" + cata2Select.eq(i).text();
 	cata2Array.push(cata2String);
 }
-
+$('.cate2' + cateid2).prop('selected', true);
+$(".add-cate2 option:not(:first-child)").remove();
 $('.add-cate1').change(function(){
-	 var fid=this.value;
-	
-	$(".add-cate2").empty();
+	 var fid=this.value;	 
+	$(".add-cate2 option").remove();
 	var cata2Html = "<option class='cate2s0 cate20' value='0'>行业 </option>";
-	fid = "cate2s" + fid;
-	for (var i = 0; i < cata2Array.length; i++) {
-		if (-1 !== cata2Array[i].indexOf(fid)) {
-			var arr = cata2Array[i].split(";")
-			cata2Html += "<option class='" + arr[0] + "' value='" + arr[1] + "'>" + arr[2] + "</option>"
+	if(fid == 0){
+		$(".add-cate2").html(cata2Html);
+	}else{
+		fid = "cate2s" + fid;
+		for (var i = 0; i < cata2Array.length; i++) {
+			if (-1 !== cata2Array[i].indexOf(fid)) {
+				var arr = cata2Array[i].split(";")
+				cata2Html += "<option class='" + arr[0] + "' value='" + arr[1] + "'>" + arr[2] + "</option>"
+			}
 		}
-
+		$(".add-cate2").html(cata2Html);
 	}
-	$(".add-cate2").html(cata2Html);
-});
 
+});
 
 var province=parseInt("{$city1|default=0}");
 var city=parseInt("{$city2|default=0}");
@@ -84,13 +87,11 @@ for (var i = 0; i < citySelect.length; i++) {
 city2(province, $('body'));
 $('.city2s' + city).prop('selected', true);
 	
-
 $('.city3s'+town).prop('selected',true);
 
 $('.city1').change(function(){ 
-	 
-	city2(this.value,$(this).parent()); 
-	$(".city3").val("0");
+	$(".city3 option:not(:first-child)").remove();
+	city2(this.value,$(this).parent()); 	
 
 });
 $('.city2').change(function(){
@@ -106,15 +107,20 @@ function city2(fid,$div){
 	
 	 $div.find('.city2 option').remove();
 	var cityHtml = "<option class='city20' value='0'>地级市</option>";
-	for(var i = 0; i < cityArray.length; i++ ){
-		if(-1 !== cityArray[i].indexOf(fid)){
+	if(fid == 0){
+		$div.find('.city2').html(cityHtml);
+	}else{
+		for (var i = 0; i < cityArray.length; i++) {
+			if (-1 !== cityArray[i].indexOf(fid)) {
 
-			var arr = cityArray[i].split(";");
- 			cityHtml += "<option class='" + arr[0] + "' value='" + arr[1] + "'>" + arr[2] + "</option>";
-			 
+				var arr = cityArray[i].split(";");
+				cityHtml += "<option class='" + arr[0] + "' value='" + arr[1] + "'>" + arr[2] + "</option>";
+
+			}
 		}
+		$div.find('.city2').html(cityHtml);
 	}
-	$div.find('.city2').html(cityHtml);
+
 	
 }
 function city3(fid,$div){

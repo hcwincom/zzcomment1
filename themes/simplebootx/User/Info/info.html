@@ -7,7 +7,7 @@
 					<div class="per_r1" >
 						<div class="ib imgbox">
 							<div id="preview1" class="preview imgbox1" ><img class="imgbox1" src="__UPLOAD__/{$user.avatar}"></div>
-							<label class="btn btn1" for="p1" title="选择图片"><span>选择图片</span></label>
+							<label class="btn btn1" for="p1" title="选择图片"><p>选择图片</p></label>
 							<input type="file" class="upload_pic" onchange="preview(this,1)" id="p1" name="IDpic1" value="" >
 						</div>
 						<p class="pms">*上传格式为jpg、png图,大小在4M以内</p>
@@ -34,21 +34,20 @@
 							<p class="lf rz">已实名验证</p>
 						<else/>
 							<p class="lf">实名认证：</p>
-						<div class="form1"><span>姓名:</span><input type="text" name="user_nicename" value="{$user.user_nicename}" ></div>
 						<p class="ml"></p>	
 							<div class="lf">
 								<div class="lf ib imgbox2">身份证正面：
 									<div id="preview2" class="preview">
 										<img class="imgbox2" src="__UPLOAD__/{$user.name_pic1}">
 									</div>
-									<label class="btn btn2" for="p2" title="选择图片"><span>选择图片</span></label>
+									<label class="btn btn2" for="p2" title="选择图片"><p>选择图片</p></label>
 									<input type="file" class="upload_pic" onchange="preview(this,2)" id="p2" name="IDpic2" value="" >
 								</div>
 								<div class="lf ib imgbox3">身份证反面：
 									<div id="preview3" class="preview">
 									<img class="imgbox3" src="__UPLOAD__/{$user.name_pic2}">
 									</div>
-									<label class="btn btn3" for="p3" title="选择图片"><span>选择图片</span></label>
+									<label class="btn btn3" for="p3" title="选择图片"><p>选择图片</p></label>
 									<input type="file" class="upload_pic" onchange="preview(this,3)" id="p3" name="IDpic3" value="" >
 									<p class="ml msg4"></p>
 								</div>
@@ -67,7 +66,7 @@
                                 <div id="preview8" class="preview">
                                  	<img class="imgbox8" src="__UPLOAD__/{$user.name_pic3}">
 									</div>
-								<label class="btn btn8" for="p8" title="选择图片"><span>选择图片</span></label>
+								<label class="btn btn8" for="p8" title="选择图片"><p>选择图片</p></label>
 								<input type="file" class="upload_pic" id="p8" onchange="preview(this,8)" name="IDpic8" value="" > 
                             </div>
                             <div class="clear"></div>
