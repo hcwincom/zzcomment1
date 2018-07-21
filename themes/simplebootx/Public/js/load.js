@@ -250,28 +250,31 @@ $(document).ready(function(){
 
 	$("input[type='text']").keyup(function () {
 		var param = $(this).val();
-		var regRule = new RegExp("/[^\u0020-\u007E\u00A0-\u00BE\u2E80-\uA4CF\uF900-\uFAFF\uFE30-\uFE4F\uFF00-\uFFEF\u0080-\u009F\u2000-\u201f\u2026\u2022\u20ac\r\n]/g","g");
+		console.log(param);
+		var regRule = "/[^\u0020-\u007E\u00A0-\u00BE\u2E80-\uA4CF\uF900-\uFAFF\uFE30-\uFE4F\uFF00-\uFFEF\u0080-\u009F\u2000-\u201f\u2026\u2022\u20ac\r\n]/g";
 		if (param.match(param)){
 			param = param.replace(regRule,"");
 		}
+		console.log(param);
+		console.log("tt");
 	});
 	$("textarea[name='dsc']").keyup(function () {
 		var param = $(this).val();
-		var regRule = new RegExp("/[^\u0020-\u007E\u00A0-\u00BE\u2E80-\uA4CF\uF900-\uFAFF\uFE30-\uFE4F\uFF00-\uFFEF\u0080-\u009F\u2000-\u201f\u2026\u2022\u20ac\r\n]/g", "g");
+		var regRule = "/[^\u0020-\u007E\u00A0-\u00BE\u2E80-\uA4CF\uF900-\uFAFF\uFE30-\uFE4F\uFF00-\uFFEF\u0080-\u009F\u2000-\u201f\u2026\u2022\u20ac\r\n]/g";
 		if (param.match(param)) {
 			param = param.replace(regRule, "");
 		}
 	});
 	$("#user_reply").keyup(function () {
 		var param = $(this).val();
-		var regRule = new RegExp("/[^\u0020-\u007E\u00A0-\u00BE\u2E80-\uA4CF\uF900-\uFAFF\uFE30-\uFE4F\uFF00-\uFFEF\u0080-\u009F\u2000-\u201f\u2026\u2022\u20ac\r\n]/g", "g");
+		var regRule = "/[^\u0020-\u007E\u00A0-\u00BE\u2E80-\uA4CF\uF900-\uFAFF\uFE30-\uFE4F\uFF00-\uFFEF\u0080-\u009F\u2000-\u201f\u2026\u2022\u20ac\r\n]/g";
 		if (param.match(param)) {
 			param = param.replace(regRule, "");
 		}
 	});
 	$("#user_message").keyup(function () {
 		var param = $(this).val();
-		var regRule = new RegExp("/[^\u0020-\u007E\u00A0-\u00BE\u2E80-\uA4CF\uF900-\uFAFF\uFE30-\uFE4F\uFF00-\uFFEF\u0080-\u009F\u2000-\u201f\u2026\u2022\u20ac\r\n]/g", "g");
+		var regRule = "/[^\u0020-\u007E\u00A0-\u00BE\u2E80-\uA4CF\uF900-\uFAFF\uFE30-\uFE4F\uFF00-\uFFEF\u0080-\u009F\u2000-\u201f\u2026\u2022\u20ac\r\n]/g";
 		if (param.match(param)) {
 			param = param.replace(regRule, "");
 		}
