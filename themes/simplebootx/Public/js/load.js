@@ -201,7 +201,7 @@ $(document).ready(function(){
 	$("#user_reply").each(function(){
 		$(this).blur(function(){
 			var infor=$(this).val();
-			if(infor.length<2||infor.length>150){
+			if(infor.length<2||infor.length>200){
 				$("#rmessage").text("请按要求填写信息！").css("color","#d00000");				
 			}
 			if(infor==""||infor==null){
@@ -211,7 +211,7 @@ $(document).ready(function(){
 	})
 	$("#rsignup").click(function(){
 		var infor=$("#user_reply").val();
-		if(infor.length<2||infor.length>150){
+		if(infor.length<2||infor.length>200){
 			$("#rmessage").text("请按要求填写信息！").css("color","#d00000");
 			return false;				
 		}
@@ -244,27 +244,52 @@ $(document).ready(function(){
 	// 限制文本框的字符长度
 	$("input[type='text']").attr("maxlength","50");
 	$("input[name='webaddr']").attr("maxlength","100");
-	$("textarea[name='userreply']").attr("maxlength", "200");
-	$("textarea[name='usermessage']").attr("maxlength","200");
-
 	// 验证禁止输入表情符
 
 
-	$("input").keyup(function () {
-		noEmoji($(this).val());
+	$("input[type='text']").keyup(function () {
+		noEmoji($(this));
 	});
 
+	var noEmoji = function (dom) {
+		var html = "",
+			oldHtml = "";
+		if ('INPUT' == dom.tagName) {
+			html = $(dom).val();
+		}
+		oldHtml = html;
+		var reg = /[^\u0020-\u007E\u00A0-\u00BE\u2E80-\uA4CF\uF900-\uFAFF\uFE30-\uFE4F\uFF00-\uFFEF\u0080-\u009F\u2000-\u201f\u2026\u2022\u20ac\r\n]/g;
+		if (html.match(reg)) {
+			html = html.replace(reg, '');
+		}
+
+		if (html != oldHtml) {
+			if ('INPUT' == dom.tagName) {
+				$(dom).val(html);
+			}
+		}
+		/**
+		 * 光标移到最后
+		 */
+		function endFocus(dom) {
+			var sel = window.getSelection();
+			var range = document.createRange();
+			range.selectNodeContents(dom);
+			range.collapse(false);
+			sel.removeAllRanges();
+			sel.addRange(range);
+		}
+	};
+
+
+
+
+
+
+
+
+
 });
-
-
-// 限制文本框不能输入表情符
-
-function noEmoji(param) {
-	var regRule = /[^\u0020-\u007E\u00A0-\u00BE\u2E80-\uA4CF\uF900-\uFAFF\uFE30-\uFE4F\uFF00-\uFFEF\u0080-\u009F\u2000-\u201f\u2026\u2022\u20ac\r\n]/g;
-	if (param.match(regRule)) {
-		param = param.replace(regRule, "");
-	}
-}
 
 
 
@@ -276,7 +301,7 @@ var mR=/^(0|86|17951)?(13[0-9]|15[012356789]|17[013678]|18[0-9]|14[57])[0-9]{8}$
 // comment signup
 	function userComment(){
 		var infor=$("#user_message").val();
-		if(infor.length<2||infor.length>150){
+		if(infor.length<2||infor.length>200){
 			$(".comment-infor").text("请输入2-150个字！");
 			return false;
 		}
