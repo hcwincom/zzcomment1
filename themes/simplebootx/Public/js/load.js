@@ -249,26 +249,32 @@ $(document).ready(function(){
 
 	$("input[type='text']").keyup(function () {
 		var param = $(this).val();
-		console.log(param);
-		console.log("pp");
-		var regRule = /[^\u0020-\u007E\u00A0-\u00BE\u2E80-\uA4CF\uF900-\uFAFF\uFE30-\uFE4F\uFF00-\uFFEF\u0080-\u009F\u2000-\u201f\u2026\u2022\u20ac\r\n]/g;
-
-		if(param.match(param)){
-			param = param.replace("regRule","");
-			alert("111");
+		var regRule = new RegExp("/[^\u0020-\u007E\u00A0-\u00BE\u2E80-\uA4CF\uF900-\uFAFF\uFE30-\uFE4F\uFF00-\uFFEF\u0080-\u009F\u2000-\u201f\u2026\u2022\u20ac\r\n]/g","g");
+		if (param.match(param)){
+			param = param.replace(regRule,"");
 		}
-
 	});
-
-	
-
-
-
-
-
-
-
-
+	$("textarea[name='dsc']").keyup(function () {
+		var param = $(this).val();
+		var regRule = new RegExp("/[^\u0020-\u007E\u00A0-\u00BE\u2E80-\uA4CF\uF900-\uFAFF\uFE30-\uFE4F\uFF00-\uFFEF\u0080-\u009F\u2000-\u201f\u2026\u2022\u20ac\r\n]/g", "g");
+		if (param.match(param)) {
+			param = param.replace(regRule, "");
+		}
+	});
+	$("#user_reply").keyup(function () {
+		var param = $(this).val();
+		var regRule = new RegExp("/[^\u0020-\u007E\u00A0-\u00BE\u2E80-\uA4CF\uF900-\uFAFF\uFE30-\uFE4F\uFF00-\uFFEF\u0080-\u009F\u2000-\u201f\u2026\u2022\u20ac\r\n]/g", "g");
+		if (param.match(param)) {
+			param = param.replace(regRule, "");
+		}
+	});
+	$("#user_message").keyup(function () {
+		var param = $(this).val();
+		var regRule = new RegExp("/[^\u0020-\u007E\u00A0-\u00BE\u2E80-\uA4CF\uF900-\uFAFF\uFE30-\uFE4F\uFF00-\uFFEF\u0080-\u009F\u2000-\u201f\u2026\u2022\u20ac\r\n]/g", "g");
+		if (param.match(param)) {
+			param = param.replace(regRule, "");
+		}
+	});
 });
 
 
