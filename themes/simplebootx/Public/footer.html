@@ -49,7 +49,8 @@ for (var i = 0; i < cata2Select.length; i++) {
 	cata2Array.push(cata2String);
 }
 $('.cate2' + cateid2).prop('selected', true);
-$(".add-cate2 option:not(:first-child)").remove();
+
+$(".catecory").find(".add-cate2 option:not(:first-child)").remove();
 $('.add-cate1').change(function(){
 	 var fid=this.value;	 
 	$(".add-cate2 option").remove();
