@@ -41,6 +41,8 @@ if(navigator.appName == "Microsoft Internet Explorer"&&parseInt(navigator.appVer
 var cateid1=parseInt("{$cateid1|default=0}");
 var cateid2=parseInt("{$cateid2|default=0}");
 
+console.log(cateid1);
+console.log("dd");
 var cata2Array = new Array();
 var cata2Select = $(".add-cate2").eq(0).find("option");
 
@@ -48,9 +50,13 @@ for (var i = 0; i < cata2Select.length; i++) {
 	var cata2String = cata2Select.eq(i).attr("class") + ";" + cata2Select.eq(i).val() + ";" + cata2Select.eq(i).text();
 	cata2Array.push(cata2String);
 }
-$('.cate2' + cateid2).prop('selected', true);
 
-$(".catecory").find(".add-cate2 option:not(:first-child)").remove();
+if(cateid1 == 0){
+	$(".add-cate2 option:not(:first-child)").remove();
+}else{
+	$('.cate2' + cateid2).prop('selected', true);
+}
+
 $('.add-cate1').change(function(){
 	 var fid=this.value;	 
 	$(".add-cate2 option").remove();
