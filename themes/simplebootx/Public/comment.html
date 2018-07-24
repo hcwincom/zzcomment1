@@ -93,7 +93,7 @@ $(document).on('click','.praise_comment',function(){
 		$("#attachment").show();
 	});
 	$(".attachment_affirm").click(function () {
-		location.href = "{:U('user/comment/download',['id'=>$vo['id']])}";
+		window.location.href = "{:U('user/comment/download',['id'=>$vo['id']])}";
 			$("#attachment").hide();
 			
 		});
