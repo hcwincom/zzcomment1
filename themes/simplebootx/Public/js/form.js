@@ -305,7 +305,7 @@ return false;
 }
     };
 function send4(){
-    return (fname1() && phone1() && tell1() && sp() && sconfirm() && asd()); 
+    return (fname1() && phone1() && sp() && sconfirm() && asd()); 
 }
 function sconfirm() {
     if (confirm("确认提交吗？确认提交将会扣除相应的押金！！！")){

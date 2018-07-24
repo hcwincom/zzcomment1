@@ -15,7 +15,8 @@
 					<a href="javascript:void(0);" class="comment-rbtn2"><notempty name='vo.reply'>展开回复</notempty></a>
 					<a href="javascript:void(0);" class="comment-rbtn5 praise_comment" title="点赞">点赞（<em class="likes praise_num">{$vo.praise}</em>）</a>
 					<a href="javascript:void(0);" class="comment-rbtn3 push_comment" title="顶">顶（<em class="push_num">{$vo.push}</em>）</a>
-					<a href="{:U('user/comment/download',['id'=>$vo['id']])}" class="comment-rbtn4" title="附件下载">附件下载</a>
+					<!-- <a href="{:U('user/comment/download',['id'=>$vo['id']])}" class="comment-rbtn4 downLoad" title="附件下载">附件下载</a> -->
+					<a href="javascript:void(0);" class="comment-rbtn4 downLoad" title="附件下载">附件下载</a>
 				</div>
 				<div class="comment-cont2 zzreply{$vo.id}">
 				<foreach name='vo.reply' item='v'>
@@ -26,9 +27,26 @@
 			</div>
 		</li>
 	 
-	</foreach>
-		 
+	</foreach>		 
 </ul>
+<!-- 评级附件下载-->
+
+<div class="attachment" id="attachment">
+	<div class="attachment_main">
+		<form action="" method="POST">
+			<input type="hidden" value="0" id="attachmentId">
+			<div class="attachment_text">
+				<span>下载所需价格:</span>
+				<i class="red">0</i>元</div>
+			<div class="attachment_btn">
+				<input type="button" value="确认支付" class="attachment_affirm">
+				<input type="button" value="取消支付" class="attachment_cancel">
+			</div>
+		</form>
+	</div>
+</div>
+
+<!--评级附件下载 end -->
 <script>
 var push_url="{:U('user/comment/push')}";
 
@@ -69,4 +87,25 @@ $(document).on('click','.praise_comment',function(){
  		}
  	},'json');
 });
+
+	//  下载附件弹出提示
+	$(".downLoad").click(function () {
+		$("#attachment").show();
+	});
+	$(".attachment_affirm").click(function () {
+		location.href = "{:U('user/comment/download',['id'=>$vo['id']])}";
+			$("#attachment").hide();
+			
+		});
+
+	$(".attachment_cancel").click(function () {
+			$("#attachment").hide();
+	});
+
+
+
+
+
+
+
 </script>

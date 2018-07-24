@@ -60,40 +60,45 @@
 				<p class="message" id="message">请输入店铺信息！(登录后才能创建店铺)</p>
 				
 				<div class="ciyt_addshop">
-					<label>城市</label>
+					<span>城市</span>
 					<tc_include file="Public:city" />
 				</div>
 				
 				<div class="catecory">
-					<label>店铺分类</label>
+					<span>店铺分类</span>
 					 <tc_include file="Public:cates" />
 				</div>
 				<div>
-					<label for="shop_name">店铺名称</label>
+					<span>店铺名称</span>
 					<input type="text" placeholder="请输入店铺名称" name="shop_name" class="shopname" id="shop_name" >
 				</div>
 				<div>
-					<span for="shop_net">网址</span>
+					<label for="shop_net">网址</label>
 					<input type="text" placeholder="请输入网址" name="shop_net" class="shopnet" id="shop_net" maxlength="100">
 				</div>
 				
 				<div>
-					<span for="shop_pic">店铺图片</span>
-					<input type="file" name="shop_pic" class="shopname" id="shop_pic" accept="image/jpeg,image/jpg,image/png">
+					<span>店铺图片</span>
+					<div class="addpreview lf">
+						<div class="pic_preview" id="pic_preview"></div>
+						<label for="shop_pic" class="shop_picview" title="选择图片"><p>选择图片</p></label>
+						<input type="file" name="shop_pic" class="shopname" id="shop_pic" onchange="picPerview(this)" accept="image/jpeg,image/jpg,image/png" >
+					</div>
+					
 				</div>
 				 
 				<div>
-					<span for="shop_phone">经营范围</span>
+					<label for="shop_phone">经营范围</label>
 					<input type="text" placeholder="请输入经营范围" name="shop_area" class="shopphone" id="shop_phone" maxlength="100">
 				</div>
 				
 				<div>
-					<label for="shop_address">详细地址</label>
+					<span>详细地址</span>
 					<input type="text" placeholder="请输入详细地址，精确到门牌号" name="shop_address" class="shopaddress" id="shop_address">
 				</div>
 				 
 				<div>
-					<label for="captcha">验证码</label>
+					<span>验证码</span>
 					<input type="text" name="verify" placeholder="请输入验证码" class="captcha" id="captcha" required/>
 					<a href="javascript:void(0);" class="captcha rt">{:sp_verifycode_img('length=4&font_size=14&width=100&height=34&charset=1234567890&use_noise=0&use_curve=0')}</a>
 				</div>

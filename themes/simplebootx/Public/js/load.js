@@ -250,13 +250,19 @@ $(document).ready(function(){
 
 	$("input[type='text']").keyup(function () {
 		var param = $(this).val();
-		console.log(param);
 		var regRule = "/[^\u0020-\u007E\u00A0-\u00BE\u2E80-\uA4CF\uF900-\uFAFF\uFE30-\uFE4F\uFF00-\uFFEF\u0080-\u009F\u2000-\u201f\u2026\u2022\u20ac\r\n]/g";
-		if (param.match(regRule)){
-			param = param.replace(regRule,"");
+		if (param.match(regRule)) {
+			param = param.replace(regRule, "");
 		}
-		console.log(param);
-		console.log("tt");
+
+		var reg = new RegExp("[`~!@#$^&*()=|{}';'\\[\\]<>?~！@#￥&*（）——|{}【】‘；”“'。？]");
+		var rs = "";
+		for (var i = 0, l = param.length; i < param.length; i++) {
+			rs = rs + param.substr(i, 1).replace(reg, '');
+		}
+		param = rs;
+
+		$(this).val(param);	
 	});
 	$("textarea[name='dsc']").keyup(function () {
 		var param = $(this).val();
@@ -264,6 +270,14 @@ $(document).ready(function(){
 		if (param.match(regRule)) {
 			param = param.replace(regRule, "");
 		}
+		var reg = new RegExp("[`~!@#$^&*()=|{}''\\[\\]<>?~！@#￥&*（）——|{}【】‘']");
+		var rs = "";
+		for (var i = 0, l = param.length; i < param.length; i++) {
+			rs = rs + param.substr(i, 1).replace(reg, '');
+		}
+		param = rs;
+		$(this).val(param);
+
 	});
 	$("#user_reply").keyup(function () {
 		var param = $(this).val();
@@ -271,6 +285,13 @@ $(document).ready(function(){
 		if (param.match(regRule)) {
 			param = param.replace(regRule, "");
 		}
+		var reg = new RegExp("[`~!@#$^&*()=|{}''\\[\\]<>?~！@#￥&*（）——|{}【】‘']");
+		var rs = "";
+		for (var i = 0, l = param.length; i < param.length; i++) {
+			rs = rs + param.substr(i, 1).replace(reg, '');
+		}
+		param = rs;
+		$(this).val(param);	
 	});
 	$("#user_message").keyup(function () {
 		var param = $(this).val();
@@ -278,7 +299,17 @@ $(document).ready(function(){
 		if (param.match(regRule)) {
 			param = param.replace(regRule, "");
 		}
+		var reg = new RegExp("[`~!@#$^&*()=|{}''\\[\\]<>?~！@#￥……&*（）——|{}【】‘']");
+		var rs = "";
+		for (var i = 0, l = param.length; i < param.length; i++) {
+			rs = rs + param.substr(i, 1).replace(reg, '');
+		}
+		param = rs;
+		$(this).val(param);	
 	});
+
+
+
 });
 
 
@@ -432,7 +463,26 @@ var mR=/^(0|86|17951)?(13[0-9]|15[012356789]|17[013678]|18[0-9]|14[57])[0-9]{8}$
 		}
 	}
 
-
+function picPerview(file) {
+	var prevDiv = document.getElementById("pic_preview");  
+	// 验证文件大小
+	var fileSize = file.files[0].size / 1024;
+	if (fileSize > 4 * 1024) {
+		alert("图片大小不能超过4MB");
+		$(file).val('');
+		return false;
+	} 
+	if (file.files && file.files[0]) {
+		var reader = new FileReader();
+		reader.onload = function (evt) {
+			prevDiv.innerHTML = '<img src="' + evt.target.result + '" />';
+		}
+		reader.readAsDataURL(file.files[0]);
+	} else {
+		console.log("ie")
+		prevDiv.innerHTML = '<div class="img" style="filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src=\'' + file.value + '\'"></div>';
+	}  
+}
 
 
 

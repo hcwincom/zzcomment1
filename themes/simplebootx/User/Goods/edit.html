@@ -7,9 +7,10 @@
                 <a class="rb" href="{:U('edit',['id'=>$info['id'],'sid'=>$sid])}">编辑{$flag}</a> 
          	 </div>
          <div class="addshop">
-               <form action="{:U('add_do')}" method="post" onsubmit="return send2()" enctype="multipart/form-data">
+               <form action="{:U('edit_do')}" method="post" onsubmit="return send2()" enctype="multipart/form-data">
                    <input type="hidden" name="sid" value="{$sid}"/>
                      <input type="hidden" name="id" value="{$info.id}" />
+                 
                    <div class="form1"><span>商品名称:</span><input type="text" name="shopname" value="{$info.name}" onblur="shopname1()"></div>
                    <p class="ml msg1"></p> 
                    <div class="form1"><span>价&nbsp;&nbsp;&nbsp;&nbsp;格:</span><input type="text" name="shopprice" value="{$info.price}" onblur="shopprice1()"></div>  
@@ -17,7 +18,7 @@
                    <div class="form1"><span class="lf">上传图片：</span>
                        <div class="lf ib imgbox6">
                             <div id="preview6" class="preview"> <img class="imgbox3" src="__UPLOAD__/{$info['pic']}"></div>
-                            <label class="btn btn6" for="p6" title="选择图片"><span>选择图片</span></label>
+                            <label class="btn btn6" for="p6" title="选择图片"><p>选择图片</p></label>
                             <input type="file" class="upload_pic" onchange="preview(this,6)" name="IDpic6" value="" id="p6">
                             <p class="pms">*上传尺寸为980*590的jpg、png图,大小在4M以内</p>
                         </div>
