@@ -289,6 +289,7 @@ textarea{resize: none;}
 .job-title{width:50%;font-size:18px;line-height: 40px;height:40px;white-space:nowrap;overflow: hidden;text-overflow: ellipsis;color: #d50000;}
 .news-title:hover{color:#d00000;}
 .news-date{font-size:16px;color: #999;line-height: 40px;padding:0 75px 0 10px;letter-spacing:4px;}
+.news-date i{font-size:16px;}
 .news-about{color:#666;font-size:14px;line-height:20px;height:40px;overflow:hidden;width: 90%;text-overflow: ellipsis !important;
 	display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;position: relative;}
 .showmore a{display: block;width:7em;line-height: 35px;color:#d00000;font-size:16px;border:1px solid #d00000;text-align: center;margin:75px auto 100px;}
@@ -474,6 +475,7 @@ label.upload{width:215px;height:36px;position:relative;overflow: hidden;}
 
 .pop-layer{display:none;width:100%;height:100%;background:rgba(0,0,0,.5);position: fixed;top:0px;left:0;z-index: 10005;}
 .pop-container{width:500px;margin:30px auto 0;border:1px solid #dcdcdc;background:#fff;position: relative;}
+.layer-container{max-height: 675px;overflow-y: scroll;}
 .close{position: absolute;top:10px;right: 10px;z-index: 30;}
 .close img{width:16px;height:16px;}
 .shop-add-form{width:404px;margin:30px auto;}
@@ -890,7 +892,7 @@ a.captcha img{width:100px;height:44px;}
 	.shop-job>li>a{width: 30%;}
 	.shop-newly>li{width:46%;margin:2% 2%;}
 	.shop-infor>li>a{width: 30%;}
-	.news-date{display: none;}
+	/* .news-date{display: none;} */
 	
 /*	个人中心*/
 	.info-deliver>.shop-add-form{
@@ -922,9 +924,12 @@ a.captcha img{width:100px;height:44px;}
 }
 @media screen and (max-width:500px){
 	/*homemain*/
-	.shop-news>li>a{width:40%;}
-	.news-cont{width:60%;}
-	.news-date{display: none;}
+	.shop-news>li{padding: 15px 0;}
+	.shop-news>li>a{width:24%;}
+	.news-cont{width:76%;}
+	.news-title{width: 35%;}
+	.news-date{font-size: 12px;width: 65%;line-height: 40px;letter-spacing: 1px;padding: 0;text-align: right;}
+	.news-date i{font-size: 14px;}
 	.shop-job>li>a{
 		width: 40%;
 	}
@@ -977,6 +982,8 @@ a.captcha img{width:100px;height:44px;}
 		width:100%;
 		height:136px;
 	}
+	.news-title{font-size: 14px;}
+	.news-about{font-size: 12px;}
 }
 
 @media screen and (max-width:400px){

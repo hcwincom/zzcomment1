@@ -6,7 +6,7 @@
 		</a>
 		<div class="lf news-cont">
 			<a href="{:U('Portal/user/info_detail',array('id'=>$vo['id'],'sid'=>$vo['sid']))}" class="lf news-title">{$vo.name}</a>
-			<span class="rt news-date">{$vo.start_time|date="Y-m-d",###}</span>
+			<span class="rt news-date"><i>截止时间:</i>{$vo.end_time|date="Y-m-d",###}</span>
 			<p class="clear news-about">{$vo.dsc}</p>
 		</div>
 	</li>
@@ -18,10 +18,12 @@
 		</a>
 		<div class="lf news-cont">
 			<a href="{:U('Portal/User/info_detail',array('id'=>$vo['id']))}" class="lf news-title">{$vo.name}</a>
-			<span class="rt news-date">{$vo.start_time|date="Y-m-d",###}</span>
+			<span class="rt news-date"><i>截止时间:</i>{$vo.end_time|date="Y-m-d",###}</span>
 			<p class="clear news-about">{$vo.dsc}</p>
 		</div>
 	</li>
 </foreach>
+ 
+
 </ul>	
  

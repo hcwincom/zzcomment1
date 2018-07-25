@@ -50,11 +50,11 @@
 		<div class="shop-add" id="shopadd_btn">
 			<a href="javascript:void(0);" title="创建店铺">创建店铺>></a>
 		</div>
-		<a href="{:U('User/Infos/add')}" title="发布信息">发布信息>></a>
+		<a href="{:U('Portal/List/outside_info')}" title="发布信息">发布信息>></a>
 	</div>
 	
 	<div class="pop-layer" id="pop_layer">
-		<div class="pop-container">
+		<div class="pop-container layer-container">
 			<a href="javascript:void(0);" class="close" id="close"><img src="__TMPL__Public/img/close.png" alt="关闭" title="关闭"></a>
 			<form action="{:U('User/Seller/create')}" method="post" class="shop-add-form" enctype="multipart/form-data">
 				<p class="message" id="message">请输入店铺信息！(登录后才能创建店铺)</p>

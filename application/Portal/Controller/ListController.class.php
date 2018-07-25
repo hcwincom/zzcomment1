@@ -26,7 +26,11 @@ class ListController extends HomebaseController {
             } 
         } 
         $this->assign('top_seller',$top_sellers);
-    }
+	}
+	 // 店铺列表
+    public function outside_info() {
+			 $this->display();
+	}
     // 店铺列表
     public function index() {
         $time=time();

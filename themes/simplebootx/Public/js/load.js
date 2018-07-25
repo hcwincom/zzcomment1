@@ -28,35 +28,47 @@ $(document).ready(function(){
 		if(levelNum>0){
 			$(this).parent(".level-color").css("color","red");
 		}
-	})
+	});
 
 	// top select
 	$("#shop_type>a").click(function(){
 		$(this).addClass("select").siblings().removeClass("select");
-	})
+	});
 
 	// shop charachter
 	$("#shop_character>a,#shop_type2>a").click(function(){
 		$(this).addClass("select").siblings().removeClass("select");
-	})
+	});
     
 	// add shop
 	$("#shopadd_btn").click(function() {
 		 $('.verify_img').attr('src',$('.verify_img').attr('src')+'&time=1');
 		$("#pop_layer").fadeIn();
-	})	
+		$("html,body").css({
+			"overflow": "hidden",
+			"height": "100%"
+		});
+	});	
 	$("#shopAddBtn").click(function () {
 		$('.verify_img').attr('src', $('.verify_img').attr('src') + '&time=1');
 		$("#pop_layer").fadeIn();
-	})
+		$("html,body").css({
+			"overflow":"hidden",
+			"height":"100%"
+		});
+	});
 	$("#close").click(function() {
 		$("#pop_layer").fadeOut();
-	})
+		$("html,body").css({
+			"overflow": "visible",
+			"height": "auto"
+		});
+	});
 
 	// shop erwei
 	$("#shop_erwei .close2").click(function() {
 		$("#shop_erwei").fadeOut();
-	})
+	});
 	
 	// home tab
 	$("#group-cont>li").click(function(){
@@ -141,8 +153,8 @@ $(document).ready(function(){
 			else{
 				$("#message").text("请输入店铺信息！").css("color","#333");				
 			}			
-		})
-	})
+		});
+	});
 	$("#signup").click(function(){
 		var s1=true;
 		$("#pop_layer :text").each(function(){
@@ -153,14 +165,14 @@ $(document).ready(function(){
 				$("#message").text("*为必填项，请完整填写信息！").css("color","#d00000");
 				s1=false;
 			}}
-		})
+		});
 		$("#pop_layer select").each(function(){
 			var select=$(this).val();
 			if(select==0){
 				$("#message").text("*为必填项，请完整填写信息！").css("color","#d00000");
 				s1=false;
 			}
-		})
+		});
 		if(s1==true){
 			$("#message").text("提交成功！");
 		}
@@ -168,7 +180,7 @@ $(document).ready(function(){
 			$("#message").text("信息错误，提交失败！");
 			return false;
 		}		
-	})
+	});
 
 
 	// comment
@@ -183,11 +195,11 @@ $(document).ready(function(){
 			if(infor==""||infor==null){
 				$(".comment-infor").text("请输入留言信息！");
 			}
-		})
+		});
 		$(this).focus(function(){
 			$(".comment-infor").text("");
-		})
-	})
+		});
+	});
 	$("#provedata").on("change",function(){
 		if($(this).val()==""){
 			$("span.btn-style").text("未选择");
@@ -195,7 +207,7 @@ $(document).ready(function(){
 		else{
 			$("span.btn-style").text("已选择");
 		}
-	})
+	});
 
 	// reply
 	$("#user_reply").each(function(){
@@ -207,8 +219,8 @@ $(document).ready(function(){
 			if(infor==""||infor==null){
 				$("#rmessage").text("*为必填项，请填写信息！").css("color","#d00000");
 			}
-		})
-	})
+		});
+	});
 	$("#rsignup").click(function(){
 		var infor=$("#user_reply").val();
 		if(infor.length<2||infor.length>200){
@@ -219,7 +231,7 @@ $(document).ready(function(){
 			$("#rmessage").text("*为必填项，请完整填写信息！").css("color","#d00000");
 			return false;
 		}
-	})
+	});
 
 	// login register
 	
@@ -229,18 +241,18 @@ $(document).ready(function(){
 			if(infor.length<1){
 				$(this).parent("div").next(".lg-infor").text("请填写信息！");				
 			}
-		})
+		});
 		$(this).focus(function(){
 			$(this).parent("div").next(".lg-infor").text("");
-		})
-	})
+		});
+	});
 
 	// checkbox
 	$(".must:checkbox").on("change",function(){
 		if($(".must:checkbox").is(":checked")){
 			$(".must:checkbox").parent("div").next(".lg-infor").text("");
 		}
-	})
+	});
 	// 限制文本框的字符长度
 	$("input[type='text']").attr("maxlength","50");
 	$("input[name='webaddr']").attr("maxlength","100");

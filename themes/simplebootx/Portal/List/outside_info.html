@@ -1,0 +1,95 @@
+<tc_include file="Public:head" />
+<link rel="stylesheet" href="__TMPL__Public/css/seller_list.css" type="text/css">
+<link rel="stylesheet" href="__TMPL__Public/css/personal.css" type="text/css">
+</head>
+
+<body>
+    <tc_include file="Public:header" />
+
+        <div id="per_line"></div>
+        <div class="per_main w1200">
+            <div class="outsideInfo">
+                <form action="" method="POST" enctype="multipart/form-data" onsubmit="return send6();">
+                    <div class="" style="text-align:center;font-size:20px;color:#f00;margin:40px 0;font-weight:bold;">申请发布信息</div>
+                    <div class="form2">
+                        <span>标题：</span>
+                        <input type="text" name="title" placeholder="" onblur="tit1()">
+                    </div>
+                    <p class="ml msg1"></p>
+                    <div class="form2">
+                        <span>地区：</span>
+                        <tc_include file="Public/city" />
+                    </div>
+                    <p class="ml msg6"></p>
+                    <div class="form2">
+                        <span>分类：</span>
+                        <tc_include file="Public/cate" /> </div>
+                    <p class="ml msg8"></p>
+                    <div class="form2">
+                        <span>联系方式：</span>
+                        <input type="text" name="tel">
+                    </div>
+                    <p class="ml msg7"></p>
+                    <div class="form2">
+                        <span>联系地址：</span>
+                        <input type="text" name="address">
+                    </div>
+                    <p class="ml msg5"></p>
+                    
+                    <div class="form2">
+                        <label class="lf">缩略图：</label>
+                        <div class="lf ib imgbox7">
+                            <div id="preview7" class="preview"></div>
+                            <label class="btn btn7" for="p7" title="选择图片">
+                                <p>选择图片</p>
+                            </label>
+                            <input type="file" class="upload_pic" onchange="preview(this,7)" name="IDpic7" value="" id="p7">
+                            <p class="pms">*上传尺寸为{$size['w']}*{$size['h']}的jpg、png图,大小在4M以内</p>
+                        </div>
+                    
+                        <div class="clear"></div>
+                    </div>
+                    <p class="ml msg4"></p>
+                    <div class="form2">
+                        <label class="lf">简介（纯文字）：</label>
+                        <textarea name="dsc" id="textareaEmoji" cols="30" rows="10"></textarea>
+                    </div>
+                    <p class="ml msg2"></p>
+                    <div class="clear"></div>
+                    <div class="form2">
+                        <label style="vertical-align: top;">详情（可编辑样式，上传图片）：</label>
+                        <textarea style="display: inline-block" name="content2" id="content2"></textarea>
+                    </div>
+                    <div class="clear"></div>
+                    <p class="ml msg2"></p>
+                    <div class="clear"></div>
+
+                    <div class="form2 mtc">
+                        <input type="submit" value="发布">
+                    </div>
+
+             </form>
+            </div>
+        </div>
+
+
+<tc_include file="Public:user_footer" />
+<script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.all.min.js"></script>
+<script>
+     //初始化百度编辑器
+        //  var ue = UE.getEditor('content2');
+        var ue = UE.getEditor('content2', {
+            wordCount: true,
+            elementPathEnabled: false,
+            maximumWords: 10000,
+            initialContent: '',
+            autoClearinitialContent: true,
+            pasteplain: true,
+            initialFrameHeight: 370,
+            autoHeightEnabled: false
+
+        });
+</script>
+</body>
+</html>

@@ -107,6 +107,18 @@ function sort() {
     }
     
 }
+function sortSelect() {
+    var cval = $(".form2 select.add-cate2").val();
+    console.log(cval);
+    if (cval != 0) {
+        $(".msg8").text("");
+        return true;
+    } else {
+        $(".msg8").text("请选择分类");
+        return false;
+    }
+
+}
 function telnum() {
     var cval = $("input[name='tel']").val();
     if(cval != ""){
@@ -144,6 +156,7 @@ function shoppict() {
 function send1(){
     return (tit1()&&cityf()&&sort()&&telnum()&&address()&&time()&&asd());
 }
+
 function shopname1(){
 var cval = $("input[name='shopname']").val();    
 if(cval!=""){ //如果非空 显示正确
@@ -305,7 +318,7 @@ return false;
 }
     };
 function send4(){
-    return (fname1() && phone1() && sp() && sconfirm() && asd()); 
+    return (fname1() && sortSelect() && phone1() && sp() && sconfirm() && asd()); 
 }
 function sconfirm() {
     if (confirm("确认提交吗？确认提交将会扣除相应的押金！！！")){
@@ -352,6 +365,9 @@ function send5() {
 }
 
 
+function send6() {
+    return (tit1() && cityf() && sort() && telnum() && address() && asd());
+}
 
 
 
