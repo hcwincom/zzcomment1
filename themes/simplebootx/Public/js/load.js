@@ -267,7 +267,7 @@ $(document).ready(function(){
 			param = param.replace(regRule, "");
 		}
 
-		var reg = new RegExp("[`~!@#$^&*()=|{}';'\\[\\]<>?~！@#￥&*（）——|{}【】‘；”“'。？]");
+		var reg = new RegExp("[`~!@#$^&*%()=|{}';'\\[\\]<>?~！@#￥&*（）——|{}【】%‘；”“'。？]");
 		var rs = "";
 		for (var i = 0, l = param.length; i < param.length; i++) {
 			rs = rs + param.substr(i, 1).replace(reg, '');
