@@ -18,7 +18,7 @@ class UserController extends HomebaseController {
         $uid=I('uid',0);
       
         $order='start_time desc';
-        $field='id,uid,pic,dsc,name,start_time';
+        $field='id,uid,pic,dsc,name,start_time,end_time';
         //先找置顶商品
         $list_top_info=[];
         $ids=C('count_top_info');
@@ -43,7 +43,12 @@ class UserController extends HomebaseController {
         $page = $this->page($total, C('page_info_list')-$len);
         
         $list=$m->field($field)->where($where)->order($order)->limit($page->firstRow,$page->listRows)->select();
-        $user=M('users')->where('id='.$uid)->find();
+        if($uid==0){
+            $user=null;
+        }else{
+            $user=M('users')->where('id='.$uid)->find();
+        }
+        
         $this->assign('user',$user);
         $this->assign('list_info',$list)->assign('list_top_info',$list_top_info)
         ->assign('page',$page->show('Admin'));
@@ -57,13 +62,21 @@ class UserController extends HomebaseController {
         $detail=M('Info')
         ->field('info.*,cate.name as cate_name')
         ->alias('info')
-        ->join('cm_cate as cate on cate.id=info.cid')
-        ->join('cm_users as u on u.id=info.uid')
+        ->join('cm_cate as cate on cate.id=info.cid','left')
+        ->join('cm_users as u on u.id=info.uid','left')
         ->where('info.id='.$id)->find();
         if(empty($detail)){
             $this->error('该信息不存在');
         }
         $detail['city_name']=getCityNames($detail['city']);
+        if($detail['uid']==0){
+            $user=[
+                'avatar'=>'',
+                'user_login'=>'游客',
+            ];
+        }else{
+            $user=M('users')->where('id='.$detail['uid'])->find();
+        }
         $user=M('users')->where('id='.$detail['uid'])->find();
         $detail['upic']=$user['avatar'];
         $detail['uname']=$user['user_login'];
@@ -139,6 +152,97 @@ class UserController extends HomebaseController {
         
         return $where_tmp;
     }
+    /* 便民信息发布 */
+    public function info(){
+        if(!empty(session('user.id'))){
+            $this->redirect('user/infos/add');
+            exit;
+        }
+        $cate=M('cate')->where('type=3')->getField('id,name');
+        $this->assign('cate',$cate);
+        $picpath='/info/0/'.time().'/';
+        session('picpath',$picpath);
+        $this->assign('picpath',$picpath);
+        $this->assign('size',['w'=>290,'h'=>175]);
+        $this->display();
+        exit;
+    }
+    /* 便民信息发布 */
+    public function info_add(){
+        
+        set_time_limit(C('TIMEOUT'));
+        $pic='';
+        $time=time();
+        $subname=date('Y-m-d',$time);
+        $picpath=I('picpath','');
+        if($picpath!=session('picpath')){
+            $this->error('请刷新页面重新添加');
+        }
+        if(empty($_FILES['IDpic7']['name'])){
+            $pic='';
+            //             $this->error('没有上传有效图片');
+        }else{
+            $path=C("UPLOADPATH");
+            $size=['w'=>290,'h'=>175];
+            $upload = new \Think\Upload();// 实例化上传类
+            //20M
+            $upload->maxSize   =  C('SIZE') ;// 设置附件上传大小
+            
+            $upload->rootPath='./'.$path;
+            $upload->autoSub  = false;
+            $upload->savePath  =$picpath;
+            
+            $fileinfo=   $upload->upload();
+            if(!$fileinfo) {// 上传错误提示错误信息
+                $this->error($upload->getError());
+            }
+            
+            foreach ($fileinfo as $v){
+                $pic0=$picpath.$v['savename'];
+                $pic=$pic0.'.jpg';
+            }
+            $image = new \Think\Image();
+            $image->open($path.$pic0);
+            // 生成一个固定大小为150*150的缩略图并保存为thumb.jpg
+            $image->thumb($size['w'], $size['h'],\Think\Image::IMAGE_THUMB_FIXED)->save($path.$pic);
+            
+            unlink($path.$pic0);
+        }
+        
+        //加7天，7*24*3600
+        $end_time=strtotime($subname)+604800;
+        
+        
+        $data=array(
+            'uid'=>0,
+            'status'=>0,
+            'pic'=>$pic,
+            'city'=>I('city3',0),
+            'create_time'=>$time,
+            'start_time'=>$time,
+            'end_time'=>$end_time,
+            'picpath'=>$picpath,
+            'name'=>I('title',''),
+            'dsc'=>I('dsc',''),
+            'tel'=>I('tel',''),
+            'cid'=>I('cid',0),
+            'address'=>I('address',''),
+            'content'=>$_POST['content2']
+        );
+        if(empty($data['city']) || empty($data['cid'])){
+            $this->error('请选择城市和分类');
+        }
+        //执行添加
+        $insert=M('info')->add($data);
+        if($insert>=1){
+            $this->success('发布成功，等待后台审核', U('index'));
+        }else{
+            $this->error('发布失败');
+        }
+        exit;
+        
+    }
+    
 }
 
 

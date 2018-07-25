@@ -507,7 +507,7 @@ class SellerController extends AdminbaseController {
                 u.user_login as uname,au.user_login as authorname
             from cm_seller_apply as sa
             left join cm_seller as s on sa.sid=s.id  
-            left join cm_cate as cate2 on cate2.id=s.cid
+            left join cm_cate as cate2 on cate2.id=sa.cid
             left join cm_cate as cate1 on cate1.id=cate2.fid
             left join cm_users as u on sa.uid=u.id
             left join cm_users as au on au.id=s.author
@@ -581,6 +581,7 @@ class SellerController extends AdminbaseController {
                 'reply_time'=>$info['create_time'],
                 'status'=>2,
                 'uid'=>$info['uid'],
+                'cid'=>$info['cid'],
                 'tel'=>$info['tel'], 
                 'mobile'=>$info['mobile'],
                 'pic'=>$info['pic'],

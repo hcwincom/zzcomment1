@@ -92,6 +92,9 @@ class TimeController extends HomebaseController {
                  $conf['count_'.$k]=$m->where('status=3')->getField('pid',true); 
                  $conf['count_'.$k]=array_unique($conf['count_'.$k]);
              } 
+             if(empty($conf['count_'.$k])){
+                 $conf['count_'.$k]=[];
+             }  
          } 
          
          $result=sp_set_dynamic_config($conf);

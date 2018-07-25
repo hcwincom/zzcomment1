@@ -18,7 +18,8 @@ class ListController extends HomebaseController {
             foreach($tops0 as $k=>$v){
                 if(empty($tops[$k])){
                     $top_sellers[$k]=$tops0[$k];
-                    $top_sellers[$k]['url']='javascript:void(0)';
+                    $top_sellers[$k]['url']=$tops0[$k]['link'];
+                    
                 }else{
                     $top_sellers[$k]=$m_seller->where('id='.$tops[$k])->find();
                     $top_sellers[$k]['url']=U('Portal/Seller/home',array('sid'=>$tops[$k]));
@@ -26,11 +27,7 @@ class ListController extends HomebaseController {
             } 
         } 
         $this->assign('top_seller',$top_sellers);
-	}
-	 // 店铺列表
-    public function outside_info() {
-			 $this->display();
-	}
+    }
     // 店铺列表
     public function index() {
         $time=time();
@@ -244,7 +241,7 @@ class ListController extends HomebaseController {
     	    ->join('cm_users as u on u.id=p.uid')
     	    ->join('cm_seller as s on s.id=p.sid')
     	    ->where(['p.id'=>['in',$ids]])
-    	    ->order('id desc')
+    	    ->order('p.push desc,p.id desc')
     	    ->limit($page->firstRow,$page->listRows)
     	    ->select();
     	    $m_reply=D('Reply0View');
@@ -254,7 +251,14 @@ class ListController extends HomebaseController {
     	    $this->assign('list_comment',$list)
     	    ->assign('page',$page->show('Admin'));
 	    } 
-	    $this->assign('html_flag','comments');
+	    $conf=C('option_comment');
+	    if($conf['download_check']==1 || $conf['download_check']==2){
+	        $this->assign('download_check',1);
+	    }else{
+	        $this->assign('download_check',0);
+	    }
+	    $this->assign('download_price',$conf['download_price']);
+	    $this->assign('html_flag','comments'); 
 	    $this->display();
 	}
 	/*最新招聘 */
@@ -298,7 +302,7 @@ class ListController extends HomebaseController {
 	    $time=time();
 	    $m=M('Info');
 	    $order='start_time desc';
-	    $field='id,uid,pic,dsc,name,start_time';
+	    $field='id,uid,pic,dsc,name,start_time,end_time';
 	    //先找置顶商品
 	    $list_top_info=[];
 	    $ids=C('count_top_info');

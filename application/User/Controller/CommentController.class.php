@@ -148,15 +148,85 @@ class CommentController extends MemberbaseController {
     public function download(){
         $id=I('id',0,'intval');
         $user=$this->user;
-        if($user['name_status']!=1){
-            $this->error('实名认证的会员才能下载');
+        $conf=C('option_comment');
+        switch($conf['download_check']){
+            case 1:
+                break;
+            case 2:
+                if($user['name_status']!=1){
+                    $this->error('实名认证的会员才能下载');
+                }
+                break;
+            default:
+                $this->error('评级材料不开放下载');
         }
-        $m=$this->m;
+        $m=$this->m; 
+        $uid=$user['id']; 
+        $m->startTrans();
+     
+        $price=$conf['download_price']; 
+        //扣款
+        if($price>0){ 
+          
+            $desc='下载评级'.$id.'的材料';
+            /* 处理赠币,优先扣除赠币，不足扣除余额，再不足则扣款失败 */
+            if($user['coin']>=$price){
+                $price_coin=$price;
+            }elseif($user['coin']<=0){
+                $price_money=$price;
+            }else{
+                $price_coin=$user['coin'];
+                $price_money=bcsub($price,$user['coin']);
+                if($user['account']<$price_money){
+                    $m->rollback();
+                    $this->error('你的余额不足，请充值');
+                    exit;
+                }
+            }
+            if($price_coin>0){
+                $row_pay=coin('-'.$price_coin, $uid,$desc.'费用');
+                if($row_pay!==1){
+                    $m->rollback();
+                    $this->error('操作失败，请刷新');
+                }
+            }
+            if($price_money>0){
+                $row_pay=account('-'.$price_money, $uid,$desc.'费用');
+                if($row_pay!==1){
+                    $m->rollback();
+                    $this->error('操作失败，请刷新');
+                }
+            }
+            
+        }
+         
         $filename=$m->where('id='.$id)->getField('file');
         if(empty($filename)){
             $this->error('数据错误');
         }
-         
+        $m->commit();
+        $file=getcwd().'/data/upload/'.$filename;
+        $info=pathinfo($file);
+        $ext=$info['extension'];
+        $name=$info['basename'];
+        header('Content-type: application/x-'.$ext);
+        header('content-disposition:attachment;filename='.$name);
+        header('content-length:'.filesize($file));
+        readfile($file);
+        exit;
+    }
+    //下载页面
+    public function download0(){
+        $id=I('id',0,'intval');
+        $user=$this->user; 
+        $m=$this->m; 
+        $info=$m->where('id='.$id)->find();
+        if(empty($info['file']) || $info['uid']!=$user['id']){
+            $this->error('数据错误');
+        }
+        $filename=$info['file'];
+        
+        
         $file=getcwd().'/data/upload/'.$filename;
         $info=pathinfo($file);
         $ext=$info['extension'];

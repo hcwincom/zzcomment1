@@ -60,6 +60,9 @@ class ConfController extends AdminbaseController {
             'apply_coin' => '领用赠币',
             'apply_check' => '领用审核',
             'apply_money' => '领用押金',
+            
+            'download_check'=>'评级材料下载审核',
+            'download_price'=>'下载费用',
         ];
         
         
@@ -194,7 +197,7 @@ class ConfController extends AdminbaseController {
                 'price'=>$data0['price_'.$k],
                 'pic'=>$data0['pic_'.$k], 
                 'name'=>$data0['name_'.$k],
-               
+                'link'=>zz_link($data0['link_'.$k]),
             ];
         }
         $result=sp_set_dynamic_config(['price_top_seller'=>$conf]);

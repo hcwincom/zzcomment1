@@ -23,7 +23,7 @@ class IndexController extends HomebaseController {
 	    foreach($tops0 as $k=>$v){
 	        if(empty($tops[$k])){
 	            $top_sellers[$k]=$tops0[$k];
-	            $top_sellers[$k]['url']='javascript:void(0)';
+	            $top_sellers[$k]['url']=$tops0[$k]['link'];
 	         }else{
 	             $top_sellers[$k]=$m_seller->where('id='.$tops[$k])->find();
 	             $top_sellers[$k]['url']=U('Portal/Seller/home',array('sid'=>$tops[$k]));

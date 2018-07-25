@@ -365,6 +365,9 @@ function site_check($m,$start,$end,$site){
 /* 为网址补加http:// */
 function zz_link($link){
     //处理网址，补加http://
+    if(empty($link)){
+        return '';
+    }
     $exp='/^(http|ftp|https):\/\//';
     if(preg_match($exp, $link)==0){
         $link='http://'.$link;

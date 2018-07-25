@@ -58,11 +58,11 @@ class InfoController extends AdminproController {
         
         $total=$m
         ->alias('p')
-        ->join('cm_users as u on u.id=p.uid')
+        ->join('cm_users as u on u.id=p.uid','left')
         ->where($where)->count();
         $page = $this->page($total, 10);
         $list=$m->alias('p')->field($field)
-        ->join('cm_users as u on u.id=p.uid')
+        ->join('cm_users as u on u.id=p.uid','left')
         ->where($where)
         ->order($order)
         ->limit($page->firstRow,$page->listRows)
@@ -81,8 +81,8 @@ class InfoController extends AdminproController {
         $id=I('id',0);
         $m=$this->m;
         $info=$m->alias('p')->field('p.*,u.user_login as uname,c.name as cname')
-        ->join('cm_users as u on u.id=p.uid')
-        ->join('cm_cate as c on c.id=p.cid') 
+        ->join('cm_users as u on u.id=p.uid','left')
+        ->join('cm_cate as c on c.id=p.cid','left')
         ->where('p.id='.$id)
         ->find();
         $info['city_name']=getCityNames($info['city']);

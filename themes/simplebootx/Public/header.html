@@ -22,12 +22,12 @@
 					</foreach>
 
 					<a href="javascript:void(0);" id="shopAddBtn">创建店铺</a>
-					<a href="{:U('User/Infos/add')}" id="publish_info">发布信息</a>
+					<a href="{:U('portal/user/info')}" id="publish_info">发布信息</a>
 				</div>
 			</div>
 			<div class="login-link rt">
 				<div class="lf publish" id="publish">
-					<a href="{:U('User/Infos/add')}">发布信息</a>
+					<a href="{:U('portal/user/info')}">发布信息</a>
 				</div>
 				<empty name="Think.session.user">
 					<a href="{:U('User/Login/index')}">登录</a>
@@ -50,7 +50,7 @@
 		<div class="shop-add" id="shopadd_btn">
 			<a href="javascript:void(0);" title="创建店铺">创建店铺>></a>
 		</div>
-		<a href="{:U('Portal/List/outside_info')}" title="发布信息">发布信息>></a>
+		<a href="{:U('portal/user/info')}" title="发布信息">发布信息>></a>
 	</div>
 	
 	<div class="pop-layer" id="pop_layer">

@@ -475,7 +475,7 @@ label.upload{width:215px;height:36px;position:relative;overflow: hidden;}
 
 .pop-layer{display:none;width:100%;height:100%;background:rgba(0,0,0,.5);position: fixed;top:0px;left:0;z-index: 10005;}
 .pop-container{width:500px;margin:30px auto 0;border:1px solid #dcdcdc;background:#fff;position: relative;}
-.layer-container{max-height: 675px;overflow-y: scroll;-webkit-overflow-scrolling: touch;}
+.layer-container{max-height: 675px;overflow-y: scroll;}
 .close{position: absolute;top:10px;right: 10px;z-index: 30;}
 .close img{width:16px;height:16px;}
 .shop-add-form{width:404px;margin:30px auto;}
@@ -835,7 +835,7 @@ a.captcha img{width:100px;height:44px;}
 	.sm-c2{width:96%;padding:0 2%;}
 	label.upload{clear:both;margin:20px 0 0;}
 	label.core{margin:6px 26px 6px 0;}
-	.pop-container{max-height:500px;overflow-y:scroll;-webkit-overflow-scrolling: touch;}
+	.pop-container{max-height:500px;overflow-y:scroll;}
 	/*login register*/
 	.login-lf{display:none;}
 	.login-rt{width:100%;float:none;padding:20px 0;}
@@ -928,6 +928,7 @@ a.captcha img{width:100px;height:44px;}
 	.shop-news>li>a{width:24%;}
 	.news-cont{width:76%;}
 	.news-title{width: 35%;}
+	.newsStar_deta{display: none;}
 	.news-date{font-size: 12px;width: 65%;line-height: 40px;letter-spacing: 1px;padding: 0;text-align: right;}
 	.news-date i{font-size: 14px;}
 	.shop-job>li>a{

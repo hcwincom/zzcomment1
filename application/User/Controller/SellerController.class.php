@@ -27,7 +27,7 @@ class SellerController extends MemberbaseController {
 	   
 	    $pic='';
 	    
-	    $m=$this->m;
+	    $m=$this->m; 
 	    $data=array(
 	        'name'=>$name,
 	        'address'=>$address,
@@ -109,8 +109,12 @@ class SellerController extends MemberbaseController {
             $this->error('该店铺不能领用');
         }
         $info['deposit']=$deposits[$info['cid0']];
+        $deposits=C('money_seller');
         $this->assign('info',$info);
+        $this->assign('deposits',$deposits);
        
+        $this->assign('cateid1',$info['cid0'])->assign('cateid2',$info['cid']);
+        
         $this->display();
     }
     //领用店铺
@@ -123,19 +127,22 @@ class SellerController extends MemberbaseController {
         if(empty($_FILES['IDpic5']['name'])){
             $this->error('营业执照必须上传');
         } 
+        $cid0=I('catecory',0);
+        $cid=I('letter',0);
+        if($cid0==0 || $cid==0){
+            $this->error('店铺分类必须选择');
+        }
         $sid=I('ssid',0);
         
         $deposits=C('money_seller');
        
         $m=$this->m;
-        $info=$m->field('s.*,c.fid as cid0')
-        ->alias('s')
-        ->join('cm_cate as c on c.id=s.cid')
-        ->where('s.id='.$sid)->find();
+        $info=$m->where('id='.$sid)->find();
+        
         if(empty($info['city']) || $info['status']!=1){
             $this->error('该店铺不能领用');
         }
-        $info['deposit']=$deposits[$info['cid0']];
+        $info['deposit']=$deposits[$cid0];
        
         $user=$this->user;
         if($info['deposit']>=$user['account']){
@@ -147,6 +154,7 @@ class SellerController extends MemberbaseController {
         $data=array(
             'uid'=>$user['id'],
             'sid'=>$sid,
+            'cid'=>$cid,
             'create_time'=>$time,
             'corporation'=>$fname,
             'scope'=>I('jyfw',''),
@@ -243,6 +251,7 @@ class SellerController extends MemberbaseController {
                 'reply_time'=>$data['create_time'],
                 'status'=>2,
                 'uid'=>$data['uid'],
+                'cid'=>$data['cid'],
                 'tel'=>$data['tel'],
                 'mobile'=>$data['mobile'], 
                 'corporation'=>$data['corporation'],

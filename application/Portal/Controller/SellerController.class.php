@@ -174,7 +174,7 @@ class SellerController extends HomebaseController {
         ->field('p.*,u.avatar,u.user_login as uname')
         ->join('cm_users as u on u.id=p.uid')
         ->where($where_comment)
-        ->order('id desc')
+        ->order('p.push desc,p.id desc')
         ->limit($page->firstRow,$page->listRows)
         ->select();
         
@@ -182,7 +182,13 @@ class SellerController extends HomebaseController {
          foreach ($list_comment as $k=>$v){
              $list_comment[$k]['reply']=$m_reply->where('cid='.$v['id'])->order('id desc')->select();
         }
-        
+        $conf=C('option_comment');
+        if($conf['download_check']==1 || $conf['download_check']==2){
+            $this->assign('download_check',1);
+        }else{
+            $this->assign('download_check',0);
+        }
+        $this->assign('download_price',$conf['download_price']);
         $this->assign('seller_flag','comment')->assign('count_comment',$count_comment)
         ->assign('list_comment',$list_comment)
         ->assign('page',$page->show('Admin'));

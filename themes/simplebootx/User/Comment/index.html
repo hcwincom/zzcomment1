@@ -15,7 +15,7 @@
 									<p class="per_e1">{$vo.content}</p>
 									<span class="time">{$vo.sname}</span>
 									<span class="time">{$vo.create_time|date='Y-m-d',###}</span>
-									<a href="{:U('user/comment/download',['id'=>$vo['id']])}" class="downLoad">下载附件</a>
+									<a href="{:U('user/comment/download0',['id'=>$vo['id']])}" class="downLoad">下载附件</a>
 								</div>
 								<div class="rt evaluate_li_rt">
 									<span class="per_e3"><eq name="vo.score" value='1'>加分<else/>减分</eq></span>

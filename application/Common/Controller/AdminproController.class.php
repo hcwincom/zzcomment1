@@ -152,10 +152,21 @@ class AdminproController extends AdminbaseController{
 	    );
 	    $desc=$flag.$id.'('.$info['name'].')';
 	    if($type=='info'){
-	        $user=$m->alias('p')->field('p.name as pname,u.user_login as uname,u.id,u.account')
-	        ->join('cm_users as u on u.id=p.uid')
-	        ->where(['p.id'=>$id])
-	        ->find();
+	        //没有登录用户信息的直接处理
+	        if($info['uid']==0){
+	            $user=[
+	                'pname'=>$info['name'],
+	                'uname'=>'游客',
+	                'id'=>$info['uid'],
+	                'account'=>0,
+	            ];
+	        }else{
+	            $user=$m->alias('p')->field('p.name as pname,u.user_login as uname,u.id,u.account')
+	            ->join('cm_users as u on u.id=p.uid')
+	            ->where(['p.id'=>$id])
+	            ->find();
+	        }
+	        
 	    }else{
 	        $user=$m->alias('p')->field('p.name as pname,s.name as sname,u.user_login as uname,u.id,u.account')
 	        ->join('cm_seller as s on s.id=p.sid')
@@ -258,7 +269,12 @@ class AdminproController extends AdminbaseController{
 	    
 	    
 	    if(empty($user)){ 
-            $data_action['desc']='用户找不到，删除了'.$desc;
+	        if($info['uid']==0){
+	            $data_action['desc']='删除了游客的'.$desc;
+	        }else{
+	            $data_action['desc']='用户找不到，删除了'.$desc;
+	        }
+           
             $row=$m->where('id='.$id)->delete();
             if($row===1){  
                 M('AdminAction')->add($data_action);
