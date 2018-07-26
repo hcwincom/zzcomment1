@@ -83,6 +83,13 @@ class SellerController extends HomebaseController {
 	     foreach ($list_comment as $k=>$v){
 	         $list_comment[$k]['reply']=$m_reply->where('cid='.$v['id'])->order('id desc')->select();
 	     }
+	     $conf=C('option_comment');
+	     if($conf['download_check']==1 || $conf['download_check']==2){
+	         $this->assign('download_check',1);
+	     }else{
+	         $this->assign('download_check',0);
+	     }
+	     $this->assign('download_price',$conf['download_price']);
 	     $this->assign('seller_flag','home')
 	       ->assign('list_goods',$list_goods)
 	       ->assign('list_comment',$list_comment)
