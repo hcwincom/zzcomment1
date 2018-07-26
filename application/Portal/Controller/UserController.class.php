@@ -235,7 +235,7 @@ class UserController extends HomebaseController {
         //执行添加
         $insert=M('info')->add($data);
         if($insert>=1){
-            $this->success('发布成功，等待后台审核', U('index'));
+            $this->success('发布成功，等待后台审核', U('portal/index/index'));
         }else{
             $this->error('发布失败');
         }

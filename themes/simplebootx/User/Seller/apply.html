@@ -73,7 +73,7 @@
                         <foreach name="deposits" item="vo">
                         <input type="hidden" calss="deposit_{$key}" value="{$vo}"/>
                         </foreach>
-                         <p class="form2Info">领用需押金{$info.deposit}元,从账户余额中扣除，审核不通过或主动注销后押金返还至余额</p>
+                         <p class="form2Info">领用需押金 <span id="depositPrice">{$info.deposit}</span> 元,从账户余额中扣除，审核不通过或主动注销后押金返还至余额</p>
                         <div class="form2 mtc"><input type="submit" value="确认上传" class="subtop"></div>
                     </div>
                     <div class="clear"></div>
@@ -83,4 +83,8 @@
 	<!-- bottom -->
 	 <tc_include file="Public:user_footer" />
 	<!-- bottom end -->
- 
+ <script>
+   
+    var select = $('.add-cate1 option:selected').val();
+
+ </script>
