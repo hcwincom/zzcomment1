@@ -8,6 +8,7 @@ body,p,h1,h2,h3,h4,h5,h6,ul,ol,li,dl,dt,dd,form,input,button,textarea,i,em,table
 }
 body,html{
 	height: 100%;
+	position: relative;
 }
 /*body{min-width: 320px;}*/
 .lf{ float: left; }
@@ -20,7 +21,7 @@ i,em{ font-style: normal; }
 /*top*/
 .top-wrapperNav{width: 100%;background: #fff;}
 .top-wrapper{width: 1200px;margin: 0 auto;width:1200px;position: relative;}
-.topFixed{position: fixed;top:0;left: 0;right:0;margin:auto;z-index: 10000;}
+.topFixed{position: fixed;top:0;left: 0;right:0;margin:auto;z-index: 10000;width: 100%;}
 .foot-container{width:1200px;margin:0 auto;}
 .logo{padding:22px 0;}
 
