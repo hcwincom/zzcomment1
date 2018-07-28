@@ -73,13 +73,13 @@
             </div>
         </div>
 
-
 <tc_include file="Public:footer" />
 <script type="text/javascript" src="__TMPL__Public/js/personal.js"></script>
 <script type="text/javascript" src="__TMPL__Public/js/form.js"></script>
 <script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.config.js"></script>
 <script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.all.min.js"></script>
 <script>
+ 
      //初始化百度编辑器
         //  var ue = UE.getEditor('content2');
         var ue = UE.getEditor('content2', {
@@ -87,10 +87,12 @@
             elementPathEnabled: false,
             maximumWords: 10000,
             initialContent: '',
-            autoClearinitialContent: true,
+            // autoClearinitialContent: true,  
             pasteplain: true,
             initialFrameHeight: 370,
-            autoHeightEnabled: false
+            autoHeightEnabled: false,
+            autoFloatEnabled: false,
+            zIndex: 0
 
         });
 </script>

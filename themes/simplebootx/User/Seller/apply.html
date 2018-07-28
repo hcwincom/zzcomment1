@@ -28,7 +28,7 @@
                         <p class="ml2 msg3"></p>  
                         <div class="form2">
                             <span class="lf">类别 ：</span>
-                            <div class="lf">
+                            <div class="lf applyCate">
                                 <tc_include file="Public:cates" />
                         
                             </div>
@@ -71,7 +71,7 @@
                         </div>
                         <p class="ml2 msg11"></p> 
                         <foreach name="deposits" item="vo">
-                        <input type="hidden" calss="deposit_{$key}" value="{$vo}"/>
+                        <input type="hidden" id="deposit_{$key}" value="{$vo}"/>
                         </foreach>
                          <p class="form2Info">领用需押金 <span id="depositPrice">{$info.deposit}</span> 元,从账户余额中扣除，审核不通过或主动注销后押金返还至余额</p>
                         <div class="form2 mtc"><input type="submit" value="确认上传" class="subtop"></div>
@@ -84,7 +84,16 @@
 	 <tc_include file="Public:user_footer" />
 	<!-- bottom end -->
  <script>
+    
+   $(".applyCate .add-cate1").change(function () {
+       var select = $(this).val();       
+      var addSelectClass = $('#deposit_'+ select).val();
+    
+     $("#depositPrice").text(addSelectClass);
+
+   });
    
-    var select = $('.add-cate1 option:selected').val();
+
+  
 
  </script>

@@ -176,7 +176,7 @@ $('.shop-add-form').submit(function(){
 
 var heightTop = $(".top-wrapperNav").offset().top;
 $(window).scroll(function(){
-	var scrollTop = $(window).scrollTop();
+	var scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
 	
 	if(scrollTop > heightTop){
 		$(".top-wrapperNav").addClass("topFixed");
@@ -186,5 +186,36 @@ $(window).scroll(function(){
 		
 	}
 });
- 
+ $(window).bind("touchmove", function () {
+		var scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
+
+	 if (scrollTop > heightTop) {
+		 $(".top-wrapperNav").addClass("topFixed");
+
+	 } else {
+		 $(".top-wrapperNav").removeClass("topFixed");
+
+	 }
+	});
+
+	// 移动端input获取焦点时取消对顶部的定位
+	var isIOS = (/iphone|ipad/gi).test(navigator.appVersion)
+	if (isIOS) {
+
+		$("input").focus(function () {
+			$(".top-wrapperNav").removeClass("topFixed");
+		});
+		$("input").focusout(function () {
+			$(".top-wrapperNav").addClass("topFixed");
+		});
+		$("textarea").focus(function () {
+			$(".top-wrapperNav").removeClass("topFixed");
+		});
+		$("textarea").focusout(function () {
+			$(".top-wrapperNav").addClass("topFixed");
+		});
+	}
+
+
+
 </script>
