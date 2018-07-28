@@ -3,7 +3,7 @@ $(document).ready(function(){
 	// 移动端input获取焦点时取消对顶部的定位
 	var u = navigator.userAgent;
 	var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); 
-	if (isIOS) {
+	if (isiOS) {
 
 		$("input").focus(function () {
 			$(".top-wrapperNav").css("position","relative");
