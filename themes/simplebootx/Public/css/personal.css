@@ -323,8 +323,8 @@ background-color: rgba(0, 0, 0, .3);}
 .webmsg thead{background:#eeeeee;}
 .webmsg th{line-height:40px;font-size:16px;color:#333;padding-left:10px;}
 .webmsg td{text-align:left;font-size: 16px;color:#333;line-height:24px;padding-left:10px;white-space: normal;padding: 10px;}
-.webmsg tbody tr{border-top:1px solid #dcdcdc;}
-.webmsg_t1{width:120px;min-width: 60px;} 
+.webmsg tbody tr{border-top:1px solid #dcdcdc;width: 100%;}
+.webmsg_t1{width:120px;min-width: 50px;} 
 .webmsg_t2{width:200px;min-width: 150px;}
 .webmsg_t3{width:600px;min-width: 300px;}.webmsg_t4{width:50px;min-width: 40px;}
 .webmsg_t5{min-width: 150px;}
@@ -621,6 +621,9 @@ td.msgmaner_td3 ul li{
 	.webmsg_t2{min-width: 100px;}
 	.webmsg_t3{min-width: 150px;}
 	.webmsg_t5{min-width: 100px;}
+	.btn{left:12px;}
+	
+	.dynamic_list li{line-height: 24px;}
 }
 @media screen and (max-width:465px){
     .dynamic_li_lf2 {
@@ -639,6 +642,7 @@ td.msgmaner_td3 ul li{
 	.boxCenter{width: 100%;margin: 0 auto;text-align: center;}
 	.preview{margin: 0 auto;}
 	.form1>p.form1Center{display: block;width: 100%;text-align: left;padding-left: 10%;}
+
 }
 @media screen and (max-width:400px) {
     .form1 input[type="submit"],.form1 input[type="reset"]{padding:0 20px;height:35px;line-height: 35px;background:#eb0000;color:#fff;text-align: center;margin-right:30px;cursor: pointer;font-size: 16px;}
@@ -664,8 +668,13 @@ td.msgmaner_td3 ul li{
 	.rcont_main_list>.per_li4{display: none;}
 	.rcont_main_list>.per_li5{display: none;}
 	.rcont_main_list>.per_li6{display: none;}
-    
-	
+	.webmsg th{font-size: 14px;padding-left: 5px;}
+	.webmsg_t2{min-width: 85px;padding-left: 0px;}
+	.webmsg_t3{min-width: 120px;padding-left: 0px;}
+	.webmsg_t5{min-width: 93px;;}
+    .webmsg td{padding: 5px;font-size: 12px;line-height: 18px;}
+	.form1 input[type="text"] { width: 183px;}
+   
  }
 
 
