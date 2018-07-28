@@ -1,27 +1,35 @@
 $(document).ready(function(){
 
 	// 移动端input获取焦点时取消对顶部的定位
-	var u = navigator.userAgent;
-	var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); 
-	if (isiOS) {
 
-		$("input").focus(function () {
-			$(".top-wrapperNav").css("position","relative");
-			$("#per_line").css("margin-top","0");
-		});
-		$("input").blur(function () {
-			$(".top-wrapperNav").css("position", "fixed");
-			$("#per_line").css("margin-top", "7em");
-		});
-		$("textarea").focus(function () {
-			$(".top-wrapperNav").css("position", "relative");
-			$("#per_line").css("margin-top", "0");
-		});
-		$("textarea").blur(function () {
-			$(".top-wrapperNav").css("position", "fixed");
-			$("#per_line").css("margin-top", "7em");
-		});
+
+	if (navigator.userAgent.match(/mobile/i)) {
+		var u = navigator.userAgent;
+		var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
+		if (isiOS) {
+
+			$("input").focus(function () {
+				$(".top-wrapperNav").css("position", "relative");
+				$("#per_line").css("margin-top", "0");
+			});
+			$("input").blur(function () {
+				$(".top-wrapperNav").css("position", "fixed");
+				$("#per_line").css("margin-top", "7em");
+			});
+			$("textarea").focus(function () {
+				$(".top-wrapperNav").css("position", "relative");
+				$("#per_line").css("margin-top", "0");
+			});
+			$("textarea").blur(function () {
+				$(".top-wrapperNav").css("position", "fixed");
+				$("#per_line").css("margin-top", "7em");
+			});
+			$("#content2").on("focus", function () {
+
+			})
+		}
 	}
+	
 
 	//shop type sub
 	$(".shop-type-sub a").click(function(){
@@ -519,7 +527,6 @@ function picPerview(file) {
 		prevDiv.innerHTML = '<div class="img" style="filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src=\'' + file.value + '\'"></div>';
 	}  
 }
-
 
 
 

@@ -95,6 +95,24 @@
             zIndex: 0
 
         });
+        	if (navigator.userAgent.match(/mobile/i)) {
+                var u = navigator.userAgent;
+                var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
+                if(isiOS){
+                     ue.addListener('focus', function () {
+                        $(".top-wrapperNav").css("position", "relative");
+                        $("#per_line").css("margin-top", "0");
+                    });
+
+                    ue.addListener('blur', function () {
+                        $(".top-wrapperNav").css("position", "fixed");
+                        $("#per_line").css("margin-top", "7em");
+                    });
+                }
+                
+             }
+     
+    
 </script>
  <script>
     $('#edit_cont img').each(function () {

@@ -1,6 +1,7 @@
 @charset "UTF-8";
 #per_line{width:100%;height:1px;background:#c6c4c4;box-shadow: 1px 1px 3px #c6c4c4;margin-top: 91px; }
 .crumbs{font-size:16px;color:#333;line-height: 50px;}
+.crumbs>span{margin-left: 10px;}
 .crumbs a{color:#333;}
 .w1200{width:1200px;margin:0 auto;}
 .per_main{margin-top:30px;margin-bottom: 100px;min-height: 80%;}
@@ -598,7 +599,11 @@ td.msgmaner_td3 ul li{
 	.dynamic_li_lf2 p{
         font-size:14px!important;
 	}
-	.rnav-two div{width: 16%;margin-left: 10px;}
+	.rnav-two div{
+		height: 28px;
+		line-height: 28px;
+	}
+	.rnav-two div{width: 30%;margin-left: 5px;}
 	.rnav_list li div{padding-bottom: 20px;}
 	
 }
@@ -632,7 +637,7 @@ td.msgmaner_td3 ul li{
 	.rnav_list li div:nth-child(2) p{font-size: 12px;}
 	.rnav_list li{width: 100%;}
 	.rnav_list li div{padding-bottom: 0;margin: 0;text-align: center;}
-	.rnav_list li div:nth-child(1){width: 30%;}
+	.rnav_list li div:nth-child(1){width: 30%;text-align: left;margin-left: 5px;}
 	.rnav_list li div:nth-child(2){width: 33%;}
 	.rnav_list li div:nth-child(3){width: 33%;}
 	.rnav_list li div:nth-child(4){width: 25%;}

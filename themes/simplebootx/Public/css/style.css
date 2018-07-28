@@ -112,8 +112,8 @@ textarea{resize: none;}
 .column-shop-container>li>a>p{overflow: hidden;}
 .column-shop-container>li>a>p>span{font-size:16px;line-height:26px;height:26px;margin:6px 0 6px 12px;color:#999;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;}
 .column-shop-container>li>a>p>span>i{font-size:16px;line-height: 26px;}
-.column-shop-container>li>a>p>span:first-child{max-width: 5em;}
-.column-shop-container>li>a>p>span:last-child{max-width: 7em;}
+.column-shop-container>li>a>p>span:first-child{max-width: 8em;}
+.column-shop-container>li>a>p>span:last-child{max-width: 12em;}
 
 /*商品上新*/
 
