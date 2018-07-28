@@ -19,9 +19,8 @@ textarea,input,button,select,img{border: none;outline: none;}
 i,em{ font-style: normal; }
 
 /*top*/
-.top-wrapperNav{width: 100%;background: #fff;}
+.top-wrapperNav{width: 100%;background: #fff;position: fixed;top:0;left: 0;z-index: 10000;}
 .top-wrapper{width: 1200px;margin: 0 auto;width:1200px;position: relative;}
-.topFixed{position: fixed;top:0;left: 0;right:0;margin:auto;z-index: 10000;width: 100%;}
 .foot-container{width:1200px;margin:0 auto;}
 .logo{padding:22px 0;}
 
@@ -72,7 +71,7 @@ i,em{ font-style: normal; }
 .slides li:first-child{display:block}
 #shopAddBtn{display: none;}
 @media screen and (max-width: 1250px){
-	.top-wrapper{width:96%;margin:0 2%;}
+	.top-wrapper{width:96%;margin:0 auto;}
 	.research{clear:both;padding:0 0 26px;}
 	.foot-container{width:96%;margin:0 2%;}
 	.foot-cont1{width:80%;}

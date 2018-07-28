@@ -1,4 +1,24 @@
 $(document).ready(function(){
+
+	// 移动端input获取焦点时取消对顶部的定位
+	var u = navigator.userAgent;
+	var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); 
+	if (isIOS) {
+
+		$("input").focus(function () {
+			$(".top-wrapperNav").css("position","relative");
+		});
+		$("input").blur(function () {
+			$(".top-wrapperNav").css("position", "fixed");
+		});
+		$("textarea").focus(function () {
+			$(".top-wrapperNav").css("position", "relative");
+		});
+		$("textarea").blur(function () {
+			$(".top-wrapperNav").css("position", "fixed");
+		});
+	}
+
 	//shop type sub
 	$(".shop-type-sub a").click(function(){
 		$(this).addClass("select").siblings().removeClass("select");
