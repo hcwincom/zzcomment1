@@ -2,7 +2,7 @@
 .wide-container{width:1200px;margin:0 auto;}
 input[type="button"],input[type="submit"],input[type="reset"]{-webkit-appearance:none;}
 input,textarea{border-radius:0;}
-#per_line{width:100%;height:1px;background:#c6c4c4;box-shadow: 1px 1px 3px #c6c4c4;margin-top: 91px; }
+#per_line{width:100%;height:1px;background:#c6c4c4;box-shadow: 1px 1px 3px #c6c4c4;margin-top: 7em; }
 /*home slider*/
 .flexslider{
 	position:relative;

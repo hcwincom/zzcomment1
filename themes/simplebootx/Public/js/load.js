@@ -7,15 +7,19 @@ $(document).ready(function(){
 
 		$("input").focus(function () {
 			$(".top-wrapperNav").css("position","relative");
+			$("#per_line").css("margin-top","0");
 		});
 		$("input").blur(function () {
 			$(".top-wrapperNav").css("position", "fixed");
+			$("#per_line").css("margin-top", "7em");
 		});
 		$("textarea").focus(function () {
 			$(".top-wrapperNav").css("position", "relative");
+			$("#per_line").css("margin-top", "0");
 		});
 		$("textarea").blur(function () {
 			$(".top-wrapperNav").css("position", "fixed");
+			$("#per_line").css("margin-top", "7em");
 		});
 	}
 
