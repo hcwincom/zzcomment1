@@ -114,7 +114,7 @@ textarea{resize: none;}
 .column-shop-container>li>a>p>span>i{font-size:16px;line-height: 26px;}
 .column-shop-container>li>a>p>span:first-child{max-width: 8em;}
 .column-shop-container>li>a>p>span:last-child{max-width: 12em;}
-
+.mlleft{color: red;height: 20px;line-height: 20px;}
 /*商品上新*/
 
 .column-product-container{overflow: hidden;margin: 35px auto;}
