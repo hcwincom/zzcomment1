@@ -658,7 +658,7 @@ td.msgmaner_td3 ul li{
     .evaluate_li_rt{width:80%;margin-top:5px;}
     #provinces{margin-left:10px;}
     #citys,#countys{margin:0 0 0 2px;}
-    .btn6{width:174px;height:105px;line-height: 105px;}
+    .btn6{width:174px;height:105px;line-height: 105px;left: 58px;}
     #preview6{width:174px;height:105px;}
      .dynamic_li_lf2{width:40%;}
      .dynamic_li_rt{width:100%;}
@@ -679,7 +679,7 @@ td.msgmaner_td3 ul li{
 	.webmsg_t5{min-width: 93px;;}
     .webmsg td{padding: 5px;font-size: 12px;line-height: 18px;}
 	.form1 input[type="text"] { width: 183px;}
-   
+  
  }
 
 

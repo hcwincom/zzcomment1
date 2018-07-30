@@ -6,7 +6,8 @@ function preview(file,o)
      // 验证文件大小
     var fileSize = file.files[0].size / 1024;
     if (fileSize > 4 * 1024) {
-        alert("图片大小不能超过4MB");
+        // alert("图片大小不能超过4MB");
+        $(".msg4").text("图片大小不能超过4MB");
         $(file).val('');
         return false;
     } 
