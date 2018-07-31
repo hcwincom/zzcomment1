@@ -372,9 +372,9 @@ textarea{resize: none;}
 }
 .shop-infor-article>p{
 	letter-spacing: 2px;
-	line-height: 20px;
+	line-height: 40px;
 	text-indent: 2em;
-	font-size: 16px;
+	font-size: 18px;
 }
 .edit-detail{
 	width: 90%;
@@ -950,7 +950,7 @@ a.captcha img{width:100px;height:44px;}
 	.shop-infor>li>a{width: 40%;}
 	.person-content>p{font-size: 14px;}
 	.shop-infor-article{width: 95%;}
-	.shop-infor-article>p{font-size: 12px;}
+	.shop-infor-article>p{font-size: 16px;line-height: 32px;}
 	/*shop main*/
 	.shop-nav-wrapper li{padding:0 5px;font-size:14px;}
 	.login-form{border:none;padding:0;width:244px;margin:0 auto;}
