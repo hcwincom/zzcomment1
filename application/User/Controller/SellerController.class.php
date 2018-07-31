@@ -445,7 +445,7 @@ class SellerController extends MemberbaseController {
         //计算得到可置顶周期  
         $top_sellers=[];
         $tops0=C('price_top_seller');
-        unset($tops0[10]);
+        unset($tops0[1]);
         $m_top=M('top_seller');
         foreach($tops0 as $k=>$v){
             $top_sellers[$k]=['price'=>$v['price']];
@@ -467,7 +467,11 @@ class SellerController extends MemberbaseController {
         $start=strtotime(I('start',''));
         $end=strtotime(I('end',''));
         $price=round(I('zprice',0),2);
-        $site=round(I('site',0),2);
+        $site=round(I('site',0),0);
+        if($site<=1){
+            $this->error('店铺位置错误');
+            exit;
+        }
         $data=array('errno'=>0,'error'=>'未执行操作');
         $time0=strtotime(date('Y-m-d'));
         $days=bcdiv(($end-$start),86400,0);
@@ -619,7 +623,7 @@ class SellerController extends MemberbaseController {
             $this->error('数据错误，请刷新');
         }
         $user=$this->user;
-        $data=[];
+        $data=['cancel_time'=>time()];
         //0未审核，1未认领，2已认领,3已冻结，4已申请注销
         switch($conf['cancel_check']){
             case 1:

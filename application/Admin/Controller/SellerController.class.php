@@ -185,7 +185,57 @@ class SellerController extends AdminbaseController {
         
     	$this->display();
     }
-    
+    //注销
+    public function cancel(){
+        $where=[];
+        //id
+        $id=I('id',0,'intval');
+        if($id!=0){
+            $where['s.id']=['eq',$id];
+        }
+        //状态
+        $where['s.status']=['eq',4];
+        
+        //分类
+        $tmp=$this->cate(1);
+        if(!empty($tmp)){
+            $where['s.cid']=$tmp;
+        }
+        //分类
+        $tmp=$this->city();
+        if(!empty($tmp)){
+            $where['s.city']=$tmp;
+        }
+        //店铺名搜索
+        $name=trim(I('name',''));
+        if($name!=''){
+            $where['s.name']=['like','%'.$name.'%'];
+        }
+        
+        $m= $this->m ;
+        $total=$m->alias('s')->where($where)->count();
+        $page = $this->page($total, 10);
+        $list=$m->alias('s')->field("s.*,concat(c1.name,'-',c2.name) as cname")
+        ->join('cm_cate as c2 on c2.id=s.cid')
+        ->join('cm_cate as c1 on c1.id=c2.fid')
+        ->where($where)
+        ->order('s.cancel_time desc')
+        ->limit($page->firstRow,$page->listRows)
+        ->select();
+        
+        //得到城市
+        foreach($list as $k=>$v){
+            $list[$k]['city_name']=getCityNames($v['city']);
+        }
+        
+        $this->assign('page',$page->show('Admin'));
+        $this->assign('list',$list);
+        
+        $this->assign('name',$name) 
+        ->assign('id',$id);
+        
+        $this->display();
+    }
     //后台操作店铺状态
     public function index_del(){
         $old_status=I('status',0,'intval');
