@@ -1,0 +1,152 @@
+<admintpl file="header" />
+<link href="__TMPL__Public/assets/css/zzinfo.css" rel="stylesheet" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li class=""><a href="{:U('index')}">{$flag}列表</a></li>
+			<li class=""><a href="{:U('top')}">{$flag}置顶列表</a></li>
+			<li class=""><a href="{:U('top0')}">{$flag}推荐列表</a></li>
+			 
+			<li class="active"><a href="{:U('top_info',array('id'=>$info['id']))}">{$flag}置顶详情</a></li>
+		</ul>
+		<!--  -->
+		<form class="form-horizontal js-ajax-form" method="post" action="{:U('top_review')}" >
+			<fieldset>
+				<div class="control-group fleft">
+					<span class="control-label" >Id：</span>
+					<div class="controls" >
+						<input type="text" value="{$info.id}"  readonly />
+					</div>
+				</div>
+				 
+				 
+				<div class="control-group fleft">
+					<span class="control-label">店铺名称：</span>
+					<div class="controls">
+						<input type="text"  value="{$info.sname}" readonly/>
+						<a href="{:U('portal/seller/home',['sid'=>$info['sid']])}" target="_blank">
+						 	查看
+						</a> 
+					</div>
+				</div>
+				 
+				<div class="control-group fleft">
+					<span class="control-label" >{$flag}标题：</span>
+					<div class="controls">
+						<input type="text"  value="{$info.pname}" readonly/>
+						 <a href="{:U('portal/seller/goods_detail',['sid'=>$info['sid'],'id'=>$info['id']])}" target="_blank">
+						 	查看
+						 </a> 
+					</div>
+				</div>
+				 
+				 
+				<div style="clear:both"></div>
+				<div class="control-group">
+					<span class="control-label" >{$flag}图片：</span>
+					<div class="controls">
+						<img src="__ROOT__/data/upload/{$info.pic}" alt="暂无图片" />
+						 
+					</div>
+				</div>
+				 
+				<div class="control-group fleft">
+					<span class="control-label" >置顶申请时间：</span>
+					<div class="controls">
+						<input type="text"  value="{$info.create_time|date='Y-m-d H:i',###}" readonly/>
+					</div>
+				</div>
+			 	<div class="control-group fleft">
+					<span class="control-label" >置顶开始时间：</span>
+					<div class="controls">
+						<input type="text"  value="{$info.start_time|date='Y-m-d',###}" readonly/>
+					</div>
+				</div>
+				<div class="control-group fleft">
+					<span class="control-label" >置顶结束时间：</span>
+					<div class="controls">
+						<input type="text"  value="{$info.end_time|date='Y-m-d',###}" readonly/>
+					</div>
+				</div>
+				<div class="control-group fleft">
+					<span class="control-label" >置顶申请费用：</span>
+					<div class="controls">
+						<input type="text" value="￥{$info.price}({$info.coin})" readonly/>
+					</div>
+				</div>
+			 	<div class="control-group fleft">
+					<span class="control-label" >置顶时段内置顶数：</span>
+					<div class="controls">
+						<input type="text" value="{$info.count}" readonly/>
+					</div>
+				</div>
+				 <div class="control-group fleft">
+					<span class="control-label" >{$flag}最大置顶数：</span>
+					<div class="controls">
+						<input type="text" value="{$info.conf_count}" readonly/>
+					</div>
+				</div>
+				<div class="control-group fleft">
+					<span class="control-label" >{$flag}每日置顶费用：</span>
+					<div class="controls">
+						<input type="text" value="{$info.conf_price}" readonly/>
+					</div>
+				</div>
+				<div class="control-group fleft">
+					<span class="control-label" >置顶申请状态：</span>
+					<div class="controls">
+						<input class="red" type="text" value="{$top_status[$info['status']]}" readonly/>
+					</div>
+				</div>
+			<div style="clear:both"></div>
+				<div class="form-actions">
+					<input type="hidden" name="id" value="{$info.id}">
+					 <input type="hidden" id="review" name="review" value="0">
+					 <input type="hidden" name="status" value="{$info.status}">
+				<eq name="info.status" value="0">
+					<button type="submit" class="btn btn-primary js-ajax-submit" id="sub1">
+						审核不通过
+					</button>
+					
+					<button type="submit" class="btn btn-primary js-ajax-submit" id="sub2">
+						审核通过
+					</button>
+				</eq>	
+					<button type="submit" class="btn btn-primary js-ajax-submit" id="sub3">
+						删除置顶 
+					</button>
+					 
+					<a class="btn" href="javascript:history.back(-1);">返回</a>
+					 
+			</fieldset>
+		</form>
+	</div>
+<script src="__PUBLIC__/js/common.js"></script> 
+<script>
+ 
+$('#sub1').click(function(){
+	if(!confirm('确认审核不通过吗？')){
+		return false;
+	}
+	$('#review').val('1');
+	return true;
+});
+$('#sub2').click(function(){
+	if(!confirm('确认审核通过吗？')){
+		return false;
+	}
+	$('#review').val('2');
+	return true;
+});
+$('#sub3').click(function(){
+	if(!confirm('确认删除吗？')){
+		return false;
+	}
+	$('#review').val('3');
+	$('form').attr('action',"{:U('top_del')}");
+	return true;
+});
+</script>
+</body>
+</html>

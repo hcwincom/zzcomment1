@@ -1,0 +1,84 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="{:U('index')}">{$flag}列表</a></li>
+			<li class=""><a href="{:U('top')}">{$flag}置顶列表</a></li>
+			<li class=""><a href="{:U('top0')}">{$flag}推荐列表</a></li>
+		</ul>
+        <form class="well form-search" method="post" action="{:U('index')}">
+			状态：<select name="status" id="status">
+				<option value="-1" <if condition="$status eq -1">selected</if>>所有</option>
+				<foreach name="info_status" item="vo">
+				<option value="{$key}" <if condition="$status eq $key">selected</if>>{$vo}</option>
+				</foreach>
+				 
+			</select>
+			地区：
+			 <admintpl file="city" />
+			{$flag}ID： 
+			<input type="text" name="id" style="width: 100px;" value="{$id}" >
+			{$flag}标题： 
+			<input type="text" name="name" style="width: 200px;" value="{$name}">
+			店铺ID： 
+			<input type="text" name="sid" style="width: 100px;" value="{$sid}" >
+			店铺名： 
+			<input type="text" name="sname" style="width: 200px;" value="{$sname}">
+			<input type="submit" class="btn btn-primary" value="搜索" />
+			<a class="btn btn-danger" href="{:U('index')}">清空</a>
+		</form> 
+		<table class="table table-hover table-bordered">
+			<thead>
+				<tr> 
+					<th>Id</th>
+					<th>店铺ID-名称</th>
+					<th>{$flag}ID-标题</th>
+					<th>图片</th>
+                    
+                    <th>创建时间</th>
+                    <th>开始时间</th>
+                    <th>过期时间</th> 
+                    <th>状态</th> 
+                    <th>操作</th> 
+				</tr>
+			</thead>
+			<tbody>
+				<foreach name="list" item="vo">
+				<tr> 
+					<td>{$vo.id}</td>
+					 <td>
+                    	<a href="{:U('portal/seller/home',['sid'=>$vo['sid']])}" target="_blank"> 
+						 {$vo.sid}-{$vo.sname}
+						 </a>
+					</td> 
+                    <td>
+                    	<a href="{:U('portal/seller/news_detail',['sid'=>$vo['sid'],'id'=>$vo['id']])}" target="_blank"> 
+	                    {$vo.name}
+	                     </a>
+                    </td>  
+                   
+                    <td><img src="__ROOT__/data/upload/{$vo.pic}" alt="暂无图片" style="width:200px;height:50px"/></td>      
+                    
+                     <td> {$vo.create_time|date="Y-m-d H:i:s",###}</td>
+                     <td> {$vo.start_time|date="Y-m-d H:i:s",###}</td>
+                     <td> {$vo.end_time|date="Y-m-d H:i:s",###}</td>
+                   <td>{$info_status[$vo['status']]}</td>
+                    <td>
+                    <a href="{:U('info',array('id'=>$vo['id']))}">查看</a> 
+                      &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+	                <a class="js-ajax-dialog-btn" href="{:U('del',array('id'=>$vo['id'],'status'=>$vo['status'],'url'=>'index'))}" data-msg="确认删除吗？">删除</a> 
+	                </td>
+					
+				</tr>
+				</foreach>
+			</tbody>
+		</table>
+		<div class="pagination">{$page}</div>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script>
+	
+	</script>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+	        <li ><a href="{:U('index')}">地区管理</a></li>
+			<li class="active"><a href="{:U('add')}">添加地区</a></li>
+	    </ul>
+	    <!--  -->
+		<form class="form-horizontal js-ajax-form" action="{:U('add_do')}" method="post">
+			<div class="tabbable">
+		        <div class="tab-content">
+		          <div class="tab-pane active" id="A">
+						<fieldset>
+							<div class="control-group">
+								<label class="control-label">省级</label>
+								<div class="controls">
+									<select name="pid" id="pid">
+										<option value="-1">添加省</option>
+										<foreach name="list1" item="vo">
+										<option value="{$vo.id}"<if
+												condition="$vo['id'] eq $pid">selected</if>>{$vo.name}
+										</option>
+										</foreach>
+									</select>
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label">市级</label>
+								<div class="controls">
+									<select name="cid" id="cid">
+										<option class="city-1" value="-1">添加省</option>
+										<option class="city0" value="0">添加市</option>
+
+										<foreach name="list2" item="vo">
+										<option class="city{$vo.fid}" value="{$vo.id}"<if
+												condition="$vo['id'] eq $cid">selected</if>>{$vo.name}
+										</option>
+										</foreach>
+									</select>
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label">名称</label>
+								<div class="controls">
+									<input type="text" name="name" value="" required><span class="form-required">*不能为空</span>
+								</div>
+							</div>
+							 
+						</fieldset>
+		          </div>
+		         
+		         
+		        </div>
+		    </div>
+		    <div class="form-actions">
+		     	<button class="btn btn-primary js-ajax-submit"type="submit">添加</button>
+		      	<a class="btn" href="javascript:history.back(-1);">返回</a>
+		    </div>
+		</form>
+	</div>
+	<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+	<script>
+		$('#cid option').hide();
+		var pid='{$pid}';
+		var cid='{$cid}';
+		if(pid=='-1'){
+			$('#cid .city-1').show();
+			$('#cid .city-1').prop('selected',true);
+		}else{
+			$('#cid .city0').show();
+			$('#cid .city'+pid).show();
+			$('#cid .city'+cid).prop('selected',true);
+			 
+		}
+		$('#pid').change(function(){
+			var pid=$(this).val();
+			$('#cid option').hide();
+			if(pid=='-1'){
+				$('#cid .city-1').show();
+				$('#cid .city-1').prop('selected',true);
+			}else{
+				$('#cid .city0').show();
+				$('#cid .city'+pid).show();
+				$('#cid .city0').prop('selected',true);
+			}
+			 
+		});
+	</script>
+</body>
+</html>

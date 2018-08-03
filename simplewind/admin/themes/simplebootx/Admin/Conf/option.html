@@ -1,0 +1,59 @@
+<admintpl file="header" />
+<link href="__TMPL__Public/assets/css/zzinfo.css" rel="stylesheet" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li class=""><a href="{:U('seller_option')}">店铺操作设置</a></li>
+			<li class="active"><a href="{:U('option')}">会员操作赠币设置</a></li>
+			<li class=""><a href="{:U('seller')}">店铺推荐位设置</a></li> 
+			<li class=""><a href="{:U('filter_char')}">网站过滤关键字配置</a></li>
+			
+		</ul>
+		<form method="post" class="form-horizontal js-ajax-form" action="{:U('option_do')}">
+			<fieldset>
+				 
+				<foreach name="conf" item="vo" k="key">
+				 
+				<div class="control-group">
+					<label class="control-label">{$types[$key]}操作设置</label>
+					<div class="controls">
+						  
+					</div>
+				</div>
+				 <foreach name="vo" item="v" key="k">
+				 <div class="control-group fleft">
+					<span class="control-label" >{$options[$k]}</span>
+					<div class="controls" >
+						<input type="text" name="{$key}_{$k}" value="{$v}" required/>
+					</div>
+				</div>
+				 </foreach>
+				 <div style="clear:both"></div>
+				 </foreach>
+				 
+				  
+			</fieldset>
+			<div class="form-actions">
+				 
+				<button type="submit" class="btn btn-primary js-ajax-submit">{:L('SAVE')}</button>
+				<a class="btn" href="javascript:history.back(-1);">{:L('BACK')}</a>
+			</div>
+			<div class="control-group">
+				<label class="control-label" style="color:red">*</label>
+				<div class="controls">  
+					<p>赠币在网站消费如商品置顶，推荐位购买中优先使用但不能提现。</p>
+					<p>置顶按天计费，置顶操作的赠币也是按天数赠送</p>
+					<p> 审核设置1=>'无需审核',2=>'实名后无需审核',3=>'全部审核'</p> 
+					<p>编辑操作如需审核，则改信息状态会变更为未审核，编辑操作若不许审核，则编辑信息，信息状态不变</p>
+					<p> 关于评级材料下载1=>'所有用户都能下载',2=>'实名用户可以下载',3=>'不开放下载'</p> 
+				</div>
+				
+			</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	
+	 
+</body>
+</html>
