@@ -934,7 +934,7 @@ a.captcha img{width:100px;height:44px;}
 	.attachment{
 		width: 90%;
 	}
-	#per_line{padding-top: 6.5em;}
+	#per_line{padding-top: 7em;}
 }
 @media screen and (max-width:500px){
 	/*homemain*/
@@ -1013,7 +1013,7 @@ a.captcha img{width:100px;height:44px;}
 	.addpreview{
 		width: 90%;
 	}
-	#per_line{padding-top: 6.3em;}
+	#per_line{padding-top: 6.5em;}
 	.infor-d1 span i{width: 22%;}
 	.infor-d1 a{width: 78%;}
 
