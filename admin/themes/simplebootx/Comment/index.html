@@ -1,66 +1,81 @@
 <admintpl file="header" />
 </head>
-<body style="min-width: 800px;">
-	<div class="wrap js-check-wrap">
+<body>
+	<div class="wrap">
 		<ul class="nav nav-tabs">
-			<li class="active"><a href="{:U('commentadmin/index')}">{:L('COMMENT_COMMENTADMIN_INDEX')}</a></li>
+			<li class="active"><a href="{:U('index')}">评级列表</a></li>
+			 
 		</ul>
-		<form class="js-ajax-form" method="post">
-			<div class="table-actions">
-				<button class="btn btn-primary btn-small js-ajax-submit" type="submit" data-action="{:U('Commentadmin/check',array('check'=>1))}" data-subcheck="true">{:L('AUDIT')}</button>
-				<button class="btn btn-primary btn-small js-ajax-submit" type="submit" data-action="{:U('Commentadmin/check',array('uncheck'=>1))}" data-subcheck="true">{:L('CANCEL_AUDIT')}</button>
-				<button class="btn btn-danger btn-small js-ajax-submit" type="submit" data-action="{:U('Commentadmin/delete')}" data-subcheck="true" data-msg="{:L('DELETE_CONFIRM_MESSAGE')}">{:L('DELETE')}</button>
-			</div>
+		 <form class="well form-search" method="post" action="{:U('index')}">
+			状态：<select name="status" id="status">
+				<option value="-1" <if condition="$status eq -1">selected</if>>所有</option>
+				<option value="0" <if condition="$status eq 0">selected</if>>未审核</option>
+				<option value="1" <if condition="$status eq 1">selected</if>>审核不通过</option>
+				<option value="2" <if condition="$status eq 2">selected</if>>审核通过</option>
+				
+			</select>
+			点评ID： 
+			<input type="text" name="id" style="width: 100px;" value="{$id}" >
+			 
+			店铺ID： 
+			<input type="text" name="sid" style="width: 100px;" value="{$sid}" >
+			店铺名： 
+			<input type="text" name="sname" style="width: 200px;" value="{$sname}">
+			<input type="submit" class="btn btn-primary" value="搜索" />
+			<a class="btn btn-danger" href="{:U('index')}">清空</a>
+		</form> 
+	 
 			<table class="table table-hover table-bordered table-list">
 				<thead>
-					<tr>
-						<th width="15"><label><input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x"></label></th>
+					<tr> 
 						<th width="50">ID</th>
-						<th width="100">{:L('NAME')}</th>
-						<th width="150">{:L('EMAIL')}</th>
-						<th>{:L('CONTENT')}</th>
-						<th width="120">{:L('TIME')}</th>
-						<th width="50">{:L('STATUS')}</th>
-						<th width="80">{:L('ACTIONS')}</th>
+						<th>店铺名称</th>
+						 
+						<th>点评人</th>
+						 <th>分值</th>
+						<th>内容</th>
+						<th>点评时间</th> 
+						<th>状态</th> 
+						 
+						<th>操作</th>
 					</tr>
 				</thead>
-				<php>$status=array("1"=>L('AUDITED'),"0"=>L('NOT_AUDITED'));</php>
-				<foreach name="comments" item="vo">
-				<tr>
-					<td><input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]" value="{$vo.id}"></td>
-					<td>{$vo.id}</td>
-					<td>{$vo.full_name}</td>
-					<td>{$vo.email}</td>
-					<td>{$vo.content}</td>
-					<td>{$vo.createtime}</td>
-					<td>{$status[$vo['status']]}</td>
-					<td>
-						<a target="_blank" href="__ROOT__/{$vo.url}">查看原文</a> 
-						<a href="{:U('Commentadmin/delete',array('id'=>$vo['id']))}" class="js-ajax-delete">{:L('DELETE')}</a>
-					</td>
-				</tr>
-				</foreach>
-				<tfoot>
-					<tr>
-						<th width="15"><label><input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x"></label></th>
-						<th width="50">ID</th>
-						<th width="100">{:L('NAME')}</th>
-						<th width="150">{:L('EMAIL')}</th>
-						<th>{:L('CONTENT')}</th>
-						<th width="120">{:L('TIME')}</th>
-						<th width="50">{:L('STATUS')}</th>
-						<th width="80">{:L('ACTIONS')}</th>
+				<tbody>
+				<foreach name="list" item="vo">
+					<tr> 
+	                    <td>{$vo.id}</td>      
+	                    <td> {$vo.sname}</td>
+	                   
+	                    <td> {$vo.uname}</td>
+	                    <td> <eq name="vo.score" value="1">加分<else/>减分</eq></td>
+	                    <td> {$vo.content|msubstr=0,20}</td> 
+	                    <td> {$vo.create_time|date="Y-m-d H:i:s",###}</td>
+	                    <td>
+						<switch name="vo.status">
+						<case value="0">未审核</case>
+						<case value="1">审核不通过</case>
+						<case value="2">审核通过</case>
+						
+						</switch>
+	                    <td>
+	                    <a  href="{:U('applyinfo',array('id'=>$vo['id']))}"  >详情</a> 
+	                    &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+	                <a class="js-ajax-dialog-btn" href="{:U('review',array('id'=>$vo['id'],'status'=>$vo['status'],'review'=>3,'url'=>'index'))}" data-msg="确认删除吗？">删除</a> 
+	                
+	                    </td>
+						
 					</tr>
-				</tfoot>
+				</foreach>
+				</tbody>
+				 
 			</table>
 			<div class="table-actions">
-				<button class="btn btn-primary btn-small js-ajax-submit" type="submit" data-action="{:U('Commentadmin/check',array('check'=>1))}" data-subcheck="true">{:L('AUDIT')}</button>
-				<button class="btn btn-primary btn-small js-ajax-submit" type="submit" data-action="{:U('Commentadmin/check',array('uncheck'=>1))}" data-subcheck="true">{:L('CANCEL_AUDIT')}</button>
-				<button class="btn btn-danger btn-small js-ajax-submit" type="submit" data-action="{:U('Commentadmin/delete')}" data-subcheck="true" data-msg="{:L('DELETE_CONFIRM_MESSAGE')}">{:L('DELETE')}</button>
+				 
 			</div>
 			<div class="pagination">{$page}</div>
-		</form>
+		
 	</div>
 	<script src="__PUBLIC__/js/common.js"></script>
+	 
 </body>
 </html>
