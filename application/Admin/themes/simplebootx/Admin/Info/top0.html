@@ -1,0 +1,83 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			 <li class=""><a href="{:U('index')}">{$flag}列表</a></li>
+			<li class=""><a href="{:U('top')}">{$flag}置顶列表</a></li>
+			<li class="active"><a href="{:U('top0')}">{$flag}推荐列表</a></li>
+			 
+		</ul>
+        <form class="well form-search" method="post" action="{:U('top0')}">
+			分类：
+			<select name="cid1" >
+				<option value="0" <if condition="$cid1 eq 0">selected</if>>所有</option>
+				<foreach name="cate1" item="vo">
+				<option value="{$key}" <if condition="$cid1 eq $key">selected</if>>{$vo}</option>
+				</foreach>
+			</select>
+			 地区：
+			 <admintpl file="city" />
+			{$flag}ID： 
+			<input type="text" name="pid" style="width: 100px;" value="{$pid}" >
+			{$flag}标题： 
+			<input type="text" name="pname" style="width: 200px;" value="{$pname}">
+			用户ID： 
+			<input type="text" name="uid" style="width: 100px;" value="{$uid}" >
+			用户名： 
+			<input type="text" name="uname" style="width: 200px;" value="{$uname}">
+			<input type="submit" class="btn btn-primary" value="搜索" />
+			<a class="btn btn-danger" href="{:U('top0')}">清空</a>
+		</form> 
+		<table class="table table-hover table-bordered">
+			<thead>
+				<tr> 
+					<th>Id</th>
+					<th>用户ID-名称</th>
+					<th>{$flag}ID-标题</th>
+					<th>{$flag}图片</th>
+                  
+                     <th>推荐费用(包含赠币)</th>
+                    <th>推荐时间</th>
+                    
+                    <th>操作</th> 
+				</tr>
+			</thead>
+			<tbody>
+				<foreach name="list" item="vo">
+				<tr>
+					 
+					<td>{$vo.id}</td>
+                    <td>
+                     
+						 {$vo.uid}-{$vo.sname}
+						 
+					</td> 
+                    <td>
+                    	<a href="{:U('portal/user/info_detail',['uid'=>$vo['uid'],'id'=>$vo['pid']])}" target="_blank"> 
+	                    {$vo.pid}-{$vo.pname}
+	                     </a>
+                    </td>  
+                    <td><img src="__ROOT__/data/upload/{$vo.pic}" alt="暂无图片" style="width:200px;height:50px"/></td>      
+                   
+                    <td>￥{$vo.price}({$vo.coin})</td>
+                     <td> {$vo.create_time|date="Y-m-d H:i:s",###}</td>
+                    
+                   
+                    <td>
+                   
+	                <a class="js-ajax-dialog-btn" href="{:U('top0_del',array('id'=>$vo['id'],'url'=>'top0'))}" data-msg="确认删除吗？">删除</a> 
+	                </td>
+					
+				</tr>
+				</foreach>
+			</tbody>
+		</table>
+		<div class="pagination">{$page}</div>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script>
+	
+	</script>
+</body>
+</html>

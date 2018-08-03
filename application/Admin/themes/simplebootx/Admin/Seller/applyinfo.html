@@ -1,0 +1,222 @@
+<admintpl file="header" />
+<link href="__TMPL__Public/assets/css/zzinfo.css" rel="stylesheet" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li><a href="{:U('applying')}">店铺领用申请列表</a></li>
+			 
+			<li class="active"><a>申请详情</a></li>
+		</ul>
+		<!-- js-ajax-form -->
+		<form class="form-horizontal js-ajax-form" method="post" action="{:U('review')}" >
+			<fieldset>
+				<div class="control-group fleft">
+					<span class="control-label" >Id：</span>
+					<div class="controls" >
+						<input type="text" value="{$info.id}"  readonly />
+					</div>
+				</div>
+				 
+				<div class="control-group fleft">
+					<span class="control-label">店铺名称：</span>
+					<div class="controls">
+						<input type="text" value="{$info.sname}" readonly/> 
+					</div>
+				</div>
+				 <div class="control-group fleft">
+					<span class="control-label">店铺状态：</span>
+					<div class="controls">
+						<input type="text" value="{$seller_status[$info['sstatus']]}" class="red" readonly/> 
+					</div>
+				</div>
+				
+				<div class="control-group fleft">
+					<span class="control-label" >创评人：</span>
+					<div class="controls">
+						<input type="text"  value="{$info.authorname}" readonly/>
+					</div>
+				</div>
+				<div class="control-group fleft">
+					<span class="control-label" >创评时间：</span>
+					<div class="controls">
+						<input type="text" value="{$info.stime|date='Y-m-d H:i',###}" readonly/>
+					</div>
+				</div>
+				<div class="control-group fleft">
+					<span class="control-label" >店铺类别：</span>
+					<div class="controls">
+						  <input type="text" value="{$info.cname}" readonly/> 
+					</div>
+				</div>
+				<div class="control-group fleft">
+					<span class="control-label" >店铺城市：</span>
+					<div class="controls">
+						  <input type="text" value="{$info.citys}" readonly/> 
+					</div>
+				</div>
+				<div class="control-group fleft">
+					<span class="control-label" >地铺地址：</span>
+					<div class="controls">
+						  <input type="text" value="{$info.address}" readonly/> 
+					</div>
+				</div>
+				<div class="control-group fleft">
+					<span class="control-label" >领用人：</span>
+					<div class="controls">
+						<input type="text"  value="{$info.uname}" readonly/>
+					</div>
+				</div>
+				<div class="control-group fleft">
+					<span class="control-label" >领用时间：</span>
+					<div class="controls">
+						<input type="text" value="{$info.create_time|date='Y-m-d H:i:s',###}" readonly/>
+					</div>
+				</div>
+				
+				<div class="control-group fleft">
+					<span class="control-label">法人代表：</span>
+					<div class="controls">
+						<input type="text" value="{$info.corporation}" readonly/>
+					</div>
+				</div>
+				 
+				<div class="control-group fleft">
+					<span class="control-label">经营范围：</span>
+					<div class="controls">
+						<input type="text" value="{$info.scope}" readonly/>
+					</div>
+				</div>
+				<div class="control-group fleft">
+					<span class="control-label">联系电话：</span>
+					<div class="controls">
+						<input type="text" value="{$info.tel}" readonly/>
+					</div>
+				</div>
+				 <div class="control-group fleft">
+					<span class="control-label">联系电话：</span>
+					<div class="controls">
+						<input type="text" value="{$info.mobile}" readonly/>
+					</div>
+				</div>
+				<div class="control-group fleft">
+					<span class="control-label">地址：</span>
+					<div class="controls">
+						<input type="text" value="{$info.address}" readonly/>
+					</div>
+				</div><div class="control-group fleft">
+					<span class="control-label">经营范围：</span>
+					<div class="controls">
+						<input type="text" value="{$info.scope}" readonly/>
+					</div>
+				</div>
+				<div class="control-group fleft">
+					<span class="control-label">经营时间：</span>
+					<div class="controls">
+						<input type="text" value="{$info.bussiness_time}" readonly/>
+					</div>
+				</div>
+				<div class="control-group fleft">
+					<span class="control-label">店铺网址：</span>
+					<div class="controls">
+						<input type="text" value="{$info.link}" readonly/>
+					</div>
+				</div>
+				<div class="control-group fleft">
+					<span class="control-label">店铺关键字：</span>
+					<div class="controls">
+						<input type="text" value="{$info.keywords}" readonly/>
+					</div>
+				</div>
+				<div class="control-group fleft">
+					<span class="control-label">店铺押金：</span>
+					<div class="controls">
+						<input type="text" value="{$info.deposit}" readonly/>
+					</div>
+				</div>
+				<div style="clear:both"></div>
+				<div class="control-group">
+					<span class="control-label" >店铺图片：</span>
+					<div class="controls">
+						<img src="__ROOT__/data/upload/{$info.pic}" alt="暂无图片"  />
+						 
+					</div>
+				</div>
+				<div class="control-group">
+					<span class="control-label" >营业执照：</span>
+					<div class="controls"> 
+						<img src="__ROOT__/data/upload/{$info.cards}" alt="暂无图片" /> 
+					</div>
+				</div>
+				<div class="control-group">
+					<span class="control-label" >店铺二维码：</span>
+					<div class="controls">
+						<img src="__ROOT__/data/upload/{$info.qrcode}" alt="暂无图片" />
+						 
+					</div>
+				</div>
+			
+				 
+				<div class="control-group fleft">
+					<span class="control-label" >审核状态：</span>
+					<div class="controls">
+						<input class="red" type="text" value="<switch name="info.status">
+					<case value="0">未审核</case>
+					<case value="1">审核不通过</case>
+					<case value="2">审核通过</case> 
+					</switch>" readonly/>
+					</div>
+				</div>
+			<div style="clear:both"></div>
+				<div class="form-actions">
+					<input type="hidden" name="id" value="{$info.id}">
+					<input type="hidden" name="status" value="{$info.status}">
+					<input type="hidden" id="review" name="review" value="0">
+				<eq name="info.status" value="0"> 
+					<button type="submit" class="btn btn-primary js-ajax-submit" id="sub1">
+						不通过
+					</button>
+					<button type="submit" class="btn btn-primary js-ajax-submit" id="sub2">
+						审核通过
+					</button>
+				</eq>
+					<button type="submit" class="btn btn-primary js-ajax-submit" id="sub3">
+						删除
+					</button>
+					<a class="btn" href="javascript:history.back(-1);">返回</a>
+					
+				</div>	
+				
+				
+		
+			</fieldset>
+		</form>
+	</div>
+<script src="__PUBLIC__/js/common.js"></script> 
+<script>
+var status=$('#status').val();
+$('#sub1').click(function(){
+	if(!confirm('确认不通过吗？')){
+		return false;
+	}
+	$('#review').val('1');
+	return true;
+});
+$('#sub2').click(function(){
+	if(!confirm('确认通过吗？')){
+		return false;
+	}
+	$('#review').val('2');
+	return true;
+});
+$('#sub3').click(function(){
+	if(!confirm('确认删除吗？')){
+		return false;
+	}
+	$('form').attr('action',"{:U('apply_del')}");
+	return true;
+});
+ 
+</script>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<admintpl file="header" />
+<link href="__TMPL__Public/assets/css/zzinfo.css" rel="stylesheet" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li><a href="{:U('reply')}">回复列表</a></li>
+			 
+			<li class="active"><a>回复详情</a></li>
+		</ul>
+		<!--  -->
+		<form class="form-horizontal js-ajax-form" method="post" action="{:U('replydel')}" >
+			<fieldset>
+				 
+				<div class="control-group fleft">
+					<span class="control-label">店铺名称：</span>
+					<div class="controls">
+						<input type="text" value="{$info.sname}"  readonly />
+						<a href="{:U('Portal/Seller/detail',array('id'=>$info['sid']))}" target="_blank">查看店铺</a>
+					</div>
+				</div>
+				 
+				
+				<div class="control-group fleft">
+					<span class="control-label" >点评时间：</span>
+					<div class="controls">
+						<input type="text" value="{$info.ctime|date='Y-m-d H:i:s',###}" readonly/>
+					</div>
+				</div>
+				<div class="control-group fleft">
+					<span class="control-label" >点评分数：</span>
+					<div class="controls">
+						<input type="text" value="{$info.cscore}" readonly/>
+					</div>
+				</div>
+				
+				<div style="clear:both"></div>
+				<div class="control-group">
+					<span class="control-label" >点评内容：</span>
+					<div class="controls">
+						  <textarea name="desc" readonly>{$info.ccontent}</textarea>
+					</div>
+				</div>
+				<div class="control-group fleft">
+					<span class="control-label" >回复人：</span>
+					<div class="controls">
+						<input type="text"  value="{$info.uname|default='游客'}" readonly/>
+					</div>
+				</div>
+				<div class="control-group fleft">
+					<span class="control-label" >回复时间：</span>
+					<div class="controls">
+						<input type="text" value="{$info.create_time|date='Y-m-d H:i:s',###}" readonly/>
+					</div>
+				</div>
+				
+				<div style="clear:both"></div>
+				<div class="control-group">
+					<span class="control-label" >回复内容：</span>
+					<div class="controls">
+						  <textarea name="desc" readonly>{$info.content}</textarea>
+					</div>
+				</div>
+				
+			 
+				<div class="form-actions">
+					<input type="hidden" name="id" value="{$info.id}">
+					 
+					<button type="submit" class="btn btn-primary js-ajax-submit" id="sub">
+						删除
+					</button>
+					 
+					<a class="btn" href="javascript:history.back(-1);">返回</a>
+					
+				 
+				
+				
+		
+			</fieldset>
+		</form>
+	</div>
+<script src="__PUBLIC__/js/common.js"></script> 
+ 
+</body>
+</html>

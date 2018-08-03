@@ -1,0 +1,28 @@
+<ul class="shop-comment">
+	<foreach name="list_comment" item="vo">
+		<li>
+			<a href="{:U('Portal/List/comment_list',array('uid'=>$vo['uid']))}" class="lf">
+				<img src="__UPLOAD__/{$vo['avatar']|default=$company['avatar']['content']}" alt="{$vo.uname}" title="{$vo.uname}">
+			</a>
+			<div class="lf comment-cont">
+				<input type="hidden" name="zzcid" class="zzcid" value="{$vo.id}"/>
+				<span class="comment-title">{$vo.sname}</span>
+				<span class="comment-type"><eq name="vo.score" value="1">加分<else/>减分</eq></span>
+				<p class="comment-about">{$vo.content}<span class="comment-date">&nbsp;&nbsp;【发表于{$vo.create_time|date="Y-m-d",###}】</span></p>
+				<div class="comment-reply zzreply0{$vo.id}">
+					<a href="javascript:void(0);" title="回复" class="comment-rbtn1">回复</a>
+					
+					<a href="javascript:void(0);" class="comment-rbtn2"><notempty name='vo.reply'>展开回复</notempty></a>
+					
+				</div>
+				<div class="comment-cont2 zzreply{$vo.id}">
+				<foreach name='vo.reply' item='v'>
+					<span class="comment-title">{$v['uname']|default='游客'.$v['ip']}&nbsp;&nbsp;回复</span>
+					<p class="comment-about">{$v.content}<span class="comment-date">&nbsp;&nbsp;【发表于{$v.create_time|date="Y-m-d",###}】</span></p>
+				</foreach> 
+				</div>
+			</div>
+		</li>
+	</foreach>
+		 
+</ul>

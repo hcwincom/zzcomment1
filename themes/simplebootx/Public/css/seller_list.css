@@ -31,12 +31,11 @@
 	word-break: normal; 
 	letter-spacing: 1px;
 	display: inline-block;
-	width: 85%;
 	line-height: 24px;
 }
 .job-infor>ul>li>i{
 	display: inline-block;
-	width: 12%;
+	width: 9%;
 	text-align: right;
 	font-size: 16px;
 	line-height: 24px;
@@ -56,11 +55,12 @@
 }
 .job-profile p span{
 	display: inline-block;
-	width: 12%;
+	width: 9%;
 	text-align: right;
 	font-size: 16px;
 	line-height: 28px;
 	vertical-align: top;
+	letter-spacing: 2px;
 }
 .job-profile p strong{
 	display: inline-block;
@@ -149,9 +149,25 @@
 	.shop-form .catecory{
 		margin-left: 1%;
 	}
-	
+	.job-infor>ul>li>i{
+		width: 11%;
+		text-align: right;
+	}
+	.job-profile p>span{
+		width: 11%;
+		text-align: right;
+	}
 }
-
+@media screen and (max-width: 1100px){
+	.job-infor>ul>li>i{
+		width: 13%;
+		text-align: right;
+	}
+	.job-profile p>span{
+		width: 13%;
+		text-align: right;
+	}
+}
 
 @media screen and (max-width: 1000px){
 	.job_detail{
@@ -163,7 +179,14 @@
 	.catecory>select{
 		width: 150px;
 	}
-
+	.job-infor>ul>li>i{
+		width: 16%;
+		text-align: right;
+	}
+	.job-profile p>span{
+		width: 16%;
+		text-align: right;
+	}
 	
 }
 
@@ -192,28 +215,32 @@
 		font-size: 14px;
 		width: 150px;
 	}
-	
+	.job-infor>ul>li>i{
+		width: 15%;
+	}
+	.job-profile p>span{
+		width: 15%;
+	}
 	
 }
-
+@media screen and (max-width: 650px){
+	.job-infor>ul>li>i{
+		width: 18%;
+	}
+	.job-profile p>span{
+		width: 18%;
+	}
+}
 
 @media screen and (max-width: 600px){
 	.job_detail{
 		width: 100%;
 	}
 	.job-infor>ul>li>i{
-		width: 31%;
-		text-align: left;
-	}
-	.job-infor>ul>li>span{
-		width: 68%;
+		width: 18%;
 	}
 	.job-profile p>span{
-		width: 30%;
-		text-align: left;
-	}
-	.job-profile p>strong{
-		width: 68%;
+		width: 17%;
 	}
 	.goods-infor{width: 90%;}
 	.shop-form select{
@@ -223,7 +250,14 @@
 		width: 150px;
 	}
 }
-
+@media screen and (max-width: 550px){
+	.job-infor>ul>li>i{
+		width: 20%;
+	}
+	.job-profile p>span{
+		width: 19%;
+	}
+}
 @media screen and (max-width: 500px){
 	.shop-form select{
 		width: 120px;
@@ -231,15 +265,36 @@
 	.catecory>select{
 		width: 100px;
 	}
+	.job-infor>ul>li>i{
+		width: 25%;
+	}
+	.job-profile p>span{
+		width: 24%;
+	}
+
 }
 @media screen and (max-width: 400px){
 	.shop-form select{
 		width: 100px;
 	}
-
+	.job-infor>ul>li>i{
+		width: 27%;
+	}
+	
+	.job-profile p>span{
+		width: 26%;
+	}
 
 }
-
+@media screen and (max-width: 360px){
+		.job-infor>ul>li>i{
+			width: 31%;
+		}
+		
+		.job-profile p>span{
+			width: 30%;
+		}
+}
 
 
 

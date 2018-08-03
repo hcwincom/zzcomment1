@@ -4,7 +4,7 @@
 <body>
 	<tc_include file="Public:header" />
 	<!-- top end -->
-
+	<div id="per_line"></div>
 	<!-- main -->
 		<div class="shop-wrapper">
 			
@@ -25,7 +25,7 @@
 				</div>
 				<div class="clear"></div>
 				<div class="job-profile">
-					<p><span>工作简介：</span> <strong>{$detail.dsc}</strong>
+					<p><span>工作简介：</span> {$detail.dsc}
 					</p>
 				</div>	
 				<div class="cont" id="edit_cont">{$detail.content}</div>
@@ -45,4 +45,13 @@
 			"max-height": "100%"
 		});
 	});
+
+
+	var imgWidth = $("#edit_cont p img").width();
+	console.log(imgWidth);
+	var pWidth = $("#edit_cont p").width();
+	console.log(pWidth);
+	pWidth = imgWidth;
+	console.log(pWidth);
+	$("#edit_cont p").css("width","pWidth");
 </script>
