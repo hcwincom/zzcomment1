@@ -50,6 +50,27 @@
 </div>
 
 <!--评级附件下载 end -->
+
+<!-- comment reply -->
+<div class="pop-layer" id="reply_layer">
+	<div class="pop-container">
+		<a href="javascript:void(0);" class="close" id="rclose">
+			<img src="__TMPL__Public/img/close.png" alt="关闭" title="关闭">
+		</a>
+		<form class="reply-form">
+			<input type="hidden" name="zzcid" class="zzcid" value="0" />
+			<p class="message" id="rmessage">请输入回复信息！</p>
+			<div>
+				<label for="user_reply" class="must">留言内容</label>
+				<textarea placeholder="请输入您的回复信息，字数在2-150字！" name="userreply" id="user_reply" maxlength="100"></textarea>
+			</div>
+			<div>
+				<input type="submit" value="立即回复" class="signup" id="rsignup">
+			</div>
+		</form>
+	</div>
+</div>
+<!-- comment reply end -->
 <script>
 var push_url="{:U('user/comment/push')}";
 
@@ -93,11 +114,16 @@ $(document).on('click','.praise_comment',function(){
 
 	//  下载附件弹出提示
 	$(".downLoad").click(function () {
+		var id=$(this).parents('li').find('.zzcid').val();
 		$("#attachment").show();
+		$('#attachmentId').val(id);
 	});
 	$(".attachment_affirm").click(function () {
-		window.location.href = "{:U('user/comment/download',['id'=>$vo['id']])}";
-			$("#attachment").hide();
+	 
+		var id = $('#attachmentId').val();
+		$("#attachment").hide();
+		window.location.href = "{:U('user/comment/download','',false,false)}"+'/id/'+id;
+			
 			
 		});
 
@@ -105,10 +131,28 @@ $(document).on('click','.praise_comment',function(){
 			$("#attachment").hide();
 	});
 
+	 $('.reply-form').submit(function () {
+		var cid = $(this).find('.zzcid').val();
+		var content = $(this).find('#user_reply').val();
+		$.post("{:U('Portal/Index/reply')}", { 'cid': cid, 'content': content }, function (data) {
+			//
+			if (data.errno == 1) {
 
+				$('#user_reply').val('');
+				$("#reply_layer").fadeOut();
+				//还要在网页添加回复
 
+				var span = '<span class="comment-title">' + data['uname'] + '&nbsp;&nbsp;回复</span>';
+				var p = '<p class="comment-about">' + data['content'] + '<span class="comment-date">&nbsp;&nbsp;【发表于' + data['time'] + '】</span></p>';
+				var cid = data['cid'];
+				$('.zzreply' + cid).prepend(span + p);
+				$('.zzreply0' + cid).find('.comment-rbtn2').html('展开回复');
+			}else{
+				alert(data.error);
+			}
+		});
 
-
-
+		return false;
+	}); 
 
 </script>

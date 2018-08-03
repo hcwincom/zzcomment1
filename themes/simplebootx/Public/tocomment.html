@@ -37,25 +37,5 @@
 	</div>
 </div>
 <script  type="text/javascript">
-$('.reply-form').submit(function(){
-	 var cid=$(this).find('.zzcid').val();
-	 var content=$(this).find('#user_reply').val();
-	 $.post("{:U('Portal/Index/reply')}",{'cid':cid,'content':content},function(data){
-		 alert(data.error);
-		 if(data.errno==1){
-			 
-			 $('#user_reply').val('');
-			 $("#reply_layer").fadeOut();
-			//还要在网页添加回复
-			 
-			var span='<span class="comment-title">'+data['uname']+'&nbsp;&nbsp;回复</span>';
-			var p='<p class="comment-about">'+data['content']+'<span class="comment-date">&nbsp;&nbsp;【发表于'+data['time']+'】</span></p>';
-			var cid=data['cid'];
-			$('.zzreply'+cid).prepend(span+p);
-			$('.zzreply0'+cid).find('.comment-rbtn2').html('展开回复');
-		 }
-	 });
-	 
-	 return false;
-});
+ 
 </script>

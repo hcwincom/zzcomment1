@@ -110,24 +110,7 @@
 		</div>
 	</div>
 <!-- add shop end -->
-<!-- comment reply -->
-	<div class="pop-layer" id="reply_layer">
-		<div class="pop-container">
-			<a href="javascript:void(0);" class="close" id="rclose"><img src="__TMPL__Public/img/close.png" alt="关闭" title="关闭"></a>
-			<form class="reply-form">
-				<input type="hidden" name="zzcid" class="zzcid" value="0"/>
-				<p class="message" id="rmessage">请输入回复信息！</p>
-				<div>
-					<label for="user_reply" class="must">留言内容</label>
-					<textarea placeholder="请输入您的回复信息，字数在2-150字！" name="userreply" id="user_reply" maxlength="100"></textarea>
-				</div>
-				<div>
-					<input type="submit" value="立即回复" class="signup" id="rsignup">
-				</div>
-			</form>
-		</div>
-	</div>
-<!-- comment reply end -->
+
 <script  type="text/javascript">
 var userid=parseInt("{$Think.session.user.id|default=0}");
  
@@ -174,32 +157,6 @@ $('.shop-add-form').submit(function(){
 	 }
 	return false;
 });
-
-// var heightTop = $(".top-wrapperNav").offset().top;
-// $(window).scroll(function(){
-// 	var scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
+ 
 	
-// 	if(scrollTop > heightTop){
-// 		$(".top-wrapperNav").addClass("topFixed");
-		
-// 	}else{
-// 		$(".top-wrapperNav").removeClass("topFixed");
-		
-// 	}
-// });
-//  $(window).bind("touchmove", function () {
-// 		var scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
-
-// 	 if (scrollTop > heightTop) {
-// 		 $(".top-wrapperNav").addClass("topFixed");
-
-// 	 } else {
-// 		 $(".top-wrapperNav").removeClass("topFixed");
-
-// 	 }
-// 	});
-
-	
-
-
 </script>
