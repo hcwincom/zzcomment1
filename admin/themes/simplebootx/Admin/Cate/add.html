@@ -18,7 +18,7 @@
 								<label class="control-label">上级父类</label>
 								<div class="controls">
 									<select name="parent">
-										<option value="0">作为店铺一级分类</option>
+										 
 									<foreach name="list" item="vo">
 										<option value="{$vo.id}" <if condition="$vo['id'] eq $fid">selected</if>>店铺-{$vo.name}</option>
 									</foreach>
