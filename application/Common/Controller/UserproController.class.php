@@ -141,6 +141,8 @@ class UserproController extends MemberbaseController{
         $m->startTrans();
         $desc=$flag.$info['id'].'('.$info['name'].')推荐';
         //扣款
+        $price_coin=0;
+        $price_money=0;
         if($price>0){
           
            
@@ -223,7 +225,7 @@ class UserproController extends MemberbaseController{
     }
     //添加置顶ajax和do
     public function add_top_do(){
-        
+       
         $id=I('id',0);
         $type=$this->type;
         $flag=$this->flag;
@@ -259,7 +261,7 @@ class UserproController extends MemberbaseController{
             $this->error('置顶价格变化，请刷新页面');
             exit;
         }
-        
+       
         //获取时间段内已置顶信息,置顶位满不能置顶
         $m_top->startTrans();
         $num=$conf['top_count'];
@@ -270,8 +272,11 @@ class UserproController extends MemberbaseController{
             $this->error('置顶位已满,请重新选择时间');
             exit;
         }
+       
         $desc=$flag.$info['id'].'('.$info['name'].')置顶';
         //扣款
+        $price_coin=0;
+        $price_money=0;
         if($price>0){ 
             
             /* 处理赠币,优先扣除赠币，不足扣除余额，再不足则扣款失败 */
@@ -303,7 +308,7 @@ class UserproController extends MemberbaseController{
                 }
             }
         }
-          
+      
         //0申请，1不同意，2同意，3，生效中，4过期
         $time=time();
         $data_top=array(
@@ -327,8 +332,8 @@ class UserproController extends MemberbaseController{
                 break;
         }
         $msg=($data_top['status']==0)?'，等待审核':'';
-        
-        $row=$m_top->add($data_top);
+      
+        $row=$m_top->add($data_top);  
         if($row>=1){
             
             $m_top->commit();
