@@ -24,13 +24,13 @@
 							<em><strong>NO.{$key} </strong>{$vo.name}</em>
 							
 							<p>
-							<notempty name="vo.id">
-							<!-- 	<span class="lf shop-level level-color">推荐位{$key}<i></i></span> -->
-								 
+							<empty name="vo.id">
+								<span class="lf shop-level level-color">&nbsp;<i></i></span> 
+							<else/>	 
 							 
 								<span class="lf shop-level level-color">等级：<i>{$vo.grade}</i></span>
 								<span class="rt shop-clicknumber">浏览量：{$vo.browse}</span>
-							</notempty>
+							</empty>
 							</p>
 							 
 						</a>
