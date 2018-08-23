@@ -465,7 +465,7 @@ label.upload{width:215px;height:36px;position:relative;overflow: hidden;}
 .shop-colcontainer{padding:0 0 55px;}
 .shop-colcontainer .page{margin:50px 0 0px;}
 .shop-erwei:before{content:" ";display:block;width:157px;height:125px;position:absolute;z-index:12;left:0px;top:-100px;background: url(../img/shop-vico.png) no-repeat;background-size:contain;}
-.shop-erwei{position: fixed;top:255px;padding:34px 23px 5px;background:#fff;margin-left:1200px;z-index:11;-webkit-box-shadow: 0 0 10px 5px #dcdcdc;-moz-box-shadow: 0 0 10px 5px #dcdcdc;box-shadow: 0 0 10px 5px #dcdcdc;}
+.shop-erwei{position: fixed;top:255px;padding:34px 23px 5px;background:#fff;margin-left:1150px;z-index:11;-webkit-box-shadow: 0 0 10px 5px #dcdcdc;-moz-box-shadow: 0 0 10px 5px #dcdcdc;box-shadow: 0 0 10px 5px #dcdcdc;}
 .shop-erwei img{width:114px;height:114px;}
 .close2{text-align:center;line-height:20px;}
 .close2>a:hover{color:#d00000;}
