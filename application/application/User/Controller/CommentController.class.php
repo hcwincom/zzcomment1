@@ -38,6 +38,33 @@ class CommentController extends MemberbaseController {
       
        $this->display();
     }
+    // 店铺评级
+    public function seller() {
+        $sid=I('sid',0,'intval');
+        if(empty($sid)){
+            $this->error('操作错误',U('user/index/index'));
+        }
+        $where_join=['p.sid'=>$sid,'p.status'=>2];
+        
+        $where=['status'=>2];
+       
+        $m=$this->m;
+        $total=$m->where($where)->count();
+        $page = $this->page($total, C('PAGE'));
+        
+        $list=$m->field('p.*,u.user_login as uname')
+        ->alias('p')
+        ->join('cm_users as u on u.id=p.uid')
+        ->where($where_join)
+        ->order('create_time desc')
+        ->limit($page->firstRow,$page->listRows)
+        ->select();
+        
+        $this->assign('page',$page->show('Admin'));
+        $this->assign('list',$list)->assign('sid',$sid);
+        
+        $this->display();
+    }
     public function add(){
         set_time_limit(C('TIMEOUT'));
         $user=$this->user;
@@ -220,10 +247,17 @@ class CommentController extends MemberbaseController {
         $id=I('id',0,'intval');
         $user=$this->user; 
         $m=$this->m; 
-        $info=$m->where('id='.$id)->find();
-        if(empty($info['file']) || $info['uid']!=$user['id']){
+        $info=$m
+        ->field('c.*,s.uid as suid')
+        ->alias('c')
+        ->join('cm_seller as s on s.id=c.sid')
+        ->where('c.id='.$id)
+        ->find();
+        
+        if(empty($info['file']) || ($info['uid']!=$user['id'] && $info['suid']!=$user['id'])){
             $this->error('数据错误');
         }
+        
         $filename=$info['file'];
         
         
@@ -237,4 +271,5 @@ class CommentController extends MemberbaseController {
         readfile($file);
         exit;
     }
+    
 }
