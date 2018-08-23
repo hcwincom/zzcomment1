@@ -225,7 +225,7 @@ class CommentController extends MemberbaseController {
             $this->error('数据错误');
         }
         $filename=$info['file'];
-        
+        //sdg
         
         $file=getcwd().'/data/upload/'.$filename;
         $info=pathinfo($file);

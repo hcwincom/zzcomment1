@@ -21,16 +21,16 @@
 								<img src="__UPLOAD__/{$vo.pic|default=$company['seller_empty']['content']}" alt="商家图片" title="{$vo.name}">
 							</div>
 							<br>
-							<em>{$vo.name}</em>
+							<em><strong>NO.{$key} </strong>{$vo.name}</em>
 							
 							<p>
-							<empty name="vo.id">
-								<span class="lf shop-level level-color">推荐位{$key}<i></i></span>
+							<notempty name="vo.id">
+							<!-- 	<span class="lf shop-level level-color">推荐位{$key}<i></i></span> -->
 								 
-							<else/>
+							 
 								<span class="lf shop-level level-color">等级：<i>{$vo.grade}</i></span>
 								<span class="rt shop-clicknumber">浏览量：{$vo.browse}</span>
-							</empty>
+							</notempty>
 							</p>
 							 
 						</a>
