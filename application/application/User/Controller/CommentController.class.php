@@ -259,7 +259,7 @@ class CommentController extends MemberbaseController {
         }
         
         $filename=$info['file'];
-        
+        //sdg
         
         $file=getcwd().'/data/upload/'.$filename;
         $info=pathinfo($file);
