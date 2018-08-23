@@ -250,10 +250,10 @@ class CommentController extends MemberbaseController {
         $info=$m
         ->field('c.*,s.uid as suid')
         ->alias('c')
-        ->join('cm_seller s','s.id=c.sid')
+        ->join('cm_seller as s on s.id=c.sid')
         ->where('c.id='.$id)
         ->find();
-      
+        
         if(empty($info['file']) || ($info['uid']!=$user['id'] && $info['suid']!=$user['id'])){
             $this->error('数据错误');
         }
