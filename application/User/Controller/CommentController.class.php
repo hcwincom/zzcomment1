@@ -62,9 +62,7 @@ class CommentController extends MemberbaseController {
         
         $this->assign('page',$page->show('Admin'));
         $this->assign('list',$list)->assign('sid',$sid);
-        dump($list);
-        dump($sid);
-        exit();
+        
         $this->display();
     }
     public function add(){
