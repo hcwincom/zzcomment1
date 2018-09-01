@@ -28,7 +28,7 @@ class JobController extends AdminproController {
         $status=I('status',-1);
         $where=array();
         
-        $field='p.id,p.sid,p.pic,p.name,p.dsc,p.create_time,p.start_time,p.end_time,p.status,s.name as sname';
+        $field='p.id,p.sid,p.cid,p.pic,p.name,p.dsc,p.create_time,p.start_time,p.end_time,p.status,s.name as sname';
         $order='p.create_time desc';
         if($id!=''){
             $where['p.id']=array('eq',$id);

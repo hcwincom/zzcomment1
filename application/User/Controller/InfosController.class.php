@@ -40,16 +40,16 @@ class InfosController extends UserproController{
        exit;
     }
      
-    /* 添加 */
-    public function add(){
-        $cate=M('cate')->where('type=3')->getField('id,name');
-        $this->assign('cate',$cate);
-        $picpath='/info/'.($this->userid).'/'.time().'/';
-        session('picpath',$picpath);
-        $this->assign('picpath',$picpath);
-        $this->display();
-       exit;
-    }
+//     /* 添加 */
+//     public function add(){
+//         $cate=M('cate')->where('type=3')->getField('id,name');
+//         $this->assign('cate',$cate);
+//         $picpath='/info/'.($this->userid).'/'.time().'/';
+//         session('picpath',$picpath);
+//         $this->assign('picpath',$picpath);
+//         $this->display();
+//        exit;
+//     }
     /* 编辑 */
     public function edit(){
         $id=I('id',0,'intval');
@@ -61,7 +61,7 @@ class InfosController extends UserproController{
         }
         session('picpath',$info['picpath']);
         $cate=M('cate')->where('type=3')->getField('id,name');
-       
+        $this->assign('cate',$cate);
         $citys=M('city')->field('city2.id as c2,city2.fid as c1')
         ->alias('city3')
         ->join('cm_city as city2 on city2.id=city3.fid')
@@ -69,7 +69,7 @@ class InfosController extends UserproController{
         $citys3=M('city')->where('fid='.$citys['c2'])->getField('id,name');
         $this->assign('add_city3',$citys3);
         $this->assign('city1',$citys['c1'])->assign('city2',$citys['c2'])->assign('city3',$info['city']);
-        $this->assign('cate',$cate);
+      
         $this->assign('info',$info);
         $this->assign('cateid',$info['cid']); 
         $this->display();

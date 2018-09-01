@@ -27,7 +27,7 @@ class GoodsController extends AdminproController {
         $sname=trim(I('sname',''));
         $status=I('status',-1);
         $where=array();
-        $field='p.id,p.sid,p.pic,p.name,p.create_time,p.status,s.name as sname';
+        $field='p.id,p.sid,p.pic,p.cid,p.name,p.create_time,p.status,s.name as sname';
         $order='p.create_time desc';
         if($id!=''){
             $where['p.id']=array('eq',$id);
@@ -72,7 +72,11 @@ class GoodsController extends AdminproController {
             }
             
         } 
-        
+        //分类
+        $tmp=$this->cate(4);
+        if(!empty($tmp)){
+            $where['p.cid']=$tmp;
+        }
         $total=$m
         ->alias('p')
         ->join('cm_seller as s on s.id=p.sid')
@@ -97,8 +101,10 @@ class GoodsController extends AdminproController {
     function info(){
         $id=I('id',0);
         $m=$this->m;
-        $info=$m->alias('p')->field('p.*,s.name as sname')
+        
+        $info=$m->alias('p')->field('p.*,s.name as sname,c.name as cname')
         ->join('cm_seller as s on s.id=p.sid')
+        ->join('cm_cate as c on c.id=p.cid')
         ->where('p.id='.$id)
         ->find();
         $this->assign('info',$info);

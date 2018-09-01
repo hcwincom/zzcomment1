@@ -40,6 +40,7 @@
 				<tr> 
 					<th>Id</th>
 					<th>店铺ID-名称</th>
+					<th>分类</th>
 					<th>{$flag}ID-标题</th>
 					<th>图片</th>
                     
@@ -59,7 +60,7 @@
 						 {$vo.sid}-{$vo.sname}
 						 </a>
 					</td> 
-                    <td>
+					<td> {$cate1[$vo['cid']]}  <td>
                     	<a href="{:U('portal/seller/job_detail',['sid'=>$vo['sid'],'id'=>$vo['id']])}" target="_blank"> 
 	                    {$vo.name}
 	                     </a>

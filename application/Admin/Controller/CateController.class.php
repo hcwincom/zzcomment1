@@ -13,7 +13,7 @@ class CateController extends AdminbaseController {
 	    parent::_initialize();
 	    $this->m = M('Cate');
 	    $this->order='sort desc,first_char asc,id asc';
-	    $this->assign('types',[1=>'店铺分类',2=>'招聘分类',3=>"便民信息"]);
+	    $this->assign('types',[1=>'店铺分类',2=>'招聘分类',3=>"便民信息",4=>'商品分类',5=>'动态分类']);
 	}
     //分类管理首页
     public function index(){
@@ -73,6 +73,14 @@ class CateController extends AdminbaseController {
                 break;
             case -3:
                 $type=3;
+                $fid=0;
+                break;
+            case -4:
+                $type=4;
+                $fid=0;
+                break;
+            case -5:
+                $type=5;
                 $fid=0;
                 break;
             default:

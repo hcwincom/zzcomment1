@@ -15,6 +15,12 @@
 				</foreach>
 				 
 			</select>
+			分类：<select name="cid1" >
+				<option value="0" <if condition="$cid1 eq 0">selected</if>>所有</option>
+				<foreach name="cate1" item="vo">
+				<option value="{$key}" <if condition="$cid1 eq $key">selected</if>>{$vo}</option>
+				</foreach>
+				</select>
 			地区：
 			 <admintpl file="city" />
 			{$flag}ID： 
@@ -33,6 +39,7 @@
 				<tr> 
 					<th>Id</th>
 					<th>店铺ID-名称</th>
+					<th>分类</th>
 					<th>{$flag}ID-标题</th>
 					<th>图片</th>
                     
@@ -51,6 +58,7 @@
 						 {$vo.sid}-{$vo.sname}
 						 </a>
 					</td> 
+					 <td> {$cate1[$vo['cid']]} </td> 
                     <td>
                     	<a href="{:U('portal/seller/goods_detail',['sid'=>$vo['sid'],'id'=>$vo['id']])}" target="_blank"> 
 	                    {$vo.name}

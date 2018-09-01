@@ -57,6 +57,9 @@ class NewsController extends UserproController{
         }
         session('picpath',$info['picpath']);
         $this->assign('info',$info); 
+        $cate=M('cate')->where('type=5')->getField('id,name');
+        $this->assign('cate',$cate);
+        $this->assign('cateid',$info['cid']); 
         $this->display();
         exit;
     }
@@ -110,7 +113,7 @@ class NewsController extends UserproController{
         $data=array(
             'sid'=>$this->sid,
             'pic'=>$pic,
-          
+            'cid'=>I('cid',0),
             'create_time'=>$time,
             'start_time'=>$time,
             'end_time'=>$start,
@@ -160,6 +163,7 @@ class NewsController extends UserproController{
             'end_time'=>$start,
             'name'=>I('title',''),
             'dsc'=>I('dsc',''),
+            'cid'=>I('cid',0),
             'content'=>$_POST['content2']
         );
         

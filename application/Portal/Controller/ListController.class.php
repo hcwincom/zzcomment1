@@ -37,7 +37,7 @@ class ListController extends HomebaseController {
         //商家//商家排名10
         $where_seller=array();
         //0未审核，1未认领，2已认领,3已冻结 
-        $where_seller['status']=array('between',[1,2]);
+        $where_seller['status']=array('eq',2);
         //处理城市
         $tmp=$this->city();
         if(!empty($tmp)){
@@ -146,6 +146,10 @@ class ListController extends HomebaseController {
 	        }
 	        
 	    } 
+	    $tmp=$this->cate(5);
+	    if(!empty($tmp)){
+	        $where['cid']=$tmp;
+	    }
 	    $total=$m->where($where)->count();
 	    $page = $this->page($total, C('page_news_list')-$len);
 	    
@@ -193,6 +197,11 @@ class ListController extends HomebaseController {
 	        }
 	        
 	    } 
+	   
+	    $tmp=$this->cate(4);
+	    if(!empty($tmp)){
+	        $where['cid']=$tmp;
+	    }
 	    $total=$m->where($where)->count();
 	    $page = $this->page($total, C('page_goods_list')-$len);
 	    
@@ -318,7 +327,7 @@ class ListController extends HomebaseController {
 	    if(!empty($tmp)){
 	        $where['city']=$tmp;
 	    }
-	    $tmp=$this->cate(3);
+	    $tmp=$this->cate(4);
 	    if(!empty($tmp)){
 	        $where['cid']=$tmp;
 	    }

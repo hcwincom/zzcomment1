@@ -48,7 +48,9 @@ class GoodsController extends UserproController{
         if(empty($info)){
             $this->error('此商品不存在');
         }
-        
+        $cate=M('cate')->where('type=4')->getField('id,name');
+        $this->assign('cate',$cate);
+        $this->assign('cateid',$info['cid']); 
         $this->assign('info',$info); 
       
         session('picpath',$info['picpath']);
@@ -108,6 +110,7 @@ class GoodsController extends UserproController{
             'create_time'=>$time,
             'start_time'=>$time,
             'name'=>I('shopname',''),
+            'cid'=>I('cid',0),
             'price'=>$price,
             'pic0'=>$pic0,
         );
@@ -149,7 +152,8 @@ class GoodsController extends UserproController{
         } 
         $data=array(  
             'name'=>I('shopname',''),
-            'price'=>$price, 
+            'price'=>$price,
+            'cid'=>I('cid',0),
         );
         //是否审核 
         $check=C('option_goods.edit_check');

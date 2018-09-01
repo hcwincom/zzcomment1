@@ -28,7 +28,7 @@ class InfoController extends AdminproController {
         $status=I('status',-1);
         $where=array();
         
-        $field='p.id,p.uid,p.pic,p.name,p.dsc,p.create_time,p.start_time,p.end_time,p.status,u.user_login as uname';
+        $field='p.id,p.uid,p.pic,p.name,p.cid,p.dsc,p.create_time,p.start_time,p.end_time,p.status,u.user_login as uname';
         $order='p.create_time desc';
         if($id!=''){
             $where['p.id']=array('eq',$id);

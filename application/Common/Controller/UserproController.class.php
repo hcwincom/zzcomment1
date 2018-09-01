@@ -22,17 +22,27 @@ class UserproController extends MemberbaseController{
     /* 添加 */
     public function add(){
         $type=$this->type;
-        if($type=='info'){
-            $id=$this->userid;
-            $cate=M('cate')->where('type=3')->getField('id,name');
-            $this->assign('cate',$cate);
-        }else{
-            $id=$this->sid;
-            if($type=='job'){
-                $cate=M('cate')->where('type=2')->getField('id,name');
-                $this->assign('cate',$cate);
-            }
+        
+        $m_cate=M('cate');
+        switch($type){
+            case 'info':
+                $id=$this->userid;
+                $cate=M('cate')->where('type=3')->getField('id,name');
+                break;
+            case 'job':
+                $id=$this->sid;
+                $cate=$m_cate->where('type=2')->getField('id,name');
+                break;
+            case 'goods':
+                $id=$this->sid;
+                $cate=$m_cate->where('type=4')->getField('id,name');
+                break;
+            case 'active':
+                $id=$this->sid;
+                $cate=$m_cate->where('type=5')->getField('id,name');
+                break;
         }
+        $this->assign('cate',$cate);
         $picpath='/'.$type.'/'.$id.'/'.time().'/';
         session('picpath',$picpath);
         $this->assign('picpath',$picpath);
@@ -374,6 +384,5 @@ class UserproController extends MemberbaseController{
         $this->display();
         exit; 
     }
-    
-	
+     
 }
