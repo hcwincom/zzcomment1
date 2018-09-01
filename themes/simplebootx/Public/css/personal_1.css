@@ -74,6 +74,12 @@
 .red{color:#f00;white-space:nowrap}
 .form1 input[type="submit"],.form1 input[type="reset"]{width:105px;height:35px;line-height: 35px;background:#eb0000;color:#fff;text-align: center;margin-right:50px;cursor: pointer;font-size: 16px;}
 .form1{font-size: 16px;}
+.form1 select {
+    width: 122px;
+    height: 43px;
+    border: 1px solid #dcdcdc;
+    padding-left: 10px;
+}
 .per_rnav{width:100%;background:#e5e5e5;}
 .rnav_title{margin-bottom: 10px;}
 .rnav-two{margin-top:10px;position: relative;}

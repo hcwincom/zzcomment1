@@ -107,6 +107,20 @@ function sort() {
     }
     
 }
+function sortform1() {
+    var cval = $(".form1 select.sort").val();
+    console.log(cval);
+    if (cval != 0) {
+        $(".msg8").text("");
+        return true;
+    } else {
+        $(".msg8").text("请选择分类");
+        return false;
+    }
+
+}
+
+
 function sortSelect() {
     var cval = $(".form2 select.add-cate2").val();
     console.log(cval);
@@ -192,7 +206,7 @@ return false;
 }
     };
 function send2(){
-    return (shopname1()&&shopprice1()&&shoppic()&&asd());
+    return (shopname1() && sortform1()&&shopprice1()&&shoppic()&&asd());
 }
     
 function sname1(){

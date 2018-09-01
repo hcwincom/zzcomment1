@@ -97,7 +97,9 @@
         'edittip ', //编辑提示
         'customstyle', //自定义标题
         'autotypeset', //自动排版
-        'drafts' // 从草稿箱加载
+        'drafts', // 从草稿箱加载
+        'map'// 地图
+       
         ]
       ]
     	//,allowDivTransToP:false
