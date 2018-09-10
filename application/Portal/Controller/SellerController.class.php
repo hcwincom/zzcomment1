@@ -205,7 +205,11 @@ class SellerController extends HomebaseController {
     //动态详情
     public function news_detail(){
         
-        $detail=M('Active')->where('id='.I('id',0,'intval'))->find();
+        $detail=M('Active')
+        ->field('active.*,cate.name as cate_name')
+        ->alias('active')
+        ->join('cm_cate as cate on cate.id=active.cid')
+        ->where('active.id='.I('id',0,'intval'))->find();
         if(empty($detail)){
             $this->error('该动态不存在');
         }
@@ -216,7 +220,11 @@ class SellerController extends HomebaseController {
     //详情
     public function goods_detail(){
         
-        $detail=M('Goods')->where('id='.I('id',0,'intval'))->find();
+        $detail=M('Goods')
+        ->field('goods.*,cate.name as cate_name')
+        ->alias('goods')
+        ->join('cm_cate as cate on cate.id=goods.cid')
+        ->where('goods.id='.I('id',0,'intval'))->find();
         if(empty($detail)){
             $this->error('该商品不存在');
         }

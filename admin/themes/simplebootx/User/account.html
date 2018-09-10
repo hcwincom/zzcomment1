@@ -16,15 +16,28 @@
 					</div>
 				</div>
 				 <div class="control-group">
-					<label class="control-label">账户余额￥</label>
+					<label class="control-label">充值余额￥</label>
 					<div class="controls">
 						<input type="text" value="{$info.account}">
 					</div>
 				</div>
 				 <div class="control-group">
-					<label class="control-label">充值金额￥</label>
+					<label class="control-label">网站赠币￥</label>
 					<div class="controls">
-						<input type="number" name="account" required>*只接受整数
+						<input type="text" value="{$info.coin}">
+					</div>
+				</div>
+				 <div class="control-group">
+					<label class="control-label">充值类型</label>
+					<div class="controls">
+						<label class="radio inline" for="active_true"><input type="radio" name="type" value="1"  id="active_true" />充值余额</label>
+						<label class="radio inline" for="active_false"><input type="radio" name="type" value="0" checked id="active_false">网站赠币</label>
+					</div>
+				</div>
+				 <div class="control-group">
+					<label class="control-label">金额￥</label>
+					<div class="controls">
+						<input type="number" name="account" required>*只接受整数,大于0为充值，小于0为扣除余额
 					</div>
 				</div>
 				<div class="control-group">

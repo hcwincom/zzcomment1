@@ -111,6 +111,8 @@ class GoodsController extends UserproController{
             'start_time'=>$time,
             'name'=>I('shopname',''),
             'cid'=>I('cid',0),
+            'dsc'=>I('dsc',''),
+            'content'=>$_POST['content2'],
             'price'=>$price,
             'pic0'=>$pic0,
         );
@@ -154,6 +156,8 @@ class GoodsController extends UserproController{
             'name'=>I('shopname',''),
             'price'=>$price,
             'cid'=>I('cid',0),
+            'dsc'=>I('dsc',''), 
+            'content'=>$_POST['content2']
         );
         //是否审核 
         $check=C('option_goods.edit_check');
