@@ -10,16 +10,16 @@
                    <input type="hidden" name="sid" value="{$sid}"/>
                    
                     <input type="hidden" name="picpath" value="{$picpath}" />
-                   <div class="form1"><span>商品名称:</span><input type="text" name="shopname" placeholder="" onblur="shopname1()"></div>
+                   <div class="form2"><span>商品名称：</span><input type="text" name="shopname" placeholder="" onblur="shopname1()"></div>
                    <p class="ml msg1"></p> 
-                    <div class="form1">
+                    <div class="form2">
                         <span>分类：</span>
                         <tc_include file="Public/cate" />
                      </div>
                     <p class="ml msg8"></p>
-                   <div class="form1"><span>价格:</span><input type="text" name="shopprice" placeholder="" onblur="shopprice1()"></div>  
+                   <div class="form2"><span>价格：</span><input type="text" name="shopprice" placeholder="" onblur="shopprice1()"></div>  
                    <p class="ml msg2"></p> 
-                   <div class="form1"><span class="lf">上传图片：</span>
+                   <div class="form2"><span class="lf">上传图片：</span>
                        <div class="lf ib imgbox6">
                             <div id="preview6" class="preview"></div>
                             <label class="btn btn6" for="p6" title="选择图片"><p>选择图片</p></label>
@@ -29,11 +29,55 @@
                         <div class="clear"></div>
                    </div>
                    <p class="ml msg3"></p> <p class="ml msg4"></p>
-                   <div class="form1"><input type="submit" value="上传"></div>
+
+                    <div class="form2"><label class="lf">简介（纯文字）：</label><textarea name="dsc" id="" cols="30" rows="10"></textarea></div>
+                    <p class="ml"></p>
+                    
+                    <div class="form2"><label style="vertical-align: top;">详情（可编辑样式，上传图片）：</label><textarea style="display: inline-block" name="content2"
+                            id="content2"></textarea></div>
+                    <p class="ml"></p>
+
+                   <div class="form2 mtc"><input type="submit" value="上传"></div>
 
                </form>
            </div>
         </div>
        
-	<tc_include file="Public/user_footer" />
-   
+    <tc_include file="Public/user_footer" />
+    <script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.config.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.all.min.js"></script>
+   <script>
+       
+        //初始化百度编辑器
+        //  var ue = UE.getEditor('content2');
+        var ue = UE.getEditor('content2', {
+            wordCount: true, //开启字数统计
+            elementPathEnabled: false,//是否启用元素路径，默认是显示
+            maximumWords: 10000,       //允许的最大字符数
+            initialContent: '',    //初始化编辑器的内容,也可以通过textarea/script给值，看官网例子
+            autoClearinitialContent: true, //是否自动清除编辑器初始内容，
+            //注意：如果focus属性设置为true,这个也为真，那么编辑器一上来就会触发导致初始化的内容看不到了
+            pasteplain: true,  //是否默认为纯文本粘贴。false为不使用纯文本粘贴，true为使用纯文本粘贴  
+            initialFrameHeight: 370,
+            autoHeightEnabled: false,//高度自适应
+            autoFloatEnabled: false,
+            zIndex: 0
+        });
+        if (navigator.userAgent.match(/mobile/i)) {
+            var u = navigator.userAgent;
+            var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
+            if (isiOS) {
+                ue.addListener('focus', function () {
+                    $(".top-wrapperNav").css("position", "relative");
+                    $("#per_line").css("margin-top", "0");
+                });
+
+                ue.addListener('blur', function () {
+                    $(".top-wrapperNav").css("position", "fixed");
+                    $("#per_line").css("margin-top", "7em");
+                });
+            }
+
+        }
+    
+   </script>

@@ -204,9 +204,27 @@ else{
 $(".msg3").text("请上传商品图片");//显示必填
 return false;
 }
-    };
+    }
+
+function shoppicyan() {
+    var imgVal = $("#preview6").attr("src");
+    if (imgVal != "") { //如果非空 显示正确
+        $(".msg3").text("");
+        return true;
+    }
+    else {
+        $(".msg3").text("请上传商品图片");//显示必填
+        return false;
+    }
+};
+
+
 function send2(){
-    return (shopname1() && sortform1()&&shopprice1()&&shoppic()&&asd());
+    return (shopname1() && sort()&&shopprice1()&&shoppic()&&asd());
+}
+
+function send7() {
+    return (shopname1() && sort() && shopprice1() && shoppicyan() && asd());
 }
     
 function sname1(){

@@ -539,7 +539,16 @@ a.captcha img{width:100px;height:44px;}
 .edit_cont{font-size: 16px;line-height: 20px;word-wrap: break-word;letter-spacing: 2px;text-indent: 32px;margin-bottom: 10px;}
 #edit_cont p{font-size: 16px;line-height: 26px;word-wrap: break-word;letter-spacing: 2px;color: #666;margin-top: 10px;}
 #edit_cont p img{margin: 0 auto;display:block;}
-.shop-detailcontainer2{width:100%;margin:0 auto;padding:0 0 80px;}
+#edit_cont>p>iframe{
+	width: 100%;
+	text-align: center;
+	margin: 0 auto;
+	margin-left: -2%;
+	padding: 0;
+
+}
+
+.shop-detailcontainer2{width:85%;margin:0 auto;padding:0 0 80px;}
 .shop-detailcontainer2 .cont-head2{text-align:center;font-size: 24px;line-height: 34px;padding:30px 0 30px;}
 .cont2{width:96%;margin:0 auto;}
 /*个人中心发布信息*/
@@ -830,7 +839,8 @@ a.captcha img{width:100px;height:44px;}
 	.shop-comment>li img{width:50px;height:50px;}
 	.shop-news>li img{width:100%;height:auto;}
 	.news-cont{padding:0 0 0 10px;}
-	.shop-detailcontainer{width:100%;margin:0 auto;padding:50px 0;}
+	.shop-detailcontainer{width:98%;margin:0 auto;padding:50px 0;}
+	#edit_cont>p>iframe{margin-left: -8%;}
 	.shop-job>li img{width: 100%;height: auto;}
 	.shop-infor>li img{width: 100%;height: auto;}
 	.shop-newadd>li{width: 49%;}
@@ -938,6 +948,7 @@ a.captcha img{width:100px;height:44px;}
 		width: 90%;
 	}
 	#per_line{padding-top: 7em;}
+	.shop-detailcontainer2{width: 100%;}
 }
 @media screen and (max-width:500px){
 	/*homemain*/

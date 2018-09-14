@@ -12,7 +12,7 @@
 				 <div class="shop-detailcontainer">
 					<h4 class="cont-head">{$detail.name}</h4>
 					<p class="cont-date"><span>{$detail.start_time|date='Y-m-d',###}</span></p>
-					<div class="cont" >{$detail.dsc}</div>
+					<div class="cont">{$detail.dsc}</div>
 					<div class="cont" id="edit_cont">{$detail.content}</div>
 				</div>
 					
@@ -30,4 +30,9 @@
 			"max-height": "100%"
 		});
 	});
+
+	$(".ueditor_baidumap").load(function () {
+			$(this).contents().find("#dituContent").css('width', '98%');
+	});
+
 </script>

@@ -31,7 +31,7 @@
 .imgbox3{width:200px;position: relative;}
 .imgbox4{width:200px;height:120px;position: relative;}
 .imgbox5{width:200px;height:120px;position: relative;}
-.imgbox6{width:290px;position: relative;}
+.imgbox6{width:290px;position: relative;margin-left:15px;}
 .imgbox7{width:200px;position: relative;margin-left:15px;}
 .imgbox8{width:200px;position: relative;}
 #preview1{width:110px;height:110px;background:#e5e4e4;}
@@ -469,6 +469,12 @@ td.msgmaner_td3 ul li{
 	padding: 3px 15px;
 	color: #fff;
 }
+
+/* 百度编辑器 */
+#edui143{
+	top: 25%;
+}
+
 
 
 @media screen and (max-width:1200px) {
