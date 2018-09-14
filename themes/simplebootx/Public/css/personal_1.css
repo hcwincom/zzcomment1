@@ -43,7 +43,7 @@
 #preview6{width:290px;height:175px;background:#e5e4e4;}
 #preview7{width:176px;height:104px;background:#e5e4e4;}
 #preview8{width:200px;height:120px;background:#e5e4e4;}
-.btn{position: absolute;left:0;top:0;display: inline-block;z-index: 9;text-align: center;}
+.btn{position: absolute;left:0;top:0;display: inline-block;z-index: 2;text-align: center;}
 .btn p{display: inline-block;color:#fff;font-size:20px;width:100%;line-height: 25px;background:#f00;}
 .btn1{width:110px;height:110px;line-height: 110px;}
 .btn2{width:200px;height:120px;line-height: 120px;top:15px;}
