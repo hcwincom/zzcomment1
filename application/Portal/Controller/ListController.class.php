@@ -327,7 +327,7 @@ class ListController extends HomebaseController {
 	    if(!empty($tmp)){
 	        $where['city']=$tmp;
 	    }
-	    $tmp=$this->cate(4);
+	    $tmp=$this->cate(3);
 	    if(!empty($tmp)){
 	        $where['cid']=$tmp;
 	    }
