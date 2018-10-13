@@ -52,16 +52,21 @@ for (var i = 0; i < cata2Select.length; i++) {
 if(cateid1 == 0){
 	$(".add-cate2 option:not(:first-child)").remove();
 }else{
+	cateSelect(cateid1, $('body'));
 	$('.cate2' + cateid2).prop('selected', true);
 }
 
-$('.add-cate1').change(function(){
-	 var fid=this.value;	 
-	$(".add-cate2 option").remove();
+$('.add-cate1').change(function(){	
+	cateSelect(this.value, $(this).parent());
+
+});
+
+function cateSelect(fid,$div) {
+	$div.find(".add-cate2 option").remove();
 	var cata2Html = "<option class='cate2s0 cate20' value='0'>行业 </option>";
-	if(fid == 0){
+	if (fid == 0) {
 		$(".add-cate2").html(cata2Html);
-	}else{
+	} else {
 		fid = "cate2s" + fid;
 		for (var i = 0; i < cata2Array.length; i++) {
 			if (-1 !== cata2Array[i].indexOf(fid)) {
@@ -69,10 +74,11 @@ $('.add-cate1').change(function(){
 				cata2Html += "<option class='" + arr[0] + "' value='" + arr[1] + "'>" + arr[2] + "</option>"
 			}
 		}
-		$(".add-cate2").html(cata2Html);
+		$div.find(".add-cate2").html(cata2Html);
 	}
 
-});
+}
+
 
 var province=parseInt("{$city1|default=0}");
 var city=parseInt("{$city2|default=0}");
@@ -125,7 +131,6 @@ function city2(fid,$div){
 		}
 		$div.find('.city2').html(cityHtml);
 	}
-
 	
 }
 function city3(fid,$div){
@@ -141,8 +146,7 @@ function city3(fid,$div){
 		},'json');
 	}
 }
- 
-		
+ 		
 </script>
 
 
