@@ -101,7 +101,7 @@ class ConfController extends AdminbaseController {
             $conf[$k]=[];
             $old=C($k);
             foreach($old as $key=>$vo){
-                $conf[$k][$key]=round($data0[$k.'_'.$key],2);
+                $conf[$k][$key]=bcadd($data0[$k.'_'.$key],0);
              }
         } 
         
@@ -168,11 +168,11 @@ class ConfController extends AdminbaseController {
             'cancel_check'=>'注销审核',
             
         ];   
-        foreach($option_seller as $key=>$vo){
-            $conf['option_seller'][$key]=round($data0['option_'.$key],2);
+        foreach($option_seller as $key=>$vo){ 
+        $conf['option_seller'][$key]=bcadd($data0['option_'.$key],0);
         }
         foreach($types as $key=>$vo){
-            $conf['money_seller'][$key]=round($data0['money_'.$key],2);
+            $conf['money_seller'][$key]=bcadd($data0['money_'.$key],0);
         }
        
         $result=sp_set_dynamic_config($conf);
@@ -199,7 +199,7 @@ class ConfController extends AdminbaseController {
         $conf=[];
         for($k=1;$k<=10;$k++){
             $conf[$k]=[
-                'price'=>round($data0['price_'.$k],2),
+                'price'=>bcadd($data0['price_'.$k],0),
                 'pic'=>$data0['pic_'.$k], 
                 'name'=>$data0['name_'.$k],
                 'link'=>zz_link($data0['link_'.$k]),
