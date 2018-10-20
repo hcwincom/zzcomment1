@@ -330,6 +330,11 @@ hello;
 	    $result = $users_model->where($where)->find();
 	    if(!empty($result)){
 	        if(sp_compare_password($password, $result['user_pass'])){
+	            //首次登陆才有 
+	            if(strtotime(date("Y-m-d")) > strtotime($result['last_login_time']) ){
+	                coin(C('option_users.login_coin'), $result['id'],'用户登陆');
+	            }
+	           
 	            session('user',$result);
 	            //写入此次登录信息
 	            $data = array(

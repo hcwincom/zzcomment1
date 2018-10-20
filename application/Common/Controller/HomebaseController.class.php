@@ -42,6 +42,16 @@ class HomebaseController extends AppframeController {
 		        if(!empty($user) && md5($key.$user['user_pass'])==$user_old['psw']){
 		            $is_login=true;
 		            session('user',$user);
+		            //首次登陆才有 
+		            if(strtotime(date("Y-m-d")) > strtotime($user['last_login_time']) ){
+		                coin(C('option_users.login_coin'), $user['id'],'用户登陆');
+		            } 
+		            //写入此次登录信息
+		            $data = array(
+		                'last_login_time' => date("Y-m-d H:i:s"),
+		                'last_login_ip' => get_client_ip(0,true),
+		            );
+		            $users_model->where(array('id'=>$user["id"]))->save($data);
 		        }else{
 		            setcookie('zypjwLogin', null,time()-2,'/');
 		        }

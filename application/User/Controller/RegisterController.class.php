@@ -193,6 +193,7 @@ class RegisterController extends HomebaseController {
 	        //注册成功页面跳转
 	        $data['id']=$result;
 	        session('user',$data);
+	        coin(C('option_users.register_coin'), $result,'用户注册');
 	        $data=array('errno'=>1,'error'=>'注册成功');
 	        //成功后清除短信验证码
 	        session('msgCode',null);

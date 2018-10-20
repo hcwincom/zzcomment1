@@ -43,6 +43,7 @@ class ConfController extends AdminbaseController {
             'option_info'=>'信息',
             'option_job'=>'招聘',
             'option_comment'=>'评级',
+            'option_users'=>'用户',
         ];
         
         $options=[
@@ -63,6 +64,9 @@ class ConfController extends AdminbaseController {
             
             'download_check'=>'评级材料下载审核',
             'download_price'=>'下载费用',
+            
+            'register_coin'=>'用户注册赠币',
+            'login_coin'=>'每日登陆赠币', 
         ];
         
         
@@ -88,6 +92,7 @@ class ConfController extends AdminbaseController {
             'option_info'=>'信息',
             'option_job'=>'招聘',
             'option_comment'=>'评级',
+            'option_users'=>'用户',
         ];
         
         $conf=[];
@@ -96,7 +101,7 @@ class ConfController extends AdminbaseController {
             $conf[$k]=[];
             $old=C($k);
             foreach($old as $key=>$vo){
-                $conf[$k][$key]=$data0[$k.'_'.$key];
+                $conf[$k][$key]=round($data0[$k.'_'.$key],2);
              }
         } 
         
@@ -162,12 +167,12 @@ class ConfController extends AdminbaseController {
             'apply_check' => '领用审核',
             'cancel_check'=>'注销审核',
             
-        ];
+        ];   
         foreach($option_seller as $key=>$vo){
-            $conf['option_seller'][$key]=$data0['option_'.$key];
+            $conf['option_seller'][$key]=round($data0['option_'.$key],2);
         }
         foreach($types as $key=>$vo){
-            $conf['money_seller'][$key]=$data0['money_'.$key];
+            $conf['money_seller'][$key]=round($data0['money_'.$key],2);
         }
        
         $result=sp_set_dynamic_config($conf);
@@ -194,7 +199,7 @@ class ConfController extends AdminbaseController {
         $conf=[];
         for($k=1;$k<=10;$k++){
             $conf[$k]=[
-                'price'=>$data0['price_'.$k],
+                'price'=>round($data0['price_'.$k],2),
                 'pic'=>$data0['pic_'.$k], 
                 'name'=>$data0['name_'.$k],
                 'link'=>zz_link($data0['link_'.$k]),
