@@ -1,6 +1,6 @@
 <!-- lgtop -->
 		<div class="top-wrapper">
-			<div class="lf logo">
+			<div class="lf logo loginLogo">
 				<h1>
 					<a href="{:U('Portal/Index/index')}" title="{$company['title']['content']}">
 						<img src="__UPLOAD__/{$company['logo']['content']}" alt="网站LOGO">
@@ -8,13 +8,13 @@
 				</h1>
 			</div>
 			
-			<div class="lg-title lf">
+			<div class="lg-title lf loginTitle">
 			<empty name="Think.session.user">
 			<span><a href="{:U('User/Register/index')}">注册</a></span>
 			</empty> 
 			</div>
 			
-			<div class="login-link rt">
+			<div class="login-link rt loginLink">
 			<empty name="Think.session.user">
 				<a href="{:U('User/Login/index')}">登录</a>
 			<else/>

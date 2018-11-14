@@ -97,7 +97,7 @@ i,em{ font-style: normal; }
 	}
 
 	.login-link{
-		top: -20px;
+		top: -2px;
 		padding: 26px 0 0 0;
 	}
 	.login-link a{
@@ -133,8 +133,10 @@ i,em{ font-style: normal; }
 	.research input[type="submit"]{width:27%;}
 	.foot-cont3{width:100%;}
 	.lg-title+.login-link{position: static;clear:both;margin-top:-10px;padding:0 0 15px 0;}
-	
+	/* .loginTitle{padding: 0;} */
 	.login-link2{clear:both;margin-top:-10px;padding:0 0 15px 0;}
+	.loginLogo{padding: 30px 0}
+	.loginTitle+.loginLink{margin-top: -63px}
 	.logo h1 img {
 			height: 22px;
 		}
