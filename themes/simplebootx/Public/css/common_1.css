@@ -26,8 +26,7 @@ i,em{ font-style: normal; }
 
 .research,.login-link{padding:26px 0;}
 
-.logo h1 a{margin-right:48px;}
-.logo h1 img{max-width: 100%; height: 100%;}
+.logo h1 img{max-width: 100%; height: 46px;margin-right:48px;}
 .research input{-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;height:38px;font-size:16px;line-height: 38px;}
 .research input[type="text"]{width:322px;border:1px solid #dcdcdc;padding-left:1em;background:#eee;}
 .research input[type="submit"]{width:126px;background:#d00000;color:#fff;cursor:pointer;}
