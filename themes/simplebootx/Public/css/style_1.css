@@ -856,10 +856,7 @@ a.captcha img{width:100px;height:44px;}
 	.shop-character{margin: 20px 0;}
 	.shop-character-list{margin-top: 20px;}
 	.shop-character{font-size: 16px;}
-	.slides li a{
-		width:100%;
-		/* height:170px; */
-	}
+	
 }
 
 
@@ -922,10 +919,7 @@ a.captcha img{width:100px;height:44px;}
 	.register-form{margin:40px auto;width:385px;}
 	.telecheck1 input[type="text"],.captcha-c1>input.captcha{clear:both;}
 	.infor-cont{width:80%;padding-left:20%;}
-	.slides li a{
-		width:100%;
-		/* height:151px; */
-	}
+	
 
 	.attachment{
 		width: 90%;
@@ -990,10 +984,7 @@ a.captcha img{width:100px;height:44px;}
 		height: 30px;
 		padding: 0 9px;
 	}
-	.slides li a{
-		width:100%;
-		/* height:136px; */
-	}
+
 	.news-title{font-size: 14px;}
 	.news-about{font-size: 12px;}
 	
