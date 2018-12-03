@@ -779,7 +779,7 @@ a.captcha img{width:100px;height:44px;}
 	.sm-c2{width:85%;}
 	.user-message{width:100%;}
 	.shop-add-list{display: none;}
-	#per_line{padding-top: 8.5em;}
+	#per_line{padding-top: 12em;}
 }
 @media screen and (max-width: 1000px){
 	/*homemain*/
@@ -805,8 +805,9 @@ a.captcha img{width:100px;height:44px;}
 	.column-product-container>li>a>p>span:nth-child(1){display: inline-block;width: 100%;}
 	.infor-d1 span i{width: 18%;}
 	.infor-d1 a{width: 82%;}
-	#per_line{padding-top: 13em;}
+	#per_line{padding-top: 12em;}
 }
+
 
 @media screen and (max-width:769px){
 	/*homemain*/
@@ -856,7 +857,7 @@ a.captcha img{width:100px;height:44px;}
 	.shop-character{margin: 20px 0;}
 	.shop-character-list{margin-top: 20px;}
 	.shop-character{font-size: 16px;}
-	
+	#per_line{padding-top: 9em;}
 }
 
 

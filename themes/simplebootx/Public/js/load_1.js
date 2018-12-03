@@ -10,19 +10,19 @@ $(document).ready(function(){
 
 			$("input").focus(function () {
 				$(".top-wrapperNav").css("position", "relative");
-				$("#per_line").css("margin-top", "0");
+				$("#per_line").css("padding-top", "0em");
 			});
 			$("input").blur(function () {
 				$(".top-wrapperNav").css("position", "fixed");
-				$("#per_line").css("margin-top", "7em");
+				$("#per_line").css("padding-top", "8em");
 			});
 			$("textarea").focus(function () {
 				$(".top-wrapperNav").css("position", "relative");
-				$("#per_line").css("margin-top", "0");
+				$("#per_line").css("padding-top", "0em");
 			});
 			$("textarea").blur(function () {
 				$(".top-wrapperNav").css("position", "fixed");
-				$("#per_line").css("margin-top", "7em");
+				$("#per_line").css("padding-top", "8em");
 			});
 			$("#content2").on("focus", function () {
 
