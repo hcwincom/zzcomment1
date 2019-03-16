@@ -149,7 +149,7 @@ class SellerController extends MemberbaseController {
         $info['deposit']=$deposits[$cid0];
        
         $user=$this->user;
-        if($info['deposit']>=$user['account']){
+        if($info['deposit']>$user['account']){
             $this->error('账户余额不足，请先充值');
         }
       
