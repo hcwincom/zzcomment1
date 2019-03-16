@@ -508,6 +508,7 @@ var mR=/^(0|86|17951)?(13[0-9]|15[012356789]|17[013678]|18[0-9]|14[57])[0-9]{8}$
 	}
 
 function picPerview(file) {
+	alert("pp");
 	var prevDiv = document.getElementById("pic_preview");  
 	// 验证文件大小
 	var fileSize = file.files[0].size / 1024;
