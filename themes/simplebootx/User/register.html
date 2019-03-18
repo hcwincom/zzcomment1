@@ -217,13 +217,11 @@ $('.register-form').submit(function(){
    var code=$.trim($('#zzcode').val());
    
  $.post("{:U('User/Register/ajaxreg')}",{'user_login':username,'mobile':mobile,'password':password1,'verify':verify,'code':code},function(data){
-	
+	 $('.lg-signup2').parent("div").next(".lg-infor").text(data.error);
 	  if(data.errno==1){
-			//返回上一页并刷新
-			self.location=document.referrer;
-		}else{
-			 
-			$('.lg-signup2').parent("div").next(".lg-infor").text(data.error);
+			//返回首页  
+			location.href='/';
+		}else{ 
 			$('.verify_img').attr('src',$('.verify_img').attr('src')+'&time=1');
 			 
 		}
@@ -231,6 +229,7 @@ $('.register-form').submit(function(){
  return false;
  
 });
+ 
 </script>
 </body>
 </html>
